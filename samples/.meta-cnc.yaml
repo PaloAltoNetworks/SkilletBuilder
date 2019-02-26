@@ -53,8 +53,8 @@ variables:
 # snippets used for api configuration including xpath and element as file name
 # files will load in the order listed
 snippets:
-  - name: device_setting
-    xpath: /config/devices/entry[@name='localhost.localdomain']/deviceconfig/setting
+  - name: device_system
+    xpath: /config/devices/entry[@name='localhost.localdomain']/deviceconfig/system
     file: hostname.xml
   - name: tag
     xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/tag
