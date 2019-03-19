@@ -11,6 +11,7 @@ description: Used by SkilletBuilder to demonstrate skillet creation and loading
 # common types are panorama, panos, and template
 # LINK TO DOCS
 type: panos
+# preload static or default-based templates
 extends:
 
 # grouping of like snippets for dynamic menu creation in panhandler
@@ -47,8 +48,6 @@ variables:
         value: color24
       - key: green
         value: color2
-
-
 
 # snippets used for api configuration including xpath and element as file name
 # files will load in the order listed
