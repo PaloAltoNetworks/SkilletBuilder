@@ -1,0 +1,60 @@
+# snippets is used to load a full NGFW configuration
+# LINK TO META FILE DOCS
+
+# unique snippet name
+name: SkilletBuilderSample
+# label used for menu selection
+label: Sample SkilletBuilder tag and hostname configuration
+description: Used by SkilletBuilder to demonstrate skillet creation and loading
+
+# type of device configuration
+# common types are panorama, panos, and template
+# LINK TO DOCS
+type: panos
+# preload static or default-based templates
+extends:
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection: sample
+
+# variables used in the configuration templates
+# type_hint defines the form field used by panhandler
+# type_hints can be text, ip_address, or dropdown
+# LINKS TO TYPE_HINT INFO
+variables:
+  - name: hostname
+    description: Firewall hostname
+    default: myFirewall
+    type_hint: text
+  - name: tag
+    description: tag object name
+    default: myFirewall
+    type_hint: text
+  - name: tag_description
+    description: tag description
+    default: this is my tag
+    type_hint: text
+  - name: tag_color
+    description: tag display color
+    default: color1
+    type_hint: dropdown
+    dd_list:
+      - key: red
+        value: color1
+      - key: orange
+        value: color6
+      - key: blue
+        value: color24
+      - key: green
+        value: color2
+
+# snippets used for api configuration including xpath and element as file name
+# files will load in the order listed
+snippets:
+  - name: device_system
+    xpath: /config/devices/entry[@name='localhost.localdomain']/deviceconfig/system
+    file: hostname.xml
+  - name: tag
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/tag
+    file: tag.xml
