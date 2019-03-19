@@ -9,7 +9,7 @@ description: Used by SkilletBuilder to demonstrate skillet creation and loading
 
 # type of device configuration
 # common types are panorama, panos, and template
-# LINK TO DOCS
+# https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
 type: panos
 # preload static or default-based templates
 extends:
@@ -21,7 +21,6 @@ labels:
 # variables used in the configuration templates
 # type_hint defines the form field used by panhandler
 # type_hints can be text, ip_address, or dropdown
-# LINKS TO TYPE_HINT INFO
 variables:
   - name: hostname
     description: Firewall hostname
