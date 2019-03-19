@@ -1,4 +1,0 @@
-<entry name="{{ tag_name }}">
-  <color>{{ tag_color }}</color>
-  <comments>{{ tag_description }}</comments>
-</entry>
