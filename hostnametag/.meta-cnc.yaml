@@ -1,0 +1,61 @@
+# snippets is used to load a full NGFW configuration
+# LINK TO META FILE DOCS
+
+# unique snippet name
+name: sampleSkillet_v90
+# label used for menu selection
+label: Sample - for hostname and tag information tutorial
+description: some text to describe it
+
+# type of device configuration
+# common types are panorama, panos, and template
+# LINK TO DOCS
+type: panos
+# preload static or default-based templates
+extends:
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection: sample
+
+# variables used in the configuration templates
+# type_hint defines the form field used by panhandler
+# type_hints can be text, ip_address, or dropdown
+# LINKS TO TYPE_HINT INFO
+variables:
+  - name: hostname
+    description: this is the fw hostname
+    default: fwHostname
+    type_hint: text
+  - name: tag_name
+    description: this is the tag name
+    default: tagname
+    type_hint: text
+  - name: tag_description
+    description: this is the tag description
+    default: fwtag
+    type_hint: text
+  - name: tag_color
+    description: this is the tag description
+    default: fwtag
+    type_hint: dropdown
+      dd_list:
+      - key: red
+        value: color1
+      - key: blue
+        value: color24
+      - key: green
+        value: color13
+      - key: orange
+        value: color6
+
+
+# snippets used for api configuration including xpath and element as file name
+# files will load in the order listed
+snippets:
+  - name: hostname
+    xpath: /config/devices/entry[@name='localhost.localdomain']/deviceconfig/system
+    file: hostname.xml
+  - name: tag
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/tag
+    file: tag.xml
