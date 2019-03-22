@@ -21,19 +21,41 @@ labels:
 # type_hint defines the form field used by panhandler
 # type_hints can be text, ip_address, or dropdown
 variables:
-  - name: hostname
-    description: Firewall hostname
-    default: myFirewall
+  - name: skillet_name
+    description: short ID for the skillet
+    default: mySkillet
     type_hint: text
-  - name: choices
+  - name: skillet_label
+    description: short label for the panhandler tile name
+    default: this is how I find and sort my skillet
+    type_hint: text
+  - name: skillet_description
+    description: short description explaing skillet function or purpose
+    default: this is what my skillet does
+    type_hint: text
+  - name: collection_name
+    description: provided to group templates in the application
+    default: myCollection
+    type_hint: text
+  - name: skillet_type
     description: sample dropdown list
-    default: choices
+    default: panos
     type_hint: dropdown
     dd_list:
-      - key: option1
-        value: option1
-      - key: option2
-        value: option2
+      - key: panos
+        value: panos
+      - key: panorama
+        value: panorama
+      - key: panorama-gpcs
+        value: panorama-gpcs
+      - key: template
+        value: template
+      - key: rest
+        value: rest
+      - key: python
+        value: python
+      - key: terraform
+        value: terraform
 
 # snippets used for api configuration including xpath and element as file name
 # files will load in the order listed
