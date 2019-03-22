@@ -1,0 +1,68 @@
+<entry name="{{ edl_name }}-out">
+  <to>
+    <member>any</member>
+  </to>
+  <from>
+    <member>any</member>
+  </from>
+  <source>
+    <member>any</member>
+  </source>
+  <destination>
+    <member>{{ edl_name }}</member>
+  </destination>
+  <source-user>
+    <member>any</member>
+  </source-user>
+  <category>
+    <member>any</member>
+  </category>
+  <application>
+    <member>any</member>
+  </application>
+  <service>
+    <member>application-default</member>
+  </service>
+  <hip-profiles>
+    <member>any</member>
+  </hip-profiles>
+  <tag>
+    <member>{{ tag_name }}</member>
+  </tag>
+  <action>deny</action>
+  <description>outbound EDL IP block rule. EDL info: {{ edl_description }}</description>
+</entry>
+<entry name="{{ edl_name }}-in">
+  <to>
+    <member>any</member>
+  </to>
+  <from>
+    <member>any</member>
+  </from>
+  <source>
+    <member>{{ edl_name }}</member>
+  </source>
+  <destination>
+    <member>any</member>
+  </destination>
+  <source-user>
+    <member>any</member>
+  </source-user>
+  <category>
+    <member>any</member>
+  </category>
+  <application>
+    <member>any</member>
+  </application>
+  <service>
+    <member>application-default</member>
+  </service>
+  <hip-profiles>
+    <member>any</member>
+  </hip-profiles>
+  <tag>
+    <member>{{ tag_name }}</member>
+  </tag>
+  <action>deny</action>
+  <description>inbound EDL IP block rule. EDL info: {{ edl_description }}</description>
+</entry>

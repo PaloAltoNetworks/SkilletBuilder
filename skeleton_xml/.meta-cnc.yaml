@@ -1,0 +1,42 @@
+# part of the panhandler application with docs at
+# https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+
+# unique snippet name
+name: skeleton_yaml_file_xml
+# label used for menu selection
+label: skeleton template for an xml yaml metafile
+description: Used in panhandler to generate a .meta-cnc.yaml skeleton file
+
+# type of device configuration
+# common types are panorama, panos, and template
+type: template
+# preload static or default-based templates
+extends:
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection: skilletbuilder
+
+# variables used in the configuration templates
+# type_hint defines the form field used by panhandler
+# type_hints can be text, ip_address, or dropdown
+variables:
+  - name: hostname
+    description: Firewall hostname
+    default: myFirewall
+    type_hint: text
+  - name: choices
+    description: sample dropdown list
+    default: choices
+    type_hint: dropdown
+    dd_list:
+      - key: option1
+        value: option1
+      - key: option2
+        value: option2
+
+# snippets used for api configuration including xpath and element as file name
+# files will load in the order listed
+snippets:
+  - name: meta-cnc-skeleton.conf
+    file: meta-cnc-skeleton.conf

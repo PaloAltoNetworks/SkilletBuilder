@@ -11,4 +11,5 @@ Welcome to SkilletBuilder documentation!
    :caption: Contents:
 
    overview
+   steps
 
