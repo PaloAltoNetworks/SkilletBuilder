@@ -23,23 +23,23 @@ labels:
 # type_hints can be text, ip_address, or dropdown
 variables:
   - name: skillet_name
-    description: short ID for the skillet
+    description: Skillet ID
     default: mySkillet
     type_hint: text
   - name: skillet_label
-    description: short label for the panhandler tile name
-    default: this is how I find and sort my skillet
+    description: Skillet Description
+    default: Skillet label (selection name in panhandler)
     type_hint: text
   - name: skillet_description
-    description: short description explaing skillet function or purpose
+    description: Skillet Description
     default: this is what my skillet does
     type_hint: text
   - name: collection_name
-    description: provided to group templates in the application
+    description: Collection Name (aka grouping name)
     default: myCollection
     type_hint: text
   - name: skillet_type
-    description: sample dropdown list
+    description: Skillet type (action taken by panhandler on Submit)
     default: panos
     type_hint: dropdown
     dd_list:
