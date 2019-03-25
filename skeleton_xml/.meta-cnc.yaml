@@ -27,8 +27,8 @@ variables:
     default: mySkillet
     type_hint: text
   - name: skillet_label
-    description: Skillet Description
-    default: Skillet label (selection name in panhandler)
+    description: Skillet label (selection name in panhandler)
+    default: my_skillet_label
     type_hint: text
   - name: skillet_description
     description: Skillet Description
