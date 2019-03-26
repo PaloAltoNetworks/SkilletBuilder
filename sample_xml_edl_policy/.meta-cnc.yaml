@@ -16,7 +16,8 @@ extends:
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
-  collection: skilletbuilder
+  collection:
+    - skilletbuilder
 
 # variables used in the configuration templates
 # type_hint defines the form field used by panhandler
@@ -47,7 +48,7 @@ variables:
     default: red
     type_hint: dropdown
     dd_list:
-      - key: blue
+       - key: blue
         value: color3
       - key: green
         value: color2
