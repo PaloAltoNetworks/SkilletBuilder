@@ -48,7 +48,7 @@ variables:
     default: red
     type_hint: dropdown
     dd_list:
-       - key: blue
+      - key: blue
         value: color3
       - key: green
         value: color2
