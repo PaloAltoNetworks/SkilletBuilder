@@ -4,7 +4,7 @@
 #
 import os
 import sys
-from tempfile import mkstemp
+from tempfile import mkdtemp
 
 from skilletlib.exceptions import LoginException
 from skilletlib.exceptions import SkilletLoaderException
@@ -19,12 +19,13 @@ skillet_content = os.environ.get('SKILLET_CONTENT', '')
 
 try:
     device = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
-    file_descr, skillet_path = mkstemp()
-    with open(file_descr, 'w') as f:
+    skillet_path = mkdtemp()
+    skillet_file = os.path.join(skillet_path, '.meta-cnc.yaml')
+    with open(skillet_file, 'w') as f:
         f.write(skillet_content)
 
-    skillet = PanosSkillet(skillet_path)
-    results = device.execute_skillet(skillet)
+    skillet = PanosSkillet(skillet_file)
+    results = device.execute_skillet(skillet, {})
     print(results)
     sys.exit(0)
 
