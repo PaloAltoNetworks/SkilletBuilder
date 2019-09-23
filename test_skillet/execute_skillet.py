@@ -5,6 +5,7 @@
 import os
 import sys
 from tempfile import mkdtemp
+import time
 
 from skilletlib.exceptions import LoginException
 from skilletlib.exceptions import SkilletLoaderException
@@ -23,7 +24,11 @@ try:
     skillet_file = os.path.join(skillet_path, '.meta-cnc.yaml')
     with open(skillet_file, 'w') as f:
         f.write(skillet_content)
+        f.flush()
 
+    # ensure our skillet contents get's written into the file from the buffers
+    os.sync()
+    time.sleep(1)
     skillet = PanosSkillet(skillet_file)
     results = device.execute_skillet(skillet, {})
     print(results)

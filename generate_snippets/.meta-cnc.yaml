@@ -8,6 +8,7 @@ description: |
 type: python3
 
 labels:
+  order: 2
   collection:
     - Skillet Builder
 

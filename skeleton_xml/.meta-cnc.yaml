@@ -15,6 +15,7 @@ extends:
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
+  order: 3
   collection:
    - Skillet Builder
 

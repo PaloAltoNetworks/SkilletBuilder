@@ -9,6 +9,7 @@ type: workflow
 
 # Labels allow grouping and type specific options and are generally only used in advanced cases
 labels:
+  order: 1
   collection:
     - Skillet Builder
 
