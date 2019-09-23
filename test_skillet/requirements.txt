@@ -1,0 +1,2 @@
+git+git://github.com/nembery/skilletlib.git@develop#egg=skilletlib
+oyaml

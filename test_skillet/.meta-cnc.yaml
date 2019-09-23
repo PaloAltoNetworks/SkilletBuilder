@@ -1,0 +1,37 @@
+name: test_skillet_inline
+label: Skillet Test Tool
+
+description: |
+  Allows you to paste in a Skillet and test it inline without having to first upload to a Git repository
+type: python3
+
+labels:
+  collection:
+    - Skillet Builder
+
+variables:
+  - name: TARGET_IP
+    description: Hostname
+    default: 10.10.10.10
+    type_hint: fqdn_or_ip
+  - name: TARGET_USER
+    description: Username
+    default: admin
+    type_hint: text
+  - name: TARGET_PASSWORD
+    description: Password
+    default:
+    type_hint: password
+  - name: SKILLET_CONTENT
+    description: Skillet Content
+    type_hint: text_area
+    default:
+    attributes:
+      rows: 40
+      cols: 40
+
+snippets:
+  - name: script
+    file: execute_skillet.py
+    input_type: env
+
