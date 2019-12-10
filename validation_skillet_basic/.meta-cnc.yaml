@@ -8,6 +8,7 @@ type: pan_validation
 labels:
   collection:
     - skilletbuilder
+    - Skillet Builder
     - Validation
 
 variables:
@@ -53,6 +54,7 @@ snippets:
   - name: check_external_list_exists
     label: check if external-list {{ edl_name }} exists
     test: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
+    fail_message: edl_name
     documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
 
   - name: check_external_list_scott
