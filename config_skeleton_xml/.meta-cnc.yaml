@@ -15,8 +15,9 @@ extends:
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
+  order: 3
   collection:
-   - skilletbuilder
+   - Skillet Builder
 
 # variables used in the configuration templates
 # type_hint defines the form field used by panhandler
@@ -63,3 +64,6 @@ variables:
 snippets:
   - name: meta-cnc-skeleton.conf
     file: meta-cnc-skeleton.conf
+    output_type: text
+    outputs:
+      - name: SKILLET_CONTENT

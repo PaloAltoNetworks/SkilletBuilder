@@ -17,7 +17,7 @@ extends:
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
   collection:
-    - skilletbuilder
+    - Skillet Builder
 
 # variables used in the configuration templates
 # type_hint defines the form field used by panhandler
