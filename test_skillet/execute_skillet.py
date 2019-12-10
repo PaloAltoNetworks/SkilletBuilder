@@ -27,6 +27,7 @@ try:
 
     # create the skillet definition from the 'skillet_content' dict we got from the environ
     skillet_dict = oyaml.safe_load(skillet_content)
+    skillet_dict['snippet_path'] = '.'
 
     # create the skillet object from the skillet dict
     skillet = PanosSkillet(skillet_dict, panoply)
