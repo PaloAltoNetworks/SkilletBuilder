@@ -57,7 +57,7 @@ snippets:
     fail_message: edl_name
     documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
 
-  - name: check_external_list_my_edl
+  - name: check_external_list_fixed
     label: edl called my_edl exists
     test: external_list | attribute_present('entry', 'name', 'my_edl')
     documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
@@ -83,6 +83,12 @@ snippets:
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL update interval is {{ edl_recurring }}
     test: external_list_named | tag_present('type.ip.{{ edl_recurring }}')
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+
+  - name: check_edl_recurring_interval_fixed
+    when: external_list | attribute_present('entry', 'name', edl_name)
+    label: EDL update interval is five-minute
+    test: external_list_named | tag_present('type.ip.five-minute')
     documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
 
   - name: check_edl_not_recurring_interval
