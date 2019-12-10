@@ -54,58 +54,64 @@ snippets:
   - name: check_external_list_exists
     label: external-list {{ edl_name }} exists
     test: external_list | attribute_present('entry', 'name', edl_name)
-    fail_message: edl_name
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+    fail_message: did not find {{ edl_name }} in the configuration
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: check_external_list_fixed
     label: edl called my_edl exists
     test: external_list | attribute_present('entry', 'name', 'my_edl')
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+    fail_message: did not find edl called my_edl in the configuration
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: check_external_list_missing
-    label: external-list {{ edl_name }} missing
+    label: external-list {{ edl_name }} is not already configured
     test: external_list | attribute_absent('entry', 'name', edl_name)
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+    fail_message: found external-list {{ edl_name }} already configured
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: check_edl_url
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL url is configured
     test: external_list_named | element_value('type.ip.url') == edl_url
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-wildfire-general-settings
+    fail_message: the edl url {{ edl_url }} is not configured
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: check_edl_not_url
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL url is different than input url
     test: external_list_named | element_value('type.ip.url') != edl_url
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-wildfire-general-settings
+    fail_message: the edl url {{ edl_url }} is already configured
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: check_edl_recurring_interval
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL update interval is {{ edl_recurring }}
-    test: external_list_named | tag_present('type.ip.{{ edl_recurring }}')
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+    test: external_list_named | tag_present('type.ip.' ~ edl_recurring)
+    fail_message: the edl is not configured for {{ edl_recurring }} updates
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: check_edl_recurring_interval_fixed
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL update interval is five-minute
     test: external_list_named | tag_present('type.ip.five-minute')
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+    fail_message: the edl is not configured for five-minute updates
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: check_edl_not_recurring_interval
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL update interval is NOT {{ edl_recurring }}
     test: external_list_named | tag_absent('type.ip.{{ edl_recurring }}')
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: security_rules_inbound_edl
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL in associated inbound security policy
     test: security_rule_inbound_edl | element_value_contains('source.member', edl_name)
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#ironskillet-security-policies
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: security_rules_outbound_edl
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL in associated outbound security policy
     test: security_rule_outbound_edl | element_value_contains('destination.member', edl_name)
-    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#ironskillet-security-policies
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
