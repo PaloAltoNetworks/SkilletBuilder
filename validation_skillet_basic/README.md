@@ -75,25 +75,6 @@ does not exist and the test is irrelevant.
     fail_message: the edl url {{ edl_url }} is already configured
 ```
 
-## edl update interval
-Uses `tag_present` to check a value that is an element tag embedded in the xpath
-and return `True` if found.
-
-Uses the `when` conditional such that this test is skipped if the named EDL
-does not exist and the test is irrelevant.
-
-The ~ is used to concatenate a string and input variable edl_recurring to
-send a complete string for validation. If a variable is not used, it would just
-be a single string surrounded by quotes.
-
-```yaml
-  - name: check_edl_recurring_interval
-    when: external_list | attribute_present('entry', 'name', edl_name)
-    label: EDL update interval is {{ edl_recurring }}
-    test: external_list_named | tag_present('type.ip.' ~ edl_recurring)
-    fail_message: the edl is not configured for {{ edl_recurring }} updates
-```
-
 ## edl update interval matches the var value
 Uses `tag_present` to check a value that is an element tag embedded in the xpath
 and return `True` if found.

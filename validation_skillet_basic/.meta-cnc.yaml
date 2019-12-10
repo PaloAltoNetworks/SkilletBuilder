@@ -65,7 +65,7 @@ snippets:
     label: external-list {{ edl_name }} exists
     test: external_list | attribute_present('entry', 'name', edl_name)
     fail_message: did not find {{ edl_name }} in the configuration
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#does-a-named-edl-exists-using-a-variable-input-value
 
   # this is a similar check to above but using hardcoded values instead of a variable
   # NOTE: in the attribute_present check the test string is surrounding by quotes when not a variable
@@ -73,7 +73,7 @@ snippets:
     label: fixed naming check - edl called some_edl exists
     test: external_list | attribute_present('entry', 'name', 'some_edl')
     fail_message: did not find edl called some_edl in the configuration
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#does-a-named-edl-exists-using-a-fixed-name-value
 
   # this is an inverse test to check that an attribute doesn't already exist
   # often used when merging into an existing configuration and validating no naming conflicts
@@ -81,7 +81,7 @@ snippets:
     label: external-list {{ edl_name }} is not already configured
     test: external_list | attribute_absent('entry', 'name', edl_name)
     fail_message: found external-list {{ edl_name }} already configured
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#does-a-named-edl-not-exist
 
   # this is the element value check that can be equal, not equal, less/greater than etc.
   # the example also showing the dot notation to walk the xpath in an object --> type.ip.url
@@ -90,7 +90,7 @@ snippets:
     label: EDL url is configured
     test: external_list_named | element_value('type.ip.url') == edl_url
     fail_message: the edl url {{ edl_url }} is not configured
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#is-the-test-url-found
 
   # example based on above showing not equal as reference
   - name: check_edl_not_url
@@ -98,7 +98,7 @@ snippets:
     label: EDL url is different than input url
     test: external_list_named | element_value('type.ip.url') != edl_url
     fail_message: the edl url {{ edl_url }} is already configured
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#is-the-test-url-not-found
 
   # example using tag_present where the check value is an xml element tag --> recurring in this case
   # note the syntax with the ~ to concatenate strings when a var name used in the validation as part of a string
@@ -107,7 +107,7 @@ snippets:
     label: EDL update interval is {{ edl_recurring }}
     test: external_list_named | tag_present('type.ip.' ~ edl_recurring)
     fail_message: the edl is not configured for {{ edl_recurring }} updates
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-matches-the-var-value
 
   # reference example showing tag_present like above but with a fixed value
   - name: check_edl_recurring_interval_fixed
@@ -115,7 +115,7 @@ snippets:
     label: EDL update interval is five-minute - fixed as five minutes
     test: external_list_named | tag_present('type.ip.five-minute')
     fail_message: the edl is not configured for five-minute updates
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-matches-a-fixed-value
 
   # this is the inverse with tag absent
   # used when the validation does not want to value in the current configuration
@@ -124,7 +124,7 @@ snippets:
     label: EDL update interval is NOT {{ edl_recurring }}
     test: external_list_named | tag_absent('type.ip.{{ edl_recurring }}')
     fail_message: an existing recurring value of {{ edl_recurring }} already exists
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-does-not-match-the-var-value
 
   # when the xml config supports multiple value entries often with the tag 'member' repeatedly used
   # element_value_contains searches the element at the object xpath for any matching values
@@ -133,7 +133,7 @@ snippets:
     label: EDL in associated inbound security policy
     test: security_rule_inbound_edl | element_value_contains('source.member', edl_name)
     fail_message: the edl {{ edl_name }} is used in an inbound security rule
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#is-the-edl-used-in-an-inbound-security-rule
 
   # same as above but matching the outbound rule and destination value
   - name: security_rules_outbound_edl
@@ -141,5 +141,5 @@ snippets:
     label: EDL in associated outbound security policy
     test: security_rule_outbound_edl | element_value_contains('destination.member', edl_name)
     fail_message: the edl {{ edl_name }} is used in an outbound security rule
-    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#is-the-edl-used-in-an-outbound-security-rule
 
