@@ -4,7 +4,7 @@ These are the basic checks done by the tutorial validation skillet.
 The validation configuration uses the skilletBuilder tutorial configuration
 in this repo with an EDL, tag, and security policy skillet.
 
-## does a named EDL exists using an input variable
+## does a named EDL exists use an input variable
 
 Uses `attribute_present` to look for an EDL by matching a var input name and return `True` if found.
 
@@ -17,7 +17,7 @@ This is for the attribute validation where the value of interest is contained in
     fail_message: did not find {{ edl_name }} in the configuration
 ```
 
-## does a named EDL exists using a fixed value
+## does a named EDL exists use a fixed value
 
 Uses `attribute_present` to look for an EDL by explicit name and return `True` if found. 
 
