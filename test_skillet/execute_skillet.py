@@ -4,8 +4,7 @@
 #
 import os
 import sys
-from tempfile import mkdtemp
-import time
+import oyaml
 
 from skilletlib.exceptions import LoginException
 from skilletlib.exceptions import SkilletLoaderException
@@ -19,18 +18,23 @@ ip = os.environ.get('TARGET_IP', '')
 skillet_content = os.environ.get('SKILLET_CONTENT', '')
 
 try:
-    device = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
-    skillet_path = mkdtemp()
-    skillet_file = os.path.join(skillet_path, '.meta-cnc.yaml')
-    with open(skillet_file, 'w') as f:
-        f.write(skillet_content)
-        f.flush()
+    panoply = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
 
-    # ensure our skillet contents get's written into the file from the buffers
-    os.sync()
-    time.sleep(1)
-    skillet = PanosSkillet(skillet_file)
-    results = device.execute_skillet(skillet, {})
+    # every skillet needs a 'config' item in the context
+    config = panoply.get_configuration()
+    context = dict()
+    context['config'] = config
+
+    # create the skillet definition from the 'skillet_content' dict we got from the environ
+    skillet_dict = oyaml.safe_load(skillet_content)
+
+    # create the skillet object from the skillet dict
+    skillet = PanosSkillet(skillet_dict, panoply)
+
+    # execute the skillet and return the results to us
+    results = skillet.execute(context)
+
+    # in this case, just print them out for the user
     print(results)
     sys.exit(0)
 
