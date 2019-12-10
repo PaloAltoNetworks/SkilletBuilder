@@ -55,6 +55,11 @@ snippets:
     test: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
     documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
 
+  - name: check_external_list_scott
+    label: check if external-list scott exists
+    test: external_list | attribute_present('entry', 'name', 'scott')
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+
   - name: check_external_list_missing
     label: check if external-list {{ edl_name }} missing
     test: external_list | attribute_absent('entry', 'name', '{{ edl_name }}')
