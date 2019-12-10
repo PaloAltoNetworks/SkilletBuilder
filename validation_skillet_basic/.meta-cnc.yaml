@@ -54,7 +54,7 @@ snippets:
   - name: check_external_list_exists
     label: external-list {{ edl_name }} exists
     test: external_list | attribute_present('entry', 'name', edl_name)
-    fail_message: did not find {{ edl_name }} in the configuration
+    fail_message: 'did not find {{ edl_name }} in the configuration'
     documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic
 
   - name: check_external_list_fixed
