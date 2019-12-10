@@ -12,9 +12,9 @@ labels:
 
 variables:
   - name: edl_name
-      description: name of the external list to validate
-      default: my_edl
-      type_hint: text
+    description: name of the external list to validate
+    default: my_edl
+    type_hint: text
   - name: edl_url
     description: external list url to validate
     default: http://someurl.com
