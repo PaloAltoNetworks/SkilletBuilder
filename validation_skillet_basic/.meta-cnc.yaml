@@ -1,0 +1,98 @@
+name: skilletBuilder_validation_basic
+label: basic validation skillets for skilletBuilder tutorial
+
+description: |
+  Sample validation skillet based on the skilletBuilder tutorial skillet
+
+type: pan_validation
+labels:
+  collection:
+    - skilletbuilder
+    - Validation
+
+variables:
+  - name: edl_name
+      description: name of the external list to validate
+      default: my_edl
+      type_hint: text
+  - name: edl_url
+    description: external list url to validate
+    default: http://someurl.com
+    type_hint: text
+  - name: edl_recurring
+    description: recurring interval check
+    default: five-minute
+    type_hint: dropdown
+    dd_list:
+      - key: five-minute
+        value: five-minute
+      - key: hourly
+        value: hourly
+      - key: daily
+        value: daily
+
+snippets:
+
+  - name: skilletBuilder_objects
+    cmd: parse
+    variable: config
+    outputs:
+      - name: external_list
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list
+      - name: external_list_named
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list//entry[@name='{{ edl_name }}']
+      - name: tag
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/tag
+      - name: security_rules
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules
+      - name: security_rule_outbound_edl
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry[@name='{{ edl_name }}-out']
+      - name: security_rule_inbound_edl
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry[@name='{{ edl_name }}-in']
+
+  - name: check_external_list_exists
+    label: check if external-list {{ edl_name }} exists
+    test: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+
+  - name: check_external_list_missing
+    label: check if external-list {{ edl_name }} missing
+    test: external_list | attribute_absent('entry', 'name', '{{ edl_name }}')
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+
+  - name: check_edl_url
+    when: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
+    label: check that EDL url is configured
+    test: external_list_named | element_value('type.ip.url') == '{{ edl_url }}'
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-wildfire-general-settings
+
+  - name: check_edl_not_url
+    when: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
+    label: check that EDL url is different than input var
+    test: external_list_named | element_value('type.ip.url') != '{{ edl_url }}'
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-wildfire-general-settings
+
+  - name: check_edl_recurring_interval
+    when: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
+    label: check if EDL update interval is {{ edl_recurring }}
+    test: external_list_named | tag_present('type.ip.{{ edl_recurring }}')
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+
+  - name: check_edl_not_recurring_interval
+    when: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
+    label: check if EDL update interval is NOT {{ edl_recurring }}
+    test: external_list_named | tag_absent('type.ip.{{ edl_recurring }}')
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-authentication-settings
+
+  - name: security_rules_inbound_edl
+    when: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
+    label: check for EDL in associated inbound security policy
+    test: security_rule_inbound_edl | element_value_contains('source.member', '{{ edl_name }}')
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#ironskillet-security-policies
+
+  - name: security_rules_outbound_edl
+    when: external_list | attribute_present('entry', 'name', '{{ edl_name }}')
+    label: check for EDL in associated outbound security policy
+    test: security_rule_outbound_edl | element_value_contains('destination.member', '{{ edl_name }}')
+    documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#ironskillet-security-policies
+

@@ -2,10 +2,10 @@
 # https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
 
 # unique snippet name
-name: skeleton_yaml_file_xml
+name: config_skeleton_yaml_file_xml
 # label used for menu selection
 label: skeleton template for an xml yaml metafile
-description: Used in panhandler to generate a .meta-cnc.yaml skeleton file
+description: Used in panhandler to generate a .meta-cnc.yaml skeleton file for xml configuration
 
 # type of device configuration
 # common types are panorama, panos, and template
