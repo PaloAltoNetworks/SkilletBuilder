@@ -29,7 +29,7 @@ variables:
     type_hint: dropdown
     dd_list:
       - key: five-minute
-        value: five-minute/
+        value: five-minute
       - key: hourly
         value: hourly
       - key: daily
