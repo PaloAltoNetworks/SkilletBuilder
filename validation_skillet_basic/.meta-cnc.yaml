@@ -114,7 +114,7 @@ snippets:
   - name: check_edl_recurring_interval
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL update interval is {{ edl_recurring }}
-    test: external_list_named | tag_present('type.ip.' ~ edl_recurring)
+    test: external_list_named | tag_present('type.ip.recurring.' ~ edl_recurring)
     fail_message: the edl is not configured for {{ edl_recurring }} updates
     documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-matches-the-var-value
 
@@ -122,7 +122,7 @@ snippets:
   - name: check_edl_recurring_interval_fixed
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL update interval is five-minute - fixed as five minutes
-    test: external_list_named | tag_present('type.ip.five-minute')
+    test: external_list_named | tag_present('type.ip.recurring.five-minute')
     fail_message: the edl is not configured for five-minute updates
     documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-matches-a-fixed-value
 
