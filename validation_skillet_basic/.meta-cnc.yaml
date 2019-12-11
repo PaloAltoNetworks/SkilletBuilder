@@ -131,7 +131,7 @@ snippets:
   - name: check_edl_not_recurring_interval
     when: external_list | attribute_present('entry', 'name', edl_name)
     label: EDL update interval is NOT {{ edl_recurring }}
-    test: external_list_named | tag_absent('type.ip.{{ edl_recurring }}')
+    test: external_list_named | tag_absent('type.ip.recurring.' ~ edl_recurring)
     fail_message: an existing recurring value of {{ edl_recurring }} already exists
     documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-does-not-match-the-var-value
 
