@@ -42,12 +42,14 @@ snippets:
     cmd: parse
     variable: config
     outputs:
+      - name: vsys_element
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
       - name: external_list
         capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list
         # if an xpath forks based on multiple elements (eg. set of EDLs) then an explicit xpath for each EDL may be required
         # examples below are shown with variables but are often hardcoded when specific values are being validated
       - name: external_list_named
-        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list//entry[@name='{{ edl_name }}']
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list/entry[@name='{{ edl_name }}']
       - name: tag
         capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/tag
       - name: security_rules
@@ -56,6 +58,13 @@ snippets:
         capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry[@name='{{ edl_name }}-out']
       - name: security_rule_inbound_edl
         capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry[@name='{{ edl_name }}-in']
+
+  # check if any external lists are configured
+  - name: check_any_edl_exists
+    label: are any external-lists configured
+    test: vsys_element | tag_present('external-list')
+    fail_message: there are no external lists found in the existing configuration
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#does-a-named-edl-exists-using-a-variable-input-value
 
   # checks if the named EDL exists in the configuration as an attribute check
   # this same check is used in 'when' checks below; if the EDL doesn't exist then other validations are not relevant
