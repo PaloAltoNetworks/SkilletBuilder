@@ -1,0 +1,37 @@
+name: generate_skillet_snippets_from_config
+label: Generate Skillet Snippets From Uploaded Configs
+
+description: |
+  Creates a list of XML snippets that have been added or modifed between a two XML configuration files.
+
+type: python3
+
+labels:
+  order: 3
+  collection:
+    - Skillet Builder
+
+variables:
+  - name: BASE_CONFIG
+    description: Base Configuration
+    default: <xml><help>Paste your base config here</help></xml>
+    type_hint: text_area
+    attributes:
+      rows: 5
+      cols: 10
+  - name: LATEST_CONFIG
+    description: Modified Configuration
+    default: <xml><help>Paste your modified config here</help></xml>
+    type_hint: text_area
+    attributes:
+      rows: 5
+      cols: 10
+
+snippets:
+  - name: script
+    file: generate_skillet_snippets_from_configs.py
+    input_type: env
+    output_type: json
+    outputs:
+      - name: snippets
+

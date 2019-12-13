@@ -15,8 +15,8 @@ from skilletlib.panoply import Panoply
 
 # each variable will be present in the environ dict on the 'os' module
 username = os.environ.get('TARGET_USERNAME', 'admin')
-password = os.environ.get('TARGET_PASSWORD', 'admin')
-ip = os.environ.get('TARGET_IP', '')
+password = os.environ.get('TARGET_PASSWORD', 'Clouds123')
+ip = os.environ.get('TARGET_IP', '10.0.1.119')
 from_candidate = os.environ.get('FROM_CANDIDATE', 'False')
 
 # check if we should generate the skillet from the candidate of the running config
