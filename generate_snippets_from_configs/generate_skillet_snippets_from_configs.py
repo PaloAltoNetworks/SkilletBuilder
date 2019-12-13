@@ -5,9 +5,11 @@ import sys
 import json
 
 # grab our two configs from the environment
-base_config = os.environ.get('BASE_CONFIG', '')
-latest_config = os.environ.get('LATEST_CONFIG', '')
+configs = os.environ.get('configs', '')
 
+config_data = json.loads(configs)
+base_config = config_data.get('base_config', '')
+latest_config = config_data.get('latest_config', '')
 # init the Panoply helper class, note we do not need connection information, as we only need offline mode
 # to compare two configurations
 p = Panoply()

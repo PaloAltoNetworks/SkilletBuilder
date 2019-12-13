@@ -12,16 +12,9 @@ labels:
     - Skillet Builder
 
 variables:
-  - name: BASE_CONFIG
-    description: Base Configuration
-    default: <xml><help>Paste your base config here</help></xml>
-    type_hint: text_area
-    attributes:
-      rows: 5
-      cols: 10
-  - name: LATEST_CONFIG
-    description: Modified Configuration
-    default: <xml><help>Paste your modified config here</help></xml>
+  - name: configs
+    description: Encoded Configs
+    default:
     type_hint: text_area
     attributes:
       rows: 5
