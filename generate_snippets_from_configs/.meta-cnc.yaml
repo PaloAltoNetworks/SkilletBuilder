@@ -12,13 +12,14 @@ labels:
     - Skillet Builder
 
 variables:
-  - name: configs
-    description: Encoded Configs
+  - name: BASE_CONFIG
+    description: Base Configuration
     default:
-    type_hint: text_area
-    attributes:
-      rows: 5
-      cols: 10
+    type_hint: file
+  - name: LATEST_CONFIG
+    description: Modified Configuration
+    default:
+    type_hint: file
 
 snippets:
   - name: script
