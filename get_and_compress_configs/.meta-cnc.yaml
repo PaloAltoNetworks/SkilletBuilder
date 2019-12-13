@@ -1,8 +1,8 @@
-name: generate_skillet_snippets_from_config
-label: Generate Skillet Snippets From Uploaded Configs
+name: get_and_compress_configs
+label: Upload Configs for Skillet Generation
 
 description: |
-  Creates a list of XML snippets that have been added or modifed between a two XML configuration files.
+  Upload your Base and Latest configs
 
 type: template
 
@@ -32,5 +32,5 @@ snippets:
     file: config_data.j2
     output_type: text
     outputs:
-      - name: snippets
+      - name: configs
 
