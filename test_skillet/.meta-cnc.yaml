@@ -6,7 +6,7 @@ description: |
 type: python3
 
 labels:
-  order: 5
+  order: 6
   collection:
     - Skillet Builder
 

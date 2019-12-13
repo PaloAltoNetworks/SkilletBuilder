@@ -1,14 +1,14 @@
 name: generate_skillet_snippets_from_device
-label: Generate Skillet Snippets
+label: Generate Skillet Snippets From Device
 
 description: |
-  Creates a list of XML snippets that have been modifed on a PAN-OS Device. This is useful to help generate
-  simple skillets
+  Creates a list of XML snippets that have been modifed on a PAN-OS Device. Use the Skillet Template
+  to place the results into a Skillet metadata file.
 
 type: python3
 
 labels:
-  order: 2
+  order: 3
   collection:
     - Skillet Builder
 

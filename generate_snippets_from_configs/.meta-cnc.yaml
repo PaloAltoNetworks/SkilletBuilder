@@ -7,7 +7,7 @@ description: |
 type: python3
 
 labels:
-  order: 3
+  order: 4
   collection:
     - Skillet Builder
 

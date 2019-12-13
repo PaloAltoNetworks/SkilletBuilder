@@ -1,6 +1,6 @@
 name: Generate_Skillet_workflow
 # label used for menu selection
-label: Generate a Skillet Workflow
+label: Generate a Skillet From Device Workflow
 
 description: |
   Use a configured PAN-OS device to generate a new Skillet from scratch

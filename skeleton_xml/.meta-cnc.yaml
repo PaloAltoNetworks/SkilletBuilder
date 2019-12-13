@@ -4,18 +4,16 @@
 # unique snippet name
 name: skeleton_yaml_file_xml
 # label used for menu selection
-label: skeleton template for an xml yaml metafile
-description: Used in panhandler to generate a .meta-cnc.yaml skeleton file
+label: Skillet Template
+description: |
+  Used in panhandler to generate a .meta-cnc.yaml skeleton file. This will take any snippets
+  created earlier and and display them inline.
 
-# type of device configuration
-# common types are panorama, panos, and template
 type: template
-# preload static or default-based templates
-extends:
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
-  order: 4
+  order: 5
   collection:
    - Skillet Builder
 
