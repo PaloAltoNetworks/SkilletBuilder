@@ -3,13 +3,18 @@ from skilletlib import Panoply
 import os
 import sys
 import json
+import base64
 
 # grab our two configs from the environment
 configs = os.environ.get('configs', '')
 
 config_data = json.loads(configs)
-base_config = config_data.get('base_config', '')
-latest_config = config_data.get('latest_config', '')
+base_config_encoded = config_data.get('base_config', '')
+latest_config_encoded = config_data.get('latest_config', '')
+
+base_config = base64.b64decode(base_config_encoded.encode('UTF-8')).decode('UTF-8')
+latest_config = base64.b64decode(latest_config_encoded.encode('UTF-8')).decode('UTF-8')
+
 # init the Panoply helper class, note we do not need connection information, as we only need offline mode
 # to compare two configurations
 p = Panoply()
