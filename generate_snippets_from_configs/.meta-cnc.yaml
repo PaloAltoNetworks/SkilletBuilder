@@ -16,10 +16,12 @@ variables:
     description: Base Configuration
     default:
     type_hint: file
+    help_text: Initial XML configuration from Before any changes are made
   - name: LATEST_CONFIG
     description: Modified Configuration
     default:
     type_hint: file
+    help_text: XML configuration from After any changes are made
 
 snippets:
   - name: script
