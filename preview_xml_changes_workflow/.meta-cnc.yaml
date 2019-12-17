@@ -1,0 +1,21 @@
+name: preview_xml_changes
+# label used for menu selection
+label: Preview XML Changes
+
+description: |
+  Find and highlight differences between two configs
+
+type: workflow
+
+# Labels allow grouping and type specific options and are generally only used in advanced cases
+labels:
+  order: 1
+  collection:
+    - Skillet Builder
+
+variables:
+
+
+snippets:
+  - name: generate_skillet_preview_from_config
+  - name: generate_skillet_preview_from_config_template
