@@ -15,7 +15,7 @@ type: template
 labels:
   order: 5
   collection:
-   - Skillet Builder
+   - Kitchen Sink
 
 # variables used in the configuration templates
 # type_hint defines the form field used by panhandler

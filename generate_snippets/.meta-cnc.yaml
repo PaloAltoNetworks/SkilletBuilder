@@ -10,7 +10,7 @@ type: python3
 labels:
   order: 3
   collection:
-    - Skillet Builder
+   - Kitchen Sink
 
 variables:
   - name: TARGET_IP
