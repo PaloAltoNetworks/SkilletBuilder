@@ -27,5 +27,7 @@ snippets:
   - name: script
     file: generate_skillet_preview_from_configs.py
     input_type: env
-
+    output_type: text
+    outputs:
+      - name: skillet_preview
 
