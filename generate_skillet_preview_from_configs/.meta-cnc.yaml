@@ -25,7 +25,7 @@ variables:
 
 snippets:
   - name: script
-    file: generate_skillet_snippets_from_configs.py
+    file: generate_skillet_preview_from_configs.py
     input_type: env
 
 
