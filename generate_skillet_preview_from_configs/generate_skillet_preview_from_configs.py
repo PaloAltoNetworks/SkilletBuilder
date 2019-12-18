@@ -36,22 +36,46 @@ for s in snippets:
     name = s.get('name', '')
     full_xpath = s.get('xpath')
     print(f'<a href="#{name}">{full_xpath}</a>')
-    xpath = re.sub('^/config', '', full_xpath)
-    parent_element_xpath = '.' + "/".join(xpath.split('/')[:-1])
-    parent_element = latest_doc.find(parent_element_xpath)
-    parent_element_string = ElementTree.tostring(parent_element).decode('UTF-8')\
-        .replace('<', '&lt;').replace('>', '&gt;')
+    xpath = re.sub('^/config', '.', full_xpath)
+    # parent_element_xpath = '.' + "/".join(xpath.split('/')[:-1])
+    parent_element = latest_doc.find(xpath)
+    element_string = s.get('element', '').strip()
+    # find child element index
+    index = 0
+    found = False
+    for child in parent_element:
+        cs = ElementTree.tostring(child).decode('UTF-8').strip()
+        if element_string == cs:
+            # found our child index
+            found = True
+            parent_element.remove(child)
+            title = full_xpath.replace('"', "'")
+            wrapped_child_element = ElementTree.fromstring(f'<span id="{name}" class="text-danger" title="{title}">{element_string}</span>')
+            parent_element.insert(index, wrapped_child_element)
+            break
+        index = index + 1
+    if not found:
+        print('WTF')
 
-    element_html = s.get('element', '').replace('<', '&lt;').replace('>', '&gt;')
-    element_wrapped = f"<span id='{name}'class='text-danger' title='{full_xpath}'>{element_html}</span>"
-    if element_html not in parent_element_string:
-        print(f'{name} was not found in parent')
-    parent_element_html = parent_element_string.replace(element_html, element_wrapped)
+    #
+    # parent_element_string = ElementTree.tostring(parent_element).decode('UTF-8')\
+    #     .replace('<', '&lt;').replace('>', '&gt;')
+    #
+    # element_html = s.get('element', '').replace('<', '&lt;').replace('>', '&gt;')
+    # element_wrapped = f"<span id='{name}'class='text-danger' title='{full_xpath}'>{element_html}</span>"
+    # if element_html not in parent_element_string:
+    #     print(f'{name} was not found in parent')
+    # parent_element_html = parent_element_string.replace(element_html, element_wrapped)
+    #
+    # if parent_element_string not in latest_config_html:
+    #     print('WTF')
+    # latest_config_html = latest_config_html.replace(parent_element_string, parent_element_html)
 
-    latest_config_html = latest_config_html.replace(parent_element_string, parent_element_html)
-
+latest_config_html = ElementTree.tostring(latest_doc).decode('UTF-8').replace('<', '&lt;').replace('>', '&gt;')
+fixed_config_html_1 = re.sub(r'&lt;span class="(.*?)" id="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
+fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
 print('-'*80)
-print(latest_config_html)
+print(fixed_config_html_2)
 print('-'*80)
 print('#'*80)
 
