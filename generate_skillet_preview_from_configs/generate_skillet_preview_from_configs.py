@@ -29,8 +29,13 @@ if len(snippets) == 0:
 
 latest_doc = ElementTree.fromstring(latest_config)
 latest_config_html = latest_config.replace('<', '&lt;').replace('>', '&gt;')
+print('#'*80)
+print('The following xpaths were found to be modified')
+
 for s in snippets:
+    name = s.get('name', '')
     full_xpath = s.get('xpath')
+    print(f'<a href="#{name}">{full_xpath}</a>')
     xpath = re.sub('^/config', './', full_xpath)
     parent_element_xpath = "/".join(xpath.split('/')[:-1])
     parent_element = latest_doc.find(parent_element_xpath)
@@ -38,13 +43,15 @@ for s in snippets:
         .replace('<', '&lt;').replace('>', '&gt;')
 
     element_html = s.get('element', '').replace('<', '&lt;').replace('>', '&gt;')
-    element_wrapped = f"<span class='text-danger' title='{full_xpath}'>{element_html}</span>"
+    element_wrapped = f"<span id='{s.get('name')}'class='text-danger' title='{full_xpath}'>{element_html}</span>"
     parent_element_html = parent_element_string.replace(element_html, element_wrapped)
 
     latest_config_html = latest_config_html.replace(parent_element_string, parent_element_html)
 
-print('<code type="xml">')
+print('-'*80)
 print(latest_config_html)
-print('</code>')
+print('-'*80)
+print('#'*80)
+
 # later gator
 sys.exit(0)
