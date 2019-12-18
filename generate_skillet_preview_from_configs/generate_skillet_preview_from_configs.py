@@ -36,14 +36,16 @@ for s in snippets:
     name = s.get('name', '')
     full_xpath = s.get('xpath')
     print(f'<a href="#{name}">{full_xpath}</a>')
-    xpath = re.sub('^/config', './', full_xpath)
-    parent_element_xpath = "/".join(xpath.split('/')[:-1])
+    xpath = re.sub('^/config', '', full_xpath)
+    parent_element_xpath = '.' + "/".join(xpath.split('/')[:-1])
     parent_element = latest_doc.find(parent_element_xpath)
     parent_element_string = ElementTree.tostring(parent_element).decode('UTF-8')\
         .replace('<', '&lt;').replace('>', '&gt;')
 
     element_html = s.get('element', '').replace('<', '&lt;').replace('>', '&gt;')
-    element_wrapped = f"<span id='{s.get('name')}'class='text-danger' title='{full_xpath}'>{element_html}</span>"
+    element_wrapped = f"<span id='{name}'class='text-danger' title='{full_xpath}'>{element_html}</span>"
+    if element_html not in parent_element_string:
+        print(f'{name} was not found in parent')
     parent_element_html = parent_element_string.replace(element_html, element_wrapped)
 
     latest_config_html = latest_config_html.replace(parent_element_string, parent_element_html)
