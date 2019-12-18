@@ -55,25 +55,11 @@ for s in snippets:
             break
         index = index + 1
     if not found:
-        print('WTF')
-
-    #
-    # parent_element_string = ElementTree.tostring(parent_element).decode('UTF-8')\
-    #     .replace('<', '&lt;').replace('>', '&gt;')
-    #
-    # element_html = s.get('element', '').replace('<', '&lt;').replace('>', '&gt;')
-    # element_wrapped = f"<span id='{name}'class='text-danger' title='{full_xpath}'>{element_html}</span>"
-    # if element_html not in parent_element_string:
-    #     print(f'{name} was not found in parent')
-    # parent_element_html = parent_element_string.replace(element_html, element_wrapped)
-    #
-    # if parent_element_string not in latest_config_html:
-    #     print('WTF')
-    # latest_config_html = latest_config_html.replace(parent_element_string, parent_element_html)
+        print('did not find this, odd')
 
 latest_config_html = ElementTree.tostring(latest_doc).decode('UTF-8').replace('<', '&lt;').replace('>', '&gt;')
 fixed_config_html_1 = re.sub(r'&lt;span class="(.*?)" id="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
-fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
+fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>\n', fixed_config_html_1)
 print('-'*80)
 print(fixed_config_html_2)
 print('-'*80)
