@@ -6,8 +6,8 @@ import re
 from xml.etree import ElementTree
 
 # grab our two configs from the environment
-base_config_path = os.environ.get('BASE_CONFIG', '/Users/nembery/Downloads/sdwan_stage1.xml')
-latest_config_path = os.environ.get('LATEST_CONFIG', '/Users/nembery/Downloads/sdwan_final_test.xml')
+base_config_path = os.environ.get('BASE_CONFIG', '')
+latest_config_path = os.environ.get('LATEST_CONFIG', '')
 
 with open(base_config_path, 'r') as bcf:
     base_config = bcf.read()
@@ -39,7 +39,7 @@ for s in snippets:
     xpath = re.sub('^/config', '.', full_xpath)
     # parent_element_xpath = '.' + "/".join(xpath.split('/')[:-1])
     parent_element = latest_doc.find(xpath)
-    element_string = s.get('element', '').strip()
+    element_string = s.get('element', '')
     # find child element index
     index = 0
     found = False
