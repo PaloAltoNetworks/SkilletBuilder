@@ -59,7 +59,7 @@ for s in snippets:
 
 latest_config_html = ElementTree.tostring(latest_doc).decode('UTF-8').replace('<', '&lt;').replace('>', '&gt;')
 fixed_config_html_1 = re.sub(r'&lt;span class="(.*?)" id="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
-fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>\n', fixed_config_html_1)
+fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
 print('-'*80)
 print(fixed_config_html_2)
 print('-'*80)
