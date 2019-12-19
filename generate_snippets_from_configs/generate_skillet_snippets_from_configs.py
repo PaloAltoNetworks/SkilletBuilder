@@ -1,9 +1,9 @@
 # 12-12-19 nembery@paloaltonetworks.com
-from skilletlib import Panoply
+import json
 import os
 import sys
-import json
-import base64
+
+from skilletlib import Panoply
 
 # grab our two configs from the environment
 base_config_path = os.environ.get('BASE_CONFIG', '')

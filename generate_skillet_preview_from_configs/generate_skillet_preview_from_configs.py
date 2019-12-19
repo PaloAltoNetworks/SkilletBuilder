@@ -4,6 +4,7 @@ import os
 import sys
 import re
 from xml.etree import ElementTree
+from xml.dom import minidom
 
 # grab our two configs from the environment
 base_config_path = os.environ.get('BASE_CONFIG', '')
@@ -28,10 +29,13 @@ if len(snippets) == 0:
     sys.exit(2)
 
 latest_doc = ElementTree.fromstring(latest_config)
-latest_config_html = latest_config.replace('<', '&lt;').replace('>', '&gt;')
-print('#'*80)
-print('The following xpaths were found to be modified')
 
+print('#'*80)
+print(' ')
+print('The following xpaths were found to be modified')
+print(' ')
+print('-'*80)
+print(' ')
 for s in snippets:
     name = s.get('name', '')
     full_xpath = s.get('xpath')
@@ -57,9 +61,12 @@ for s in snippets:
     if not found:
         print('did not find this, odd')
 
-latest_config_html = ElementTree.tostring(latest_doc).decode('UTF-8').replace('<', '&lt;').replace('>', '&gt;')
+latest_config_str = ElementTree.tostring(latest_doc).decode('UTF-8')
+latest_config_formatted = minidom.parseString(latest_config_str).toprettyxml(indent='    ')
+latest_config_html = latest_config_formatted.replace('<', '&lt;').replace('>', '&gt;')
 fixed_config_html_1 = re.sub(r'&lt;span class="(.*?)" id="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
 fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
+
 print('-'*80)
 print(fixed_config_html_2)
 print('-'*80)
