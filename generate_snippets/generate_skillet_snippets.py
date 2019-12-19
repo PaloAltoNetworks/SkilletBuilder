@@ -15,8 +15,8 @@ from skilletlib.panoply import Panoply
 
 # each variable will be present in the environ dict on the 'os' module
 username = os.environ.get('TARGET_USERNAME', 'admin')
-password = os.environ.get('TARGET_PASSWORD', 'Clouds123')
-ip = os.environ.get('TARGET_IP', '10.0.1.119')
+password = os.environ.get('TARGET_PASSWORD', 'Prismalabpassword!@#$%')
+ip = os.environ.get('TARGET_IP', '54.81.209.234')
 from_candidate = os.environ.get('FROM_CANDIDATE', 'False')
 
 # check if we should generate the skillet from the candidate of the running config
@@ -34,7 +34,8 @@ try:
         print('No Candidate Configuration can be found to use to build a skillet!')
         sys.exit(2)
 
-    print(json.dumps(snippets, indent=2))
+    output_bytes = bytes(json.dumps(snippets, indent=2))
+    print(output_bytes)
     sys.exit(0)
 
 except SkilletLoaderException as se:
