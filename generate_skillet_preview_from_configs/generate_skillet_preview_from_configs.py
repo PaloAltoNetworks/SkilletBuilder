@@ -7,8 +7,8 @@ from xml.etree import ElementTree
 from lxml import etree
 
 # grab our two configs from the environment
-base_config_path = os.environ.get('BASE_CONFIG', '')
-latest_config_path = os.environ.get('LATEST_CONFIG', '')
+base_config_path = os.environ.get('BASE_CONFIG', '/Users/nembery/Downloads/sdwan_stage1.xml')
+latest_config_path = os.environ.get('LATEST_CONFIG', '/Users/nembery/Downloads/sdwan_final_test.xml')
 
 with open(base_config_path, 'r') as bcf:
     base_config = bcf.read()
@@ -63,7 +63,7 @@ for s in snippets:
 
 latest_config_str = ElementTree.tostring(latest_doc).decode('UTF-8')
 etree_dom_obj = etree.fromstring(latest_config_str)
-latest_config_formatted = etree.tostring(etree_dom_obj, pretty_print=True)
+latest_config_formatted = etree.tostring(etree_dom_obj, pretty_print=True).decode('UTF-8')
 latest_config_html = latest_config_formatted.replace('<', '&lt;').replace('>', '&gt;')
 fixed_config_html_1 = re.sub(r'&lt;span class="(.*?)" id="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
 fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
