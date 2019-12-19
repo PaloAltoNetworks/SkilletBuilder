@@ -34,7 +34,7 @@ try:
         print('No Candidate Configuration can be found to use to build a skillet!')
         sys.exit(2)
 
-    output_bytes = bytes(json.dumps(snippets, indent=2))
+    output_bytes = bytes(json.dumps(snippets, indent=2), 'UTF-8')
     print(output_bytes)
     sys.exit(0)
 
