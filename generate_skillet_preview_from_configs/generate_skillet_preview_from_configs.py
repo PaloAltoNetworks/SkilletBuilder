@@ -32,7 +32,7 @@ latest_doc = ElementTree.fromstring(latest_config)
 
 print('#'*80)
 print(' ')
-print('The following xpaths were found to be modified')
+print('The following xpaths were found to be modified:')
 print(' ')
 print('-'*80)
 print(' ')
