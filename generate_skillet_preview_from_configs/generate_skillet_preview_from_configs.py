@@ -54,7 +54,7 @@ for s in snippets:
             found = True
             parent_element.remove(child)
             title = full_xpath.replace('"', "'")
-            wrapped_child_element = ElementTree.fromstring(f'<span id="{name}" class="text-danger" title="{title}">{element_string}</span>')
+            wrapped_child_element = ElementTree.fromstring(f'<span id="{name}" class="text-danger" title="{title}">{element_string}</span>\n')
             parent_element.insert(index, wrapped_child_element)
             break
         index = index + 1
@@ -66,7 +66,7 @@ etree_dom_obj = etree.fromstring(latest_config_str)
 latest_config_formatted = etree.tostring(etree_dom_obj, pretty_print=True).decode('UTF-8')
 latest_config_html = latest_config_formatted.replace('<', '&lt;').replace('>', '&gt;')
 fixed_config_html_1 = re.sub(r'&lt;span class="(.*?)" id="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
-fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>\n\n', fixed_config_html_1)
+fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
 
 print('-'*80)
 print(fixed_config_html_2)
