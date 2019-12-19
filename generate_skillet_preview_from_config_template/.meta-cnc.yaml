@@ -20,3 +20,4 @@ variables:
 snippets:
   - name: preview_xml_output
     file: output.j2
+    template_title: XML Modifications

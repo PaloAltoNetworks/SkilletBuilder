@@ -62,6 +62,7 @@ variables:
 snippets:
   - name: meta-cnc-skeleton.conf
     file: meta-cnc-skeleton.conf
+    template_title: Generated Skillet
     output_type: text
     outputs:
       - name: SKILLET_CONTENT
