@@ -4,7 +4,7 @@ import os
 import sys
 import re
 from xml.etree import ElementTree
-from xml.dom import minidom
+from lxml import etree
 
 # grab our two configs from the environment
 base_config_path = os.environ.get('BASE_CONFIG', '')
@@ -62,7 +62,8 @@ for s in snippets:
         print('did not find this, odd')
 
 latest_config_str = ElementTree.tostring(latest_doc).decode('UTF-8')
-latest_config_formatted = minidom.parseString(latest_config_str).toprettyxml(indent='    ')
+etree_dom_obj = etree.fromstring(latest_config_str)
+latest_config_formatted = etree.tostring(etree_dom_obj, pretty_print=True)
 latest_config_html = latest_config_formatted.replace('<', '&lt;').replace('>', '&gt;')
 fixed_config_html_1 = re.sub(r'&lt;span class="(.*?)" id="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
 fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
