@@ -1,0 +1,30 @@
+name: generate_set_cli_from_configs
+label: Generate set commands from configs
+
+description: |
+  Creates a list of CLI Set commands from the difference between two XML config files.
+
+type: python3
+
+labels:
+  order: 4
+  collection:
+   - Skillet Builder
+
+variables:
+  - name: BASE_CONFIG
+    description: Base Configuration
+    default:
+    type_hint: file
+    help_text: Initial XML configuration from Before any changes are made
+  - name: LATEST_CONFIG
+    description: Modified Configuration
+    default:
+    type_hint: file
+    help_text: XML configuration from After any changes are made
+
+snippets:
+  - name: script
+    file: ../generate_set_cli_from_configs.py
+    input_type: env
+
