@@ -4,7 +4,7 @@
 # unique snippet name
 name: generate_skillet_preview_from_config_template
 # label used for menu selection
-label: Skillet Template
+label: XML Modifications Template
 description: |
   Display the results of the Preview XML Changes Skillet
 
