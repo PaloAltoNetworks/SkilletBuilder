@@ -2,6 +2,7 @@
 #
 # Executes a basic skillet from the ENV variable 'SKILLET_CONTENT' useful for testing
 #
+import html
 import os
 import sys
 import oyaml
@@ -15,7 +16,10 @@ from skilletlib.skillet.panos import PanosSkillet
 username = os.environ.get('TARGET_USERNAME', 'admin')
 password = os.environ.get('TARGET_PASSWORD', 'admin')
 ip = os.environ.get('TARGET_IP', '')
-skillet_content = os.environ.get('SKILLET_CONTENT', '')
+skillet_content_raw = os.environ.get('SKILLET_CONTENT', '')
+
+# because we are passing this value around, we may need to unescape it here
+skillet_content = html.unescape(skillet_content_raw)
 
 try:
     panoply = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
