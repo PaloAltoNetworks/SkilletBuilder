@@ -21,6 +21,7 @@ skillet_content_raw = os.environ.get('SKILLET_CONTENT', '')
 # because we are passing this value around, we may need to unescape it here
 skillet_content = html.unescape(skillet_content_raw)
 
+# get the full contents of the environment to initialize the skillet context
 try:
     panoply = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
 
@@ -36,6 +37,8 @@ try:
     # create the skillet object from the skillet dict
     skillet = PanosSkillet(skillet_dict, panoply)
 
+    # ensure all our variables from the environment / outer context is copied in and ready to go
+    skillet.update_context(os.environ)
     # execute the skillet and return the results to us
     results = skillet.execute(context)
 
