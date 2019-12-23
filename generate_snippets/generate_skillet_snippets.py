@@ -15,8 +15,8 @@ from skilletlib.panoply import Panoply
 
 # each variable will be present in the environ dict on the 'os' module
 username = os.environ.get('TARGET_USERNAME', 'admin')
-password = os.environ.get('TARGET_PASSWORD', 'Prismalabpassword!@#$%')
-ip = os.environ.get('TARGET_IP', '54.81.209.234')
+password = os.environ.get('TARGET_PASSWORD', '')
+ip = os.environ.get('TARGET_IP', '')
 from_candidate = os.environ.get('FROM_CANDIDATE', 'False')
 
 # check if we should generate the skillet from the candidate of the running config
