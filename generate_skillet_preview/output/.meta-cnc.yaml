@@ -1,9 +1,4 @@
-# part of the panhandler application with docs at
-# https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
-
-# unique snippet name
-name: generate_skillet_preview_from_config_template
-# label used for menu selection
+name: generate_skillet_preview_output
 label: XML Modifications Template
 description: |
   Display the results of the Preview XML Changes Skillet
@@ -11,7 +6,6 @@ description: |
 type: template
 
 labels:
-  order: 5
   collection:
    - Kitchen Sink
 

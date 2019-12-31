@@ -1,13 +1,12 @@
-name: generate_skillet_preview_from_config
-label: Preview XML Changes between configs
+name: generate_set_cli_offline
+label: Generate set commands from configs
 
 description: |
-  Find and highlight differences between two configs
+  Creates a list of CLI Set commands from the difference between two XML config files.
 
 type: python3
 
 labels:
-  order: 4
   collection:
    - Kitchen Sink
 
@@ -25,9 +24,6 @@ variables:
 
 snippets:
   - name: script
-    file: generate_skillet_preview_from_configs.py
+    file: ../../generate_set_cli.py
     input_type: env
-    output_type: text
-    outputs:
-      - name: skillet_preview
 

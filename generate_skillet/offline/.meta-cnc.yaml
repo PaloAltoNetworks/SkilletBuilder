@@ -1,15 +1,14 @@
-name: generate_set_cli_from_configs
-label: Generate set commands from configs
+name: generate_skillet_snippets_from_config
+label: Generate Skillet Snippets From Uploaded Configs
 
 description: |
-  Creates a list of CLI Set commands from the difference between two XML config files.
+  Creates a list of XML snippets that have been added or modifed between a two XML configuration files.
 
 type: python3
 
 labels:
-  order: 4
   collection:
-   - Skillet Builder
+   - Kitchen Sink
 
 variables:
   - name: BASE_CONFIG
@@ -25,6 +24,9 @@ variables:
 
 snippets:
   - name: script
-    file: ../generate_set_cli_from_configs.py
+    file: ../../generate_skillet_snippets_from_configs.py
     input_type: env
+    output_type: json
+    outputs:
+      - name: snippets
 

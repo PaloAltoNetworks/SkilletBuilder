@@ -1,14 +1,12 @@
-name: generate_skillet_snippets_from_device
-label: Generate Skillet Snippets From Device
+name: generate_set_cli_online
+label: Generate set commands from device
 
 description: |
-  Creates a list of XML snippets that have been modifed on a PAN-OS Device. Use the Skillet Template
-  to place the results into a Skillet metadata file.
+  Creates a list of CLI Set commands from the difference between two XML config files.
 
 type: python3
 
 labels:
-  order: 3
   collection:
    - Kitchen Sink
 
@@ -37,9 +35,6 @@ variables:
 
 snippets:
   - name: script
-    file: generate_skillet_snippets.py
+    file: ../../generate_set_cli.py
     input_type: env
-    output_type: json
-    outputs:
-      - name: snippets
 

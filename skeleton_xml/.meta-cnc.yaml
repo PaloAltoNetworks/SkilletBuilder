@@ -13,7 +13,6 @@ type: template
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
-  order: 5
   collection:
    - Kitchen Sink
 

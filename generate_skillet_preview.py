@@ -6,22 +6,35 @@ import re
 from xml.etree import ElementTree
 from lxml import etree
 
-# grab our two configs from the environment
-base_config_path = os.environ.get('BASE_CONFIG', '/Users/nembery/Downloads/sdwan_stage1.xml')
-latest_config_path = os.environ.get('LATEST_CONFIG', '/Users/nembery/Downloads/sdwan_final_test.xml')
 
-with open(base_config_path, 'r') as bcf:
-    base_config = bcf.read()
+config_source = os.environ.get('skillet_source', 'offline')
 
-with open(latest_config_path, 'r') as lcf:
-    latest_config = lcf.read()
+if config_source == 'offline':
+    # grab our two configs from the environment
+    base_config_path = os.environ.get('BASE_CONFIG', '')
+    latest_config_path = os.environ.get('LATEST_CONFIG', '')
 
-# init the Panoply helper class, note we do not need connection information, as we only need offline mode
-# to compare two configurations
-p = Panoply()
+    with open(base_config_path, 'r') as bcf:
+        base_config = bcf.read()
 
-# insert magic here
-snippets = p.generate_skillet_from_configs(base_config, latest_config)
+    with open(latest_config_path, 'r') as lcf:
+        latest_config = lcf.read()
+
+    p = Panoply()
+    snippets = p.generate_skillet_from_configs(base_config, latest_config)
+else:
+    # each variable will be present in the environ dict on the 'os' module
+    username = os.environ.get('TARGET_USERNAME', 'admin')
+    password = os.environ.get('TARGET_PASSWORD', '')
+    ip = os.environ.get('TARGET_IP', '')
+    from_candidate = os.environ.get('FROM_CANDIDATE', 'False')
+
+    p = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
+    snippets = p.generate_skillet(from_candidate=from_candidate)
+    if from_candidate:
+        latest_config = p.get_configuration(config_source='candidate')
+    else:
+        latest_config = p.get_configuration(config_source='running')
 
 # check we actually have some diffs
 if len(snippets) == 0:
