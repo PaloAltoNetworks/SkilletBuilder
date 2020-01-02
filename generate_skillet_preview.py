@@ -61,13 +61,19 @@ for s in snippets:
     index = 0
     found = False
     for child in parent_element:
-        cs = ElementTree.tostring(child).decode('UTF-8').strip()
+        cs = ElementTree.tostring(child).decode('UTF-8')
+        whitespace_match = re.search(r'(\s+)$', cs)
+        if whitespace_match:
+            whitespace = whitespace_match.group()
+        else:
+            whitespace = ''
         if element_string == cs:
             # found our child index
             found = True
             parent_element.remove(child)
             title = full_xpath.replace('"', "'")
-            wrapped_child_element = ElementTree.fromstring(f'<span id="{name}" class="text-danger" title="{title}">{element_string}</span>')
+            wrapped_child_element = \
+                ElementTree.fromstring(f'<span id="{name}" class="text-danger" title="{title}">{element_string}</span>{whitespace}')
             parent_element.insert(index, wrapped_child_element)
             break
         index = index + 1
