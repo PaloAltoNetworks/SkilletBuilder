@@ -62,12 +62,13 @@ for s in snippets:
     found = False
     for child in parent_element:
         cs = ElementTree.tostring(child).decode('UTF-8')
+        cs_stripped = cs.strip()
         whitespace_match = re.search(r'(\s+)$', cs)
         if whitespace_match:
             whitespace = whitespace_match.group()
         else:
             whitespace = ''
-        if element_string == cs:
+        if element_string == cs_stripped:
             # found our child index
             found = True
             parent_element.remove(child)
