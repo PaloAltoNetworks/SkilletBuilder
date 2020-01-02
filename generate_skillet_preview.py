@@ -89,7 +89,7 @@ for s in snippets:
 
 latest_config_formatted = etree.tostring(latest_doc, pretty_print=True).decode('UTF-8')
 latest_config_html = latest_config_formatted.replace('<', '&lt;').replace('>', '&gt;')
-fixed_config_html_1 = re.sub(r'&lt;span class="(.*?)" id="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
+fixed_config_html_1 = re.sub(r'&lt;span id="(.*?)" class="(.*?)" title="(.*?)"&gt;', r'<span class="\1" id="\2" title="\3">', latest_config_html)
 fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
 
 print('-'*80)

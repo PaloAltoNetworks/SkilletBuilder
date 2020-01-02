@@ -20,8 +20,8 @@ if config_source == 'offline':
 else:
     # each variable will be present in the environ dict on the 'os' module
     username = os.environ.get('TARGET_USERNAME', 'admin')
-    password = os.environ.get('TARGET_PASSWORD', 'Clouds123')
-    ip = os.environ.get('TARGET_IP', '10.70.221.224').strip()
+    password = os.environ.get('TARGET_PASSWORD', '')
+    ip = os.environ.get('TARGET_IP', '').strip()
     from_candidate = os.environ.get('FROM_CANDIDATE', 'True')
 
     p = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
