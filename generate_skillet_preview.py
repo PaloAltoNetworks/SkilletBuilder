@@ -74,7 +74,7 @@ for s in snippets:
             parent_element.remove(child)
             title = full_xpath.replace('"', "'")
             wrapped_child_element = \
-                ElementTree.fromstring(f'<span id="{name}" class="text-danger" title="{title}">{element_string}</span>{whitespace}')
+                ElementTree.fromstring(f'<span id="{name}" class="text-danger" title="{title}">{element_string}{whitespace}</span>')
             parent_element.insert(index, wrapped_child_element)
             break
         index = index + 1
