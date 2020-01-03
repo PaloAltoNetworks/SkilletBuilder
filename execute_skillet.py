@@ -51,9 +51,9 @@ try:
     results = skillet.execute(context)
 
     print()
-    print('=' * 140)
+    print('=' * 137)
     print('Execution Results:')
-    print('=' * 140)
+    print('=' * 137)
     print()
     print()
     # in this case, just print them out for the user
@@ -62,19 +62,28 @@ try:
     else:
         print(results)
 
+    print()
     if debug:
-        print('='*140)
+        print('='*137)
+        print()
         print('Skillet Content:')
+        print()
+        print('='*137)
+        print()
         print(skillet_content)
-        print('='*140)
+        print('='*137)
+        print()
         print('Full Context:')
+        print()
+        print('='*137)
+        print()
         for i in skillet.context:
             if i == 'config':
                 continue
             item = json.dumps(skillet.context[i], indent="  ")
             print(f'{i} = {item}\n')
         # print(json.dumps(skillet.context))
-        print('=' * 140)
+        print('=' * 137)
 
     sys.exit(0)
 
