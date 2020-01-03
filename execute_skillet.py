@@ -57,15 +57,16 @@ try:
         print(results)
 
     if debug:
-        print('='*80)
+        print('='*160)
+        print(skillet_content)
+        print('='*160)
         for i in skillet.context:
             if i == 'config':
                 continue
             item = json.dumps(skillet.context[i], indent="  ")
             print(f'{i} = {item}\n')
-            print()
         # print(json.dumps(skillet.context))
-        print('=' * 80)
+        print('=' * 160)
 
     sys.exit(0)
 
