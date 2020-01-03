@@ -53,7 +53,16 @@ try:
     # in this case, just print them out for the user
     print(results)
     if debug:
-        print(json.dumps(skillet.context))
+        print('='*80)
+        for i in context:
+            if i == 'config':
+                continue
+            item = json.dumps(config[i])
+            print(f'{i} = {item}\n')
+
+        # print(json.dumps(skillet.context))
+        print('=' * 80)
+
     sys.exit(0)
 
 except SkilletLoaderException as se:
