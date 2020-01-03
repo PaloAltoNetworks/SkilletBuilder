@@ -57,7 +57,7 @@ try:
         for i in skillet.context:
             if i == 'config':
                 continue
-            item = json.dumps(config[i], indent="2")
+            item = json.dumps(skillet.context[i], indent="2")
             print(f'{i} = {item}\n')
 
         # print(json.dumps(skillet.context))
