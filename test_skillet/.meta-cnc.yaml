@@ -23,6 +23,15 @@ variables:
     description: Password
     default:
     type_hint: password
+  - name: DEBUG
+    description: Show Debug Output
+    type_hint: dropdown
+    dd_list:
+      - key: "True"
+        value: "True"
+      - key: "False"
+        value: "False"
+
   - name: SKILLET_CONTENT
     description: Skillet Content
     type_hint: text_area

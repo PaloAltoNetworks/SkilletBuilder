@@ -6,6 +6,7 @@ import html
 import os
 import sys
 import oyaml
+import json
 
 from skilletlib.exceptions import LoginException
 from skilletlib.exceptions import SkilletLoaderException
@@ -19,6 +20,7 @@ username = os.environ.get('TARGET_USERNAME', 'admin')
 password = os.environ.get('TARGET_PASSWORD', 'admin')
 ip = os.environ.get('TARGET_IP', '')
 skillet_content_raw = os.environ.get('SKILLET_CONTENT', '')
+debug = os.environ.get('DEBUG', False)
 
 # because we are passing this value around, we may need to unescape it here
 skillet_content = html.unescape(skillet_content_raw)
@@ -50,6 +52,8 @@ try:
 
     # in this case, just print them out for the user
     print(results)
+    if debug:
+        print(json.dumps(skillet.context))
     sys.exit(0)
 
 except SkilletLoaderException as se:
