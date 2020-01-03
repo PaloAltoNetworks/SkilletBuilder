@@ -54,10 +54,10 @@ try:
     print(results)
     if debug:
         print('='*80)
-        for i in context:
+        for i in skillet.context:
             if i == 'config':
                 continue
-            item = json.dumps(config[i])
+            item = json.dumps(config[i], indent="2")
             print(f'{i} = {item}\n')
 
         # print(json.dumps(skillet.context))
