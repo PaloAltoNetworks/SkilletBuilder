@@ -33,6 +33,6 @@ variables:
 
 snippets:
   - name: script
-    file: execute_skillet.py
+    file: ../execute_skillet.py
     input_type: env
 

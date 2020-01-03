@@ -9,8 +9,10 @@ import oyaml
 
 from skilletlib.exceptions import LoginException
 from skilletlib.exceptions import SkilletLoaderException
-from skilletlib.panoply import Panoply
+from skilletlib import Panoply
+from skilletlib import SkilletLoader
 from skilletlib.skillet.panos import PanosSkillet
+from skilletlib.skillet.base import Skillet
 
 # each variable will be present in the environ dict on the 'os' module
 username = os.environ.get('TARGET_USERNAME', 'admin')
@@ -35,7 +37,11 @@ try:
     skillet_dict['snippet_path'] = '.'
 
     # create the skillet object from the skillet dict
-    skillet = PanosSkillet(skillet_dict, panoply)
+    if skillet_dict.get('type') == 'panos':
+        skillet: PanosSkillet = PanosSkillet(skillet_dict, panoply)
+    else:
+        sl = SkilletLoader()
+        skillet: Skillet = sl.create_skillet(skillet_dict)
 
     # ensure all our variables from the environment / outer context is copied in and ready to go
     skillet.update_context(os.environ)
