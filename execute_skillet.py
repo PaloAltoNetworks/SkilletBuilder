@@ -50,6 +50,12 @@ try:
     # execute the skillet and return the results to us
     results = skillet.execute(context)
 
+    print()
+    print('=' * 140)
+    print('Execution Results:')
+    print('=' * 140)
+    print()
+    print()
     # in this case, just print them out for the user
     if skillet.type == 'pan_validation':
         print(json.dumps(results, indent="  "))
@@ -57,16 +63,18 @@ try:
         print(results)
 
     if debug:
-        print('='*160)
+        print('='*140)
+        print('Skillet Content:')
         print(skillet_content)
-        print('='*160)
+        print('='*140)
+        print('Full Context:')
         for i in skillet.context:
             if i == 'config':
                 continue
             item = json.dumps(skillet.context[i], indent="  ")
             print(f'{i} = {item}\n')
         # print(json.dumps(skillet.context))
-        print('=' * 160)
+        print('=' * 140)
 
     sys.exit(0)
 
