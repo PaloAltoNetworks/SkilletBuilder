@@ -59,7 +59,9 @@ try:
                 continue
             item = json.dumps(skillet.context[i], indent="  ")
             print(f'{i} = {item}\n')
-
+            print()
+            print(str(skillet.context[i]))
+            print()
         # print(json.dumps(skillet.context))
         print('=' * 80)
 
