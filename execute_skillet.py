@@ -57,14 +57,12 @@ try:
     print()
     print('=' * 137)
     print()
-    print()
     # in this case, just print them out for the user
     if skillet.type == 'pan_validation':
         print(json.dumps(results, indent="  "))
     else:
         print(results)
 
-    print()
     if debug:
         print('='*137)
         print()
@@ -84,7 +82,6 @@ try:
                 continue
             item = json.dumps(skillet.context[i], indent="  ")
             print(f'{i} = {item}\n')
-        # print(json.dumps(skillet.context))
         print('=' * 137)
 
     sys.exit(0)
