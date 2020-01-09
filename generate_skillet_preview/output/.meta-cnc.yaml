@@ -10,6 +10,9 @@ labels:
    - Kitchen Sink
 
 variables:
+  - name: skillet_source
+    type_hint: hidden
+    default: ''
 
 snippets:
   - name: preview_xml_output

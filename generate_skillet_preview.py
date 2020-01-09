@@ -1,11 +1,10 @@
 # 12-12-19 nembery@paloaltonetworks.com
-from skilletlib import Panoply
 import os
-import sys
 import re
-from xml.etree import ElementTree
-from lxml import etree
+import sys
 
+from lxml import etree
+from skilletlib import Panoply
 
 config_source = os.environ.get('skillet_source', 'offline')
 
@@ -44,11 +43,11 @@ if len(snippets) == 0:
 
 latest_doc = etree.fromstring(latest_config)
 
-print('#'*80)
+print('#' * 80)
 print(' ')
 print('The following xpaths were found to be modified:')
 print(' ')
-print('-'*80)
+print('-' * 80)
 print(' ')
 for s in snippets:
     name = s.get('name', '')
@@ -80,7 +79,8 @@ for s in snippets:
             parent_element.remove(child)
             title = snippet_xpath.replace('"', "'")
             wrapped_child_element = \
-                etree.fromstring(f'<span id="{name}" class="text-danger" title="{title}">{element_string}{whitespace}</span>')
+                etree.fromstring(
+                    f'<span id="{name}" class="text-danger" title="{title}">{element_string}{whitespace}</span>')
             parent_element.insert(index, wrapped_child_element)
             break
         index = index + 1
@@ -89,13 +89,14 @@ for s in snippets:
 
 latest_config_formatted = etree.tostring(latest_doc, pretty_print=True).decode('UTF-8')
 latest_config_html = latest_config_formatted.replace('<', '&lt;').replace('>', '&gt;')
-fixed_config_html_1 = re.sub(r'&lt;span id="(.*?)" class="(.*?)" title="(.*?)"&gt;', r'<span class="\2" id="\1" title="\3">', latest_config_html)
+fixed_config_html_1 = re.sub(r'&lt;span id="(.*?)" class="(.*?)" title="(.*?)"&gt;',
+                             r'<span class="\2" id="\1" title="\3">', latest_config_html)
 fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
 
-print('-'*80)
+print('-' * 80)
 print(fixed_config_html_2)
-print('-'*80)
-print('#'*80)
+print('-' * 80)
+print('#' * 80)
 
 # later gator
 sys.exit(0)
