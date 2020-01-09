@@ -55,6 +55,9 @@ variables:
         value: python
       - key: terraform
         value: terraform
+  - name: snippets
+    type_hint: hidden
+    default: ''
 
 # snippets used for api configuration including xpath and element as file name
 # files will load in the order listed

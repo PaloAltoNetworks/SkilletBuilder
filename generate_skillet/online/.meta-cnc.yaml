@@ -12,6 +12,9 @@ labels:
    - Kitchen Sink
 
 variables:
+  - name: skillet_source
+    type_hint: hidden
+    default: online
   - name: TARGET_IP
     description: Hostname
     default: 10.10.10.10
