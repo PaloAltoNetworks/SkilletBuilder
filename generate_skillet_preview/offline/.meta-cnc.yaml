@@ -11,6 +11,9 @@ labels:
    - Kitchen Sink
 
 variables:
+  - name: skillet_source
+    type_hint: hidden
+    default: online
   - name: BASE_CONFIG
     description: Base Configuration
     default:
