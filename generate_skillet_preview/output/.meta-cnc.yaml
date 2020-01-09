@@ -10,7 +10,7 @@ labels:
    - Kitchen Sink
 
 variables:
-  - name: skillet_source
+  - name: skillet_preview
     type_hint: hidden
     default: ''
 
