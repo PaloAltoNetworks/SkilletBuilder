@@ -1,0 +1,47 @@
+name: generate_skillet_snippets_from_device
+label: Generate Skillet Snippets From Device
+
+description: |
+  Creates a list of XML snippets that have been modifed on a PAN-OS Device. Use the Skillet Template
+  to place the results into a Skillet metadata file.
+
+type: python3
+
+labels:
+  collection:
+   - Kitchen Sink
+
+variables:
+  - name: skillet_source
+    type_hint: hidden
+    default: online
+  - name: TARGET_IP
+    description: Hostname
+    default: 10.10.10.10
+    type_hint: fqdn_or_ip
+  - name: TARGET_USER
+    description: Username
+    default: admin
+    type_hint: text
+  - name: TARGET_PASSWORD
+    description: Password
+    default:
+    type_hint: password
+  - name: FROM_CANDIDATE
+    description: Configuration Source
+    type_hint: dropdown
+    default: "False"
+    dd_list:
+      - key: "From Running Configuration"
+        value: "False"
+      - key: "From Candidate Configuration"
+        value: True
+
+snippets:
+  - name: script
+    file: ../../generate_skillet_snippets.py
+    input_type: env
+    output_type: json
+    outputs:
+      - name: snippets
+

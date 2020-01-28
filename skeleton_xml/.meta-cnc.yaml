@@ -4,19 +4,17 @@
 # unique snippet name
 name: skeleton_yaml_file_xml
 # label used for menu selection
-label: skeleton template for an xml yaml metafile
-description: Used in panhandler to generate a .meta-cnc.yaml skeleton file
+label: Skillet Template
+description: |
+  Used in panhandler to generate a .meta-cnc.yaml skeleton file. This will take any snippets
+  created earlier and and display them inline.
 
-# type of device configuration
-# common types are panorama, panos, and template
 type: template
-# preload static or default-based templates
-extends:
 
 # grouping of like snippets for dynamic menu creation in panhandler
 labels:
   collection:
-   - skilletbuilder
+   - Kitchen Sink
 
 # variables used in the configuration templates
 # type_hint defines the form field used by panhandler
@@ -57,9 +55,16 @@ variables:
         value: python
       - key: terraform
         value: terraform
+  - name: snippets
+    type_hint: hidden
+    default: ''
 
 # snippets used for api configuration including xpath and element as file name
 # files will load in the order listed
 snippets:
   - name: meta-cnc-skeleton.conf
     file: meta-cnc-skeleton.conf
+    template_title: Generated Skillet
+    output_type: text
+    outputs:
+      - name: SKILLET_CONTENT

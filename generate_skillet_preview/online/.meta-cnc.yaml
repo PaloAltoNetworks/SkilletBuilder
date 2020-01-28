@@ -1,0 +1,46 @@
+name: generate_skillet_preview_online
+label: Preview XML Changes from device
+
+description: |
+  Find and highlight differences between two configs on a device.
+
+type: python3
+
+labels:
+  collection:
+   - Kitchen Sink
+
+variables:
+  - name: skillet_source
+    type_hint: hidden
+    default: online
+  - name: TARGET_IP
+    description: Hostname
+    default: 10.10.10.10
+    type_hint: fqdn_or_ip
+  - name: TARGET_USER
+    description: Username
+    default: admin
+    type_hint: text
+  - name: TARGET_PASSWORD
+    description: Password
+    default:
+    type_hint: password
+  - name: FROM_CANDIDATE
+    description: Configuration Source
+    type_hint: dropdown
+    default: "False"
+    dd_list:
+      - key: "From Running Configuration"
+        value: "False"
+      - key: "From Candidate Configuration"
+        value: True
+
+snippets:
+  - name: script
+    file: ../../generate_skillet_preview.py
+    input_type: env
+    output_type: text
+    outputs:
+      - name: skillet_preview
+

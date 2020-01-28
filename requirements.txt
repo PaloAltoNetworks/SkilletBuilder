@@ -1,0 +1,4 @@
+git+git://github.com/paloaltonetworks/skilletlib.git@develop#egg=skilletlib
+lxml==4.4.1
+oyaml==0.9
+

@@ -1,0 +1,43 @@
+name: generate_set_cli_online
+label: Generate set commands from device
+
+description: |
+  Creates a list of CLI Set commands from the difference between two XML config files.
+
+type: python3
+
+labels:
+  collection:
+   - Kitchen Sink
+
+variables:
+  - name: skillet_source
+    type_hint: hidden
+    default: online
+  - name: TARGET_IP
+    description: Hostname
+    default: 10.10.10.10
+    type_hint: fqdn_or_ip
+  - name: TARGET_USER
+    description: Username
+    default: admin
+    type_hint: text
+  - name: TARGET_PASSWORD
+    description: Password
+    default:
+    type_hint: password
+  - name: FROM_CANDIDATE
+    description: Configuration Source
+    type_hint: dropdown
+    default: "False"
+    dd_list:
+      - key: "From Running Configuration"
+        value: "False"
+      - key: "From Candidate Configuration"
+        value: True
+
+snippets:
+  - name: script
+    file: ../../generate_set_cli.py
+    input_type: env
+
