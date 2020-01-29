@@ -47,7 +47,7 @@ try:
     config_doc = etree.fromstring(config)
     found = config_doc.xpath(xpath)
 
-    if isinstance(Element, found):
+    if isinstance(etree.ElementBase, found):
         found_txt = etree.tostring(found)
         found_obj = xmltodict.parse(found)
     else:
