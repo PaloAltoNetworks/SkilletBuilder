@@ -45,7 +45,7 @@ xpath = os.environ.get('xpath', '')
 try:
 
     config_doc = etree.fromstring(config)
-    found = config.doc.xpath(xpath)
+    found = config_doc.xpath(xpath)
 
     if isinstance(Element, found):
         found_txt = etree.tostring(found)

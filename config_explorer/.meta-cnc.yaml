@@ -58,6 +58,12 @@ variables:
       value: online
     help_text: Perform XPATH query against running or candidate configuration
 
+  - name: xpath
+    description: XPATH Query
+    default: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles
+    type_hint: text
+    help_text: XPath Query to run against the configuration.
+
   - name: config
     description: Offline Config
     type_hint: text_area
@@ -70,11 +76,6 @@ variables:
       value: offline
     help_text: Paste in a full PAN-OS Configuration here for offline mode.
 
-  - name: xpath
-    description: XPATH Query
-    default: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles
-    type_hint: text
-    help_text: XPath Query to run against the configuration.
 
 snippets:
   - name: script
