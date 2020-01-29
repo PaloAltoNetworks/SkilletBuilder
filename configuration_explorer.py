@@ -12,7 +12,7 @@ from skilletlib.exceptions import LoginException
 from skilletlib.exceptions import SkilletLoaderException
 from skilletlib.panoply import Panos
 
-source = os.environ.get('source', 'offline')
+source = os.environ.get('source', 'online')
 
 config = ''
 
@@ -40,19 +40,38 @@ if source == 'online':
 else:
     config = os.environ.get('config', '')
 
-xpath = os.environ.get('xpath', '')
+xpath = os.environ.get('xpath', "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles")
 
 try:
 
     config_doc = etree.fromstring(config)
     found = config_doc.xpath(xpath)
 
-    if isinstance(etree.ElementBase, found):
-        found_txt = etree.tostring(found)
-        found_obj = xmltodict.parse(found)
-    else:
-        found_txt = str(found)
+    if isinstance(found, list):
+        if len(found) == 1:
+            found_item = found.pop(0)
+            found_str = etree.tostring(found_item).decode('UTF-8')
+            found_obj = xmltodict.parse(found_str)
+        else:
+            found_obj = list()
+            found_str = 'List of items:\n\n'
+
+            for found_item in found:
+                if isinstance(found_item, str):
+                    found_str = f'{found_str}\n{found_item}'
+                    found_obj.append(found_item)
+
+                else:
+                    found_item_str = etree.tostring(found_item).decode('UTF-8')
+                    found_str = f'{found_str}\n{found_item_str}'
+                    found_obj.append(xmltodict.parse(found_item_str))
+
+    elif isinstance(found, str):
         found_obj = found
+        found_str = found
+    else:
+        found_str = etree.tostring(found)
+        found_obj = xmltodict.parse(found_str)
 
     found_json = json.dumps(found_obj, indent='  ')
 
@@ -65,10 +84,14 @@ try:
     print()
     print(f'xpath: {xpath}')
     print()
-    print(found_txt)
+    print('=' * 137)
+    print()
+    print('xml:')
+    print(found_str)
     print()
     print('=' * 137)
     print()
+    print('json:')
     print(found_json)
     print()
     print('=' * 137)
