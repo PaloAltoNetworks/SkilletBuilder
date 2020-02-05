@@ -11,18 +11,63 @@ labels:
     - Skillet Builder
 
 variables:
+ - name: source
+    description: Configuration Mode
+    type_hint: dropdown
+    dd_list:
+      - key: "Online"
+        value: "online"
+      - key: "Offline"
+        value: "offline"
+    help_text: Online will query a PAN-OS device via API, Offline will allow you to paste in a full Configuration.
+
   - name: TARGET_IP
     description: Hostname
     default: 10.10.10.10
     type_hint: fqdn_or_ip
+    toggle_hint:
+      source: source
+      value: online
   - name: TARGET_USER
     description: Username
     default: admin
     type_hint: text
+    toggle_hint:
+      source: source
+      value: online
   - name: TARGET_PASSWORD
     description: Password
     default:
     type_hint: password
+    toggle_hint:
+      source: source
+      value: online
+
+  - name: config
+    description: Offline Config
+    type_hint: text_area
+    default:
+    attributes:
+      rows: 10
+      cols: 40
+    toggle_hint:
+      source: source
+      value: offline
+    help_text: Paste in a full PAN-OS Configuration here for offline mode.
+
+  - name: config_source
+    description: Online Configuration Source
+    type_hint: dropdown
+    dd_list:
+      - key: "Running Configuration"
+        value: "running"
+      - key: "Candidate Configuration"
+        value: "candidate"
+    toggle_hint:
+      source: source
+      value: online
+    help_text: Perform XPATH query against running or candidate configuration
+
   - name: DEBUG
     description: Show Debug Output
     type_hint: dropdown
