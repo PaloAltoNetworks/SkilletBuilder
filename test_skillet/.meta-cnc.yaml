@@ -11,7 +11,7 @@ labels:
     - Skillet Builder
 
 variables:
- - name: source
+  - name: source
     description: Configuration Mode
     type_hint: dropdown
     dd_list:
