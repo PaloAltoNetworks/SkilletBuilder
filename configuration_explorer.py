@@ -50,8 +50,12 @@ try:
     if isinstance(found, list):
         if len(found) == 1:
             found_item = found.pop(0)
-            found_str = etree.tostring(found_item).decode('UTF-8')
-            found_obj = xmltodict.parse(found_str)
+            if isinstance(found_item, str):
+                found_str = str(found_item)
+                found_obj = found_str
+            else:
+                found_str = etree.tostring(found_item).decode('UTF-8')
+                found_obj = xmltodict.parse(found_str)
         else:
             found_obj = list()
             found_str = 'List of items:\n\n'

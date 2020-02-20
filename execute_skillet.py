@@ -10,15 +10,39 @@ import json
 
 from skilletlib.exceptions import LoginException
 from skilletlib.exceptions import SkilletLoaderException
-from skilletlib import Panoply
+from skilletlib import Panos
 from skilletlib import SkilletLoader
 from skilletlib.skillet.panos import PanosSkillet
 from skilletlib.skillet.base import Skillet
 
-# each variable will be present in the environ dict on the 'os' module
-username = os.environ.get('TARGET_USERNAME', 'admin')
-password = os.environ.get('TARGET_PASSWORD', 'admin')
-ip = os.environ.get('TARGET_IP', '')
+source = os.environ.get('source', 'online')
+
+config = ''
+
+if source == 'online':
+
+    config_source = os.environ.get('config_source', 'running')
+    username = os.environ.get('TARGET_USERNAME', 'admin')
+    password = os.environ.get('TARGET_PASSWORD', 'admin')
+    ip = os.environ.get('TARGET_IP', '')
+
+    try:
+        device = Panos(hostname=ip, api_username=username, api_password=password, debug=False)
+        config = device.get_configuration(config_source=config_source)
+
+    except SkilletLoaderException as se:
+        print('Error Executing Skillet')
+        print(se)
+        exit(1)
+
+    except LoginException as le:
+        print('Error Logging into device')
+        print(le)
+        exit(1)
+
+else:
+    config = os.environ.get('config', '')
+
 skillet_content_raw = os.environ.get('SKILLET_CONTENT', '')
 debug = os.environ.get('DEBUG', False)
 
@@ -27,10 +51,7 @@ skillet_content = html.unescape(skillet_content_raw)
 
 # get the full contents of the environment to initialize the skillet context
 try:
-    panoply = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
 
-    # every skillet needs a 'config' item in the context
-    config = panoply.get_configuration()
     context = dict()
     context['config'] = config
 
@@ -40,7 +61,7 @@ try:
 
     # create the skillet object from the skillet dict
     if skillet_dict.get('type') == 'panos':
-        skillet: PanosSkillet = PanosSkillet(skillet_dict, panoply)
+        skillet: PanosSkillet = PanosSkillet(skillet_dict, device)
     else:
         sl = SkilletLoader()
         skillet: Skillet = sl.create_skillet(skillet_dict)
