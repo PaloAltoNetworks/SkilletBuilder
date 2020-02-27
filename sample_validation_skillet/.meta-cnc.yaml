@@ -1,8 +1,9 @@
 name: sample_validation_skilletbuilder
-label: sample validation skillet
+label: Sample validation skillet
 
 description: |
-  Short set of validations for skilletBuilder training tutorial
+  Short set of validations for skilletBuilder training tutorial with ntp check, password complexity,
+  URL filtering for malware, and security allow rules with profiles or groups
 
 type: pan_validation
 labels:
@@ -113,6 +114,7 @@ snippets:
   - name: check_allow_security_policies_have_profile
     label: check that all allow security policies have a profile or group
     test: allow_security_policies_without_profile | length == 0
+    severity: medium
     fail_message: |
       allow security policies without a profile or group: {{ allow_security_policies_without_profile }}
     pass_message: |
