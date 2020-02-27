@@ -1,0 +1,68 @@
+# part of the panhandler application with docs at
+# https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+
+# unique snippet name
+name: skeleton_yaml_file_any
+# label used for menu selection
+label: Skillet YAML File Template
+description: |
+  Used in panhandler to generate a .meta-cnc.yaml skeleton file. This will create a generic skeleton
+  based on the skillet type selected with placeholder values
+
+type: template
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection:
+   - Skillet Builder
+
+# variables used in the configuration templates
+# type_hint defines the form field used by panhandler
+# type_hints can be text, ip_address, or dropdown
+variables:
+  - name: skillet_name
+    description: Skillet ID
+    default: mySkillet
+    type_hint: text
+  - name: skillet_label
+    description: Skillet label (selection name in panhandler)
+    default: my_skillet_label
+    type_hint: text
+  - name: skillet_description
+    description: Skillet Description
+    default: this is what my skillet does
+    type_hint: text
+  - name: collection_name
+    description: Collection Name (aka grouping name)
+    default: myCollection
+    type_hint: text
+  - name: skillet_type
+    description: Skillet type (action taken by panhandler on Submit)
+    default: panos
+    type_hint: dropdown
+    dd_list:
+      - key: panos
+        value: panos
+      - key: panorama
+        value: panorama
+      - key: template
+        value: template
+      - key: rest
+        value: rest
+      - key: python
+        value: python
+      - key: terraform
+        value: terraform
+      - key: validation
+        value: pan_validation
+      - key: workflow
+        value: workflow
+  - name: snippets
+    type_hint: hidden
+    default: ''
+
+# snippets used for api configuration including xpath and element as file name
+# files will load in the order listed
+snippets:
+  - name: meta-cnc-skeleton.conf
+    file: meta-cnc-skeleton.conf
