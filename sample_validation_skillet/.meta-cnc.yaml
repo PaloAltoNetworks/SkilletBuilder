@@ -1,5 +1,5 @@
 name: sample_validation_skilletbuilder
-label: Sample validation skillet
+label: Sample Validation Skillet
 
 description: |
   Short set of validations for skilletBuilder training tutorial with ntp check, password complexity,
