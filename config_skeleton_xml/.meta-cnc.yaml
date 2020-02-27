@@ -2,7 +2,7 @@
 # https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
 
 # unique snippet name
-name: skeleton_yaml_file_xml
+name: config_skeleton_yaml_file_xml
 # label used for menu selection
 label: Skillet Template
 description: |

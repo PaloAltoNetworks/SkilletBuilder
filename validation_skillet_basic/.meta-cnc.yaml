@@ -1,0 +1,154 @@
+name: skilletBuilder_validation_basic
+label: basic validation skillets for skilletBuilder tutorial
+
+description: |
+  Sample validation skillet based on the skilletBuilder tutorial skillet
+
+type: pan_validation
+labels:
+  collection:
+    - skilletbuilder
+    - Skillet Builder
+    - Validation
+
+variables:
+  # using var inputs as the tutorial validations are configuration dependent
+  # it also provides for variations of pass/fail using these inputs for training purposes
+  # vars may not be required in static validations
+  - name: edl_name
+    description: name of the external list to validate
+    default: my_edl
+    type_hint: text
+  - name: edl_url
+    description: external list url to validate
+    default: http://someurl.com
+    type_hint: text
+  - name: edl_recurring
+    description: recurring interval check
+    default: five-minute
+    type_hint: dropdown
+    dd_list:
+      - key: five-minute
+        value: five-minute
+      - key: hourly
+        value: hourly
+      - key: daily
+        value: daily
+
+snippets:
+  # creating a set of named objects related to the SkilletBuilder tutorial configuration
+  # the output objects can be grouped as below or distributed throughout the skillet closer to actual tests
+  - name: skilletBuilder_objects
+    cmd: parse
+    variable: config
+    outputs:
+      - name: vsys_element
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+      - name: external_list
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list
+        # if an xpath forks based on multiple elements (eg. set of EDLs) then an explicit xpath for each EDL may be required
+        # examples below are shown with variables but are often hardcoded when specific values are being validated
+      - name: external_list_named
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list/entry[@name='{{ edl_name }}']
+      - name: tag
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/tag
+      - name: security_rules
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules
+      - name: security_rule_outbound_edl
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry[@name='{{ edl_name }}-out']
+      - name: security_rule_inbound_edl
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry[@name='{{ edl_name }}-in']
+
+  # check if any external lists are configured
+  - name: check_any_edl_exists
+    label: are any external-lists configured
+    test: vsys_element | tag_present('external-list')
+    fail_message: there are no external lists found in the existing configuration
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#does-a-named-edl-exists-using-a-variable-input-value
+
+  # checks if the named EDL exists in the configuration as an attribute check
+  # this same check is used in 'when' checks below; if the EDL doesn't exist then other validations are not relevant
+  # edl_name is a variable name used for the label, attribute_present check, and fail_message
+  # for text  strings the {{ var }} notation is used and just the var name when used in a filter
+  - name: check_external_list_exists
+    label: external-list {{ edl_name }} exists
+    test: external_list | attribute_present('entry', 'name', edl_name)
+    fail_message: did not find {{ edl_name }} in the configuration
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#does-a-named-edl-exists-using-a-variable-input-value
+
+  # this is a similar check to above but using hardcoded values instead of a variable
+  # NOTE: in the attribute_present check the test string is surrounding by quotes when not a variable
+  - name: check_external_list_fixed
+    label: external-list some_edl exists [fixed value test]
+    test: external_list | attribute_present('entry', 'name', 'some_edl')
+    fail_message: did not find edl called some_edl in the configuration
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#does-a-named-edl-exists-using-a-fixed-name-value
+
+  # this is an inverse test to check that an attribute doesn't already exist
+  # often used when merging into an existing configuration and validating no naming conflicts
+  - name: check_external_list_missing
+    label: external-list {{ edl_name }} is not already configured
+    test: external_list | attribute_absent('entry', 'name', edl_name)
+    fail_message: found external-list {{ edl_name }} already configured
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#does-a-named-edl-not-exist
+
+  # this is the element value check that can be equal, not equal, less/greater than etc.
+  # the example also showing the dot notation to walk the xpath in an object --> type.ip.url
+  - name: check_edl_url
+    when: external_list | attribute_present('entry', 'name', edl_name)
+    label: EDL url {{ edl_url }} is configured
+    test: external_list_named | element_value('type.ip.url') == edl_url
+    fail_message: the edl url {{ edl_url }} is not configured
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#is-the-test-url-found
+
+  # example based on above showing not equal as reference
+  - name: check_edl_not_url
+    when: external_list | attribute_present('entry', 'name', edl_name)
+    label: EDL url {{ edl_url }} is not configured
+    test: external_list_named | element_value('type.ip.url') != edl_url
+    fail_message: the edl url {{ edl_url }} is already configured
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#is-the-test-url-not-found
+
+  # example using tag_present where the check value is an xml element tag --> recurring in this case
+  # note the syntax with the ~ to concatenate strings when a var name used in the validation as part of a string
+  - name: check_edl_recurring_interval
+    when: external_list | attribute_present('entry', 'name', edl_name)
+    label: EDL update interval is {{ edl_recurring }}
+    test: external_list_named | tag_present('type.ip.recurring.' ~ edl_recurring)
+    fail_message: the edl is not configured for {{ edl_recurring }} updates
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-matches-the-var-value
+
+  # reference example showing tag_present like above but with a fixed value
+  - name: check_edl_recurring_interval_fixed
+    when: external_list | attribute_present('entry', 'name', edl_name)
+    label: EDL update interval is five-minute [fixed value test]
+    test: external_list_named | tag_present('type.ip.recurring.five-minute')
+    fail_message: the edl is not configured for five-minute updates
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-matches-a-fixed-value
+
+  # this is the inverse with tag absent
+  # used when the validation does not want to value in the current configuration
+  - name: check_edl_not_recurring_interval
+    when: external_list | attribute_present('entry', 'name', edl_name)
+    label: EDL update interval is NOT {{ edl_recurring }}
+    test: external_list_named | tag_absent('type.ip.recurring.' ~ edl_recurring)
+    fail_message: an existing recurring value of {{ edl_recurring }} already exists
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#edl-update-interval-does-not-match-the-var-value
+
+  # when the xml config supports multiple value entries often with the tag 'member' repeatedly used
+  # element_value_contains searches the element at the object xpath for any matching values
+  - name: security_rules_inbound_edl
+    when: external_list | attribute_present('entry', 'name', edl_name)
+    label: EDL in associated inbound security policy {{ edl_name }}-in
+    test: security_rule_inbound_edl | element_value_contains('source.member', edl_name)
+    fail_message: the edl {{ edl_name }} is not used in inbound security rule {{ edl_name }}-in
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#is-the-edl-used-in-an-inbound-security-rule
+
+  # same as above but matching the outbound rule and destination value
+  - name: security_rules_outbound_edl
+    when: external_list | attribute_present('entry', 'name', edl_name)
+    label: EDL in associated outbound security policy {{ edl_name }}-out
+    test: security_rule_outbound_edl | element_value_contains('destination.member', edl_name)
+    fail_message: the edl {{ edl_name }} is used in outbound security rule {{ edl_name }}-out
+    documentation_link: https://github.com/scotchoaf/SkilletBuilder/tree/develop/validation_skillet_basic#is-the-edl-used-in-an-outbound-security-rule
+
