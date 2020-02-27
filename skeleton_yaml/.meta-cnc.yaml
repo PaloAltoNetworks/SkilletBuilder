@@ -55,6 +55,8 @@ variables:
         value: terraform
       - key: validation
         value: pan_validation
+      - key: workflow
+        value: workflow
   - name: snippets
     type_hint: hidden
     default: ''
