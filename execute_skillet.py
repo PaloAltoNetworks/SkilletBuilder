@@ -18,6 +18,7 @@ from skilletlib.skillet.base import Skillet
 source = os.environ.get('source', 'online')
 
 config = ''
+device = None
 
 if source == 'online':
 
@@ -49,6 +50,7 @@ debug = os.environ.get('DEBUG', False)
 # because we are passing this value around, we may need to unescape it here
 skillet_content = html.unescape(skillet_content_raw)
 
+sl = SkilletLoader()
 # get the full contents of the environment to initialize the skillet context
 try:
 
@@ -56,14 +58,16 @@ try:
     context['config'] = config
 
     # create the skillet definition from the 'skillet_content' dict we got from the environ
-    skillet_dict = oyaml.safe_load(skillet_content)
+    skillet_dict_raw = oyaml.safe_load(skillet_content)
+
+    # use skilletLoader to normalize the skillet definition and fix common config file errors
+    skillet_dict = sl.normalize_skillet_dict(skillet_dict_raw)
     skillet_dict['snippet_path'] = '.'
 
     # create the skillet object from the skillet dict
     if skillet_dict.get('type') == 'panos':
         skillet: PanosSkillet = PanosSkillet(skillet_dict, device)
     else:
-        sl = SkilletLoader()
         skillet: Skillet = sl.create_skillet(skillet_dict)
 
     # ensure all our variables from the environment / outer context is copied in and ready to go
