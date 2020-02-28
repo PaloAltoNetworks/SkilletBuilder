@@ -31,7 +31,7 @@ snippets:
         capture_object: /config/mgt-config/password-complexity
 
 # check that ntp servers are configured
-  - name: ntp_servers
+  - name: ntp_servers_test
     label: configure primary and secondary ntp servers
     test: |
       (
@@ -45,7 +45,7 @@ snippets:
     documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-services-services
 
  # check for password complexity minimum password length
-  - name: password_complexity
+  - name: password_complexity_test
     label: configure strong password complexity ( >= 12 chars)
     test: |
       (
