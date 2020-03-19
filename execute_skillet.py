@@ -65,7 +65,7 @@ try:
     skillet_dict['snippet_path'] = '.'
 
     # create the skillet object from the skillet dict
-    if skillet_dict.get('type') == 'panos':
+    if 'pan' in skillet_dict.get('type'):
         skillet: PanosSkillet = PanosSkillet(skillet_dict, device)
     else:
         skillet: Skillet = sl.create_skillet(skillet_dict)
