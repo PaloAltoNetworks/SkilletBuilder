@@ -30,7 +30,7 @@ variables:
     toggle_hint: 
       source: source
       value: online
-  - name: TARGET_USER
+  - name: TARGET_USERNAME
     description: Username
     default: admin
     type_hint: text

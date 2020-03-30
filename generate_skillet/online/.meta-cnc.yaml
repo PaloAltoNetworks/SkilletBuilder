@@ -19,7 +19,7 @@ variables:
     description: Hostname
     default: 10.10.10.10
     type_hint: fqdn_or_ip
-  - name: TARGET_USER
+  - name: TARGET_USERNAME
     description: Username
     default: admin
     type_hint: text
