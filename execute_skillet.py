@@ -13,7 +13,7 @@ from skilletlib.exceptions import SkilletLoaderException
 from skilletlib import Panos
 from skilletlib import SkilletLoader
 from skilletlib.skillet.panos import PanosSkillet
-from skilletlib.skillet.pan_validation import PanValidationSkilletkillet
+from skilletlib.skillet.pan_validation import PanValidationSkillet
 from skilletlib.skillet.base import Skillet
 
 source = os.environ.get('source', 'online')
@@ -67,7 +67,7 @@ try:
 
     # create the skillet object from the skillet dict
     if 'pan_validation' in skillet_dict.get('type'):
-        skillet: PanValidationSkilletkillet = PanValidationSkilletkillet(skillet_dict, device)
+        skillet: PanValidationSkillet = PanValidationSkillet(skillet_dict, device)
     elif 'pan' in skillet_dict.get('type'):
         skillet: PanosSkillet = PanosSkillet(skillet_dict, device)
     else:
