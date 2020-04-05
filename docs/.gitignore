@@ -1,0 +1,5 @@
+# sphinx build dirs for local testing
+_build/
+_static/
+_templates/
+
