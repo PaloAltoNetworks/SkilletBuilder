@@ -16,9 +16,6 @@ Welcome to SkilletBuilder documentation!
    variables
 
 
-
-
-
 Indices and tables
 ==================
 

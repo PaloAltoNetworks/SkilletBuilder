@@ -24,6 +24,8 @@ author = 'Scott Shoaf'
 # The full version, including alpha/beta/rc tags
 release = '0.1'
 
+# use index.rst file
+master_doc = 'index'
 
 # -- General configuration ---------------------------------------------------
 
