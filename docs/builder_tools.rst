@@ -9,6 +9,7 @@ skillets.
 Import to panHandler as part of the Skillet Builder sandbox. The skillets are
 part of the ``Skillet Builder`` collection.
 
+
 |
 
 Generate a Skillet
@@ -30,10 +31,10 @@ Generate a Skillet steps:
 When running the generator choose between offline (From uploaded Configs) and online (From Running NGFW) mode.
 
 .. image:: images/Generate_Skillet_running_or_offline.png
-   :width: 300
+   :width: 250
 
-Offline Mode
-~~~~~~~~~~~~
+Generator Offline Mode
+~~~~~~~~~~~~~~~~~~~~~~
 
   Recommended when generating a skillet from a custom base configuration typically
   for add-on configuration skillets.
@@ -44,8 +45,8 @@ Offline Mode
 .. NOTE::
     Export the configuration files from the NGFW or Panorama before running the generator.
 
-Online Mode
-~~~~~~~~~~~
+Generator Online Mode
+~~~~~~~~~~~~~~~~~~~~~
 
   Uses an 'out of the box' empty configuration as the baseline. This is useful to
   generate skillets for complete configurations used in demonstrations and POCs.
@@ -109,8 +110,8 @@ When running the previewer choose between offline (From uploaded Configs) and on
 .. image:: images/Preview_XML_Changes_offline_or_online_mode.png
    :width: 600
 
-Offline Mode
-~~~~~~~~~~~~
+XML Preview Offline Mode
+~~~~~~~~~~~~~~~~~~~~~~~~
 
   Recommended when previewing a skillet from a custom base configuration.
 
@@ -120,8 +121,8 @@ Offline Mode
 .. NOTE::
     Export the configuration files from the NGFW or Panorama before running the previewer.
 
-Online Mode
-~~~~~~~~~~~
+XML Preview Online Mode
+~~~~~~~~~~~~~~~~~~~~~~~
 
   Uses an 'out of the box' empty configuration as the baseline. This is useful to
   preview skillets to see a broad set of changes.
@@ -170,8 +171,8 @@ When running the generator choose between offline (From uploaded Configs) and on
 .. image:: images/Generate_Set_Commands_offline_or_offline_selection.png
    :width: 600
 
-Offline Mode
-~~~~~~~~~~~~
+Generate Set Commands Offline Mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Recommended when generating a skillet from a custom base configuration typically
   for add-on configuration skillets.
@@ -182,8 +183,8 @@ Offline Mode
 .. NOTE::
     Export the configuration files from the NGFW or Panorama before running the generator.
 
-Online Mode
-~~~~~~~~~~~
+Generate Set Commands Online Mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Uses an 'out of the box' empty configuration as the baseline. This is useful to
   generate skillets for complete configurations used in demonstrations and POCs.
@@ -209,8 +210,8 @@ Debug outputs can also be used for enhanced skillet testing.
 
 When running the test tool choose between Offline and Online modes. Also select Debug mode if required.
 
-Offline Mode
-~~~~~~~~~~~~
+Skillet Test Offline Mode
+~~~~~~~~~~~~~~~~~~~~~~~~~
 
     * validation skillets: paste in a configuration text file without requiring API access
     * other skillet types: not applicable and may generate errors
@@ -221,8 +222,8 @@ Offline Mode
 .. NOTE::
     Export the configuration files from the NGFW or Panorama before running the test tool.
 
-Online Mode
-~~~~~~~~~~~
+Skillet Test Online Mode
+~~~~~~~~~~~~~~~~~~~~~~~~
 
     * panos/panorama: load skillet snippets using API credentials
     * validation: get the device configuration file and run the validation
@@ -285,8 +286,8 @@ The Configuration Explorer Tool is used to display xml elements and values based
 
 When running the explorer tool choose between Offline and Online modes. Also select Debug mode if required.
 
-Offline Mode
-~~~~~~~~~~~~
+Config Explorer Offline Mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 In offline mode the user pastes in the XML configuration file without the use of API interactions.
 
@@ -296,8 +297,8 @@ In offline mode the user pastes in the XML configuration file without the use of
 .. NOTE::
     Export the configuration files from the NGFW or Panorama before running the test tool.
 
-Online Mode
-~~~~~~~~~~~
+Config Explorer Online Mode
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Exports the device configuration based on the API values.
 
