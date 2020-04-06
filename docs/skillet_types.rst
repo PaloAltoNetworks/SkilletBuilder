@@ -52,18 +52,7 @@ panorama
     * operational commands to generate certificates or perform 'load config partial'
     * configuration commands for move, edit, and delete
 
-.. NOTE::
-    The panos and panorama types are functionally identical and used primarily to denote
-    the platform target for the skillet
-
-.. NOTE::
-    The panorama and panorama-gpcs [Prisma Access] skillet types are identical except for tool
-    handling of the commit models. The panorama type will only commit to Panorama while the
-    panorama-gpcs type will also push the configuration to Prisma Access.
-
-
-  **View examples of panorama skillets**
-
+**View examples of panorama skillets**
 
 
   `IronSkillet v9.1 Panorama`_
@@ -73,6 +62,17 @@ panorama
   `Panorama Skillets at the Skillet District`_
 
   .. _Panorama Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/panorama
+
+
+.. NOTE::
+    The panos and panorama types are functionally identical and used primarily to denote
+    the platform target for the skillet
+
+.. NOTE::
+    The panorama and panorama-gpcs [Prisma Access] skillet types are identical except for tool
+    handling of the commit models. The panorama type will only commit to Panorama while the
+    panorama-gpcs type will also push the configuration to Prisma Access.
+
 
 |
 
@@ -166,10 +166,6 @@ python
     * use the NGFW and Support APIs to generate an SLR
     * generate and import configuration files to a device
 
-.. NOTE::
-    Python scripts are useful when checking system state is required.
-    The best example is checking job status for a process before performing
-    the next task. Some skillets are stateless and do not have this capability.
 
   **View examples of python skillets**
 
@@ -184,6 +180,13 @@ python
   `Python Skillets at the Skillet District`_
 
   .. _Python Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/python
+
+
+.. NOTE::
+    Python scripts are useful when checking system state is required.
+    The best example is checking job status for a process before performing
+    the next task. Some skillets are stateless and do not have this capability.
+
 
 |
 
