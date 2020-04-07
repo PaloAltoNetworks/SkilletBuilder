@@ -1,5 +1,5 @@
-Types of Skillets
-=================
+Skillet Types
+=============
 
 The original skillets were focused on configuration using XML snippets.
 This is now extended to include a broad array of skillet types for deployment,

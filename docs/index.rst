@@ -11,12 +11,13 @@ Welcome to SkilletBuilder documentation!
    :caption: Contents:
 
    overview
+   skillet_framework
    skillet_types
    builder_tools
    xml
    jinja
    variables
-   switching_dev_latest
+   panhandler
    validation_skillets
    skillets
    example_skillet

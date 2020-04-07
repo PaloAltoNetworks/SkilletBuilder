@@ -1,22 +1,9 @@
 SkilletBuilder Overview
 =======================
 
-Welcome to the SkilletBuilder documentation and tutorial.
+Welcome to the SkilletBuilder documentation, examples, and tutorials.
 
-The template creation is based on the format required for `panhandler`_
-and other configuration applications.
+This is a living set of content updated as new skillet types, examples, and tutorials are available.
 
-.. _panhandler: https://panhandler.readthedocs.io
-
-
-Coverage includes:
-
-    * Pan-OS and Panorama xml configuration elements and xpaths
-
-    * metadata file used by the panhandler application
-
-    * basic panhandler instruction for skillet testing
-
-    * github intro for skillet archive, testing, and sharing
 
 
