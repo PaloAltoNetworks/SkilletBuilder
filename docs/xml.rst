@@ -265,8 +265,26 @@ This output is used in various ways in tests, pulldown menu options, or input to
 
 The :ref:`Configuration Explorer Tool` will be used to view XML parsing outputs.
 
-Getting an XML Element
-~~~~~~~~~~~~~~~~~~~~~~
+|
+
+Parsing Syntax Basics
+~~~~~~~~~~~~~~~~~~~~~
+
+Parsing the XML file starts with the base XPath which is appended based on the data to be output. The various options
+will align to the type of output: element, value, list.
+
+Common items used for parsing configurations and outputs include:
+
+    * List of attribute values: append the xpath with ``@name`` where name is the attribute name
+    * return element text: append ``text()`` to the end of the xpath
+    * skip XPath tag levels, especially for broader queries: use ``//`` in the XPath instead of explicit tags
+    * Filter queries: use ``tag_name[text()='text_value']`` where the tag_name has a specific text_value
+    * search element details then reference attributes further up the tree, use ``..`` for each level up the tree
+
+Below are example queries and outputs.
+
+Output an XML Element
+~~~~~~~~~~~~~~~~~~~~~
 
 The simplest parsing simply returns an XML Element.
 
@@ -283,11 +301,11 @@ the output from the explorer shows the tag XML elements along with a json snippe
 
 This entry has 3 tags: block_list, tag name, and demo_tag.
 
-Getting a List based on Attribute Name
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Output a List based on Attribute Name
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This parsing example will return a list of tag names by appending the XPath with ``/entry/@name`` where entry is
-the tag of interest and name is the attribute name.
+the tag of interest and name is the attribute.
 
 The new XPath to query is
 
@@ -295,15 +313,17 @@ The new XPath to query is
 
     /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/tag/entry/@name
 
-and the output is now a list of items, the tag names.
+and the output is a list of items: the tag names.
 
   .. image:: images/XML_explorer_list_of_names.png
      :width: 600
 
-Getting a List based on a Text Value
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Building on the example, filters can be used to limit the output.
+Output a List Filtered on a Text Value
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Building on the example, filters can be used to limit the output. In this example we'll filter the output looking for
+tags with color = color1.
 
 The new XPath to query is
 
@@ -322,7 +342,8 @@ Let's break this down.
 
     * The ``color[text()='color1']`` goes down to the color tag level and gets all elements with text value = color1
 
-    * The ``/../@name`` used the double dot notation to go up one level in the tree where 'entry' is based and get the names
+    * The ``/../@name`` uses the double dot notation to go up one level in the tree and grab the list of name values
 
-So we exclude the demo_tag with color6 and only show the names of the other two tags.
+This gives us the filtered list based on a color value.
+
 
