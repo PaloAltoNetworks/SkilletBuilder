@@ -14,12 +14,13 @@ Welcome to SkilletBuilder documentation!
    skillet_types
    builder_tools
    xml
-   xml_parsing_examples
    jinja
-   jinja_examples
    variables
-   tutorial_config
-   tutorial_validation
+   switching_dev_latest
+   validation_skillets
+   skillets
+   example_skillet
+   examples/example_skillets
 
 
 Indices and tables
