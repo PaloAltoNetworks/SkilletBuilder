@@ -279,9 +279,9 @@ Common items used for parsing configurations and outputs include:
     * return element text: append ``text()`` to the end of the xpath
     * skip XPath tag levels, especially for broader queries: use ``//`` in the XPath instead of explicit tags
     * Filter queries: use ``tag_name[text()='text_value']`` where the tag_name has a specific text_value
-    * search element details then reference attributes further up the tree, use ``..`` for each level up the tree
+    * search element details then reference attributes further up the tree, use ``/../`` for each level up the tree
 
-Below are example queries and outputs.
+The following sections show in depth examples using the query syntax options above.
 
 Output an XML Element
 ~~~~~~~~~~~~~~~~~~~~~
@@ -345,5 +345,20 @@ Let's break this down.
     * The ``/../@name`` uses the double dot notation to go up one level in the tree and grab the list of name values
 
 This gives us the filtered list based on a color value.
+
+|
+
+XPath Query Tips
+~~~~~~~~~~~~~~~~
+
+    1. Use the Explorer and start with a known XPath and zoom into specific details
+
+    2. Verify what's contained in the configuration file you are querying
+
+    3. If using the double dot ``/../../`` option make sure you properly count the number of levels required
+
+
+
+
 
 
