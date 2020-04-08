@@ -17,7 +17,7 @@ docker
   Using a docker skillet, you can create a single docker image that contains
   all your dependencies and distribute that with the Skillet metadata file.
 
-  Examples:
+  Use cases:
 
     * Ansible playbooks and associated libraries
     * Terraform implementations
@@ -26,18 +26,17 @@ docker
 
   **View examples of docker skillets**
 
-    `Prisma Access stage 1 configuration`_
+  +---------------------------------------------------+
+  | `Prisma Access stage 1 configuration`_            |
+  +---------------------------------------------------+
+  | `Sample docker skillets`_                         |
+  +---------------------------------------------------+
+  | `Docker Skillets at the Skillet District`_        |
+  +---------------------------------------------------+
 
     .. _Prisma Access stage 1 configuration: https://github.com/PaloAltoNetworks/prisma-access-skillets/tree/master/configuration/panorama_stage_1_config
-
-    `Sample docker skillets`_
-
     .. _Sample docker skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/docker
-
-    `Docker Skillets at the Skillet District`_
-
     .. _Docker Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/docker
-
 
 |
 
@@ -52,27 +51,26 @@ panorama
     * operational commands to generate certificates or perform 'load config partial'
     * configuration commands for move, edit, and delete
 
-**View examples of panorama skillets**
+  **View examples of panorama skillets**
 
-
-  `IronSkillet v9.1 Panorama`_
+  +---------------------------------------------------+
+  | `IronSkillet v9.1 Panorama`_                      |
+  +---------------------------------------------------+
+  | `Panorama Skillets at the Skillet District`_      |
+  +---------------------------------------------------+
 
   .. _IronSkillet v9.1 Panorama: https://github.com/PaloAltoNetworks/iron-skillet/tree/panos_v9.0/templates/panos/snippets
-
-  `Panorama Skillets at the Skillet District`_
-
   .. _Panorama Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/panorama
 
 
-.. NOTE::
-    The panos and panorama types are functionally identical and used primarily to denote
-    the platform target for the skillet
+  .. NOTE::
+      The panos and panorama types are functionally identical and used primarily to denote
+      the platform target for the skillet
 
-.. NOTE::
-    The panorama and panorama-gpcs [Prisma Access] skillet types are identical except for tool
-    handling of the commit models. The panorama type will only commit to Panorama while the
-    panorama-gpcs type will also push the configuration to Prisma Access.
-
+  .. NOTE::
+      The panorama and panorama-gpcs [Prisma Access] skillet types are identical except for tool
+      handling of the commit models. The panorama type will only commit to Panorama while the
+      panorama-gpcs type will also push the configuration to Prisma Access.
 
 |
 
@@ -89,7 +87,9 @@ panorama-gpcs
 
   **View examples of Prisma Access skillets**
 
-  `Prisma Access Mobile User`_
+  +---------------------------------------------------+
+  | `Prisma Access Mobile User`_                      |
+  +---------------------------------------------------+
 
   .. _Prisma Access Mobile User: https://github.com/PaloAltoNetworks/prisma-access-skillets/blob/master/stage_2_configuration/load_config_partial_02/.meta-cnc.yaml
 
@@ -109,18 +109,17 @@ panos
 
   **View examples of panos skillets**
 
-
-  `Sample panos skillets`_
+  +---------------------------------------------------+
+  | `Sample panos skillets`_                          |
+  +---------------------------------------------------+
+  | `IronSkillet v9.1 PAN-OS`_                        |
+  +---------------------------------------------------+
+  | `NGFW Skillets at the Skillet District`_          |
+  +---------------------------------------------------+
 
   .. _Sample panos skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/panos
-
-  `IronSkillet v9.1 PAN-OS`_
-
   .. _IronSkillet v9.1 PAN-OS: https://github.com/PaloAltoNetworks/iron-skillet/tree/panos_v9.0/templates/panos/snippets
-
-  `NGFW Skillets at the Skillet District`_
-
-.. _NGFW Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/ngfw
+  .. _NGFW Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/ngfw
 
 |
 
@@ -140,16 +139,16 @@ pan_validation
 
   **View examples of template skillets**
 
-  `Iron Skillet v9.1 validations`_
+  +---------------------------------------------------+
+  | `Iron Skillet v9.1 validations`_                  |
+  +---------------------------------------------------+
+  | `Sample validation skillets`_                     |
+  +---------------------------------------------------+
+  | `Validation Skillets at the Skillet District`_    |
+  +---------------------------------------------------+
 
   .. _Iron Skillet v9.1 validations: https://github.com/PaloAltoNetworks/iron-skillet/tree/panos_v9.0/validations
-
-  `Sample validation skillets`_
-
   .. _Sample validation skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/validation
-
-  `Validation Skillets at the Skillet District`_
-
   .. _Validation Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/validation
 
 |
@@ -169,24 +168,23 @@ python
 
   **View examples of python skillets**
 
-  `HomeSkillet content updates`_
+  +---------------------------------------------------+
+  | `HomeSkillet content updates`_                    |
+  +---------------------------------------------------+
+  | `Sample python skillets`_                         |
+  +---------------------------------------------------+
+  | `Python Skillets at the Skillet District`_        |
+  +---------------------------------------------------+
 
   .. _HomeSkillet content updates: https://github.com/PaloAltoNetworks/HomeSkillet/tree/master/python_content_updates
-
-  `Sample python skillets`_
-
   .. _Sample python skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/python
-
-  `Python Skillets at the Skillet District`_
-
   .. _Python Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/python
 
 
-.. NOTE::
-    Python scripts are useful when checking system state is required.
-    The best example is checking job status for a process before performing
-    the next task. Some skillets are stateless and do not have this capability.
-
+  .. NOTE::
+      Python scripts are useful when checking system state is required.
+      The best example is checking job status for a process before performing
+      the next task. Some skillets are stateless and do not have this capability.
 
 |
 
@@ -204,22 +202,20 @@ rest
 
   **View examples of rest skillets**
 
-  `Sample REST skillets`_
+  +---------------------------------------------------+
+  | `Sample REST skillets`_                           |
+  +---------------------------------------------------+
+  | `HomeSkillet get zone names`_                     |
+  +---------------------------------------------------+
+  | `Prisma Access get service information`_          |
+  +---------------------------------------------------+
+  |  `REST Skillets at the Skillet District`_         |
+  +---------------------------------------------------+
 
   .. _Sample REST skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/rest
-
-  `HomeSkillet get zone names`_
-
   .. _HomeSkillet get zone names: https://github.com/PaloAltoNetworks/HomeSkillet/tree/panos_v9.0/rest_get_zone_names
-
-  `Prisma Access get service information`_
-
   .. _Prisma Access get service information: https://github.com/PaloAltoNetworks/prisma-access-skillets/tree/master/assess/get_service_info
-
-  `REST Skillets at the Skillet District`_
-
   .. _REST Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/rest
-
 
 |
 
@@ -238,22 +234,20 @@ template
 
   **View examples of template skillets**
 
-  `Iron Skillet v9.1 set commands`_
+  +---------------------------------------------------+
+  | `Iron Skillet v9.1 set commands`_                 |
+  +---------------------------------------------------+
+  | `Iron Skillet v9.1 XML config file`_              |
+  +---------------------------------------------------+
+  | `Sample template skillets`_                       |
+  +---------------------------------------------------+
+  | `Template Skillets at the Skillet District`_      |
+  +---------------------------------------------------+
 
   .. _Iron Skillet v9.1 set commands: https://github.com/PaloAltoNetworks/iron-skillet/tree/panos_v9.0/templates/panos/set_commands
-
-  `Iron Skillet v9.1 XML config file`_
-
   .. _Iron Skillet v9.1 XML config file: https://github.com/PaloAltoNetworks/iron-skillet/tree/panos_v9.0/templates/panos/full
-
-  `Sample template skillets`_
-
   .. _Sample template skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/template/template_example
-
-  `Template Skillets at the Skillet District`_
-
   .. _Template Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/template
-
 
 |
 
@@ -270,18 +264,17 @@ terraform
 
   **View examples of terraform skillets**
 
-  `Deploy Panorama in Azure`_
+  +---------------------------------------------------+
+  | `Deploy Panorama in Azure`_                       |
+  +---------------------------------------------------+
+  | `Sample Terraform skillets`_                      |
+  +---------------------------------------------------+
+  | `Terraform Skillets at the Skillet District`_     |
+  +---------------------------------------------------+
 
   .. _Deploy Panorama in Azure: https://github.com/PaloAltoNetworks/prisma-access-skillets/tree/master/deploy/azure/deploy_panorama
-
-  `Sample Terraform skillets`_
-
   .. _Sample Terraform skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/terraform
-
-  `Terraform Skillets at the Skillet District`_
-
   .. _Terraform Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/terraform
-
 
 |
 
@@ -300,15 +293,15 @@ workflow
 
   **View examples of workflow skillets**
 
-  `HomeSkillet workflow`_
+  +---------------------------------------------------+
+  | `HomeSkillet workflow`_                           |
+  +---------------------------------------------------+
+  | `Sample workflow skillets`_                       |
+  +---------------------------------------------------+
+  | `Workflow Skillets at the Skillet District`_      |
+  +---------------------------------------------------+
 
   .. _HomeSkillet workflow: https://github.com/PaloAltoNetworks/HomeSkillet/tree/panos_v9.0/workflow_HomeSkillet_menu_selection
-
-  `Sample workflow skillets`_
-
   .. _Sample workflow skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/workflow
-
-  `Workflow Skillets at the Skillet District`_
-
   .. _Workflow Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/workflow
 
