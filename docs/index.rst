@@ -18,9 +18,9 @@ Welcome to SkilletBuilder documentation!
    jinja
    variables
    panhandler
-   validation_skillets
    skillets
    example_skillet
+   validation_skillet
    examples/example_skillets
 
 

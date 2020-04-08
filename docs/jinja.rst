@@ -15,8 +15,8 @@ Content objects are collected from the skillet and associated files then passed 
 
 |
 
-Jinja Variables
----------------
+Jinja Variable
+--------------
 
 Variables are used in the Snippets sections of the .meta-cnc.yaml file and externally referenced text files to:
 
@@ -144,8 +144,8 @@ And the output if dhcp-client is selected:
 
 |
 
-Jinja For Loops
----------------
+Jinja For Loop
+--------------
 
 For loops can be used in a skillet to capture a list of information and iterate over the list as multiple entries.
 
@@ -163,7 +163,7 @@ In this example a list of serial numbers are onboarded to Panorama.
 Below is the XML element with the for loop embedded. The conditionals are placed within ``{% for content %}``
 using `Jinja built-in for loop logic`_.
 
-    .. _Jinja built-in for loop logic: https://jinja.palletsprojects.com/en/2.11.x/templates/#for
+.. _Jinja built-in for loop logic: https://jinja.palletsprojects.com/en/2.11.x/templates/#for
 
 
 .. code-block:: xml
@@ -186,11 +186,37 @@ adding in each serial number in the variable list.
 
 |
 
-Jinja Filters
--------------
+Jinja Filter
+------------
+
+Jinja filters have a few roles in skillets:
+
+    1. reformat data
+    2. boolean logic for validation tests
+    3. output passwords as hashes
+
+These filters can be `built-in filters`_ or custom skillet filters.
+
+.. _built-in filters: https://jinja.palletsprojects.com/en/2.11.x/templates/#for
+
+Filters are used by including `` | filter `` after a variable:
 
 
++----------------------------------------------+-------------------------------------------------+
+| Variable | Filter example                    |  Filter action                                  |
++==============================================+=================================================+
+| var | length                                 |  True if a list var has values                  |
++----------------------------------------------+-------------------------------------------------+
+| var | length == 0                            |  True if a list var is empty                    |
++----------------------------------------------+-------------------------------------------------+
+| var | md5_hash                               |  convert a password to a phash                  |
++----------------------------------------------+-------------------------------------------------+
+| var | element_value('config_value') == 'yes' |  True if the XML config_value = yes             |
++----------------------------------------------+-------------------------------------------------+
+| var | tag_present('config_tag')              |  True if the XML tag exists                     |
++----------------------------------------------+-------------------------------------------------+
+| var | replace ("old", "new")                 |  replace a string or substring with a new value |
++----------------------------------------------+-------------------------------------------------+
+| var | int                                    |  convert a string to an integer                 |
++----------------------------------------------+-------------------------------------------------+
 
-| syntax
-built-in filters: https://jinja.palletsprojects.com/en/2.11.x/templates/#list-of-builtin-filters
-custom filters for validations
