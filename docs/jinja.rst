@@ -1,17 +1,17 @@
 Jinja and Skillets
 ==================
 
-Jinja a templating language for Python and used within the skillet framework to:
+Jinja is a templating language for Python and used within the skillet framework to:
 
-    * allow variable substitution
-    * provide lightweight coding logic like if and for
+    * allow variable value substitution
+    * provide lightweight coding logic such as if and for
     * apply filters to format data
     * leverage filters for validation testing logic
 
   .. image:: images/jinja_engine.png
      :width: 800
 
-Content objects are collected from the skillet and associated files then passed through the rendering engine.
+Content objects are collected from the skillet and passed through the rendering engine.
 
 |
 
@@ -24,7 +24,7 @@ Variables are used in the Snippets sections of the .meta-cnc.yaml file and exter
     * define variable-based XPaths such as Panorama templates and device-groups
     * create contextual output pass/fail messages in validation skillets
 
-Variables are added to using a ``{{ variable }}`` syntax.
+Variables are added using a ``{{ variable }}`` syntax.
 
 The example below uses three variables: tag_name, tag_color, and tag_description
 

@@ -10,7 +10,7 @@ validation, operations, and other needs beyond configuration.
 docker
 ------
 
-  Using a docker skillet you can use any available libraries in the docker image.
+  With a docker skillet you can use any available libraries in the docker image.
   This allows you to distribute custom tools and scripts, or use existing
   dockerized tools, as a skillet.
 
@@ -132,10 +132,9 @@ pan_validation
   Examples:
 
     * best practice configuration assessments (eg. IronSkillet)
-    * dependency checks before loading configuration skillets (referenced profiles, plugin versions, licensing)
-    * check for potential merge conflicts (existing profile names or object ID values)
+    * dependency checks before loading configuration skillets
+    * check for potential merge conflicts based on existing config elements
     * troubleshooting assistance with config/system insights
-
 
   **View examples of template skillets**
 
@@ -196,8 +195,8 @@ rest
 
   Examples:
 
-    * Prisma Access service information
-    * query a device and return a list of attributes to be used in a skillet dropdown or checklist
+    * Prisma Access or other platform service information
+    * query a device and return a list of values used in a skillet UI dropdown
     * check status of cloud platforms
 
   **View examples of rest skillets**
