@@ -7,20 +7,36 @@ Welcome to SkilletBuilder documentation!
 ========================================
 
 .. toctree::
-   :maxdepth: 1
-   :caption: Contents:
+   :maxdepth: 2
+   :caption: Getting Started
 
    overview
    skillet_framework
-   skillet_types
-   builder_tools
+   panhandler
+
+.. toctree::
+   :caption: Building Blocks
+   :maxdepth: 2
+
    xml
    jinja
    jinja_custom_filters
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Tutorials
+
+   tutorials/tutorial_configuration
+   tutorials/tutorial_validation
+
+.. toctree::
+   :maxdepth: 2
+   :caption: References and Examples
+
+   skillet_types
+   builder_tools
    variables
-   panhandler
    skillets
    example_skillet
    validation_skillet
    examples/example_skillets
-   builder_sandbox
