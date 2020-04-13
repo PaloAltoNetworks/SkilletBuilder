@@ -1,7 +1,5 @@
-.. _`tutorial_configuration`:
-
 Configuration
--------------
+=============
 
-this is a config tutorial
+Configuration Skillet tutorials coming soon!
 

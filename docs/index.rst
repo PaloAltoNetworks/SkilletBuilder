@@ -7,7 +7,7 @@ Skillet Builder Documentation
 =============================
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Getting Started
 
    overview
@@ -16,21 +16,24 @@ Skillet Builder Documentation
 
 .. toctree::
    :caption: Building Blocks
-   :maxdepth: 2
+   :maxdepth: 1
 
    xml
    jinja
    jinja_custom_filters
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: Tutorials
 
    tutorials/tutorial_configuration
    tutorials/tutorial_validation
+   tutorials/tutorial_template
+   tutorials/tutorial_rest
+   tutorials/tutorial_workflow
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    :caption: References and Examples
 
    skillet_types
