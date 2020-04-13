@@ -1,7 +1,7 @@
 SkilletBuilder Overview
 =======================
 
-Welcome to the SkilletBuilder documentation, examples, and tutorials.
+Welcome to the SkilletBuilder documentation, examples, and tutorials content designed to expand the Builder community.
 This is a living set of content updated as new skillet types, examples, and tutorials are available.
 
 The video contains a quick Skillet overview and a few demonstrations playing Skillets with panHandler.
@@ -13,6 +13,11 @@ The video contains a quick Skillet overview and a few demonstrations playing Ski
     interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 |
+
+The purpose of Skillet Builders is to 'skilletize' knowledge and expertise into sharable entities that can be
+played by users to eliminate the complexity of various tasks. This can complement or remove the requirement to
+capture GUI config guides that can still require hours of configuration steps, often with all users entering the same
+sets of data. Thus the transition from 'show me how to configure' to 'give a configuration to load'.
 
 Skillet Use Cases
 -----------------

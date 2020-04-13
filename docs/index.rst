@@ -16,7 +16,7 @@ Welcome to SkilletBuilder documentation!
    builder_tools
    xml
    jinja
-   custom_filters
+   jinja_custom_filters
    variables
    panhandler
    skillets
