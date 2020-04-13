@@ -1,7 +1,7 @@
-SkilletBuilder Overview
-=======================
+Skillet Builder Overview
+========================
 
-Welcome to the SkilletBuilder documentation, examples, and tutorials content designed to expand the Builder community.
+Welcome. This site contains Skillet Builder documentation, examples, and tutorials designed to expand the Builder community.
 This is a living set of content updated as new skillet types, examples, and tutorials are available.
 
 The video contains a quick Skillet overview and a few demonstrations playing Skillets with panHandler.
