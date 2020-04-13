@@ -4,6 +4,15 @@ SkilletBuilder Overview
 Welcome to the SkilletBuilder documentation, examples, and tutorials.
 This is a living set of content updated as new skillet types, examples, and tutorials are available.
 
+The video contains a quick Skillet overview and a few demonstrations playing Skillets with panHandler.
+
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=8b8cb56c-f1dd-4d6e-821e-ab98014d9046&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+|
 
 Skillet Use Cases
 -----------------
@@ -23,8 +32,8 @@ with Terraform and Ansible, skillets can provide a web UI interface to capture d
     * perform NGFW threat and AV content updates
     * install plug-ins
 
-Configuration
-~~~~~~~~~~~~~
+Configure
+~~~~~~~~~
 
 Save time by levering best practice and reference configurations created by subject matter experts.
 

@@ -8,6 +8,16 @@ The Skillet Framework is designed to create a structured yet extensible model fo
      :width: 800
 
 
+View the video for a quick overview of the Skillet Framework
+
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=ccdf68c7-106b-4132-9c77-ab6b00f1f57d&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+|
+
 Github
 ------
 

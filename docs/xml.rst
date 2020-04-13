@@ -111,18 +111,26 @@ and values are required since the XML tag ``entry`` is the same for each tag con
 
 |
 
-Finding the XPath
-~~~~~~~~~~~~~~~~~
+Tools to Find the XPath
+-----------------------
 
 Knowing the XPath is key for most of the configuration and validation skillets. Here are a few ways to find the XPath
 for a specific configuration element.
 
-For each example we'll use the same XPath for a NGFW tag object. Each example results in the same XPath.
+The video tutorial shows examples of capturing the XPath and associated XML elements.
+
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=e07d567b-c7cb-41a1-9bc6-ab6a014f0ebc&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+For each documentation example we'll use the same XPath for a NGFW tag object. Each example results in the same XPath.
 
 |
 
 Web UI Debug
-^^^^^^^^^^^^
+~~~~~~~~~~~~
 
 The Web UI Debug is a great starting place if you aren't sure where to begin and are familar with Web UI configuration.
 
@@ -161,7 +169,7 @@ and ignoring the entry for the tag created the XPath for all tags would be:
 |
 
 Web UI XML API Explorer
-^^^^^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~~~~~
 
 The Web UI XML API Explorer is a web version of the CLI interface designed to view API information.
 
@@ -194,7 +202,7 @@ Clicking ``tag`` at the end gives the XPath as:
 |
 
 CLI Debug
-^^^^^^^^^
+~~~~~~~~~
 
 If you are familiar with the device CLI commands or are using commands that aren't found in Web UI this is a preferred option.
 
@@ -217,7 +225,7 @@ This switches the config view from JSON to XML.
 |
 
 Skillet Generator
-^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~
 
 This option uses the generator to output one or more XPaths based on configuration changes between two files.
 
