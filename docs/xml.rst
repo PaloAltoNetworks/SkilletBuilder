@@ -20,7 +20,13 @@ XML Basics
 
 The basics covers the essentials of XML terminology and structure.
 
+.. raw:: html
 
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=1b18bf7a-eda9-46bb-8654-ab6a016df3a6&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+|
 
 XML Format
 ~~~~~~~~~~
@@ -66,47 +72,19 @@ The example shows a representation of the XML file as folders.
 
 The 'config' tag is the top level folder. The second level folders/tags include mgt-config, devices, and shared.
 Opening mgt-config shows the next level down, users and password-complexity. This model of nested tags creates the
-structure of the configuration data file. The job of skillets is to edit or read this
-data file structure.
+structure of the configuration data file. The job of skillets is to edit or read this data file structure.
 
 Paths and XPaths
 ^^^^^^^^^^^^^^^^
 
-Using the same folder model and a Linux prompt view, I can walk through my emulated XML folder structure.
-
-::
-
-    midleton:config:$
-    midleton:config:$ path
-    /config
-    midleton:config:$
-    midleton:config:$ ls
-    devices		mgt-config	shared
-    midleton:config:$
-    midleton:config:$ cd mgt-config/
-    midleton:mgt-config:$
-    midleton:mgt-config:$ path
-    /config/mgt-config
-    midleton:mgt-config:$
-    midleton:mgt-config:$ cd users
-    midleton:users:$
-    midleton:users:$ path
-    /config/mgt-config/users
-    midleton:users:$
-    midleton:users:$ ls
-    entry_name_admin
-    midleton:users:$
-    midleton:users:$
-
-
-I start at /config and cd into child folders mgt-config and users. The ``path`` alias is similar to ``pwd`` but
-only shows the relative folder starting at config. The final path above is ``/config/mgt-config/users``.
+Using the same folder model I would reference the users folder path as ``/config/mgt-config/users``.
 The path is just a series of folder names separated by '/' showing where I am in the data structure.
 
-XML uses the same concept renaming the path to ``XPath``.
-In the prior XML example look for the sequence of tags <config>, <mgt-config>, <users>.
+XML uses the same concept renaming path to ``XPath``.
 The XPath equivalent is ``/config/mgt-config/users`` identical to the folder-based example above.
 So the XPath is just a chain of tags separated by '/' stating where a piece of data is located in the file.
+In the prior XML example look for the sequence of tags <config>, <mgt-config>, <users> to see the XPath hierarchy
+in the raw XML configuration file.
 
 
 **Attributes and Values in the XPath**
@@ -283,15 +261,31 @@ Parsing Syntax Basics
 Parsing the XML file starts with the base XPath which is appended based on the data to be output. The various options
 will align to the type of output: element, value, list.
 
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=76a5251d-caac-4c52-aae8-ab6d00f64f9d&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+|
+
 Common items used for parsing configurations and outputs include:
 
-    * **List of attribute values**: append the xpath with ``@name`` where name is the attribute name
-    * **return element text**: append ``text()`` to the end of the xpath
-    * **skip XPath tag levels for broader queries**: use ``//`` in the XPath between tags
-    * **Filter queries**: ``tag_name[text()='text_value']`` where a tag_name has a specific text_value
-    * **reference attributes further up the tree**: ``/../`` for each  level up the tree
++---------------------------------------+------------------------------------------------------------+
+| Use in XPath Query                    |  How Impacts the Query and Output                          |
++=======================================+============================================================+
+| append XPath with attribute ``@name`` |  list of names for the last XPath tag (eg. <entry>)        |
++---------------------------------------+------------------------------------------------------------+
+| append XPath with text()              |  text value of the last XPath tag                          |
++---------------------------------------+------------------------------------------------------------+
+| use tag_name[text()='text_value']     |  filter results where tag_name has a specific text_value   |
++---------------------------------------+------------------------------------------------------------+
+| use ``//`` in the XPath               |  wildcard to look across XML branches                      |
++---------------------------------------+------------------------------------------------------------+
+| Use ``..`` after a filter statement   |  reference items one level up in the tree for each /../    |
++---------------------------------------+------------------------------------------------------------+
 
-The following sections show in depth examples using the query syntax options above.
+The following sections show examples using the query syntax options above.
 
 Output an XML Element
 ~~~~~~~~~~~~~~~~~~~~~

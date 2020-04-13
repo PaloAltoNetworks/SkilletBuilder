@@ -23,11 +23,4 @@ Welcome to SkilletBuilder documentation!
    example_skillet
    validation_skillet
    examples/example_skillets
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   builder_sandbox

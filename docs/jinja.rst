@@ -13,6 +13,15 @@ Jinja is a templating language for Python and used within the skillet framework 
 
 Content objects are collected from the skillet and passed through the rendering engine.
 
+
+The video tutorial covers Jinja variables, if conditionals, and for loops.
+
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=cc895e38-e07d-47d0-aad0-ab6b0110ea51&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
 |
 
 Jinja Variable
@@ -194,6 +203,12 @@ Jinja filters have a few roles in skillets:
     1. reformat data
     2. boolean logic for validation tests
     3. output passwords as hashes
+
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=99d78d0b-0c16-4fe9-b43b-ab6d014c8971&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 These filters can be `built-in filters`_ or custom skillet filters.
 
