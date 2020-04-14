@@ -4,28 +4,16 @@ Testing Skillets with PanHandler
 Since panHandler supports all skillet types and supports the SkilletBuilder tools, it is recommended for skillet design,
 build, and test.
 
-|
+For first time panHandler users, reference the `panHandler Quickstart Guide`_ in the Live Skillet District.
 
-Playing Skillets from the Repo Detail Page
-------------------------------------------
-
-Instead of going back and forth between the repo detail andcollections page, you can run skillets from the repo Detail page.
-
-  .. image:: images/panhandler_repo_detail.png
-     :width: 600
-
-    1. click ``Update to Latest`` to import the latest repo changes
-    2. check that your updates were imported reviewing messages in the ``Latest Updates`` section
-    3. play the skillet by clicking the label in the ``Metadata files`` section
-
-This allows you to refresh and play all from a single page.
+    .. _panHandler Quickstart Guide: https://live.paloaltonetworks.com/t5/Skillet-Tools/Install-and-Get-Started-With-Panhandler/ta-p/307916
 
 |
 
-Switching between Latest and Develop Containers
------------------------------------------------
+Loading the Master or Develop Versions
+--------------------------------------
 
-PanHandler runs in a Docker container, the main build tagged as 'latest'.
+PanHandler runs in a Docker container, the master build tagged as 'latest'.
 
 There is also a develop branch with new features and updates. Although not the recommended release, some users may
 want to work with develop and explore new features. Some skillets being developed may also be dependent on newer features.
@@ -91,6 +79,21 @@ If you see multiple panHandler images you can recover disk space using:
 
 This will remove all unused images.
 
+|
+
+Playing Skillets from the Repo Detail Page
+------------------------------------------
+
+Instead of going back and forth between the repo detail andcollections page, you can run skillets from the repo Detail page.
+
+  .. image:: images/panhandler_repo_detail.png
+     :width: 600
+
+    1. click ``Update to Latest`` to import the latest repo changes
+    2. check that your updates were imported reviewing messages in the ``Latest Updates`` section
+    3. play the skillet by clicking the label in the ``Metadata files`` section
+
+This allows you to refresh and play all from a single page.
 
 |
 
