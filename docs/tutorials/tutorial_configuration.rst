@@ -234,5 +234,277 @@ Create the Project Skeleton Structure for XML
 Generate the Skillet
 ~~~~~~~~~~~~~~~~~~~~
 
+  In panHandler use the :ref:`Generate a Skillet` skillet to extract the difference between the baseline and
+  modified coniguration with offline mode.
 
+  .. image:: images/configure_skillet_generator.png
+     :width: 800
+     :align: center
+
+  After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
+
+  .. image:: images/configure_skillet_preamble.png
+     :width: 800
+     :align: center
+
+  Suggested tutorial inputs:
+
+    * Skillet ID: tag_edl_tutorial
+    * Skillet Label: Tutorial skillet to configure tag, EDL, and security rules
+    * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
+    * Collection Name: Tutorial
+    * Skillet type: ``panos``
+
+Copy the Output to .meta-cnc.yaml
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Copy the output text under **Generated Skillet** and paste into the .meta-cnc.yaml file.
+
+  The YAML file contains:
+
+    * preamble populated with the web form values
+    * placeholder variables section
+    * snippets section with XPath/element entries where each diff found
+
+  .. NOTE::
+        At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play
+        the skillet without variables. Common reasons for raw output testing include the need for snippet reordering
+        and confirmation that the snippet elements will load
+
+Add Variables to Snippets
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Snippets can be edited to use contextual names, more coarse or granular snippets,
+  and formatting clean up such as XML elements. The modifications are optional based on Skillet Builder preference.
+
+  Adding variables is done in both the snippets and variables sections. The snippets section is edited by
+  adding a :ref:`Jinja Variable` where each value can be modified by the user. This correlates to variables
+  defined in the variables section specifying type for web form display and validation.
+
+  .. TIP::
+    YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
+    it can often also be frustrating to work with. A good reference to use to check your
+    YAML syntax is the `YAML Lint site <http://www.yamllint.com/>`_.
+
+
+  For the tutorial, the external-list element has 3 variables (name, description, url)
+  that are added into the configuration resulting in:
+
+  .. image:: images/configure_skillet_edl_vars.png
+     :width: 800
+     :align: center
+
+  Note that the <recurring> value is static as ``five-minute`` without a variable.
+  Some values may remain static as a best practice or, as with type ``<ip>``, specific to the configuration requirement.
+
+  The tag also has 3 variables (name, description, color)
+
+  .. image:: images/configure_skillet_tag_vars.png
+     :width: 800
+     :align: center
+
+  Lastly, the security rules leverage EDL and tag variables (edl name, tag name) as a connected set of template configs.
+
+  .. image:: images/configure_skillet_rules_vars.png
+     :width: 800
+     :align: center
+
+  In this outbound rule example, not only are the variables used for the standard destination address and tag fields,
+  but text substitution can also be used to create unique entries. In this case, the EDL name is used as
+  a security rule name prefix joined with ‘-out’.
+
+  .. TIP::
+    When creating the modified configuration for a skillet, you can use variable-type names where applicable to
+    simplify the variable insertion into the snippets. Simply wrap the names with ``{{  }}`` or even use
+    search-replace when text content is unique within the file.
+
+  .. TIP::
+    If the variables are used across multiple skillets as part of defined Steps or a workflow, reuse the same
+    variable name where possible. Tools like panHandler will cache web form inputs and auto-populate values
+    when the same variable is encountered again.
+
+Edit the Variables Section
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Now that the variable set is known, they must be added to the metadata file along with a description to be used
+  in the web form, a default provided in the form, and a type_hint to specify the type of web form field.
+  This metadata allows tools like panHandler to auto-generate the web form without any user specific HTML coding.
+
+  Key is :ref:`Ensuring all variables are defined` in the variables section. In the tutorial we'll use the first
+  grep option to generate a list of added variables.
+
+  .. code-block:: bash
+
+    midleton:SBtest$ grep -r '{{' . |  cut -d'{' -f3 | awk '{ print $1 }' | sort -u
+    edl_description
+    edl_name
+    edl_url
+    tag_color
+    tag_description
+    tag_name
+
+  The output of the grep command shows the six variables used in the tutorial configs.
+
+  From here, edit the variables section of the YAML file. Note that 5 of 6 are text while color is using a dropdown.
+  The dropdown is useful when the GUI and XML use different values or limited choices are offered.
+
+  .. image:: images/configure_skillet_rules_vars.png
+     :width: 800
+     :align: center
+
+  The values for the tag color require color numbers and not the Web UI presented names. This is common for many dropdown
+  selections in the Web UI. For these types of situations, you can create a set of items (eg. tags)
+  to be displayed in the XML output to match Web UI and XML required values.
+
+  For the tag color values, below is the config showing the 3 color values for green, orange, and red.
+  Additional colors can be extracted by using the GUI to create more tags and then use the CLI and ‘show tag’
+  to see additional color numbers.
+
+  .. image:: images/configure_skillet_tag_colors.png
+     :width: 800
+     :align: center
+
+Local Skillet Test
+~~~~~~~~~~~~~~~~~~
+
+  Before pushing the skillet to Github, use the :ref:`Skillet Test Tool` to validate the final YAML file formatting
+  and variable additions. Paste the contents of the YAML file into the test tool and submit. This will play the skillet
+  using the default variable values. Check that the configuration loaded into the NGFW.
+
+Push the Skillet to Github
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  At this stage initial building is complete. The YAML file preamble, variables, and snippets sections all have
+  relevant content added. Now we want to push this to Github for additional testing and tuning.
+
+  .. code-block:: bash
+
+    TODO: insert the git add/commit/push commands
+
+  The skillet now resides in Github.
+
+  .. image:: images/configure_skillet_repo_updated.png
+     :width: 800
+     :align: center
+
+Testing and Tuning
+------------------
+
+Now that the skillet has been pushed to Github, the skillet can be imported to panHandler to test the user experience.
+
+Import the Skillet
+~~~~~~~~~~~~~~~~~~
+
+  Use ``Import Skillets`` with the ``Clone or download`` Github URL to import to panHandler.
+
+  .. image:: images/configure_skillet_import.png
+     :width: 800
+     :align: center
+
+  View the skillet ``Detail`` from the ``Skillet Repositories`` page.
+
+  **Github URL and branch**
+
+    * validate the correct URL for your skillet
+    * check the Active Branch, master for the tutorial
+
+  **Latest Updates**
+
+    * review the last commit to ensure you are testing the latest push
+    * ``Update to Latest`` as needed to pull recent commits
+
+  **Metadata files**
+
+    * check that all skillet Labels are listed; missing labels indicate an error in the YAML file
+    * check that all label names and descriptions are unique and understandable
+    * [Optional] click the gear icon next to a label to locally view the YAML file contents
+
+  **Collections**
+
+    * verify the collection names are correct and edit YAML files as needed
+
+  .. TIP::
+    You can run skillets from the Detail page by clicking its Label name. This bypasses the need to click into
+    a Collection for each push update during testing.
+
+  .. NOTE::
+    If you receive errors during import, the most common issue is an error with YAML formatting.
+    Check alignment and syntax, push to Github, then try to import again.
+
+Play the Skillet
+~~~~~~~~~~~~~~~~
+
+  From the Detail or Collection view, play the skillet. Although you may have tested with the Test Tool,
+  playing the imported skillet allows the builder to review the Web UI elements presented to the user.
+
+  Check both the output messages in panHandler and actual NGFW view to test the skillet. Also verify that the
+  configuration loads as candidate and will also commit. If you receive errors messages, common issues may be:
+
+    * snippet load order
+    * variable typos in the snippet section or not included in the variables section
+    * invalid input data that passes web form validation but not NGFW validation checks
+
+Edit, Push, Test
+~~~~~~~~~~~~~~~~
+
+ If errors are found, repeat the steps above until a clean skillet can be loaded and committed.
+
+Documentation
+-------------
+
+The final stage is to document key details about the skillet to provide contextual information to the user community.
+
+README.md
+~~~~~~~~~
+
+  The skillet repo created has a placeholder README.md and earlier in the tutorial we created a README.md within
+  the skillet directory. The main README gives an overview of the repo for any user viewing the page. The skillet
+  directory README should provide skillet-specific details such as what the skillet does, variable input descriptions,
+  and caveats and requirements.
+
+  README.md uses the markdown format. Numerous examples can be found in the skillet files. There is also a
+  wide array of `markdown cheat sheets`_ you can find using Google searches.
+  Below are a few common markdown elements you can use in your documentation. Most EDIs can display the user view
+  as you edit the markdown file.
+
+  .. _markdown cheat sheets: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+  +-------------------------------------------------------------------------------------+
+  | Markdown syntax options                                                             |
+  +=====================================================================================+
+  | `#, ##, ###` for header text levels (H1, H2, H3, etc.)                              |
+  +-------------------------------------------------------------------------------------+
+  | `**text**` for bold text                                                            |
+  +-------------------------------------------------------------------------------------+
+  | `*text*` or `_text_` to underline                                                   |
+  +-------------------------------------------------------------------------------------+
+  | `1. text` to create numbered lists                                                  |
+  +-------------------------------------------------------------------------------------+
+  | `* text`, `+ text`, `- text` for bullet style lists                                 |
+  +-------------------------------------------------------------------------------------+
+  | `[text](url)` for inline web links                                                  |
+  +-------------------------------------------------------------------------------------+
+  | \`test\` to highlight a text string                                                 |
+  +-------------------------------------------------------------------------------------+
+  | \`\`\`text block - one or more lines\`\`\` to create a highlighted text block       |
+  +-------------------------------------------------------------------------------------+
+
+  .. TIP::
+    To view markdown edits in existing Github repos, click on the README.md file, then use the ``Raw``
+    option to display the output as raw markdown text. From here you can copy-paste or review formatting.
+
+
+
+  **Support Policy Text**
+  Skillets are not part of Palo Alto Networks supported product so the policy text is appended to the
+  README file to specify skillets are not supported. Sample text to copy/paste is found in the `SkilletBuilder repo README`_:
+
+  .. _SkilletBuilder repo README: https://raw.githubusercontent.com/PaloAltoNetworks/SkilletBuilder/master/README.md
+
+Live Community
+~~~~~~~~~~~~~~
+
+  Skillets can be shared in the Live community as Community or Personal skillets. Community Skillets
+  are expected to have a higher quality of testing, documentation, and ongoing support. Personal skillets
+  can be shared as-is to create awareness and eventually become upgraded as Community Skillets.
 

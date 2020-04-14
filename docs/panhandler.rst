@@ -1,5 +1,5 @@
-Testing Skillets with PanHandler
-================================
+Building and Testing with PanHandler
+====================================
 
 Since panHandler supports all skillet types and supports the SkilletBuilder tools, it is recommended for skillet design,
 build, and test.
