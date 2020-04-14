@@ -5,6 +5,20 @@ Overview
 --------
 
 This tutorial is aimed at novice skillet builders who want to work through building a sample skillet.
+The configuration tutorial will create a simple configuration including:
+
+  * an IP External Dynamic List (EDL) object
+  * a Tag object
+  * Security rules (Inbound and Outbound) referencing the EDL and tag objects
+
+The video provides an end-to-end perspective for building a configuration skillet as complement
+to the documentation content.
+
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=17392613-262a-4606-a11a-ab6c010b894e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 Content is grouped into 4 basic sections specific to each task category:
 
@@ -53,16 +67,6 @@ Content is grouped into 4 basic sections specific to each task category:
 
 |
 
-Configuration Tutorial Elements
--------------------------------
-
-The configuration tutorial will create a simple configuration including:
-
-  * an IP External Dynamic List (EDL) object
-  * a Tag object
-  * Security rules (Inbound and Outbound) referencing the EDL and tag objects
-
-|
 
 Setting up the Sandbox
 ----------------------
