@@ -143,19 +143,19 @@ Creating a New Repo and Cloning
 
   Log in to Github and select ‘New’ to add a new repo.
 
-    .. image:: ../images/create_new_repo_button.png
+    .. image:: images/create_new_repo_button.png
         :width: 600
 
   Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
   pushing any EDI directories such as .idea/ used by Pycharm.
 
-    .. image:: ../images/create_new_repo_fields.png
+    .. image:: images/create_new_repo_fields.png
         :width: 600
 
   Once created, copy the clone URL from the GUI.
   This is found with the green ‘Clone or download’ button and NOT the browser URL.
 
-    .. image:: ../images/clone_new_repo.png
+    .. image:: images/clone_new_repo.png
        :width: 600
 
 
@@ -184,7 +184,7 @@ Create the Configuration in the NGFW
 
   Configure the external-list object with a name, description, and source URL.
 
-  .. image:: ../images/configure_edl.png
+  .. image:: images/configure_edl.png
      :width: 600
      :align: center
 
@@ -192,7 +192,7 @@ Create the Configuration in the NGFW
 
   Configure the tag object with a name, color, and comments (description).
 
-  .. image:: ../images/configure_tag.png
+  .. image:: images/configure_tag.png
      :width: 400
      :align: center
 
@@ -211,7 +211,7 @@ Create the Configuration in the NGFW
   rule names are prepended with the EDL name. In later steps variables are used in the rule names to
   map the EDL and ensure rule names are unique.
 
-.. image:: ../images/configure_security_rules.png
+.. image:: images/configure_security_rules.png
     :width: 800
     :align: center
 
@@ -229,7 +229,7 @@ Create the Project Skeleton Structure for XML
 
   The skillet directory structure will look like:
 
-  .. image:: ../images/configure_skillet_folder.png
+  .. image:: images/configure_skillet_folder.png
      :width: 250
      :align: center
 
@@ -239,7 +239,7 @@ Generate the Skillet
   In panHandler use the :ref:`Generate a Skillet` skillet to extract the difference between the baseline and
   modified configuration with offline mode choosing 'From uploaded configs'.
 
-  .. image:: ../images/configure_skillet_generator.png
+  .. image:: images/configure_skillet_generator.png
      :width: 800
      :align: center
 
@@ -247,7 +247,7 @@ Generate the Skillet
 
   After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
 
-  .. image:: ../images/configure_skillet_preamble.png
+  .. image:: images/configure_skillet_preamble.png
      :width: 800
      :align: center
 
@@ -725,7 +725,7 @@ Push the Skillet to Github
   The skillet now resides in Github. Note however that the page README gives no real indication about
   what is contained in this repo. We'll get back to that later.
 
-  .. image:: ../images/configure_skillet_repo_updated.png
+  .. image:: images/configure_skillet_repo_updated.png
      :width: 800
      :align: center
 
@@ -739,7 +739,7 @@ Import the Skillet
 
   Get the new skillet URL from Github
 
-  .. image:: ../images/skillet_clone_url.png
+  .. image:: images/skillet_clone_url.png
      :width: 300
      :align: center
 
@@ -747,7 +747,7 @@ Import the Skillet
 
   Use ``Import Skillets`` with the ``Clone or download`` Github URL to import the skillet to panHandler.
 
-  .. image:: ../images/configure_skillet_import.png
+  .. image:: images/configure_skillet_import.png
      :width: 400
      :align: center
 
@@ -755,7 +755,7 @@ Import the Skillet
 
   View the skillet ``Detail`` from the ``Skillet Repositories`` page.
 
-  .. image:: ../images/configure_skillet_detail.png
+  .. image:: images/configure_skillet_detail.png
      :width: 800
      :align: center
 
@@ -795,7 +795,7 @@ Play the Skillet
   From the Detail or Collection view, play the skillet. Although you may have tested with the Test Tool,
   playing the imported skillet allows the builder to review the Web UI elements presented to the user.
 
-  .. image:: ../images/configure_skillet_play.png
+  .. image:: images/configure_skillet_play.png
      :width: 800
      :align: center
 
@@ -804,7 +804,7 @@ Play the Skillet
   Before pushing the configuration to the device, you can use the ``Debug`` option to view the rendered skillets.
   This view is used to validate variable substitutions and XML formatting.
 
-  .. image:: ../images/configure_skillet_debug.png
+  .. image:: images/configure_skillet_debug.png
      :width: 800
      :align: center
 
