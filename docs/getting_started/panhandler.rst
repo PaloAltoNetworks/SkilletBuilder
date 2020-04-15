@@ -86,12 +86,13 @@ Playing Skillets from the Repo Detail Page
 
 Instead of going back and forth between the repo detail andcollections page, you can run skillets from the repo Detail page.
 
-  .. image:: images/panhandler_repo_detail.png
+  .. image:: /images/panhandler/panhandler_repo_detail.png
      :width: 600
 
-    1. click ``Update to Latest`` to import the latest repo changes
-    2. check that your updates were imported reviewing messages in the ``Latest Updates`` section
-    3. play the skillet by clicking the label in the ``Metadata files`` section
+
+  1. click ``Update to Latest`` to import the latest repo changes
+  2. check that your updates were imported reviewing messages in the ``Latest Updates`` section
+  3. play the skillet by clicking the label in the ``Metadata files`` section
 
 This allows you to refresh and play all from a single page.
 

@@ -4,7 +4,7 @@ The Skillet Framework
 The Skillet Framework is designed to create a structured yet extensible model for a multitude of skillet types.
 
 
-  .. image:: images/skillet_framework.png
+  .. image:: /images/skillet_framework/skillet_framework.png
      :width: 800
 
 
@@ -69,7 +69,7 @@ Skillet Metadata File
 
 The skillet metafile contains key descriptors, variable definitions, and skillet actions.
 
-  .. image:: images/skillet_framework_yaml_file.png
+  .. image:: /images/skillet_framework/skillet_framework_yaml_file.png
      :width: 800
 
 

@@ -106,8 +106,8 @@ Having the CLI ‘XML Ready’
   Review the :ref:`XML Basics` if you are not familiar with XML concepts.
 
 
-PanHandler
-~~~~~~~~~~
+Run PanHandler
+~~~~~~~~~~~~~~
 
   PanHandler will be used to generate and test the skillet.
 
@@ -115,8 +115,8 @@ PanHandler
   the latest version.
 
 
-Skillet Builder Tools
-~~~~~~~~~~~~~~~~~~~~~
+Import Skillet Builder Tools
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   In panHandler import the :ref:`Skillet Builder Tools` repo.
 
@@ -187,7 +187,7 @@ Create the Configuration in the NGFW
 
   .. image:: /images/configure_tutorial/configure_edl.png
      :width: 600
-     :align: center
+
 
   |
 
@@ -195,7 +195,7 @@ Create the Configuration in the NGFW
 
   .. image:: /images/configure_tutorial/configure_tag.png
      :width: 400
-     :align: center
+
 
 |
 
@@ -214,7 +214,7 @@ Create the Configuration in the NGFW
 
 .. image:: /images/configure_tutorial/configure_security_rules.png
     :width: 800
-    :align: center
+
 
 Create the Project Skeleton Structure for XML
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -232,7 +232,7 @@ Create the Project Skeleton Structure for XML
 
   .. image:: /images/configure_tutorial/configure_skillet_folder.png
      :width: 250
-     :align: center
+
 
 Generate the Skillet
 ~~~~~~~~~~~~~~~~~~~~
@@ -242,7 +242,7 @@ Generate the Skillet
 
   .. image:: /images/configure_tutorial/configure_skillet_generator.png
      :width: 800
-     :align: center
+
 
 |
 
@@ -250,7 +250,7 @@ Generate the Skillet
 
   .. image:: /images/configure_tutorial/configure_skillet_preamble.png
      :width: 800
-     :align: center
+
 
 |
 
@@ -728,7 +728,7 @@ Push the Skillet to Github
 
   .. image:: /images/configure_tutorial/configure_skillet_repo_updated.png
      :width: 800
-     :align: center
+
 
 Testing and Tuning
 ------------------
@@ -742,7 +742,7 @@ Import the Skillet
 
   .. image:: /images/configure_tutorial/skillet_clone_url.png
      :width: 300
-     :align: center
+
 
 |
 
@@ -750,7 +750,7 @@ Import the Skillet
 
   .. image:: /images/configure_tutorial/configure_skillet_import.png
      :width: 400
-     :align: center
+
 
 |
 
@@ -758,7 +758,7 @@ Import the Skillet
 
   .. image:: /images/configure_tutorial/configure_skillet_detail.png
      :width: 800
-     :align: center
+
 
 |
 
@@ -798,7 +798,7 @@ Play the Skillet
 
   .. image:: /images/configure_tutorial/configure_skillet_play.png
      :width: 800
-     :align: center
+
 
 |
 
@@ -807,7 +807,7 @@ Play the Skillet
 
   .. image:: /images/configure_tutorial/configure_skillet_debug.png
      :width: 800
-     :align: center
+
 
   Check both the output messages in panHandler and actual NGFW view to test the skillet. Also verify that the
   configuration loads as candidate and will also commit. If you receive errors messages, common issues may be:

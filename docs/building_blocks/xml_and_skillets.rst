@@ -41,16 +41,16 @@ This example shows how these items are used in HTML. HTML has pre-defined tags f
 since HTML is focused on page display. The attributes are used for formatting, href links, and other style
 components. The text values are items displayed on screen.
 
-  .. image:: images/html_sample.png
+  .. image:: /images/xml_and_skillets/html_sample.png
      :width: 800
-     :align: center
+
 
 You can see that the XML format is similar. There are <tags>, some with attributes="value", and text between tags.
 Unlike HTML, XML uses custom tags which is what makes it extensible.
 
-  .. image:: images/xml_terminology.png
+  .. image:: /images/xml_and_skillets/xml_terminology.png
      :width: 800
-     :align: center
+
 
 |
 
@@ -66,9 +66,9 @@ Folder-based Hierarchy
 Therefore the best comparison used for XML structure is a folder-based data structure with each <tag> as a folder.
 The example shows a representation of the XML file as folders.
 
-  .. image:: images/xml_structure_folders.png
+  .. image:: /images/xml_and_skillets/xml_structure_folders.png
      :width: 500
-     :align: center
+
 
 The 'config' tag is the top level folder. The second level folders/tags include mgt-config, devices, and shared.
 Opening mgt-config shows the next level down, users and password-complexity. This model of nested tags creates the
@@ -137,9 +137,9 @@ The Web UI Debug is a great starting place if you aren't sure where to begin and
 Log into the device and then in another browser tab navigate to ``https://$NGFW_IP/debug`` where $NGFW_IP is the
 device IP address.
 
-  .. image:: images/XML_web_UI_debug.png
+  .. image:: /images/xml_and_skillets/XML_web_UI_debug.png
      :width: 600
-     :align: center
+
 
 Check ``Debug`` and ``Clear debug`` to get started.
 
@@ -149,9 +149,9 @@ Back in the debug tab click ``Refresh`` to view the debug output. You'll see lot
 To find the configuration change, search for ``cmd="edit"`` or ``cmd="set"``. In our case **set** is required since a new
 tag. If you make changes to an existing item then use **edit**.
 
-  .. image:: images/XML_web_UI_debug_search.png
+  .. image:: /images/xml_and_skillets/XML_web_UI_debug_search.png
      :width: 800
-     :align: center
+
 
 Just to the right of the set or edit will be ``obj=`` with the XPath. The XPath in this example is:
 
@@ -176,9 +176,9 @@ The Web UI XML API Explorer is a web version of the CLI interface designed to vi
 Log into the device and then in another browser tab navigate to ``https://$NGFW_IP/api`` where $NGFW_IP is the
 device IP address.
 
-  .. image:: images/XML_API_explorer.png
+  .. image:: /images/xml_and_skillets/XML_API_explorer.png
      :width: 250
-     :align: center
+
 
 Click through to the tag configuration:
 
@@ -189,9 +189,9 @@ Click through to the tag configuration:
 
 As you click through you'll notice the entry in the XPath window shows your current XML tree location.
 
-  .. image:: images/XML_API_explorer_XPath.png
+  .. image:: /images/xml_and_skillets/XML_API_explorer_XPath.png
      :width: 800
-     :align: center
+
 
 Clicking ``tag`` at the end gives the XPath as:
 
@@ -208,9 +208,9 @@ If you are familiar with the device CLI commands or are using commands that aren
 
 Simply enter ``debug cli on``, ``configure``, and ``show tag``.
 
-  .. image:: images/XML_CLI_debug_XPath.png
+  .. image:: /images/xml_and_skillets/XML_CLI_debug_XPath.png
      :width: 600
-     :align: center
+
 
 The highlighted text just above the tag configuration shows the XPath as:
 
@@ -233,9 +233,9 @@ To use the Skillet Generator see the :ref:`Generate a Skillet` documentation.
 
 Save a baseline configuration, add a tag, and export the candidate configuration. Use these two files in the generator.
 
-  .. image:: images/XML_skillet_generator_XPath.png
+  .. image:: /images/xml_and_skillets/XML_skillet_generator_XPath.png
      :width: 600
-     :align: center
+
 
 The output snippet includes the XPath:
 
@@ -308,9 +308,9 @@ Using the XPath from the examples above
 
 the output from the Explorer shows the tag XML elements along with a json snippet.
 
-  .. image:: images/XML_explorer_element.png
+  .. image:: /images/xml_and_skillets/XML_explorer_element.png
      :width: 600
-     :align: center
+
 
 This entry has 3 tags: block_list, tag name, and demo_tag.
 
@@ -328,9 +328,9 @@ The new XPath to query is
 
 and the output is a list of items: the tag names.
 
-  .. image:: images/XML_explorer_list_of_names.png
+  .. image:: /images/xml_and_skillets/XML_explorer_list_of_names.png
      :width: 600
-     :align: center
+
 
 Output a List Filtered on a Text Value
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -346,9 +346,9 @@ The new XPath to query is
 
 and the output is now a list of items, the tag names with color1.
 
-  .. image:: images/XML_explorer_filter_text.png
+  .. image:: /images/xml_and_skillets/XML_explorer_filter_text.png
      :width: 600
-     :align: center
+
 
 Let's break this down referencing the XML element output in :ref:`Output an XML Element`
 

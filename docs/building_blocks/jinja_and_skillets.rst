@@ -8,7 +8,7 @@ Jinja is a templating language for Python and used within the skillet framework 
     * apply filters to format data
     * leverage filters for validation testing logic
 
-  .. image:: images/jinja_engine.png
+  .. image:: /images/jinja_and_skillets/jinja_engine.png
      :width: 800
 
 Content objects are collected from the skillet and passed through the rendering engine.

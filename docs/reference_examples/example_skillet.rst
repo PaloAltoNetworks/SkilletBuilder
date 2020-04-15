@@ -79,5 +79,5 @@ Rendered Form
 
 This `.meta-cnc.yaml` will produce the following web form in Panhandler:
 
-.. image:: images/ph-example-skillet.png
+.. image:: /images/example_skillet/ph-example-skillet.png
 

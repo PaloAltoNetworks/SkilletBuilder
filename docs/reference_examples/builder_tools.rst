@@ -18,9 +18,9 @@ Used to generate an XML configuration skillet for PAN-OS or Panorama.
 The generator creates an output of XPath and XML element snippets by analyzing
 the difference between two XML configuration files.
 
-.. image:: images/Generate_Skillet_tile.png
+.. image:: /images/builder_tools/Generate_Skillet_tile.png
    :width: 300
-   :align: center
+
 
 Generate a Skillet steps:
 
@@ -30,9 +30,9 @@ Generate a Skillet steps:
 
 When running the generator choose between offline (From uploaded Configs) and online (From Running NGFW) mode.
 
-.. image:: images/Generate_Skillet_running_or_offline.png
+.. image:: /images/builder_tools/Generate_Skillet_running_or_offline.png
    :width: 250
-   :align: center
+
 
 Generator Offline Mode
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -40,9 +40,9 @@ Generator Offline Mode
   Recommended when generating a skillet from a custom base configuration typically
   for add-on configuration skillets. Select a base and modified configuration to compare.
 
-  .. image:: images/Generate_Skillet_offline_option.png
+  .. image:: /images/builder_tools/Generate_Skillet_offline_option.png
      :width: 600
-     :align: center
+
 
 
 .. NOTE::
@@ -56,9 +56,9 @@ Generator Online Mode
   Enter the device API credentials to export the running or candidate configuration
   file.
 
-  .. image:: images/Generate_Skillet_online_mode_menu.png
+  .. image:: /images/builder_tools/Generate_Skillet_online_mode_menu.png
      :width: 600
-     :align: center
+
 
 
 .. NOTE::
@@ -70,9 +70,9 @@ Skeleton YAML file attributes
 
   After the files are captured the user is prompted for the skillet preamble information.
 
-  .. image:: images/Generate_Skillet_yaml_skeleton.png
+  .. image:: /images/builder_tools/Generate_Skillet_yaml_skeleton.png
      :width: 600
-     :align: center
+
 
 |
 
@@ -103,16 +103,16 @@ Preview XML Changes
 
 Analyzes the difference between two XML files and outputs the changes in red.
 
-  .. image:: images/Preview_XML_Changes_tile.png
+  .. image:: /images/builder_tools/Preview_XML_Changes_tile.png
      :width: 300
-     :align: center
+
 
 When running the previewer choose between offline (From uploaded Configs) and online (From Running NGFW) mode.
 
 
-.. image:: images/Preview_XML_Changes_offline_or_online_mode.png
+.. image:: /images/builder_tools/Preview_XML_Changes_offline_or_online_mode.png
    :width: 600
-   :align: center
+
 
 XML Preview Offline Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~
@@ -120,9 +120,9 @@ XML Preview Offline Mode
   Recommended when previewing a skillet from a custom base configuration.
   Select a base and modified configuration to compare.
 
-  .. image:: images/Preview_XML_Changes_offline_mode_files.png
+  .. image:: /images/builder_tools/Preview_XML_Changes_offline_mode_files.png
      :width: 600
-     :align: center
+
 
 
 .. NOTE::
@@ -136,9 +136,9 @@ XML Preview Online Mode
   Enter the device API credentials to export the running or candidate configuration
   file.
 
-  .. image:: images/Preview_XML_Changes_online_mode_API_values.png
+  .. image:: /images/builder_tools/Preview_XML_Changes_online_mode_API_values.png
      :width: 600
-     :align: center
+
 
 View the Changes
 ~~~~~~~~~~~~~~~~
@@ -147,17 +147,17 @@ View the Changes
   file with changes highlighted with red text.
 
 
-  .. image:: images/Preview_XML_Changes_modifications_xpaths.png
+  .. image:: /images/builder_tools/Preview_XML_Changes_modifications_xpaths.png
      :width: 600
-     :align: center
+
 
   |
 
   The XPaths are active links and will jump to its respective section of the configuration file.
 
-  .. image:: images/Preview_XML_Changes_modifications_elements.png
+  .. image:: /images/builder_tools/Preview_XML_Changes_modifications_elements.png
      :width: 400
-     :align: center
+
 
   The red text associates to the tag and external-list XPath configuration elements.
 
@@ -173,15 +173,15 @@ Generate Set CLI Commands
 In some cases it is preferred to use set commands instead of XML API configuration. This skillet finds the difference
 between two configuration files and outputs the associated set commands.
 
-  .. image:: images/Generate_Set_Commands_tile.png
+  .. image:: /images/builder_tools/Generate_Set_Commands_tile.png
      :width: 300
-     :align: center
+
 
 When running the generator choose between offline (From uploaded Configs) and online (From Running NGFW) mode.
 
-.. image:: images/Generate_Set_Commands_offline_or_offline_selection.png
+.. image:: /images/builder_tools/Generate_Set_Commands_offline_or_offline_selection.png
    :width: 600
-   :align: center
+
 
 Generate Set Commands Offline Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,9 +189,9 @@ Generate Set Commands Offline Mode
   Recommended when generating a skillet from a custom base configuration typically
   for add-on configuration skillets. Select a base and modified configuration to compare.
 
-  .. image:: images/Generate_Set_Commands_offline_files_to_upload.png
+  .. image:: /images/builder_tools/Generate_Set_Commands_offline_files_to_upload.png
      :width: 600
-     :align: center
+
 
 
 .. NOTE::
@@ -205,18 +205,18 @@ Generate Set Commands Online Mode
   Enter the device API credentials to export the running or candidate configuration
   file.
 
-  .. image:: images/Generate_Set_Commands_online_mode_API_values.png
+  .. image:: /images/builder_tools/Generate_Set_Commands_online_mode_API_values.png
      :width: 600
-     :align: center
+
 
 View the Rendered Output
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
   A list of output set commands will be displayed on screen.
 
-  .. image:: images/Generate_Set_Commands_set_commands.png
+  .. image:: /images/builder_tools/Generate_Set_Commands_set_commands.png
      :width: 600
-     :align: center
+
 
 
 .. NOTE::
@@ -231,9 +231,9 @@ Skillet Test Tool
 The test tool is used to play skillets without the need to upload to Github and update the repo in panHandler.
 Debug outputs can be used for enhanced skillet testing.
 
-  .. image:: images/Skillet_Test_Tool_tile.png
+  .. image:: /images/builder_tools/Skillet_Test_Tool_tile.png
      :width: 300
-     :align: center
+
 
 When running the test tool choose between Offline and Online modes. Also select Debug mode if required.
 
@@ -243,9 +243,9 @@ Skillet Test Offline Mode
     * **validation skillets**: paste in a configuration text file without requiring API access
     * **other skillet types**: not applicable and may generate errors
 
-  .. image:: images/Skillet_Test_Tool_offline_mode_text_box.png
+  .. image:: /images/builder_tools/Skillet_Test_Tool_offline_mode_text_box.png
      :width: 800
-     :align: center
+
 
 .. NOTE::
     Export the configuration files from the NGFW or Panorama before running the test tool.
@@ -257,9 +257,9 @@ Skillet Test Online Mode
     * **validation**: use API credentials to export the file and run the validation
     * **rest**: run the skillet with REST credentials and output the results
 
-  .. image:: images/Skillet_Test_Tool_oneline_mode_API_values.png
+  .. image:: /images/builder_tools/Skillet_Test_Tool_oneline_mode_API_values.png
      :width: 800
-     :align: center
+
 
 Debug Mode
 ~~~~~~~~~~
@@ -271,18 +271,18 @@ Debug Mode
     * context variable values
     * For validation skillets this shows the capture outputs to assist with skillet testing and tuning.
 
-  .. image:: images/Skillet_Test_Tool_debug_mode_select.png
+  .. image:: /images/builder_tools/Skillet_Test_Tool_debug_mode_select.png
      :width: 800
-     :align: center
+
 
 Skillet Content
 ~~~~~~~~~~~~~~~
 
   This is the skillet to be played. Paste in the complete .meta-cnc.yaml file content including the preamble.
 
-  .. image:: images/Skillet_Test_Tool_skillet_content.png
+  .. image:: /images/builder_tools/Skillet_Test_Tool_skillet_content.png
      :width: 800
-     :align: center
+
 
 .. NOTE::
     In panHandler this content is cached and will appear each time the Test Tool skillet is used. This allows for
@@ -295,9 +295,9 @@ Test Tool Output
 
   Based on the skillet type and debug mode, output will vary.
 
-  .. image:: images/Skillet_Test_Tool_output.png
+  .. image:: /images/builder_tools/Skillet_Test_Tool_output.png
      :width: 800
-     :align: center
+
 
 More detailed outputs and using the test tool is covered in the details for building skillets.
 
@@ -311,9 +311,9 @@ The Configuration Explorer Tool is used to display XML elements and values based
     * Used to discover capture outputs in validation skillets
     * assist with manual exploration of XPath and XML element associations
 
-.. image:: images/Skillet_Test_Tool_tile.png
+.. image:: /images/builder_tools/Skillet_Test_Tool_tile.png
    :width: 300
-   :align: center
+
 
 
 When running the explorer tool choose between Offline and Online modes. Also select Debug mode if required.
@@ -323,9 +323,9 @@ Config Explorer Offline Mode
 
   In offline mode the user pastes in the XML configuration file without the use of API interactions.
 
-  .. image:: images/Configuration_Explorer_Tool_offline_mode_input.png
+  .. image:: /images/builder_tools/Configuration_Explorer_Tool_offline_mode_input.png
      :width: 800
-     :align: center
+
 
 .. NOTE::
     Export the configuration files from the NGFW or Panorama before running the test tool.
@@ -335,9 +335,9 @@ Config Explorer Online Mode
 
   Exports the device configuration based on the API values.
 
-  .. image:: images/Configuration_Explorer_Tool_online_mode_API_values.png
+  .. image:: /images/builder_tools/Configuration_Explorer_Tool_online_mode_API_values.png
      :width: 800
-     :align: center
+
 
 
 XPATH Query
@@ -345,9 +345,9 @@ XPATH Query
 
   The XPath query to use against the configuration file.
 
-  .. image:: images/Configuration_Explorer_Tool_xpath_query.png
+  .. image:: /images/builder_tools/Configuration_Explorer_Tool_xpath_query.png
      :width: 500
-     :align: center
+
 
 |
 
@@ -359,9 +359,9 @@ Configuration Explorer Output
   The output shows the results of the XPath query as an XML element, value, or list of values. This is determined by
   the input query syntax.
 
-  .. image:: images/Configuration_Explorer_Tool_output.png
+  .. image:: /images/builder_tools/Configuration_Explorer_Tool_output.png
      :width: 500
-     :align: center
+
 
 |
 
@@ -379,9 +379,9 @@ Sample Configuration Skillet
 
 This skillet provides a reference configuration skillet used in the tutorial content.
 
-  .. image:: images/Sample_Configuration_tile.png
+  .. image:: /images/builder_tools/Sample_Configuration_tile.png
      :width: 300
-     :align: center
+
 
 Configuration includes:
 
@@ -389,9 +389,9 @@ Configuration includes:
     * external-list snippet with external-list name, description, and URL variables
     * Inbound and Outbound block security policies referencing tag and external-list variables
 
-  .. image:: images/Sample_Configuration_input_variables.png
+  .. image:: /images/builder_tools/Sample_Configuration_input_variables.png
      :width: 600
-     :align: center
+
 
 .. _View the details of the configuration skillet: https://github.com/PaloAltoNetworks/SkilletBuilder/blob/master/sample_xml_edl_policy/.meta-cnc.yaml
 
@@ -405,9 +405,9 @@ Sample Validation Skillet
 
 This skillet provides a reference validation skillet used in the tutorial content.
 
-  .. image:: images/Sample_Validation_tile.png
+  .. image:: /images/builder_tools/Sample_Validation_tile.png
      :width: 300
-     :align: center
+
 
 Validation includes:
 
@@ -416,9 +416,9 @@ Validation includes:
     * check that all url-filtering profiles block category malware
     * check that all allow security policies include a profile or group
 
-  .. image:: images/Sample_Validation_output.png
+  .. image:: /images/builder_tools/Sample_Validation_output.png
      :width: 800
-     :align: center
+
 
 .. _View the details of the validation skillet: https://github.com/PaloAltoNetworks/SkilletBuilder/blob/master/sample_validation_skillet/.meta-cnc.yaml
 
@@ -431,9 +431,9 @@ Skillet YAML File Template
 
 This skillet uses a simple text render to generate a starter .meta-cnc.yaml formatted output.
 
-  .. image:: images/Skeleton_YAML_tile.png
+  .. image:: /images/builder_tools/Skeleton_YAML_tile.png
      :width: 300
-     :align: center
+
 
 Skeleton file inputs include:
 
@@ -443,9 +443,9 @@ Skeleton file inputs include:
   * Collection Name: contextual name to group skillets
   * Skillet type: type of skillet (eg. panos, panorama, pan_validation)
 
-  .. image:: images/Skeleton_YAML_inputs.png
+  .. image:: /images/builder_tools/Skeleton_YAML_inputs.png
      :width: 800
-     :align: center
+
 
 .. _View the skeleton YAML template: https://github.com/PaloAltoNetworks/SkilletBuilder/blob/master/skeleton_yaml/meta-cnc-skeleton.conf
 

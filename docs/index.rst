@@ -10,17 +10,17 @@ Skillet Builder Documentation
    :maxdepth: 1
    :caption: Getting Started
 
-   overview
-   skillet_framework
-   panhandler
+   getting_started/overview
+   getting_started/skillet_framework
+   getting_started/panhandler
 
 .. toctree::
    :caption: Building Blocks
    :maxdepth: 1
 
-   xml
-   jinja
-   jinja_custom_filters
+   building_blocks/xml_and_skillets
+   building_blocks/jinja_and_skillets
+   building_blocks/jinja_custom_filters
 
 .. toctree::
    :maxdepth: 1
@@ -36,10 +36,10 @@ Skillet Builder Documentation
    :maxdepth: 1
    :caption: References and Examples
 
-   skillet_types
-   builder_tools
-   variables
-   skillets
-   example_skillet
-   validation_skillet
-   examples/example_skillets
+   reference_examples/skillet_types
+   reference_examples/builder_tools
+   reference_examples/variables
+   reference_examples/skillets
+   reference_examples/example_skillet
+   reference_examples/validation_skillet
+   reference_examples/examples/example_skillets
