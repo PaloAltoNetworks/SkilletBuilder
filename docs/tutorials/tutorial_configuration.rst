@@ -348,7 +348,7 @@ Generate the Skillet
                                   <recurring>
                                     <five-minute/>
                                   </recurring>
-                                  <description/>
+                                  <description>edl_description</description>
                                   <url>http://someurl.com</url>
                                 </ip>
                               </type>
@@ -490,7 +490,7 @@ Add Variables to Snippets
                       <recurring>
                         <five-minute/>
                       </recurring>
-                      <description>{{ edl_description }}<description/>
+                      <description>{{ edl_description }}</description>
                       <url>{{ edl_url }}</url>
                     </ip>
                   </type>

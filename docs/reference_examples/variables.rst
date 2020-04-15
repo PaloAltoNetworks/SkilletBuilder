@@ -7,6 +7,10 @@ Variables in a Skillet determine what a user can modify or customize before depl
 generated into a web form that a user can fill out. Each variable can have it's own 'type' determined by the 'type_hint'
 attribute in the variable declaration. This page lists all the available type hints for reference.
 
+The Skillet repo contains a `sample skillet with all inputs`_.
+
+.. _sample skillet with all inputs: https://github.com/PaloAltoNetworks/Skillets/blob/master/inputs/all_inputs/.meta-cnc.yaml
+
 Variable Types
 --------------
 
@@ -85,6 +89,22 @@ email
     default: support@noway.com
     type_hint: email
     help_text: Enter your email address here to receive lots of spam
+
+|
+
+
+file
+~~~~
+
+  This type will upload a file to a temporary directory and set the variable value to the full path to the file. This
+  is useful for python Skillets to take the file path as an input and open and handle the file contents itself.
+
+.. code-block:: yaml
+
+  - name: uploaded_file_path
+    description: Upload a File
+    default:
+    type_hint: file
 
 |
 
@@ -315,6 +335,8 @@ dynamic UI elements in the following cases:
 
 |
 
+.. _variable_source:
+
 source
 ~~~~~~
 
@@ -375,6 +397,8 @@ source
 
 
 |
+
+.. _variable_toggle_hint:
 
 toggle_hint
 ~~~~~~~~~~~

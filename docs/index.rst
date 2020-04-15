@@ -21,6 +21,7 @@ Skillet Builder Documentation
    building_blocks/xml_and_skillets
    building_blocks/jinja_and_skillets
    building_blocks/jinja_custom_filters
+   building_blocks/capture_output
 
 .. toctree::
    :maxdepth: 1
@@ -38,6 +39,7 @@ Skillet Builder Documentation
 
    reference_examples/skillet_types
    reference_examples/builder_tools
+   reference_examples/metadata_attributes
    reference_examples/variables
    reference_examples/skillets
    reference_examples/example_skillet
