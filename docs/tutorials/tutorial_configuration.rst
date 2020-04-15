@@ -11,7 +11,7 @@ The configuration tutorial will create a simple configuration including:
   * a Tag object
   * Security rules (Inbound and Outbound) referencing the EDL and tag objects
 
-The video provides an end-to-end perspective for building a configuration skillet as complement
+The video provides an end-to-end perspective for building a configuration skillet as a complement
 to the documentation content.
 
 .. raw:: html
@@ -19,6 +19,7 @@ to the documentation content.
     <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
     id=17392613-262a-4606-a11a-ab6c010b894e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
     interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+|
 
 Content is grouped into 4 basic sections specific to each task category:
 
@@ -48,7 +49,7 @@ Content is grouped into 4 basic sections specific to each task category:
 3- Test and Troubleshoot
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Test against a live device and Fix/Tune as needed.
+  Test against a live device and fix/tune as needed.
 
   * Use the :ref:`Skillet Test Tool` to quick test the skillet
   * Import the skillet into panHandler to test web UI and config loading
