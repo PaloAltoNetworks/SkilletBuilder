@@ -11,7 +11,7 @@ This tutorial walks through the creation and testing of a validation skillet tha
   * Check if all configured URL-filtering profiles are blocking the malware category
   * Check if all 'allow' security rules are configured with a security profile or group
 
-Unlike configuration skillets that can easy start with the difference between two configuration files, validation
+Unlike configuration skillets that can start with the difference between two configuration files, validation
 skillets are more open-ended. Therefore builders need to learn the mechanics of validation skillets to apply to their
 own use cases. This includes capturing outputs as variables and using them in boolean tests.
 
@@ -197,8 +197,8 @@ for the skillet ID, label, description, and collection name. Select `validation`
  .. image:: /images/validation_tutorial/skeleton_yaml_file.png
      :width: 600
 
-Paste the output into the placeholder .meta-cnc.yaml file. The preamble contains the values from the web form. They
-key attributed is the type: pan_validation. This defines this as a validation skillet. You can delete the text
+Paste the output into the placeholder .meta-cnc.yaml file. The preamble contains the values from the web form. The
+key attribute is the type: pan_validation. This defines this as a validation skillet. You can delete the text
 under the variables and snippets section.
 
 .. code-block:: yaml
@@ -240,7 +240,7 @@ As a reminder, a starter XPath needed for each capture can be found using one or
 covered in :ref:`Tools to Find the XPath`. In the tutorial I'll use the CLI option with `debug cli on` and
 `set cli config-output xml`.
 
-All of the initial testing will be done locally without pushing the skillet to Github using the test tool.
+All of the initial testing will be done locally using the test tool without pushing the skillet to Github.
 After all of the tests are working we'll push to Github and do final review using the panHandler formatted outputs.
 
 NTP Servers
@@ -251,7 +251,6 @@ The first test will check to see if NTP configuration is present. The CLI comman
 
 .. code-block:: bash
     :emphasize-lines: 1, 6, 11-18
-    :name: show deviceconfig system ntp-servers
 
     admin@homeSkilletFirewall# show deviceconfig system ntp-servers
     (container-tag: deviceconfig container-tag: system container-tag: ntp-servers)
@@ -428,8 +427,7 @@ to present the results and is used for debugging purposes.
     }
 
 Under pan_validation.ntp_servers_test you see the results, items read from the YAML file, and an output message
-selected based on True or False results. If the test results aren't as expected, check the running configuration
-and the capture output and test items in the YAML file.
+selected based on True or False results.
 
 The second section of the test output is the YAML text. The third section shows all of the variable values.
 
@@ -469,20 +467,20 @@ The second section of the test output is the YAML text. The third section shows 
 
 This allows you to see the ntp_servers object content read from the NGFW. In this case the servers are configured.
 An empty value is typically the result of an empty NGFW configuration or an incorrect capture_object XPath.
+If the test results aren't as expected review the running configuration to make sure it aligns with the context output.
 
 This test looks good so lets move on to the next one.
 
 Password Complexity
 ~~~~~~~~~~~~~~~~~~~
 
-For this test we'll focus on the highlights. Review the previous NTP servers test for attribute explanations.
+For this test we'll just cover the highlights. Review the previous NTP servers test for attribute explanations.
 
 This test checks to see if password complexity is enabled and if the minimum password length is >=12.
 The CLI command to view the NTP configuration is `show deviceconfig system ntp-servers`.
 
 .. code-block:: bash
     :emphasize-lines: 1, 6, 11-21
-    :name: show deviceconfig system ntp-servers
 
     admin@homeSkilletFirewall# show mgt-config password-complexity
     (container-tag: mgt-config container-tag: password-complexity)
@@ -536,11 +534,11 @@ The output shows two key items.
     </password-complexity>
 
 In this example we're explicitly looking for the `enabled` and `minimum-length` settings.
-Instead of tags we're focused on the element text value. The 'yes' between the <enabled> tags
+Instead of tags we're focused on the element text values: the 'yes' between the <enabled> tags
 and the '12' between the <minimum-length> tags.
 
 Design choices: we could create two unique capture_value outputs for each item with more granular XPaths
-but in this case I've opted to check items from the one object.
+but in this case I've opted to test items from a single password-complexity object.
 This is useful if I later decide to add more tests for various password-complexity settings.
 
 .. code-block:: yaml
@@ -556,11 +554,11 @@ This is useful if I later decide to add more tests for various password-complexi
             capture_object: /config/mgt-config/password-complexity
 
 In this example I've added the output for password_complexity to the ntp_servers output. This shows how you can
-easily add more items under one outputs attribute. You can also create a new capture section. We'll do that with
+add more captures under one outputs attribute. You could also create a new capture section. We'll do that with
 the next test.
 
 Add a new test section. This one is called password_complexity_test and also uses two mini tests to get an aggregate
-result.
+result. These could optionally be two unique tests with their own test results depending on design choices.
 
 .. code-block:: yaml
 
@@ -583,18 +581,16 @@ Let's break it down
   object, no dot notation stepping down the configuration is needed. The expression == yes is used for the test.
   If enabled is 'yes' the test result is True. Otherwise we get a False.
 
-  The second test is similar using the minimum-length tag. This expression check >= 12 and if the configuration
+  The second test is similar using the minimum-length tag. This expression checks >= 12 and if the configuration
   setting meets this condition, a True result is returned.
 
-Copy the password-complexity outputs line and the new test into the .meta-cnc.yaml file. Then copy the full
+Copy the password-complexity outputs lines and the new test into the .meta-cnc.yaml file. Then copy the full
 skillet into the Test Tool and run.
 
 .. NOTE::
     make sure the YAML file alignments are correct or you'll get errors running the skillet.
 
-You'll now see both test results in the output. At this stage go into the NGFW and modify/delete the
-NTP and password-complexity settings to see the results change.
-
+You'll now see both test results in the output.
 
 .. code-block:: yaml
 
@@ -650,7 +646,7 @@ URL-Filtering and Malware
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The prior tests were looking at very specific items: primary and secondary NTP settings and password-complexity
-configuration. This test however will query across a set of URL-filtering objects, names unknown. So the logic
+configuration. This test however will query across a set of URL-filtering objects, their names unknown. So the logic
 is a bit more fuzzy.
 
 The goal is to get a list of all URL-filtering profiles, specifically the names. Then get the names of all profiles
@@ -733,7 +729,7 @@ where <block> <member> includes malware. This requires :ref:`Parsing XML` to cap
 
 The first step is to put the XPath into the :ref:`Configuration Explorer Tool` and begin to tune the outputs.
 With an active connection to the NGFW, use Online mode and enter the XPath into the XPath Query field.
-The output will show the XML element same output as the CLI show command. The goal is is to make sure we have
+The output will show the XML element, the same output as the CLI show command. The goal is is to make sure we have
 a solid starting point.
 
 Now run the query again with `/entry/@name` appended to the XPath. The Execution results will be a list of profile
@@ -792,7 +788,7 @@ The output is now just <member>malware</member> so we've limited to these config
 The last part of the query is to step back up the tree to the <entry> level and grab the names. This requires
 the '..' notation similar to returning up a level in a Linux directory path. Looking back at the XML element
 we have to go up two levels: <member> to <block>, <block> to <entry>. So we'll append '/../../' to the
-end of the XPath. Then since we only want the names, append again with /@name. This is a long XPath query.
+end of the XPath. Since we only want the names, append again with /@name. Yes this is a long XPath query string.
 
 .. code-block:: json
 
@@ -808,7 +804,7 @@ end of the XPath. Then since we only want the names, append again with /@name. T
     Exception-URL
 
 So the output we need is based on the XML query above to get the list of profile names with malware = block.
-Now that we have the queries, time to get back to our skillet.
+Now that we have the two queries, time to get back to our skillet.
 
 .. code-block:: yaml
 
@@ -831,7 +827,7 @@ Now that we have the queries, time to get back to our skillet.
         filter_items: item not in url_profiles_block_malware
 
 For this validation we'll need two outputs. The first, `url_profiles_block_malware` captures the list of all
-URL-filtering profiles that have malware as block. The capture_list XPath should look familiar. Its the long one.
+URL-filtering profiles that have malware as block. The capture_list XPath should look familiar.
 
 The second uses the capture_list for all the profile names. The variable name is `url_profiles_not_blocking_malware`
 so we need to filter the full list and exclude items with malware set to block. Here we use `filter_items` to step
@@ -857,7 +853,7 @@ then the test passes. If any profiles show up in this list then they don't have 
 Fail. We also use the list variable in the fail_message to show what profiles caused the test to fail.
 
 Now copy the capture output and test sections and paste at the bottom of the .meta-cnc.yaml file. This is the third
-test. Now use the test tool to see the outputs.
+test. Use the test tool to see the outputs.
 
 .. TIP::
     You can create a scratch skillet file with only the capture and test currently begin developed. This is pasted
@@ -885,8 +881,8 @@ I know this is the bad apple by looking at the output_message line and the profi
       }
     }
 
-The other data of interest is the capture values for the two outputs. Useful for debugging when the results
-are not as expected.
+The other data of interest in the Full Context section is the capture values for the two outputs.
+Useful for debugging when the results are not as expected.
 
 .. code-block:: json
 
@@ -911,7 +907,7 @@ Proper testing and tuning would include changing the settings in the NGFW and se
 Security Rules with Profiles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The last test looks across all security rules to see which have a profile or profile-group configured.
+The last test looks across all 'allow' security rules to see which have a profile or profile-group configured.
 Creating this test is similar to the URL-filtering example.
 
 The goal is to get a list of all 'allow' security rules, specifically the names. Then get the names of all rules
@@ -1102,11 +1098,10 @@ security rules names.
     HS-non-def-web-ports
     HS-find-non-def-apps
 
-This is all of the rules but we want only the allow rules. Then we only want the rules with a profile or group
-setting.
+This is all of the rules but first we only want the allow rules.
 
-For the action=allow we'll look one down by removing '/@name' and adding '/action' to the XPath. The output is a list
-of <action> elements.
+For the action=allow we'll look one down level by removing '/@name' and adding '/action' to the XPath.
+The output is a list of <action> elements, a mix of deny and allow.
 
 .. code-block:: json
 
@@ -1146,7 +1141,7 @@ Next we filter to only capture the 'allow' elements by appending action with `[t
     <action>allow</action>
     <action>allow</action>
 
-So at this stage we're only grabbing allow element but we need the names. So now we walk back up the tree
+So at this stage we're only grabbing allow elements but we need their entry names. Next we walk back up the tree
 one level with a `/../` and append the query with `@name` to only return the names.
 
 .. code-block:: json
@@ -1255,7 +1250,7 @@ Now that we have both queries, time to get back to our skillet.
 For this validation we'll need two outputs. The first, `security_policies_with_profile_or_group` captures the list of all
 security policies with a profile setting.
 
-The second uses the capture_list for all the allow security rules. The variable name is
+The second uses the capture_list for all of the allow security rules. The variable name is
 `allow_security_policies_without_profile` so we need to filter the full list of rules down to the items
 that are not in the `security_policies_with_profile_or_group` list. The delta is our list of interest showing
 which allow rules don't have a profile setting.
@@ -1330,11 +1325,11 @@ Push to Github and Test in panHandler
 Now the .meta-cnc.yaml file has the four tests ready to go. Push the skillet to Github and import into panHandler.
 Run the skillet to view results.
 
- .. image:: /images/validation_tutorial/validation_output.png
-     :width: 800
+   .. image:: /images/validation_tutorial/validation_output.png
+       :width: 800
 
-    * review label text, results, and documentation links
-    * expand labels and review the pass/fail messages
+  * review label text, results, and documentation links
+  * expand labels and review the pass/fail messages
 
 .. Note::
     The Severity settings are optional and added into the tests for demonstration. Severity can be used
@@ -1344,4 +1339,5 @@ Edit the README.md Docs
 -----------------------
 
 The final step as with any skillet is to add the :ref:`Documentation` in the skillet REAMD.md file.
+
 
