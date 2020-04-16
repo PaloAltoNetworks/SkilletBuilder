@@ -49,7 +49,7 @@ You can also view the short video giving a brief overview of validation skillets
 |
 
 Example .meta-cnc.yaml File
----------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 This tutorial will be recreating the .meta-cnc.yaml file in the SkilletBuilder repo as the `sample_validation_skillet`_
 
@@ -198,7 +198,8 @@ for the skillet ID, label, description, and collection name. Select `validation`
      :width: 600
 
 Paste the output into the placeholder .meta-cnc.yaml file. The preamble contains the values from the web form. They
-key attributed is the type: pan_validation. This defines this as a validation skillet.
+key attributed is the type: pan_validation. This defines this as a validation skillet. You can delete the text
+under the variables and snippets section.
 
 .. code-block:: yaml
 
@@ -223,7 +224,694 @@ key attributed is the type: pan_validation. This defines this as a validation sk
         - Tutorial
 
 
-NTP Server Test
----------------
+Validation Tests
+----------------
+
+The tutorial will step through each validation test including the respective capture output.
+
+Each test will work through the following:
+
+    * review the configuration to see what we will capture and test
+    * specify the capture output parameters
+    * define the test
+    * add messaging and documentation links to each test
+
+As a reminder, a starter XPath needed for each capture can be found using one or more of the techniques
+covered in :ref:`Tools to Find the XPath`. In the tutorial I'll use the CLI option with `debug cli on` and
+`set cli config-output xml`.
+
+All of the initial testing will be done locally without pushing the skillet to Github using the test tool.
+After all of the tests are working we'll push to Github and do final review using the panHandler formatted outputs.
+
+NTP Servers
+~~~~~~~~~~~
+
+The first test will check to see if NTP configuration is present. The CLI command to view the NTP configuration is
+`show deviceconfig system ntp-servers`.
+
+.. code-block:: bash
+    :emphasize-lines: 1, 6, 11-18
+    :name: show deviceconfig system ntp-servers
+
+    admin@homeSkilletFirewall# show deviceconfig system ntp-servers
+    (container-tag: deviceconfig container-tag: system container-tag: ntp-servers)
+    ((eol-matched: . #t) (eol-matched: . #t) (xpath-prefix: . /config/devices/entry[@name='localhost.localdomain'])
+    (context-inserted-at-end-p: . #f))  /usr/local/bin/pan_ms_client --config-mode=xml --set-prefix='set deviceconfig
+    system ' --cookie=5245413957557299 <<'EOF'  |sed 2>/dev/null -e 's/devices localhost.localdomain//'  |/usr/bin/less -X -E -M
+    <request cmd="get" obj="/config/devices/entry[@name='localhost.localdomain']/deviceconfig/system/ntp-servers"></request>
+    EOF
+
+    <response status="success" code="19">
+      <result total-count="1" count="1">
+        <ntp-servers>
+          <primary-ntp-server>
+            <ntp-server-address>0.pool.ntp.org</ntp-server-address>
+          </primary-ntp-server>
+          <secondary-ntp-server>
+            <ntp-server-address>1.pool.ntp.org</ntp-server-address>
+          </secondary-ntp-server>
+        </ntp-servers>
+      </result>
+    </response>
+    [edit]
+    admin@homeSkilletFirewall#
+
+The output shows two key items.
+
+**the XPath after 'obj='**
+
+.. code-block:: bash
+
+    /config/devices/entry[@name='localhost.localdomain']/deviceconfig/system/ntp-servers
+
+**the NTP servers XML element**
+
+.. code-block:: xml
+
+    <ntp-servers>
+      <primary-ntp-server>
+        <ntp-server-address>0.pool.ntp.org</ntp-server-address>
+      </primary-ntp-server>
+      <secondary-ntp-server>
+        <ntp-server-address>1.pool.ntp.org</ntp-server-address>
+      </secondary-ntp-server>
+    </ntp-servers>
+
+Since the user can set the server address to any value, the focus will be on the tags. In this case the NTP
+configuration exists if the <ntp-server-address> tags are present under the primary and secondary server settings.
+This leads to the decision to use the :ref:`tag_present` custom jinja filter with :ref:`capture_object`. The capture
+object lets us capture the entire XML element to use in the test.
+
+The first part of the snippet is the capture output, where we'll use capture_object.
+
+.. code-block:: yaml
+
+  - name: device_config_file
+    cmd: parse
+    variable: config
+    outputs:
+      - name: ntp_servers
+        capture_object: /config/devices/entry[@name='localhost.localdomain']/deviceconfig/system/ntp-servers
+
+Capture output attribute settings. Let's outline each item for the first test.
+
+    * name: contextual name for this capture section
+    * cmd: using `parse` to parse the config file
+    * variable: set to config to parse the config file as the raw input content
+    * outputs: where we can define one or more output variables
+    * name: unique variable where the NTP configuration object is stored
+    * capture_object: XPath for the NTP configuration
+
+Now with the ntp-servers dict object, we can craft the test and associated messages and links. These are added to the
+snippets section of the .meta-cnc.yaml file.
+
+.. code-block:: yaml
+
+    - name: ntp_servers_test
+      label: configure primary and secondary ntp servers
+      test: |
+        (
+        ntp_servers | tag_present('primary-ntp-server.ntp-server-address')
+        and ntp_servers | tag_present('secondary-ntp-server.ntp-server-address')
+        )
+      fail_message: |
+        time server configuration is reccommended to ensure the firewall clock is in sync with external service and logging
+        platforms.
+      pass_message: recommended primary and secondary ntp servers are configured
+      documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-services-services
+
+Test section attribute settings. Let's outline each item as part of the first test.
+
+    * name: unique name for the test
+    * label: panHandler test results display line item
+    * test: test performed; this example uses `and` to test two items
+    * fail_message: what to display if the test fails
+    * pass_message: what to display if the test passes
+    * documentation link: helper content specific to the test
+
+Let's look at the test attribute in more detail. Everything else should be fairly straightforward.
+
+.. code-block:: yaml
+
+      test: |
+        (
+        ntp_servers | tag_present('primary-ntp-server.ntp-server-address')
+        and ntp_servers | tag_present('secondary-ntp-server.ntp-server-address')
+        )
+
+Let's break it down.
+
+  The first mini test uses the ntp_servers capture object as the input. The check is after the pipe '|' using
+  a custom filter 'tag_present'. The dot notation is used to step down into the object to primary-ntp-server
+  to get to the tag of interest <ntp-server-address>. If this tag is present the test returns `True`.
+
+  The second mini test performs an identical check but looks at the secondary-ntp-server portion of the configuration
+  to see if the <ntp-server-address> tag is part of the configuration. If this tag is present the test returns
+  `True`.
+
+  In this case we want both servers to be configured so the `and` is used with outer parentheses to combine each
+  isolated test into one boolean test output. The test is `True` only if both mini tests return `True`. A `True`
+  will display the pass_message and a `False` will output the fail message.
+
+  The pipe after 'test:' is a formatting option to allow for multiline inputs. Common for aggregate tests.
+
+With the capture output and test put together we get the following in the snippets section.
+
+.. code-block:: yaml
+
+      - name: device_config_file
+        cmd: parse
+        variable: config
+        outputs:
+          - name: ntp_servers
+            capture_object: /config/devices/entry[@name='localhost.localdomain']/deviceconfig/system/ntp-servers
+
+    # check that ntp servers are configured
+      - name: ntp_servers_test
+        label: configure primary and secondary ntp servers
+        test: |
+          (
+          ntp_servers | tag_present('primary-ntp-server.ntp-server-address')
+          and ntp_servers | tag_present('secondary-ntp-server.ntp-server-address')
+          )
+        fail_message: |
+          time server configuration is reccommended to ensure the firewall clock is in sync with external service and logging
+          platforms.
+        pass_message: recommended primary and secondary ntp servers are configured
+        documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-services-services
+
+Copy this text to the snippets section of the .meta-cnc.yaml file. Our first test is complete.
+
+Now copy the entire .meta-cnc.yaml text and paste into Skillet Content section of the :ref:`Skillet Test Tool`. You
+should have NGFW access in your sandbox and can use `Running Configuration` as the Online Configuration Source.
+Click `Submit` to play the skillet.
+
+Look at the output from the first section, 'Execution Results'. This shows what would be sent back to the application
+to present the results and is used for debugging purposes.
+
+.. code-block:: json
+
+        {
+      "snippets": {
+        "ntp_servers_test": true
+      },
+      "pan_validation": {
+        "ntp_servers_test": {
+          "results": true,
+          "label": "configure primary and secondary ntp servers",
+          "severity": "low",
+          "documentation_link": "https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-services-services",
+          "test": "(\nntp_servers | tag_present('primary-ntp-server.ntp-server-address')\nand ntp_servers | tag_present('secondary-ntp-server.ntp-server-address')\n)\n",
+          "output_message": "recommended primary and secondary ntp servers are configured"
+        }
+      }
+    }
+
+Under pan_validation.ntp_servers_test you see the results, items read from the YAML file, and an output message
+selected based on True or False results. If the test results aren't as expected, check the running configuration
+and the capture output and test items in the YAML file.
+
+The second section of the test output is the YAML text. The third section shows all of the variable values.
+
+.. code-block:: json
+    :emphasize-lines: 12-19
+
+    hostname = "myFirewall"
+
+    choices = "choices"
+
+    snippets = ""
+
+    device_config_file = {
+      "results": "success",
+      "changed": false
+    }
+
+    ntp_servers = {
+      "ntp-servers": {
+        "primary-ntp-server": {
+          "ntp-server-address": "0.pool.ntp.org"
+        },
+        "secondary-ntp-server": {
+          "ntp-server-address": "1.pool.ntp.org"
+        }
+      }
+    }
+
+    ntp_servers_test = {
+      "results": true,
+      "label": "configure primary and secondary ntp servers",
+      "severity": "low",
+      "documentation_link": "https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-services-services",
+      "test": "(\nntp_servers | tag_present('primary-ntp-server.ntp-server-address')\nand ntp_servers | tag_present('secondary-ntp-server.ntp-server-address')\n)\n",
+      "output_message": "recommended primary and secondary ntp servers are configured"
+    }
+
+This allows you to see the ntp_servers object content read from the NGFW. In this case the servers are configured.
+An empty value is typically the result of an empty NGFW configuration or an incorrect capture_object XPath.
+
+This test looks good so lets move on to the next one.
+
+Password Complexity
+~~~~~~~~~~~~~~~~~~~
+
+For this test we'll focus on the highlights. Review the previous NTP servers test for attribute explanations.
+
+This test checks to see if password complexity is enabled and if the minimum password length is >=12.
+The CLI command to view the NTP configuration is `show deviceconfig system ntp-servers`.
+
+.. code-block:: bash
+    :emphasize-lines: 1, 6, 11-21
+    :name: show deviceconfig system ntp-servers
+
+    admin@homeSkilletFirewall# show mgt-config password-complexity
+    (container-tag: mgt-config container-tag: password-complexity)
+    ((eol-matched: . #t) (eol-matched: . #t) (xpath-prefix: . /config) (context-inserted-at-end-p: . #f))
+    /usr/local/bin/pan_ms_client --config-mode=xml --set-prefix='set mgt-config ' --cookie=9688686339792135 <<'EOF'
+    |sed 2>/dev/null -e 's/devices localhost.localdomain//'  |/usr/bin/less -X -E -M
+    <request cmd="get" obj="/config/mgt-config/password-complexity"></request>
+    EOF
+
+    <response status="success" code="19">
+      <result total-count="1" count="1">
+        <password-complexity>
+          <enabled>yes</enabled>
+          <minimum-length>12</minimum-length>
+          <minimum-uppercase-letters>1</minimum-uppercase-letters>
+          <minimum-lowercase-letters>1</minimum-lowercase-letters>
+          <minimum-numeric-letters>1</minimum-numeric-letters>
+          <minimum-special-characters>1</minimum-special-characters>
+          <block-username-inclusion>yes</block-username-inclusion>
+          <password-history-count>24</password-history-count>
+          <new-password-differs-by-characters>3</new-password-differs-by-characters>
+        </password-complexity>
+      </result>
+    </response>
+    [edit]
+    admin@homeSkilletFirewall#
+
+The output shows two key items.
+
+**the XPath after 'obj='**
+
+.. code-block:: bash
+
+    /config/mgt-config/password-complexity
+
+**the pasword-complexity XML element**
+
+.. code-block:: xml
+    :emphasize-lines: 2-3
+
+    <password-complexity>
+      <enabled>yes</enabled>
+      <minimum-length>12</minimum-length>
+      <minimum-uppercase-letters>1</minimum-uppercase-letters>
+      <minimum-lowercase-letters>1</minimum-lowercase-letters>
+      <minimum-numeric-letters>1</minimum-numeric-letters>
+      <minimum-special-characters>1</minimum-special-characters>
+      <block-username-inclusion>yes</block-username-inclusion>
+      <password-history-count>24</password-history-count>
+      <new-password-differs-by-characters>3</new-password-differs-by-characters>
+    </password-complexity>
+
+In this example we're explicitly looking for the `enabled` and `minimum-length` settings.
+Instead of tags we're focused on the element text value. The 'yes' between the <enabled> tags
+and the '12' between the <minimum-length> tags.
+
+Design choices: we could create two unique capture_value outputs for each item with more granular XPaths
+but in this case I've opted to check items from the one object.
+This is useful if I later decide to add more tests for various password-complexity settings.
+
+.. code-block:: yaml
+    :emphasize-lines: 7-8
+
+      - name: device_config_file
+        cmd: parse
+        variable: config
+        outputs:
+          - name: ntp_servers
+            capture_object: /config/devices/entry[@name='localhost.localdomain']/deviceconfig/system/ntp-servers
+          - name: password_complexity
+            capture_object: /config/mgt-config/password-complexity
+
+In this example I've added the output for password_complexity to the ntp_servers output. This shows how you can
+easily add more items under one outputs attribute. You can also create a new capture section. We'll do that with
+the next test.
+
+Add a new test section. This one is called password_complexity_test and also uses two mini tests to get an aggregate
+result.
+
+.. code-block:: yaml
+
+     - name: password_complexity_test
+        label: configure strong password complexity ( >= 12 chars)
+        test: |
+          (
+          password_complexity | element_value('enabled') == 'yes'
+          and password_complexity | element_value('minimum-length') >= '12'
+          )
+        fail_message: |
+          check that password complexity is enabled with a minimum password length of 12 characters
+        pass_message: |
+          password complexity is enabled with a minimum password length of 12 characters
+        documentation_link: https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-minimum-password-complexity
+
+Let's break it down
+
+  The first test uses element_value and the tag of interest, enabled. Since this is at the top of the captured
+  object, no dot notation stepping down the configuration is needed. The expression == yes is used for the test.
+  If enabled is 'yes' the test result is True. Otherwise we get a False.
+
+  The second test is similar using the minimum-length tag. This expression check >= 12 and if the configuration
+  setting meets this condition, a True result is returned.
+
+Copy the password-complexity outputs line and the new test into the .meta-cnc.yaml file. Then copy the full
+skillet into the Test Tool and run.
+
+.. NOTE::
+    make sure the YAML file alignments are correct or you'll get errors running the skillet.
+
+You'll now see both test results in the output. At this stage go into the NGFW and modify/delete the
+NTP and password-complexity settings to see the results change.
+
+
+.. code-block:: yaml
+
+        {
+          "snippets": {
+            "ntp_servers": true,
+            "password_complexity_test": true
+          },
+          "pan_validation": {
+            "ntp_servers": {
+              "results": true,
+              "label": "configure primary and secondary ntp servers",
+              "severity": "low",
+              "documentation_link": "https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-services-services",
+              "test": "(\nntp_servers | tag_present('primary-ntp-server.ntp-server-address')\nand ntp_servers | tag_present('secondary-ntp-server.ntp-server-address')\n)\n",
+              "output_message": "recommended primary and secondary ntp servers are configured"
+            },
+            "password_complexity_test": {
+              "results": true,
+              "label": "configure strong password complexity ( >= 12 chars)",
+              "severity": "low",
+              "documentation_link": "https://iron-skillet.readthedocs.io/en/docs_dev/viz_guide_panos.html#device-setup-management-minimum-password-complexity",
+              "test": "(\npassword_complexity | element_value('enabled') == 'yes'\nand password_complexity | element_value('minimum-length') >= '12'\n)\n",
+              "output_message": "password complexity is enabled with a minimum password length of 12 characters"
+            }
+          }
+        }
+
+Also review the Full Context section of the output to see the password_complexity captured object.
+
+.. code-block:: yaml
+
+    password_complexity = {
+      "password-complexity": {
+        "enabled": "yes",
+        "minimum-length": "12",
+        "minimum-uppercase-letters": "1",
+        "minimum-lowercase-letters": "1",
+        "minimum-numeric-letters": "1",
+        "minimum-special-characters": "1",
+        "block-username-inclusion": "yes",
+        "password-history-count": "24",
+        "new-password-differs-by-characters": "3"
+      }
+    }
+
+You can modify the NGFW settings and see the changes in the output here. A null value may indicate an empty
+running configuration or incorrect XPath for this capture.
+
+This completes the second test.
+
+URL-Filtering and Malware
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The prior tests were looking at very specific items: primary and secondary NTP settings and password-complexity
+configuration. This test however will query across a set of URL-filtering objects, names unknown. So the logic
+is a bit more fuzzy.
+
+The goal is to get a list of all URL-filtering profiles, specifically the names. Then get the names of all profiles
+with the category malware explicitly set to block. The difference between the two lists of names are the URL-filtering
+profiles that do not have malware set to block. For this test we'll use a built-in :ref:`Jinja Filter` and
+:ref:`capture_list` for the output.
+
+The CLI command to view the URL-filtering profile configuration is `show profiles url-filtering`. The output
+XML element has been greatly edited to only show the malware category for each profile. Actual output will
+be much longer.
+
+
+.. code-block:: bash
+    :emphasize-lines: 1, 8
+
+        admin@homeSkilletFirewall# show profiles url-filtering
+        (container-tag: profiles container-tag: url-filtering)
+        ((eol-matched: . #t) (eol-matched: . #t) (eol-matched: . #t) (xpath-prefix: .
+        /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1'])
+        (context-inserted-at-end-p: . #f)) /usr/local/bin/pan_ms_client --config-mode=xml --set-prefix='set profiles
+        ' --cookie=2581626760981804 <<'EOF'  |sed 2>/dev/null -e 's/devices localhost.localdomain//'
+        |/usr/bin/less -X -E -M <request cmd="get"
+        obj="/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles/url-filtering"></request>
+        EOF
+
+        <response status="success" code="19">
+          <result total-count="1" count="1">
+            <url-filtering>
+              <entry name="Outbound-URL">
+                <block>
+                  <member>malware</member>
+                </block>
+              </entry>
+              <entry name="Alert-Only-URL">
+                <alert>
+                  <member>malware</member>
+                </alert>
+              </entry>
+              <entry name="Exception-URL">
+                <block>
+                  <member>malware</member>
+                </block>
+              </entry>
+            </url-filtering>
+          </result>
+        </response>
+
+The output shows two key items.
+
+**the XPath after 'obj='**
+
+.. code-block:: bash
+
+    /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles/url-filtering
+
+**the URL-filtering XML element**
+
+.. code-block:: xml
+
+        <url-filtering>
+          <entry name="Outbound-URL">
+            <block>
+              <member>malware</member>
+            </block>
+          </entry>
+          <entry name="Alert-Only-URL">
+            <alert>
+              <member>malware</member>
+            </alert>
+          </entry>
+          <entry name="Exception-URL">
+            <block>
+              <member>malware</member>
+            </block>
+          </entry>
+        </url-filtering>
+
+In this example we want to capture a list of all profile names. Then we want to create a list of profiles
+where <block> <member> includes malware. This requires :ref:`Parsing XML` to capture the lists.
+
+The first step is to put the XPath into the :ref:`Configuration Explorer Tool` and begin to tune the outputs.
+With an active connection to the NGFW, use Online mode and enter the XPath into the XPath Query field.
+The output will show the XML element same output as the CLI show command. The goal is is to make sure we have
+a solid starting point.
+
+Now run the query again with `/entry/@name` appended to the XPath. The Execution results will be a list of profile
+names.
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles/url-filtering/entry/@name
+
+    ========================================================================================================================
+
+    xml:
+    List of items:
+
+
+    Outbound-URL
+    Alert-Only-URL
+    Exception-URL
+
+    =========================================================================================================================
+
+    json:
+    [
+      "Outbound-URL",
+      "Alert-Only-URL",
+      "Exception-URL"
+    ]
+
+This gets us closer to what we need for testing: a list of all profile names.
+
+While here we also want to create an XPath query that only returns the names with malware set to block. This requires
+both a filter to limit the results and then walking back up the tree to get the names. Time to experiment.
+
+Appending the base XPath with '/block' will return all of the <block> config elements. But we don't have the entry
+names yet. Then going one level down by adding '/member' will show the member entries.
+Now append the output with 'text()' to only see the category names.
+This is how we can step through the tree and tune the capture.
+
+Time to filter. Remove '/text()' from the end and instead use in a filter with `[text()='malware']` after member.
+The output is now just <member>malware</member> so we've limited to these config elements. But what are the entry names?
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+    /profiles/url-filtering/entry/block/member[text()='malware']
+
+    =======================================================================================
+
+    xml:
+    List of items:
+
+    <member>malware</member>
+    <member>malware</member>
+
+
+The last part of the query is to step back up the tree to the <entry> level and grab the names. This requires
+the '..' notation similar to returning up a level in a Linux directory path. Looking back at the XML element
+we have to go up two levels: <member> to <block>, <block> to <entry>. So we'll append '/../../' to the
+end of the XPath. Then since we only want the names, append again with /@name. This is a long XPath query.
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/
+    profiles/url-filtering/entry/block/member[text()='malware']/../../@name
+
+    ========================================================================================
+
+    xml:
+    List of items:
+
+    Outbound-URL
+    Exception-URL
+
+So the output we need is based on the XML query above to get the list of profile names with malware = block.
+Now that we have the queries, time to get back to our skillet.
+
+.. code-block:: yaml
+
+  - name: url_profile_test
+    cmd: parse
+    variable: config
+    outputs:
+
+      # get list of url profiles with malware explicitly set to block
+      # using this model instead of checking for alert, allow, continue - especially with allow not showing in the config
+      - name: url_profiles_block_malware
+        capture_list: |-
+          /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles/url-filtering/entry
+          /block/member[text()='malware']/../../@name
+
+      # get list of all url profiles then filter to profiles not in url_profiles_block_malware
+      - name: url_profiles_not_blocking_malware
+        capture_list: |-
+          /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles/url-filtering/entry/@name
+        filter_items: item not in url_profiles_block_malware
+
+For this validation we'll need two outputs. The first, `url_profiles_block_malware` captures the list of all
+URL-filtering profiles that have malware as block. The capture_list XPath should look familiar. Its the long one.
+
+The second uses the capture_list for all the profile names. The variable name is `url_profiles_not_blocking_malware`
+so we need to filter the full list and exclude items with malware set to block. Here we use `filter_items` to step
+through all of the names and if its NOT in the url_profiles_block_malware list, add it to this one. Thus we're
+comparing two lists to find the delta. That delta is our list of interest for the test.
+
+The test looks like
+
+.. code-block:: yaml
+
+      - name: check_all_url_profiles_block_malware
+        label: check that all url profiles block category malware
+        test: url_profiles_not_blocking_malware | length == 0
+        severity: high
+        fail_message: |
+          url profiles not blocking malware: {{ url_profiles_not_blocking_malware }}
+        pass_message: |
+          all url profiles are currently blocking the category malware
+        documentation_link: https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/url-filtering/configure-url-filtering.html#
+
+You'll notice the test is very simple. If the `url_profiles_not_blocking_malware` list has a length == 0 (meaning empty)
+then the test passes. If any profiles show up in this list then they don't have malware set to block and cause a test
+Fail. We also use the list variable in the fail_message to show what profiles caused the test to fail.
+
+Now copy the capture output and test sections and paste at the bottom of the .meta-cnc.yaml file. This is the third
+test. Now use the test tool to see the outputs.
+
+.. TIP::
+    You can create a scratch skillet file with only the capture and test currently begin developed. This is pasted
+    into the test tool and removes any clutter from other tests. Once the test is properly configured you can
+    copy back to the master validation YAML file.
+
+The Execution Results show a test fail. This is a good thing since the Alert-Only-URL profile doesn't block malware.
+I know this is the bad apple by looking at the output_message line and the profile name is listed.
+
+.. code-block:: json
+
+    {
+      "snippets": {
+        "check_all_url_profiles_block_malware": false
+      },
+      "pan_validation": {
+        "check_all_url_profiles_block_malware": {
+          "results": false,
+          "label": "check that all url profiles block category malware",
+          "severity": "high",
+          "documentation_link": "https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/url-filtering/configure-url-filtering.html#",
+          "test": "url_profiles_not_blocking_malware | length == 0",
+          "output_message": "url profiles not blocking malware: ['Alert-Only-URL']"
+        }
+      }
+    }
+
+The other data of interest is the capture values for the two outputs. Useful for debugging when the results
+are not as expected.
+
+.. code-block:: json
+
+    url_profiles_block_malware = [
+      "Outbound-URL",
+      "Exception-URL"
+    ]
+
+    url_profiles_not_blocking_malware = [
+      "Alert-Only-URL"
+    ]
+
+You can see the lists captured for each output entry.
+
+.. TIP::
+    If you want to see all of the profile names you can use a capture_list output with the list of names
+    exluding any filters. Even without a test association, the list of names will appear in the debug output
+    as part of the Full Context.
+
+Proper testing and tuning would include changing the settings in the NGFW and seeing the output results.
+
+Security Rules with Profiles
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
 
 
