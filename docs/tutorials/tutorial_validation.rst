@@ -164,14 +164,14 @@ The same file is also shown below.
               # get a list of security policies with a profile or group configured
               - name: security_policies_with_profile_or_group
                 capture_list: |-
-                  /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry
-                  //profile-setting//member/../../../@name
+                  /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+                  /rulebase/security/rules/entry/profile-setting/../@name
 
               # get a list of security policies with action allow
               - name: allow_security_policies_without_profile
                 capture_list: |-
-                  /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry
-                  /action[text()='allow']/../@name
+                  /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+                  /rulebase/security/rules/entry/action[text()='allow']/../@name
                 filter_items: item not in security_policies_with_profile_or_group
 
           # check that all allow security policies have a profile or group
@@ -659,7 +659,7 @@ profiles that do not have malware set to block. For this test we'll use a built-
 :ref:`capture_list` for the output.
 
 The CLI command to view the URL-filtering profile configuration is `show profiles url-filtering`. The output
-XML element has been greatly edited to only show the malware category for each profile. Actual output will
+XML element has been edited to only show the malware category for each profile. Actual output will
 be much longer.
 
 
@@ -911,7 +911,437 @@ Proper testing and tuning would include changing the settings in the NGFW and se
 Security Rules with Profiles
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+The last test looks across all security rules to see which have a profile or profile-group configured.
+Creating this test is similar to the URL-filtering example.
+
+The goal is to get a list of all 'allow' security rules, specifically the names. Then get the names of all rules
+with a profile or profile-group. The difference between the two lists of names will gives us the rules of interest,
+the allow rules without a profile or group. For this test we'll again use a built-in :ref:`Jinja Filter` and
+:ref:`capture_list` for the output.
+
+The CLI command to view the security rules is `show rulebase security rules`. The output
+XML element based on HomeSkillet has been edited to only show the name, action, and profile settings.
+Actual output will be much longer. The example has also modified the HomeSkillet configuration by
+removing the profile settings from the rule HS-non-def-web-ports and using profiles in the rule HS-find-non-def-apps.
+These changes help show the different between profiles and groups while giving us a 'bad rule' that will fail
+the test.
 
 
+.. code-block:: bash
+    :emphasize-lines: 1, 9
 
+        admin@homeSkilletFirewall# show rulebase security rules
+        (container-tag: rulebase container-tag: security container-tag: rules)
+        ((eol-matched: . #t) (eol-matched: . #t) (eol-matched: . #t) (xpath-prefix: .
+        /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1'])
+        (context-inserted-at-end-p: . #f))
+        /usr/local/bin/pan_ms_client --config-mode=xml --set-prefix='set rulebase security '
+        --cookie=7811212055193400 <<'EOF'  |sed 2>/dev/null -e 's/devices localhost.localdomain//'
+        |/usr/bin/less -X -E -M <request cmd="get"
+        obj="/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules"></request>
+        EOF
+
+        <response status="success" code="19">
+          <result total-count="1" count="1">
+            <rules>
+              <entry name="Outbound Block Rule">
+                <action>deny</action>
+              </entry>
+              <entry name="Inbound Block Rule">
+                <action>deny</action>
+              </entry>
+              <entry name="DNS Sinkhole Block">
+                <action>deny</action>
+              </entry>
+              <entry name="HS-block-quic">
+                <action>deny</action>
+              </entry>
+              <entry name="HS-no-unknown-URL-xfer">
+                <profile-setting>
+                  <group>
+                    <member>Outbound-Unknown-URL</member>
+                  </group>
+                </profile-setting>
+                <action>allow</action>
+              </entry>
+              <entry name="HS-allow-outbound">
+                <action>allow</action>
+                <profile-setting>
+                  <group>
+                    <member>Outbound</member>
+                  </group>
+                </profile-setting>
+              </entry>
+              <entry name="HS-non-def-SSL-ports">
+                <action>allow</action>
+                <profile-setting>
+                  <group>
+                    <member>Outbound</member>
+                  </group>
+                </profile-setting>
+              </entry>
+              <entry name="HS-non-def-web-ports">
+                <action>allow</action>
+              </entry>
+              <entry name="HS-find-non-def-apps">
+                <action>allow</action>
+                <profile-setting>
+                    <profiles>
+                      <virus>
+                        <member>Outbound-AV</member>
+                      </virus>
+                      <vulnerability>
+                        <member>Outbound-VP</member>
+                      </vulnerability>
+                    </profiles>
+                </profile-setting>
+              </entry>
+            </rules>
+          </result>
+        </response>
+        [edit]
+        admin@homeSkilletFirewall#
+
+The output shows two key items.
+
+**the XPath after 'obj='**
+
+.. code-block:: bash
+
+    /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules
+
+**the Security Rule XML element**
+
+.. code-block:: xml
+
+        <rules>
+          <entry name="Outbound Block Rule">
+            <action>deny</action>
+          </entry>
+          <entry name="Inbound Block Rule">
+            <action>deny</action>
+          </entry>
+          <entry name="DNS Sinkhole Block">
+            <action>deny</action>
+          </entry>
+          <entry name="HS-block-quic">
+            <action>deny</action>
+          </entry>
+          <entry name="HS-no-unknown-URL-xfer">
+            <profile-setting>
+              <group>
+                <member>Outbound-Unknown-URL</member>
+              </group>
+            </profile-setting>
+            <action>allow</action>
+          </entry>
+          <entry name="HS-allow-outbound">
+            <action>allow</action>
+            <profile-setting>
+              <group>
+                <member>Outbound</member>
+              </group>
+            </profile-setting>
+          </entry>
+          <entry name="HS-non-def-SSL-ports">
+            <action>allow</action>
+            <profile-setting>
+              <group>
+                <member>Outbound</member>
+              </group>
+            </profile-setting>
+          </entry>
+          <entry name="HS-non-def-web-ports">
+            <action>allow</action>
+          </entry>
+          <entry name="HS-find-non-def-apps">
+            <action>allow</action>
+            <profile-setting>
+                <profiles>
+                  <virus>
+                    <member>Outbound-AV</member>
+                  </virus>
+                  <vulnerability>
+                    <member>Outbound-VP</member>
+                  </vulnerability>
+                </profiles>
+            </profile-setting>
+          </entry>
+        </rules>
+
+In this example we want to capture a list of all action=allow rule names. Then we want to create a list of rules
+where <profile-setting> is present. Then we'll compare these two lists.
+This requires :ref:`Parsing XML` to capture the lists.
+
+The first step is to put the XPath into the :ref:`Configuration Explorer Tool` and begin to tune the outputs.
+With an active connection to the NGFW, use Online mode and enter the XPath into the XPath Query field.
+The output will show the XML element same output as the CLI show command. The goal is is to make sure we have
+a solid starting point.
+
+Now run the query again with `/entry/@name` appended to the XPath. The Execution results will be a list of all
+security rules names.
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+    /rulebase/security/rules/entry/@name
+
+    ======================================================================================
+
+    xml:
+    List of items:
+
+
+    Outbound Block Rule
+    Inbound Block Rule
+    DNS Sinkhole Block
+    HS-block-quic
+    HS-no-unknown-URL-xfer
+    HS-allow-outbound
+    HS-non-def-SSL-ports
+    HS-non-def-web-ports
+    HS-find-non-def-apps
+
+This is all of the rules but we want only the allow rules. Then we only want the rules with a profile or group
+setting.
+
+For the action=allow we'll look one down by removing '/@name' and adding '/action' to the XPath. The output is a list
+of <action> elements.
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+    /rulebase/security/rules/entry/action
+
+    =====================================================================================
+
+    xml:
+    List of items:
+
+    <action>deny</action>
+    <action>deny</action>
+    <action>deny</action>
+    <action>deny</action>
+    <action>allow</action>
+    <action>allow</action>
+    <action>allow</action>
+    <action>allow</action>
+    <action>allow</action>
+
+Next we filter to only capture the 'allow' elements by appending action with `[text()='allow']`
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+    /rulebase/security/rules/entry/action[text()='allow']
+
+    =====================================================================================
+
+    xml:
+    List of items:
+
+    <action>allow</action>
+    <action>allow</action>
+    <action>allow</action>
+    <action>allow</action>
+    <action>allow</action>
+
+So at this stage we're only grabbing allow element but we need the names. So now we walk back up the tree
+one level with a `/../` and append the query with `@name` to only return the names.
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+    /rulebase/security/rules/entry/action[text()='allow']/../@name
+
+    =====================================================================================
+
+    xml:
+    List of items:
+
+    HS-no-unknown-URL-xfer
+    HS-allow-outbound
+    HS-non-def-SSL-ports
+    HS-non-def-web-ports
+    HS-find-non-def-apps
+
+We now have the XPath query to use as one part of our capture output.
+
+The second list isn't looking for names or specific values but checking if the <profile-setting> tag is present.
+This tag only appears in the configuration if a profile or group exists.
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+    /rulebase/security/rules/entry/profile-setting
+
+    ======================================================================================
+
+    xml:
+    List of items:
+
+    <profile-setting>
+      <group>
+        <member>Outbound-Unknown-URL</member>
+      </group>
+    </profile-setting>
+
+    <profile-setting>
+      <group>
+        <member>Outbound</member>
+      </group>
+    </profile-setting>
+
+    <profile-setting>
+      <group>
+        <member>Outbound</member>
+      </group>
+    </profile-setting>
+
+    <profile-setting>
+      <profiles>
+        <virus>
+          <member>Outbound-AV</member>
+        </virus>
+        <vulnerability>
+          <member>Outbound-VP</member>
+        </vulnerability>
+      </profiles>
+    </profile-setting>
+
+Close but we want the names of the rules with the profile-settings. To get this we'll use `/../` to come up a level
+from <profile-setting> to <entry> and then output the entry names by appending `@name` to the XPath.
+
+.. code-block:: json
+
+    xpath: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+    /rulebase/security/rules/entry/profile-setting/../@name
+
+    =====================================================================================
+
+    xml:
+    List of items:
+
+    HS-no-unknown-URL-xfer
+    HS-allow-outbound
+    HS-non-def-SSL-ports
+    HS-find-non-def-apps
+
+This output is all of the security rules with a profile-setting. Now we have the XPath query to use in the
+capture output for the profile-setting rules.
+
+Now that we have both queries, time to get back to our skillet.
+
+.. code-block:: yaml
+
+     # test that all allow security policies have profile-settings configured
+      - name: security_policy_test
+        cmd: parse
+        variable: config
+        outputs:
+          # get a list of security policies with a profile or group configured
+          - name: security_policies_with_profile_or_group
+            capture_list: |-
+              /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+              /rulebase/security/rules/entry/profile-setting/../@name
+
+          # get a list of security policies with action allow
+          - name: allow_security_policies_without_profile
+            capture_list: |-
+              /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+              /rulebase/security/rules/entry/action[text()='allow']/../@name
+            filter_items: item not in security_policies_with_profile_or_group
+
+For this validation we'll need two outputs. The first, `security_policies_with_profile_or_group` captures the list of all
+security policies with a profile setting.
+
+The second uses the capture_list for all the allow security rules. The variable name is
+`allow_security_policies_without_profile` so we need to filter the full list of rules down to the items
+that are not in the `security_policies_with_profile_or_group` list. The delta is our list of interest showing
+which allow rules don't have a profile setting.
+
+The test looks like
+
+.. code-block:: yaml
+
+    # check that all allow security policies have a profile or group
+      - name: check_allow_security_policies_have_profile
+        label: check that all allow security policies have a profile or group
+        test: allow_security_policies_without_profile | length == 0
+        severity: medium
+        fail_message: |
+          allow security policies without a profile or group: {{ allow_security_policies_without_profile }}
+        pass_message: |
+          all allow security policies have a profile or group configured
+        documentation_link: https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/policy/security-profiles/create-a-security-profile-group.html
+
+You'll notice the test is very simple. If the `allow_security_policies_without_profile` list has a length == 0 (meaning empty)
+then the test passes. If any rules show up in this list then they don't have a profile-setting and cause a test
+Fail. We also use the list variable in the fail_message to show what rules caused the test to fail.
+
+Now copy the capture output and test sections and paste at the bottom of the .meta-cnc.yaml file. This is the final
+test. Now use the test tool to see the outputs.
+
+The Execution Results show a test fail. This is a good thing since the HS-non-def-web-ports rule doesn't have a
+profile setting.
+I know this is the bad apple by looking at the output_message line and the security rule name is listed.
+
+.. code-block:: json
+
+    {
+      "snippets": {
+        "check_allow_security_policies_have_profile": false
+      },
+      "pan_validation": {
+        "check_allow_security_policies_have_profile": {
+          "results": false,
+          "label": "check that all allow security policies have a profile or group",
+          "severity": "medium",
+          "documentation_link": "https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/policy/security-profiles/create-a-security-profile-group.html",
+          "test": "allow_security_policies_without_profile | length == 0",
+          "output_message": "allow security policies without a profile or group: ['HS-non-def-web-ports']"
+        }
+      }
+    }
+
+The other data of interest is the capture values for the two outputs. Useful for debugging when the results
+are not as expected.
+
+.. code-block:: json
+
+    security_policies_with_profile_or_group = [
+      "HS-no-unknown-URL-xfer",
+      "HS-allow-outbound",
+      "HS-non-def-SSL-ports",
+      "HS-find-non-def-apps"
+    ]
+
+    allow_security_policies_without_profile = [
+      "HS-non-def-web-ports"
+    ]
+
+You can see the lists captured for each output entry.
+
+Proper testing and tuning would include changing the settings in the NGFW and viewing the output results.
+
+Push to Github and Test in panHandler
+-------------------------------------
+
+Now the .meta-cnc.yaml file has the four tests ready to go. Push the skillet to Github and import into panHandler.
+Run the skillet to view results.
+
+ .. image:: /images/validation_tutorial/validation_output.png
+     :width: 800
+
+    * review label text, results, and documentation links
+    * expand labels and review the pass/fail messages
+
+.. Note::
+    The Severity settings are optional and added into the tests for demonstration. Severity can be used
+    in the tests or left as the default 'low'.
+
+Edit the README.md Docs
+-----------------------
+
+The final step as with any skillet is to add the :ref:`Documentation` in the skillet REAMD.md file.
 
