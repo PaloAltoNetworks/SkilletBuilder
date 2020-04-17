@@ -92,7 +92,7 @@ snippets:
       all url profiles are currently blocking the category malware
     documentation_link: https://docs.paloaltonetworks.com/pan-os/9-1/pan-os-admin/url-filtering/configure-url-filtering.html#
 
- # test that all allow security policies have a profile or profile-group configured
+  # test that all allow security policies have a profile or profile-group configured
   - name: security_policy_test
     cmd: parse
     variable: config
@@ -100,14 +100,14 @@ snippets:
       # get a list of security policies with a profile or group configured
       - name: security_policies_with_profile_or_group
         capture_list: |-
-          /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry
-          //profile-setting//member/../../../@name
+          /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+          /rulebase/security/rules/entry/profile-setting/../@name
 
       # get a list of security policies with action allow
       - name: allow_security_policies_without_profile
         capture_list: |-
-          /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/rulebase/security/rules/entry
-          /action[text()='allow']/../@name
+          /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']
+          /rulebase/security/rules/entry/action[text()='allow']/../@name
         filter_items: item not in security_policies_with_profile_or_group
 
   # check that all allow security policies have a profile or group
