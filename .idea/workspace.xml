@@ -1,39 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="bcf22d6f-46ef-4b01-bc3f-3e5211f0d02e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/config_explorer/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/configuration_explorer.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/execute_skillet.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_set_cli.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_set_cli_from_configs/offline/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_set_cli_from_configs/online/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_set_cli_from_configs/workflow/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet/offline/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet/online/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet/workflow/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet_preview.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/offline/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/online/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/output/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/output/output.j2" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/workflow/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet_snippets.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/generate_skillet_snippets_from_configs.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample_validation_skillet/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample_validation_skillet/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample_xml_edl_policy/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/sample_xml_edl_policy/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skeleton_xml/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skeleton_xml/meta-cnc-skeleton.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skeleton_yaml/.meta-cnc.yaml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/skeleton_yaml/meta-cnc-skeleton.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_skillet/.meta-cnc.yaml" beforeDir="false" />
-    </list>
+    <list default="true" id="bcf22d6f-46ef-4b01-bc3f-3e5211f0d02e" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -84,7 +52,7 @@
       <workItem from="1586093069170" duration="59186000" />
       <workItem from="1586783910771" duration="70918000" />
       <workItem from="1587051182727" duration="2921000" />
-      <workItem from="1587143311783" duration="801000" />
+      <workItem from="1587143311783" duration="1138000" />
     </task>
     <servers />
   </component>
