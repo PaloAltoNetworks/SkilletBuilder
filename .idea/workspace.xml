@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bcf22d6f-46ef-4b01-bc3f-3e5211f0d02e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/LICENSE" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config_explorer/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/configuration_explorer.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/execute_skillet.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_set_cli.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_set_cli_from_configs/offline/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_set_cli_from_configs/online/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_set_cli_from_configs/workflow/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet/offline/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet/online/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet/workflow/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet_preview.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/offline/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/online/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/output/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/output/output.j2" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet_preview/workflow/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet_snippets.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/generate_skillet_snippets_from_configs.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample_validation_skillet/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample_validation_skillet/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample_xml_edl_policy/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/sample_xml_edl_policy/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeleton_xml/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeleton_xml/meta-cnc-skeleton.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeleton_yaml/.meta-cnc.yaml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/skeleton_yaml/meta-cnc-skeleton.conf" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/test_skillet/.meta-cnc.yaml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1a7iWtYqS2Z0nZmRuynVF8oHMR6" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/docs" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs" />
+      <recent name="$PROJECT_DIR$/docs/images" />
+      <recent name="$PROJECT_DIR$/docs/examples" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/docs/reference_examples" />
+      <recent name="$PROJECT_DIR$/docs/building_blocks" />
+      <recent name="$PROJECT_DIR$/docs/getting_started" />
+      <recent name="$PROJECT_DIR$/docs/images/example_skillet" />
+      <recent name="$PROJECT_DIR$/docs/images/archive" />
+    </key>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bcf22d6f-46ef-4b01-bc3f-3e5211f0d02e" name="Default Changelist" comment="" />
+      <created>1586093067598</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1586093067598</updated>
+      <workItem from="1586093069170" duration="59186000" />
+      <workItem from="1586783910771" duration="70918000" />
+      <workItem from="1587051182727" duration="2921000" />
+      <workItem from="1587143311783" duration="801000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="391" y="-868" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1586880740051">
+      <screen x="-78" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="391" y="-868" key="#com.intellij.execution.impl.EditConfigurationsDialog/-78.-1057.1920.1057/66.23.1726.1097@-78.-1057.1920.1057" timestamp="1586880740051" />
+    <state x="670" y="-720" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1586805359537">
+      <screen x="-78" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="670" y="-720" key="#com.intellij.fileTypes.FileTypeChooser/-78.-1057.1920.1057/66.23.1726.1097@-78.-1057.1920.1057" timestamp="1586805359537" />
+    <state x="594" y="-890" key="CommitChangelistDialog2" timestamp="1586883140442">
+      <screen x="-78" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="594" y="-890" key="CommitChangelistDialog2/-78.-1057.1920.1057/63.23.1729.1097@-78.-1057.1920.1057" timestamp="1586883140442" />
+    <state x="594" y="-890" key="CommitChangelistDialog2/-78.-1057.1920.1057/66.23.1726.1097@-78.-1057.1920.1057" timestamp="1586880743496" />
+    <state x="653" y="-701" width="782" height="550" key="find.popup" timestamp="1586963073679">
+      <screen x="-78" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="653" y="-701" width="782" height="550" key="find.popup/-78.-1057.1920.1057/66.23.1726.1097@-78.-1057.1920.1057" timestamp="1586963073679" />
+    <state x="590" y="-824" width="672" height="678" key="search.everywhere.popup" timestamp="1586872918149">
+      <screen x="-78" y="-1057" width="1920" height="1057" />
+    </state>
+    <state x="590" y="-824" width="672" height="678" key="search.everywhere.popup/-78.-1057.1920.1057/63.23.1729.1097@-78.-1057.1920.1057" timestamp="1586281250676" />
+    <state x="590" y="-824" width="672" height="678" key="search.everywhere.popup/-78.-1057.1920.1057/66.23.1726.1097@-78.-1057.1920.1057" timestamp="1586872918149" />
+  </component>
+</project>
