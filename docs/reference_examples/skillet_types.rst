@@ -152,11 +152,13 @@ pan_validation
 
 |
 
-python
-------
+python3
+-------
 
   Run python scripts within a controlled virtual environment and include a web UI
   instead of command line arguments. Designed to simplify sharing of python scripts.
+
+  Current version used in panHandler is python3.6
 
   Examples:
 

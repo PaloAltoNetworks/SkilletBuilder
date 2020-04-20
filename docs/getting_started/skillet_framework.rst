@@ -106,7 +106,7 @@ Snippets
     * panos/panorama: reads a list of XPaths and elements that are pushed to the device for configuration
     * template: simple rendering of a text file displayed to the screen
     * rest: a series of REST API interactions including response capture
-    * python: run a python script in a local virtual environment
+    * python3: run a python script in a local virtual environment
     * pan_validation: assess a configuration against a set of predefined rules
     * terraform: run terraform deployments for cloud deployments
     * docker: instantiate a docker container to run virtual applications
