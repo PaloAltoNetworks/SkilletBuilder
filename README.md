@@ -1,9 +1,8 @@
 # SkilletBuilder
 Docs, tools and tutorial for Skillet Building
 
-The main documentation provides generic manual instruction for template
-creation.
-
+The [Skillet Builder documentation](https://skilletbuilder.readthedocs.io/en/latest/reference_examples/builder_tools.html)
+provides detailed information for each builder tool.
 
 Using these tools, it is possible to manually configure a NGFW, then generate a skillet from those changes. That 
 skillet can then be used to configure N number of other NGFWs with some light editing to add variables. 
