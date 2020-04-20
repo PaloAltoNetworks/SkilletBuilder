@@ -49,8 +49,8 @@ variables:
         value: template
       - key: rest
         value: rest
-      - key: python
-        value: python
+      - key: python3
+        value: python3
       - key: terraform
         value: terraform
       - key: validation
