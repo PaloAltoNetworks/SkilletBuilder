@@ -3,3 +3,7 @@ _build/
 _static/
 _templates/
 
+# python virtual environment
+env/
+venv/
+

@@ -345,13 +345,13 @@ source
   it's value will be used to populate the form control. If the variable is not found, the form control reverts
   to a standard 'text' input as a fallback.
 
-.. code-block:: yaml
+    .. code-block:: yaml
 
-  - name: selected_interface
-    description: Interface
-    default: not-saved
-    type_hint: dropdown
-    source: interface_names
+      - name: selected_interface
+        description: Interface
+        default: not-saved
+        type_hint: dropdown
+        source: interface_names
 
 
   If the 'type_hint' is 'text' and the 'source' variable is a list, then multiple text input controls will be shown
@@ -359,26 +359,26 @@ source
   'dict' with a key for each item in the list, and it's value from the user. This is useful to capture things like
   an ip address for each interface in a list.
 
-.. code-block:: yaml
+    .. code-block:: yaml
 
-      - name: interface_ips
-        description: Interface IP Address For
-        default: 10.10.10.10
-        type_hint: text
-        source: interface_names
+          - name: interface_ips
+            description: Interface IP Address For
+            default: 10.10.10.10
+            type_hint: text
+            source: interface_names
 
 
   In this example, a text input control will be generated for each of the items found in the 'interface_names' list.
   Assume the 'interface_names' variable contained the following:
 
-.. code-block:: json
+    .. code-block:: json
 
-      "interface_names": [
-        "ethernet1/1",
-        "ethernet1/2",
-        "ethernet1/3",
-        "ethernet1/4",
-      ]
+          "interface_names": [
+            "ethernet1/1",
+            "ethernet1/2",
+            "ethernet1/3",
+            "ethernet1/4",
+          ]
 
 
   The resulting UI form will include 4 Text inputs. The item in the list will be appended to the description
@@ -386,15 +386,34 @@ source
   interface_ips variable in the jinja context will have the following structure:
 
 
-.. code-block:: json
+    .. code-block:: json
 
-      "interface_ips": {
-        "ethernet1/1": "10.10.10.11",
-        "ethernet1/2": "10.10.10.12",
-        "ethernet1/3": "10.10.10.13",
-        "ethernet1/4": "10.10.10.14",
-      }
+          "interface_ips": {
+            "ethernet1/1": "10.10.10.11",
+            "ethernet1/2": "10.10.10.12",
+            "ethernet1/3": "10.10.10.13",
+            "ethernet1/4": "10.10.10.14",
+          }
 
+  **Panorama Variables**
+
+  This model is also useful when working with Panorama template variables. A list of Panorama variable names
+  can be the source and the user-entered values captured as a dict. The snippet below shows the use
+  of a Jinja For loop iterating over the dict 'template_variables' as part of device onboarding.
+
+    ..  code-block:: xml
+
+        <entry name="{{ serial_number }}">
+          <variable>
+            {%- for var_name, var_value in template_variables.items() %}
+            <entry name="{{ var_name }}">
+              <type>
+                <ip-netmask>{{ var_value }}</ip-netmask>
+              </type>
+            </entry>
+            {% endfor %}
+          </variable>
+        </entry>
 
 |
 
