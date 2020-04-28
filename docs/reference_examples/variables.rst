@@ -395,6 +395,26 @@ source
         "ethernet1/4": "10.10.10.14",
       }
 
+  ** Panorama Variables**
+
+  This model is also useful when working with Panorama template variables. A list of Panorama variable names
+  can be the source and the user-entered values captured as a dict. The snippet below shows the use
+  of a Jinja For loop iterating over the dict 'template_variables' as part of device onboarding.
+
+..  code-block:: xml
+
+    <entry name="{{ serial_number }}">
+      <variable>
+        {%- for var_name, var_value in template_variables.items() %}
+        <entry name="{{ var_name }}">
+          <type>
+            <ip-netmask>{{ var_value }}</ip-netmask>
+          </type>
+        </entry>
+        {% endfor %}
+      </variable>
+    </entry>
+
 
 |
 
