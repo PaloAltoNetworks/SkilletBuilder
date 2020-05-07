@@ -34,7 +34,7 @@ docker
   | `Docker Skillets at the Skillet District`_        |
   +---------------------------------------------------+
 
-    .. _Prisma Access stage 1 configuration: https://github.com/PaloAltoNetworks/prisma-access-skillets/tree/master/configuration/panorama_stage_1_config
+    .. _Prisma Access stage 1 configuration: https://github.com/PaloAltoNetworks/prisma-access-skillets/tree/master/configuration/stage_1_configuration
     .. _Sample docker skillets: https://github.com/PaloAltoNetworks/Skillets/tree/master/docker
     .. _Docker Skillets at the Skillet District: https://live.paloaltonetworks.com/t5/Community-Skillets/tkb-p/Community_Skillets_Articles/label-name/docker
 
@@ -88,11 +88,10 @@ panorama-gpcs
   **View examples of Prisma Access skillets**
 
   +---------------------------------------------------+
-  | `Prisma Access Mobile User`_                      |
+  | `Prisma Access Remote Network`_                      |
   +---------------------------------------------------+
 
-  .. _Prisma Access Mobile User: https://github.com/PaloAltoNetworks/prisma-access-skillets/blob/master/stage_2_configuration/load_config_partial_02/.meta-cnc.yaml
-
+  .. _Prisma Access Remote Network: https://github.com/PaloAltoNetworks/prisma-access-skillets/tree/master/configuration/stage_2_configuration/remote_network_onboarding
 |
 
 panos
