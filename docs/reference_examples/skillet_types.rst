@@ -40,6 +40,7 @@ docker
 
 |
 
+
 panorama
 --------
 
@@ -88,10 +89,11 @@ panorama-gpcs
   **View examples of Prisma Access skillets**
 
   +---------------------------------------------------+
-  | `Prisma Access Remote Network`_                      |
+  | `Prisma Access Remote Network`_                   |
   +---------------------------------------------------+
 
   .. _Prisma Access Remote Network: https://github.com/PaloAltoNetworks/prisma-access-skillets/tree/master/configuration/stage_2_configuration/remote_network_onboarding
+
 |
 
 panos
