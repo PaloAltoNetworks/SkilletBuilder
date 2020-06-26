@@ -68,7 +68,7 @@ Skillets are open-source and extensible, ready to play using any supported appli
 Supported players and utilities include:
 
   +---------------------------------------------------+
-  | `panHandler Skillet Player`_                      |
+  | `PanHandler Skillet Player`_                      |
   +---------------------------------------------------+
   | `Expedition (Migration Tool)`_                    |
   +---------------------------------------------------+
@@ -78,12 +78,14 @@ Supported players and utilities include:
   +---------------------------------------------------+
   | `skilletCLI or interacting with skillets`_        |
   +---------------------------------------------------+
+  | `Ansible Skillet Collection`_        |
+  +---------------------------------------------------+
 
-  .. _panHandler Skillet Player: https://panhandler.readthedocs.io
+  .. _PanHandler Skillet Player: https://panhandler.readthedocs.io
   .. _Expedition (Migration Tool): https://live.paloaltonetworks.com/t5/Expedition-Migration-Tool/ct-p/migration_tool
   .. _Palo Alto Networks Customer Support Portal: https://support.paloaltonetworks.com/
   .. _Secure Dynamics: https://www.securedynamics.net/sechealth-for-firewalls/
   .. _skilletLib for application development: https://skilletlib.readthedocs.io/
   .. _skilletCLI or interacting with skillets: https://github.com/adambaumeister/skilletcli
-
+  .. _Ansible Skillet Collection: https://github.com/PaloAltoNetworks/skillet_ansible
 
