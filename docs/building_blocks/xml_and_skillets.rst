@@ -189,7 +189,7 @@ Click through to the tag configuration:
 
 As you click through you'll notice the entry in the XPath window shows your current XML tree location.
 
-  .. image:: /images/xml_and_skillets/XML_API_explorer_XPath.png
+  .. image:: /images/xml_and_skillets/XML_API_explorer_xpath.png
      :width: 800
 
 
@@ -208,7 +208,7 @@ If you are familiar with the device CLI commands or are using commands that aren
 
 Simply enter ``debug cli on``, ``configure``, and ``show tag``.
 
-  .. image:: /images/xml_and_skillets/XML_CLI_debug_XPath.png
+  .. image:: /images/xml_and_skillets/XML_CLI_debug_xpath.png
      :width: 600
 
 
@@ -233,7 +233,7 @@ To use the Skillet Generator see the :ref:`Generate a Skillet` documentation.
 
 Save a baseline configuration, add a tag, and export the candidate configuration. Use these two files in the generator.
 
-  .. image:: /images/xml_and_skillets/XML_skillet_generator_XPath.png
+  .. image:: /images/xml_and_skillets/XML_skillet_generator_xpath.png
      :width: 600
 
 
