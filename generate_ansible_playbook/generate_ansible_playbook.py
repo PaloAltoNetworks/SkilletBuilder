@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 # Tool to Generate an Ansible Playbook from a set of Configuration diffs between Running and Candidate config,
 # or the running and baseline config
+#
+# This tool depends on skilletlib, which can be installed via `pip install skilletlib`
+#
 # nembery - 082420
+#
 
 import os
 import sys
@@ -23,7 +27,10 @@ fc = False if from_candidate == 'False' else True
 snippets = list()
 
 try:
+    # init the Panoply class, which is a wrapper around pan-python with some extra convenience methods
     device = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
+
+    # generate_skillet is where all the magic happens. This returns a list of changes found on the device
     snippets = device.generate_skillet(from_candidate=fc)
 
 except SkilletLoaderException as se:
