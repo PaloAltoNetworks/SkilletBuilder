@@ -11,16 +11,27 @@ labels:
    - Kitchen Sink
 
 variables:
-  - name: BASE_CONFIG
-    description: Base Configuration
+  - name: TARGET_IP
+    description: Hostname
+    default: 10.10.10.10
+    type_hint: fqdn_or_ip
+  - name: TARGET_USERNAME
+    description: Username
+    default: admin
+    type_hint: text
+  - name: TARGET_PASSWORD
+    description: Password
     default:
-    type_hint: file
-    help_text: Initial XML configuration from Before any changes are made
-  - name: LATEST_CONFIG
-    description: Modified Configuration
-    default:
-    type_hint: file
-    help_text: XML configuration from After any changes are made
+    type_hint: password
+  - name: FROM_CANDIDATE
+    description: Configuration Source
+    type_hint: dropdown
+    default: "False"
+    dd_list:
+      - key: "From Running Configuration"
+        value: "False"
+      - key: "From Candidate Configuration"
+        value: True
 
 snippets:
   - name: script
