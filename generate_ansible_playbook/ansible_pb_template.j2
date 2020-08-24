@@ -3,8 +3,15 @@
   connection: local
   gather_facts: False
 
-  roles:
-    - role: PaloAltoNetworks.paloaltonetworks
+  collections:
+    - paloaltonetworks.panos
+
+  vars:
+    provider:
+      ip_address: ''
+      username: ''
+      password: ''
+      api_key: ''
 
   tasks:
 
