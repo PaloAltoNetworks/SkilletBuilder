@@ -19,7 +19,7 @@
 
   - name: {{ snippet.name }}
     panos_type_cmd:
-      provider: {{ \'{{ provider }}\' }}
+      provider: '{{ '{{ provider }}' }}'
       xpath: |
         {{ snippet.xpath }}
       element: |
