@@ -1,0 +1,28 @@
+name: generate_ansible_playbook
+label: Generate Ansible Playbook from Configuration Diff
+
+description: |
+  Creates an Ansible playbook from the differences between two PAN-OS Configuration files.
+
+type: python3
+
+labels:
+  collection:
+   - Kitchen Sink
+
+variables:
+  - name: BASE_CONFIG
+    description: Base Configuration
+    default:
+    type_hint: file
+    help_text: Initial XML configuration from Before any changes are made
+  - name: LATEST_CONFIG
+    description: Modified Configuration
+    default:
+    type_hint: file
+    help_text: XML configuration from After any changes are made
+
+snippets:
+  - name: script
+    file: ./generate_ansible_playbook.py
+    input_type: env

@@ -1,0 +1,21 @@
+- name: {{ playbook_title }}
+  hosts: all
+  connection: local
+  gather_facts: False
+
+  roles:
+    - role: PaloAltoNetworks.paloaltonetworks
+
+  tasks:
+
+{% for snippet in snippets %}
+
+  - name: {{ snippet.name }}
+    panos_type_cmd:
+      provider: '{{ provider }}'
+      xpath: |
+        {{ snippet.xpath }}
+      element: |
+        {{ snippet.element }}
+
+{% endfor %}
