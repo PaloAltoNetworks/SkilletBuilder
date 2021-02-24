@@ -75,9 +75,15 @@ If you see multiple panHandler images you can recover disk space using:
 
 ::
 
-    docker image prune
+    docker image prune -a
 
 This will remove all unused images.
+
+To remove all unused containers, networks, images (both dangling and unreferenced), and optionally, volumes:
+
+::
+
+    docker system prune
 
 |
 
