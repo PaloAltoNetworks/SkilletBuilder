@@ -1,4 +1,4 @@
 lxml==4.6.2
 oyaml==0.9
 xmltodict==0.12.0
-skilletlib==0.4.1
+skilletlib==0.8.1
