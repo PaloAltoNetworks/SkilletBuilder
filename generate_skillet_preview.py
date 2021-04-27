@@ -5,14 +5,15 @@ import sys
 
 from lxml import etree
 from skilletlib import Panoply
+from skilletlib.exceptions import LoginException
+from skilletlib.exceptions import SkilletLoaderException
 
 config_source = os.environ.get('skillet_source', 'offline')
 
 if config_source == 'offline':
     # grab our two configs from the environment
-    base_config_path = os.environ.get('BASE_CONFIG', '/Users/nembery/Downloads/iron_skillet_panos_full.xml')
-    # base_config_path = os.environ.get('BASE_CONFIG', '')
-    latest_config_path = os.environ.get('LATEST_CONFIG', '/Users/nembery/Downloads/running-config (16).xml')
+    base_config_path = os.environ.get('BASE_CONFIG', '')
+    latest_config_path = os.environ.get('LATEST_CONFIG', '')
 
     with open(base_config_path, 'r') as bcf:
         base_config = bcf.read()
@@ -27,14 +28,39 @@ else:
     username = os.environ.get('TARGET_USERNAME', 'admin')
     password = os.environ.get('TARGET_PASSWORD', '')
     ip = os.environ.get('TARGET_IP', '')
-    from_candidate = os.environ.get('FROM_CANDIDATE', 'False')
+    config_source = os.environ.get('CONFIG_SOURCE', 'candidate')
 
-    p = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
-    snippets = p.generate_skillet(from_candidate=from_candidate)
-    if from_candidate:
-        latest_config = p.get_configuration(config_source='candidate')
-    else:
-        latest_config = p.get_configuration(config_source='running')
+    snippets = list()
+
+    try:
+        device = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
+
+        if config_source == 'specific':
+            config_version = os.environ.get('CONFIG_VERSION', '-1')
+            previous_config = device.get_configuration(config_source=config_version)
+            latest_config = device.get_configuration(config_source='running')
+        elif config_source == 'candidate':
+            previous_config = device.get_configuration(config_source='running')
+            latest_config = device.get_configuration(config_source='candidate')
+        else:
+            # use previous config by default
+            previous_config = device.get_configuration(config_source='-1')
+            latest_config = device.get_configuration(config_source='running')
+
+        snippets = device.generate_skillet_from_configs(previous_config, latest_config)
+
+        if len(snippets) == 0 and config_source == 'candidate':
+            print('No Candidate Configuration can be found to use to build a skillet!')
+            sys.exit(2)
+
+    except SkilletLoaderException as se:
+        print('Error Executing Skillet')
+        print(se)
+        sys.exit(1)
+    except LoginException as le:
+        print('Error Logging into device')
+        print(le)
+        sys.exit(1)
 
 # check we actually have some diffs
 if len(snippets) == 0:
@@ -87,14 +113,24 @@ for s in snippets:
     if not found:
         print('did not find this, odd')
 
+
+def rp(match):
+    return '&nsbp;' * len(match.group())
+
+
 latest_config_formatted = etree.tostring(latest_doc, pretty_print=True).decode('UTF-8')
 latest_config_html = latest_config_formatted.replace('<', '&lt;').replace('>', '&gt;')
 fixed_config_html_1 = re.sub(r'&lt;span id="(.*?)" class="(.*?)" title="(.*?)"&gt;',
                              r'<span class="\2" id="\1" title="\3">', latest_config_html)
 fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
 
+regex = re.compile(r'^\s+', re.MULTILINE)
+fixed_config_html_3 = regex.sub(rp, fixed_config_html_2)
+
+# fixed_config_html_3 = re.sub('^ .', rp, fixed_config_html_2)
+fixed_config_html_4 = fixed_config_html_3.replace('\n', '<br/->')
 print('-' * 80)
-print(fixed_config_html_2)
+print(fixed_config_html_4)
 print('-' * 80)
 print('#' * 80)
 
