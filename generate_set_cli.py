@@ -14,7 +14,7 @@ if config_source == 'offline':
     latest_config_path = os.environ.get('LATEST_CONFIG', '')
 
     with open(base_config_path, 'r') as bcf:
-        base_config = bcf.read()
+        previous_config = bcf.read()
 
     with open(latest_config_path, 'r') as lcf:
         latest_config = lcf.read()
@@ -53,7 +53,7 @@ else:
         print(le)
         sys.exit(1)
 
-cli_diffs = device.generate_set_cli_from_configs(base_config, latest_config)
+cli_diffs = device.generate_set_cli_from_configs(previous_config, latest_config)
 
 for i in cli_diffs:
     print(i)
