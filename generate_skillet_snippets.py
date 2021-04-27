@@ -26,14 +26,14 @@ try:
 
     if config_source == 'specific':
         config_version = os.environ.get('CONFIG_VERSION', '-1')
-        previous_config = device.get_configuration_version(config_version)
+        previous_config = device.get_configuration(config_source=config_version)
         latest_config = device.get_configuration(config_source='running')
     elif config_source == 'candidate':
         previous_config = device.get_configuration(config_source='running')
         latest_config = device.get_configuration(config_source='candidate')
     else:
         # use previous config by default
-        previous_config = device.get_configuration_version('-1')
+        previous_config = device.get_configuration(config_source='-1')
         latest_config = device.get_configuration(config_source='running')
 
     snippets = device.generate_skillet_from_configs(previous_config, latest_config)
