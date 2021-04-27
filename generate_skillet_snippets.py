@@ -17,20 +17,28 @@ from skilletlib.panoply import Panoply
 username = os.environ.get('TARGET_USERNAME', 'admin')
 password = os.environ.get('TARGET_PASSWORD', '')
 ip = os.environ.get('TARGET_IP', '')
-from_candidate = os.environ.get('FROM_CANDIDATE', 'False')
-
-# check if we should generate the skillet from the candidate of the running config
-if from_candidate == 'True':
-    fc = True
-else:
-    fc = False
+config_source = os.environ.get('CONFIG_SOURCE', 'candidate')
 
 snippets = list()
 
 try:
     device = Panoply(hostname=ip, api_username=username, api_password=password, debug=False)
-    snippets = device.generate_skillet(from_candidate=fc)
-    if len(snippets) == 0 and fc is True:
+
+    if config_source == 'specific':
+        config_version = os.environ.get('CONFIG_VERSION', '-1')
+        previous_config = device.get_configuration_version(config_version)
+        latest_config = device.get_configuration(config_source='running')
+    elif config_source == 'candidate':
+        previous_config = device.get_configuration(config_source='running')
+        latest_config = device.get_configuration(config_source='candidate')
+    else:
+        # use previous config by default
+        previous_config = device.get_configuration_version('-1')
+        latest_config = device.get_configuration(config_source='running')
+
+    snippets = device.generate_skillet_from_configs(previous_config, latest_config)
+
+    if len(snippets) == 0 and config_source == 'candidate':
         print('No Candidate Configuration can be found to use to build a skillet!')
         sys.exit(2)
 
