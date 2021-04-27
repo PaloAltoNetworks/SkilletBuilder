@@ -124,13 +124,8 @@ fixed_config_html_1 = re.sub(r'&lt;span id="(.*?)" class="(.*?)" title="(.*?)"&g
                              r'<span class="\2" id="\1" title="\3">', latest_config_html)
 fixed_config_html_2 = re.sub(r'&lt;/span&gt;', r'</span>', fixed_config_html_1)
 
-regex = re.compile(r'^\s+', re.MULTILINE)
-fixed_config_html_3 = regex.sub(rp, fixed_config_html_2)
-
-# fixed_config_html_3 = re.sub('^ .', rp, fixed_config_html_2)
-fixed_config_html_4 = fixed_config_html_3.replace('\n', '<br/->')
 print('-' * 80)
-print(fixed_config_html_4)
+print(fixed_config_html_2)
 print('-' * 80)
 print('#' * 80)
 

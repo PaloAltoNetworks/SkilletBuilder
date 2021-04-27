@@ -26,15 +26,33 @@ variables:
     description: Password
     default:
     type_hint: password
-  - name: FROM_CANDIDATE
+  - name: CONFIG_SOURCE
     description: Configuration Source
     type_hint: dropdown
     default: "False"
     dd_list:
-      - key: "From Running Configuration"
-        value: "False"
+      - key: "From Previously Committed Running Configuration"
+        value: previous
       - key: "From Candidate Configuration"
-        value: True
+        value: candiate
+      - key: "From Specific Configuration Version"
+        value: specific
+    help_text: |
+      Choose a configuration source to use to generate a list of changes. Previously committed will generate all
+      changes made between the last commit and the current running configuration. Candidate will generate all changes
+      between the running configuration and the current candidate configuration. Specific Configuration Version will
+      use the differences between the current running configuration and a versioned backup of the running config.
+  - name: CONFIG_VERSION
+    description: Previous Configuration Version Number
+    default: -1
+    type_hint: text
+    toggle_hint:
+      source: CONFIG_SOURCE
+      value: specific
+    help_text: |
+      Use a specific configuration version number, as found from 'show config audit info'. You may also use negative
+      numbers to indicate the most to least recent running configuration versions.
+
 
 snippets:
   - name: script
