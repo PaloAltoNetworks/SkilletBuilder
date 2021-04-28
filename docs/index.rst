@@ -13,6 +13,7 @@ Skillet Builder Documentation
    getting_started/overview
    getting_started/skillet_framework
    getting_started/panhandler
+   getting_started/appetizer
 
 .. toctree::
    :maxdepth: 1
