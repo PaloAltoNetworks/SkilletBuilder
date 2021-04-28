@@ -40,7 +40,9 @@ if source == 'online':
 else:
     config = os.environ.get('config', '')
 
-xpath = os.environ.get('xpath', "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles")
+xpath = os.environ.get('xpath',
+                       "/config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/profiles"
+                       )
 
 try:
 

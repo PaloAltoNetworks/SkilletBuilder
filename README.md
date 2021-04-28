@@ -1,6 +1,7 @@
 # SkilletBuilder
 Docs, tools and tutorial for Skillet Building
 
+
 The [Skillet Builder documentation](https://skilletbuilder.readthedocs.io/en/latest/reference_examples/builder_tools.html)
 provides detailed information for each builder tool.
 
@@ -9,6 +10,23 @@ skillet can then be used to configure N number of other NGFWs with some light ed
 
 There is also a tutorial branch walking the user through an example
 Skillet use case.
+
+## Quick start
+
+You can use Appetizer to quickly spin up a Skillet Builder container to test these
+tools:
+
+```bash
+docker run -it --rm -p 8088:8080 -e 'REPO=https://github.com/PaloAltoNetworks/SkilletBuilder.git' \
+  -e 'BRANCH=develop' \ 
+  --name "Skillet Builder" registry.gitlab.com/panw-gse/as/appetizer
+```
+
+## Usage in Panhandler
+
+These tools require the latest Panhandler container, which can be found in the
+[Panhandler Docs](https://panhandler.readthedocs.io/en/master/running.html#quick-start).
+
 
 ## Support Policy
 The code and templates in the repo are released under an as-is, best effort,
