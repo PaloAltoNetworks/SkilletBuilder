@@ -48,4 +48,5 @@ Skillet Builder Documentation
 
    tutorials/tutorial_configuration
    tutorials/tutorial_validation
+   tutorials/basic_set_commands
 
