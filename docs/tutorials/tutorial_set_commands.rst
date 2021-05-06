@@ -75,8 +75,7 @@ This tutorial will be split into # sections below.
 .. _`Setting up the Sandbox`:
 
 
-wow this is awsome
-~~~~~~~~~~~~~~~~~~
+
 
 .. _`Build the Skillet`:
 
@@ -89,4 +88,5 @@ wow this is awsome
 .. _`Document and Share`: 
 
 
-
+hello
+-----
