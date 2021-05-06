@@ -72,26 +72,22 @@ This tutorial will be split into # sections below.
   * Others can now import into their tools and use the new skillet
 
 .. _`Setting up the Sandbox`:
-
 Setting up the Sandbox
 ----------------------
 
 
 
 .. _`Build the Skillet`:
-
 Build the Skillet
 -----------------
 
 
 .. _`Test and Troubleshoot`:
-
 Test and Troubleshoot
 ---------------------
 
 
 .. _`Document and Share`:
-
 Document and Share
 ------------------
 
