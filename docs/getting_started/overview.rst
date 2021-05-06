@@ -1,10 +1,10 @@
 Skillet Builder Overview
 ========================
 
-Welcome. This site contains Skillet Builder documentation, examples, and tutorials designed to expand the Builder community.
-This is a living set of content updated as new skillet types, examples, and tutorials are available.
+Welcome. This site contains Skillet Builder documentation, examples, and `tutorials <Configuration>`_ designed to
+expand the Builder community. This is a living set of content updated as new skillet types, examples, and tutorials are available.
 
-The video contains a quick Skillet overview and a few demonstrations playing Skillets with panHandler.
+This video contains a quick Skillet overview and a few demonstrations playing Skillets with Panhandler.
 
 .. raw:: html
 
@@ -14,9 +14,9 @@ The video contains a quick Skillet overview and a few demonstrations playing Ski
 
 |
 
-The purpose of Skillet Builders is to 'skilletize' knowledge and expertise into sharable entities that can be
-played by users to eliminate the complexity of various tasks. This can complement or remove the requirement to
-capture GUI config guides that can still require hours of configuration steps, often with all users entering the same
+The purpose of Skillets is to capture knowledge and expertise into sharable units that can be
+consumed by users to reduce complexity. This can complement or remove the requirement to
+capture GUI config guides that can require hours of configuration steps, often with all users entering the same
 sets of data. Thus the transition from 'show me how to configure' to 'give a configuration to load'.
 
 Skillet Use Cases
@@ -68,20 +68,21 @@ Skillets are open-source and extensible, ready to play using any supported appli
 Supported players and utilities include:
 
   +---------------------------------------------------+
-  | `PanHandler Skillet Player`_                      |
+  | `PanHandler`_                                     |
+  +---------------------------------------------------+
+  | `SLI (Skillet CLI Tool)`_                         |
   +---------------------------------------------------+
   | `Expedition (Migration Tool)`_                    |
   +---------------------------------------------------+
-  | `Palo Alto Networks Customer Support Portal`_     |
+  | `skilletlib for application development`_        |
+  +---------------------------------------------------+
+  | `Ansible Skillet Collection`_                     |
   +---------------------------------------------------+
   | `Secure Dynamics`_                                |
   +---------------------------------------------------+
-  | `skilletCLI or interacting with skillets`_        |
-  +---------------------------------------------------+
-  | `Ansible Skillet Collection`_        |
-  +---------------------------------------------------+
 
-  .. _PanHandler Skillet Player: https://panhandler.readthedocs.io
+  .. _PanHandler: https://panhandler.readthedocs.io
+  .. _SLI (Skillet CLI Tool): https://gitlab.com/panw-gse/as/sli/-/blob/master/README.md
   .. _Expedition (Migration Tool): https://live.paloaltonetworks.com/t5/Expedition-Migration-Tool/ct-p/migration_tool
   .. _Palo Alto Networks Customer Support Portal: https://support.paloaltonetworks.com/
   .. _Secure Dynamics: https://www.securedynamics.net/sechealth-for-firewalls/

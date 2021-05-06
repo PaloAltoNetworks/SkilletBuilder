@@ -1,15 +1,13 @@
 # SkilletBuilder
-Docs, tools and tutorial for Skillet Building
-
-The main documentation provides generic manual instruction for template
-creation.
+Docs, tools and tutorials for Building [Skillets](https://live.paloaltonetworks.com/t5/quickplay-solutions-discussions/the-palo-alto-networks-skillet-story/m-p/308056)
+and using the [PAN-OS XML API](https://skilletbuilder.readthedocs.io/en/latest/building_blocks/xml_and_skillets.html).
 
 
-Using these tools, it is possible to manually configure a NGFW, then generate a skillet from those changes. That 
-skillet can then be used to configure N number of other NGFWs with some light editing to add variables. 
+Using these tools, it is possible to manually configure a NGFW via the GUI,
+then generate a skillet from those changes. That 
+skillet can then be customized and used to configure N number of other NGFWs.
 
-There is also a tutorial branch walking the user through an example
-Skillet use case.
+See the [full documentation](https://skilletbuilder.readthedocs.io/en/latest/) for more information.
 
 ## Support Policy
 The code and templates in the repo are released under an as-is, best effort,
