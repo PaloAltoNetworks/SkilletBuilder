@@ -39,8 +39,8 @@ This tutorial will be split into # sections below.
   Please ensure all pre-requisites have been met for this section.
 
 
-2- Build the skillet
-~~~~~~~~~~~~~~~~~~~~
+2- `Build the Skillet`_
+~~~~~~~~~~~~~~~~~~~~~~~
 
   Edit the .meta-cnc.yaml file to create the skillet
 
@@ -51,8 +51,8 @@ This tutorial will be split into # sections below.
   * add the variables
   * commit and push to Github
 
-3- Test and Troubleshoot
-~~~~~~~~~~~~~~~~~~~~~~~~
+3- `Test and Troubleshoot`_
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Test against a live device and fix/tune as needed.
 
@@ -62,86 +62,36 @@ This tutorial will be split into # sections below.
   * Tune the web UI, configuration elements
 
 
-4- Document and Share
-~~~~~~~~~~~~~~~~~~~~~
+4- `Document and Share`_
+~~~~~~~~~~~~~~~~~~~~~~~~
 
   The final and important steps are good documentation and sharing with the community.
 
   * READme.md documentation in the Github repo
   * Skillet District posting
   * Others can now import into their tools and use the new skillet
-  
-  
-  
-
-
-
-
-
-
-
-
-dfg
-dd
-d
-d
-d
-d
-d
-d
-dd
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-d
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 .. _`Setting up the Sandbox`:
 
-Ok
+Setting up the Sandbox
+----------------------
 
 
 
+.. _`Build the Skillet`:
 
+Build the Skillet
+-----------------
+
+
+.. _`Test and Troubleshoot`:
+
+Test and Troubleshoot
+---------------------
+
+
+.. _`Document and Share`:
+
+Document and Share
+------------------
 
