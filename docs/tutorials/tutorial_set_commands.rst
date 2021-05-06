@@ -21,8 +21,7 @@ Prerequisites
 * Have an up and running NGFW VM
 * A GitHub_ account with access permissions to edit repository content
 * Docker_ desktop active and running on your machine
-* Personal preference of Text editor/IDE(Integrated Development Environment) for XML/YAML editing
-* Access to the following repositories
+* Personal preference of text editor/IDE(Integrated Development Environment) for XML/YAML editing
 * Ability to access the NGFW device via GUI, SSH/CLI and API
 * Be able to log into PanHandler_ and import/run skillets, specifically SkilletBuilder_ tools
 
