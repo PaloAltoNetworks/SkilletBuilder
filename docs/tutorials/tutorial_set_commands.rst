@@ -103,7 +103,7 @@ This tutorial will be split into # sections below.
 
 
 
-.. _`Setting up the Sandbox:
+.. _`Setting up the Sandbox`:
 
 Ok
 
