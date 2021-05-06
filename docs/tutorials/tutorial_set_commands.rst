@@ -7,6 +7,7 @@ Overview
 This tutorial is designed to help the user get familiar with using set commands to bring up and apply basic configs to their NGFW. By then end of this tutorial the user should be able to alter their firewall manually through the Command Line Interface(CLI) with set commands. All set/op commands that can be entered in the cli manually can also be transformed into an automation playlist in the form of a skillet. This allows the user to run a series of set commands to easily configure their NGFW with just the click of a button.
 
 This Basic Config with Set Commands tutorial will show the user how to:
+
 * Access and configure the Next Generation Firewall(NGFW) through the web UI and CLI
 * Capture configuration differences made on the NGFW into set commands and automation skillets
 * Learn how to use Panhandler tooling
