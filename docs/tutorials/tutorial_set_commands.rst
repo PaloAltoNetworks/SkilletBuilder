@@ -81,14 +81,16 @@ In this section we will set everything up that will be needed to successfully co
 NGFW
 ~~~~
 
-This is the device that we will be working with and configuring during the tutorial. Be sure that you are able to log into the firewall UI by inputting its management IP into the web browser[1]. For example: *https://192.168.XX.XX*. When logged in be sure to make note of a number of things.
+This is the device that we will be working with and configuring during the tutorial. Be sure that you are able to log into the firewall UI by inputting its management IP into the web browser[1]. For example: *https://192.168.XX.XX*. When logged in it can be useful to make note of a number of things.
 
 **Software Version:**
-Be sure to keep the devices software version in mind when traversing this tutorial. Some configuration elements may be version specific and require unique skillets per software releases.
+Please take note of the devices software version when traversing this tutorial. Some configuration elements may be version specific and require unique skillets per software releases.
 
-**Baseline Configuration:** It can come in handy and is recommended to capture a *baseline* configuration of your newly brought up and pre-configured firewall. This is especially useful for testing purposes if you wish to quickly revert any changes made on the NGFW back to a blank slate. This can be done on the NGFW UI via *Devices->Setup->Operations->Save named configuration snapshot*.
+**Baseline Configuration:** It is recommended to capture a *baseline* configuration of your newly brought up and pre-configured firewall. This is especially useful for testing purposes if you wish to quickly revert any changes made on the NGFW back to a blank slate. This can be done on the NGFW UI via *Devices->Setup->Operations->Save named configuration snapshot*.
 
-.. [1] If you reach a warning page, click advanced settings and choose the proceed to webpage option.
+
+
+.. [1] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
 
 Build the Skillet
 -----------------
