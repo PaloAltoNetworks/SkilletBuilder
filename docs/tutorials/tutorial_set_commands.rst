@@ -18,5 +18,6 @@ Prerequisites
 * Ability to access the NGFW device via GUI, SSH/CLI and API
 * Be able to log into PanHandler_ and import/run skillets, specifically set command skillets
 
-_PanHandler: https://panhandler.readthedocs.io/en/master/
+.. _PanHandler:https://panhandler.readthedocs.io/en/master/
+
   * More information on PanHandler -> https://panhandler.readthedocs.io/en/master/
