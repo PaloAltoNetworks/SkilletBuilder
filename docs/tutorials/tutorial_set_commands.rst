@@ -33,7 +33,7 @@ Prerequisites
 
 This tutorial will be split into # sections below.
 
-1- 'Setting up the sandbox'_
+1- Setting up the sandbox_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Please ensure all pre-requisites have been met for this section.
@@ -72,6 +72,7 @@ This tutorial will be split into # sections below.
   * Others can now import into their tools and use the new skillet
   
   
- .. _'Setting up the sandbox':
+  
+ .. _sandbox:
 
 Welcome
