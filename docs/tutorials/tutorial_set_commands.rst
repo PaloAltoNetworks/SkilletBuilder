@@ -74,22 +74,8 @@ This tutorial will be split into # sections below.
 
 .. _`Setting up the Sandbox`:
 
-Setting up the Sandbox
-----------------------
+
 wow this is awsome
 
-.. _`Build the Skillet`:
 
-Build the Skillet
------------------
-
-.. _`Test and Troubleshoot`:
-
-Test and Troubleshoot
----------------------
-
-.. _`Document and Share`: 
-
-Document and Share
-------------------
 
