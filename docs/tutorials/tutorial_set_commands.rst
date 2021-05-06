@@ -33,7 +33,7 @@ Prerequisites
 
 This tutorial will be split into # sections below.
 
-1- Setting up the sandbox_
+1- Setting up the Sandbox
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   Please ensure all pre-requisites have been met for this section.
@@ -109,6 +109,4 @@ This tutorial will be split into # sections below.
 
 
 
-.. _sandbox:
-
-Welcome
+A link-  :ref:`Setting up the Sandbox`
