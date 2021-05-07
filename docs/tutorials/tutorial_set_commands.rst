@@ -34,8 +34,8 @@ Prerequisites
 .. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
 .. _SLI: https://pypi.org/project/sli/
 .. [1] PyCharm or SublimeText are good options for a beginner text editor or IDE.
-.. [2] Log in to the NGFW UI by entering this *https://XXX.XXX.XXX.XXX*,(with your NGFW's floating IP replacing the X's), into the web browser URL bar.
-.. [3] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this *ssh username@XXX.XXX.XXX.XXX*.
+.. [2] Log in to the NGFW UI by entering this, *https://XXX.XXX.XXX.XXX* (with your NGFW's floating IP replacing the X's), into the web browser URL bar.
+.. [3] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh username@XXX.XXX.XXX.XXX* (with your NGFW's floating IP replacing the X's).
 
 This tutorial will be split into # sections below and can either be done via the reading the document or watching the tutorial video. There is a video tutorial for achieving our intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
