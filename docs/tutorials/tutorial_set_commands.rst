@@ -21,7 +21,7 @@ Prerequisites
 * Have an up and running NGFW Virtual Machine(VM)
 * A GitHub_ account with access permissions to edit repository content
 * Docker_ desktop active and running on your machine
-* Personal preference of text editor/IDE(Integrated Development Environment) for XML/YAML editing
+* Personal preference of text editor/IDE(Integrated Development Environment) for XML/YAML editing[1]
 * Ability to access the NGFW device via GUI, SSH/CLI and API
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
@@ -33,6 +33,7 @@ Prerequisites
 .. _Docker: https://www.docker.com
 .. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
 .. _SLI: https://pypi.org/project/sli/
+.. [1] PyCharm or SublimeText are good options for a beginner text editor or IDE.
 
 This tutorial will be split into # sections below and can either be done via the reading the document or watching the tutorial video. There is a video tutorial for achieving our intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
