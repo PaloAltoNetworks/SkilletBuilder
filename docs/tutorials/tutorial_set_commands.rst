@@ -18,7 +18,7 @@ However, In order to be able to run valid set commands to begin with, there are 
 Prerequisites
 --------------
 
-* Have an up and running NGFW VM
+* Have an up and running NGFW Virtual Machine(VM)
 * A GitHub_ account with access permissions to edit repository content
 * Docker_ desktop active and running on your machine
 * Personal preference of text editor/IDE(Integrated Development Environment) for XML/YAML editing
