@@ -7,8 +7,8 @@ Overview
 This tutorial is aimed at novice skillet builders who want to work through building a sample skillet.
 The configuration tutorial will create a simple configuration including:
 
-  * an IP External Dynamic List (EDL) object
-  * a Tag object
+  * An IP External Dynamic List (EDL) object
+  * A Tag object
   * Security rules (Inbound and Outbound) referencing the EDL and tag objects
 
 The video provides an end-to-end perspective for building a configuration skillet as a complement
@@ -22,56 +22,40 @@ to the documentation content.
 
 |
 
-Content is grouped into 4 basic sections specific to each task category:
+Click below to jump to a specific section of the tutorial:
 
-1- Set up the sandbox
-~~~~~~~~~~~~~~~~~~~~~
+1. `Prerequisites`_
 
-  Prepare your skillet building and testing environment.
+2. `Set Up Your Environment`_
 
-  * NGFW up and running
-  * GUI, SSH, and API access to the device
-  * panhandler running with the SkilletBuilder tools imported
-  * IDE (Integrated Development Environment) such as Pycharm or VS Code
-  * Github account with access permissions to edit repository content
+3. `Build the Skillet`_
 
-2- Build the skillet
-~~~~~~~~~~~~~~~~~~~~
+4. `Test and Troubleshoot`_
 
-  Edit the .meta-cnc.yaml file to create the skillet
-
-  * create the github repo and clone to edit
-  * create an empty .meta-cnc.yaml file
-  * save 'before and after' configuration snapshots
-  * use the :ref:`Generate a Skillet` tool to create the initial skillet
-  * add the variables
-  * commit and push to Github
-
-3- Test and Troubleshoot
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-  Test against a live device and fix/tune as needed.
-
-  * Use the :ref:`Skillet Test Tool` to quick test the skillet
-  * Import the skillet into panHandler to test web UI and config loading
-  * Fix any UI or loading errors
-  * Tune the web UI, configuration elements
+5. `Document`_
 
 
-4- Document and Share
-~~~~~~~~~~~~~~~~~~~~~
+Prerequisites
+-------------
 
-  The final and important steps are good documentation and sharing with the community.
+Before moving forward with the tutorial, you will need the following:
 
-  * READme.md documentation in the Github repo
-  * Skillet District posting
-  * Others can now import into their tools and use the new skillet
+- NGFW up and running with proper access to GUI and CLI(via SSH)
+- A GitHub account with access permissions to edit repository content
+- Docker desktop installed and running on your local machine
+- Text Editor/IDE of choice for XML/YAML editing
+- Access to the following repositories:
 
-|
+    - `PanHandler <https://github.com/PaloAltoNetworks/panhandler/>`_
+    - `SkilletBuilder <https://github.com/PaloAltoNetworks/SkilletBuilder/>`_
 
+It may also be useful to review the following topics before getting started:
 
-Setting up the Sandbox
-----------------------
+- :ref:`XMLandSkillets`
+- :ref:`jinjaandskillets`
+
+Set Up Your Environment
+-----------------------
 
 The skillet sandbox specific to this NGFW configuration will consist of 4 basic elements: the NGFW, panHandler,
 the Skillet Builder tools, and the creation/editor environment.
@@ -131,7 +115,7 @@ Skillet Editor
 
 |
 
-Building the Skillet
+Build the Skillet
 --------------------
 
 The following steps take the user from creating the Github repo, through generating and editing the skillet, to a final
@@ -730,7 +714,7 @@ Push the Skillet to Github
      :width: 800
 
 
-Testing and Tuning
+Test and Troubleshoot
 ------------------
 
 Now that the skillet has been pushed to Github, the skillet can be imported to panHandler to test the user experience.
@@ -821,7 +805,7 @@ Edit, Push, Test
 
  If errors are found, repeat the steps above until a clean skillet can be loaded and committed.
 
-Documentation
+Document
 -------------
 
 The final stage is to document key details about the skillet to provide contextual information to the user community.

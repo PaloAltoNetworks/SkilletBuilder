@@ -1,3 +1,5 @@
+.. _XMLandSkillets:
+
 XML and Skillets
 ================
 
