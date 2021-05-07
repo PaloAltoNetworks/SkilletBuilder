@@ -95,6 +95,16 @@ Please take note of the devices software version when traversing this tutorial. 
 
 **Baseline Configuration:** It is recommended to capture a *baseline* configuration of your newly brought up and pre-configured firewall. This is especially useful for testing purposes if you wish to quickly revert any changes made on the NGFW back to a blank slate. This can be done on the NGFW UI via *Devices->Setup->Operations->Save named configuration snapshot*.
 
+**API Access**
+Login credentials with API access to test playing Skillets and any changes made by using set commands.
+
+GitHub
+~~~~~~
+
+The user will need a valid GitHub account that they can use to create, edit and clone repositories related to this tutorial. If you do not have an account please go to the GitHub_ website and create one. 
+
+.. _GitHub: https://github.com
+
 
 Build the Skillet
 -----------------
