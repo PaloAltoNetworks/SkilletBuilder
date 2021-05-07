@@ -35,7 +35,7 @@ This tutorial will be split into # sections below.
 1- `Setting up the Sandbox`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Please ensure all pre-requisites have been met for this section.
+  Please ensure all pre-requisites from above have been met for this section.
 
 
 2- `Build the Skillet`_
