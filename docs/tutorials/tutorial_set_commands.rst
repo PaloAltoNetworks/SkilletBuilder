@@ -12,7 +12,7 @@ This Basic Config with Set Commands tutorial will show the user how to:
 * Capture configuration differences made on the NGFW into set commands and automation skillets
 * Learn how to use Panhandler tooling
 
-However, In order to be able to run valid set commands to begin with, there are a number of prerequisites that must be satisfied.
+However, in order to be able to run valid set commands to begin with, there are a number of prerequisites that must be satisfied.
 
 
 Prerequisites
@@ -26,7 +26,7 @@ Prerequisites
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
   * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. Please refer to and follow the steps in the linked SLI page to get started
-* For users wishing to work through the browser UI log into PanHandler_ and import/run skillets, specifically SkilletBuilder_ tools
+* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, specifically SkilletBuilder_ tools
 
 .. _PanHandler: https://panhandler.readthedocs.io/en/master/
 .. _GitHub: https://github.com
