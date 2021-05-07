@@ -22,7 +22,7 @@ Prerequisites
 * A GitHub_ account with access permissions to edit repository content
 * Docker_ desktop active and running on your machine
 * Personal preference of text editor/IDE(Integrated Development Environment) for XML/YAML editing[1]
-* Ability to access the NGFW device via GUI[2], SSH/CLI[3] and API
+* Ability to access the NGFW device via GUI[2][3], SSH/CLI[4] and API
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
   * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. Please refer to and follow the steps in the linked SLI page to get started
@@ -35,7 +35,8 @@ Prerequisites
 .. _SLI: https://pypi.org/project/sli/
 .. [1] PyCharm or SublimeText are good options for a beginner text editor or IDE.
 .. [2] Log in to the NGFW UI by entering this, *https://XXX.XXX.XXX.XXX* (with your NGFW's management IP replacing the X's), into the web browser URL bar.
-.. [3] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh username@XXX.XXX.XXX.XXX* (with your NGFW's management IP replacing the X's).
+.. [3] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
+.. [4] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh username@XXX.XXX.XXX.XXX* (with your NGFW's management IP replacing the X's).
 
 This tutorial will be split into # sections below and can either be done via the reading the document or watching the tutorial video. There is a video tutorial for achieving our intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
@@ -87,16 +88,13 @@ In this section we will set everything up that will be needed to successfully co
 NGFW
 ~~~~
 
-This is the device that we will be working with and configuring during the tutorial. Be sure that you are able to log into the firewall UI by inputting its management IP into the web browser[1]. For example: *https://192.168.XX.XX*. When logged in it can be useful to make note of a number of things.
+This is the device that we will be working with and configuring during the tutorial. Be sure that you are able to log into the firewall UI by inputting its management IP into the web browser. When logged in it can be useful to make note of a number of things.
 
 **Software Version:**
 Please take note of the devices software version when traversing this tutorial. Some configuration elements may be version specific and require unique skillets per software releases.
 
 **Baseline Configuration:** It is recommended to capture a *baseline* configuration of your newly brought up and pre-configured firewall. This is especially useful for testing purposes if you wish to quickly revert any changes made on the NGFW back to a blank slate. This can be done on the NGFW UI via *Devices->Setup->Operations->Save named configuration snapshot*.
 
-
-
-.. [1] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
 
 Build the Skillet
 -----------------
