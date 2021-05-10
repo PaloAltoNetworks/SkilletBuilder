@@ -50,7 +50,12 @@ Before moving forward with the tutorial, please ensure the following prerequisit
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
   * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. Please refer to and follow the steps in the linked SLI_ page to get started
-* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, specifically SkilletBuilder_ tools
+    * For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, specifically SkilletBuilder_ tools
+    
+It may also be useful to review the following topics before getting started:
+
+- :ref:`XMLandSkillets`
+- :ref:`jinjaandskillets`
 
 .. _PanHandler: https://panhandler.readthedocs.io/en/master/
 .. _GitHub: https://github.com
@@ -90,7 +95,8 @@ Having the CLI 'Set Command Ready'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     This tutorial will use the Skillet Generator tool but it is also useful to know how to configure the firewall through the CLI. These
-    operations commands below will help you get started with configurations but please also refer to this supplemental article_.
+    operations commands below will help you get started with configurations but please also refer to this supplemental article_ for more
+    guidance on using the CLI with the NGFW.
 
     .. code-block:: bash
       
@@ -105,15 +111,38 @@ Having the CLI 'Set Command Ready'
       admin@PA-VM> exit
       exiting configuration mode
       
-    We first log in with the *ssh* command, we then enter a *set* command to display configuration data as set commands. *Debug cli on* 
+    First log in with the "*ssh*" command, we then enter a "*set*" command to display configuration data as set commands. *Debug cli on* 
     will allow for the easy capturing of the specific configuration xpath whenever a change is made via set commands on the cli, this
-    `knowledgebase article`_ is also useful in understanding how to view NGFW configurations in *set* and *xml* formats via the cli.
-    configuration mode with the keyword, *configure*. Once in configuration mode we can make changes on the NGFW with *set* commands.
-    After all desired changes are made you can commit them to the NGFW via the *commit* command and then exit out of configuration mode
-    with *exit*.
+    `knowledgebase article`_ is also useful in understanding how to view NGFW configurations in "*set*" and "*xml*" formats via the cli.
+    configuration mode with the keyword, "*configure*". Once in configuration mode we can make changes on the NGFW with set commands.
+    After all desired changes are made you can commit them to the NGFW via the "*commit*" command and then exit out of configuration 
+    mode with "*exit*".
     
 .. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
 .. _`knowledgebase article`: https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA10g000000ClHoCAK
+
+Run PanHandler
+~~~~~~~~~~~~~~
+
+  PanHandler is a utility that is used to create, load and view configuration templates and workflows. We will be using PanHandler to 
+  help create automation templates called "*skillets*" and use these templates to automate the process of deploying set commands to our 
+  NGFW.
+  
+  To access the PanHandler web UI you do the following commands in your CLI.
+  
+  .. code-block:: bash
+    > curl -s -k -L http://bit.ly/2xui5gM | bash
+  
+  Then you want to input the following into your browsers URL.
+    
+  .. code-block:: html
+    > http://localhost:8080
+
+  Please refer to the PanHandler documentation for more detailed information on the many useful functions of the PanHandler utility.
+  
+  Use the curl command found in :ref:`Updating or Running the Master Version` if panHandler is not installed or not running
+  the latest version.
+  
 
 Build The Skillet
 -----------------
@@ -160,56 +189,8 @@ Document
 
 
 
-Before moving forward with the tutorial, you will need the following:
 
-- NGFW up and running with proper access to GUI and CLI(via SSH)
-- A GitHub account with access permissions to edit repository content
-- Docker desktop installed and running on your local machine
-- Text Editor/IDE of choice for XML/YAML editing
-- Access to the following repositories:
 
-    - `PanHandler <https://github.com/PaloAltoNetworks/panhandler/>`_
-    - `SkilletBuilder <https://github.com/PaloAltoNetworks/SkilletBuilder/>`_
-
-It may also be useful to review the following topics before getting started:
-
-- :ref:`XMLandSkillets`
-- :ref:`jinjaandskillets`
-
-ssSet Up Your Environment
------------------------
-
-The skillet sandbox specific to this NGFW configuration will consist of 4 basic elements: the NGFW, panHandler,
-the Skillet Builder tools, and the creation/editor environment.
-
-NGFW
-~~~~
-
-  This is the device to be configured.
-
-  **Software Version**
-  Note the software version of the configuration device and associated skillets.
-  Skillets configuration elements may be version specific require unique skillets per software release.
-
-  **Baseline Configuration**
-  Recommendation to save a configuration file as ‘baseline’ for easy rollback for generation, testing, and demonstration.
-
-  **API Access**
-  Login credentials with API access to test playing the skillet
-
-Having the CLI ‘XML Ready’
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  The tutorial will use the Skillet Generator but later stages of testing and tuning may require review and capture
-  of the XPath or XML elements. These operations commands make the CLI XML-ready:
-
-  .. code-block:: bash
-
-      admin@PA-VM> set cli config-output-format xml
-      admin@PA-VM> debug cli on
-
-  The first command will display configuration data as XML and the second will allow for easy capture of the configuration XPath.
-  Review the :ref:`XML Basics` if you are not familiar with XML concepts.
 
 
 Run PanHandler
