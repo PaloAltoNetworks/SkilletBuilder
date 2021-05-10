@@ -235,19 +235,6 @@ Document
 
 
 
-Skillet Editor
-~~~~~~~~~~~~~~
-
-  The IDE should be ready with:
-
-  * a full view of files and directories in the skillet
-  * text editor that supports YAML and XML file types
-  * terminal access to interact with Git/Github
-
-|
-
-Build the Skillet
---------------------
 
 The following steps take the user from creating the Github repo, through generating and editing the skillet, to a final
 push of skillet content back to the created repo.
