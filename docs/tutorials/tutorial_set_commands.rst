@@ -297,12 +297,40 @@ Generate the Set Commands Skillet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     In PanHandler use the :ref:`Generate Set CLI Commands` skillet to extract the difference between the baseline and modified 
-    NGFW configurations. To do this click on the dropdown menu underneath *"Source of Changes"* and then click on 
-    **"From uploaded configs"**. You will want to have 2 XML files that you exported from your NGFW configurations on your local 
-    machine that you can upload to *"Base Configuration:"* and *"Modified Configuration:"* sections here. You can get these 2 XML files
-    from your NGFW by navigating and clicking on **Devices->Setup->Operations->"Export named configuration snapshot"**.
+    NGFW configurations. To do this in offline mode, click on the dropdown menu underneath *"Source of Changes"* and then click on 
+    **"From uploaded configs"**. 
+    
+    .. image:: /images/configure_tutorial/configure_skillet_generator.png
+        :width: 800
+|
 
+    You will want to have 2 XML files that you exported from your NGFW configurations on your local 
+    machine. You can then upload these files to *"Base Configuration:"* and *"Modified Configuration:"* sections here. 
+    You can get these 2 XML files from your NGFW by navigating to and clicking on 
+    **Devices->Setup->Operations->"Export named configuration snapshot"**. Once here export the baseline and modified versions of
+    the NGFW and upload them to the SkilletBuilder tool.
+    
+    After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
+    
+    .. image:: /images/configure_tutorial/configure_skillet_preamble.png
+        :width: 800    
+|
 
+  Suggested tutorial inputs:
+
+    * Skillet ID: tag_edl_tutorial
+    * Skillet Label: Tutorial skillet to configure tag, EDL, and security rules
+    * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
+    * Collection Name: Tutorial
+    * Skillet type: ``panos``
+
+  Clicking **Submit** results in a screen output of the .skillet.yaml file.
+
+  The rendered YAML file contains:
+
+    * preamble populated with the web form values
+    * placeholder variables section
+    * snippets section with XPath/element entries where each diff found
 
 
 
