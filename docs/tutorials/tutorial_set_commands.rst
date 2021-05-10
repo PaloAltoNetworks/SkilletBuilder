@@ -121,14 +121,15 @@ Having the CLI 'Set Command Ready'
 .. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
 .. _`knowledgebase article`: https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA10g000000ClHoCAK
 
-Run PanHandler
-~~~~~~~~~~~~~~
+Running PanHandler
+~~~~~~~~~~~~~~~~~~
 
   PanHandler is a utility that is used to create, load and view configuration templates and workflows. We will be using PanHandler to 
   help create automation templates called "*skillets*" and use these templates to automate the process of deploying set commands to our 
   NGFW.
   
-  To access the PanHandler web UI you do the following commands in your CLI.
+  If you have not already installed or run the latest version of PanHandler, in order to access the latest version of the PanHandler web
+  UI you do the following commands in your CLI.
   
   .. code-block:: bash
   
@@ -138,12 +139,20 @@ Run PanHandler
     
   .. code-block:: html
   
-    > http://localhost:8080
+    http://localhost:8080
 
   Please refer to the `PanHandler documentation`_ for more detailed information on the many useful functions of the PanHandler utility.
   
 .. _`PanHandler documentation`: https://panhandler.readthedocs.io/en/master/overview.html
   
+Importing SkilletBuilder Tools
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Once you have gained access to the PanHandler UI you will want to import the SkilletBuilder_ repository. This is done by clicking
+    the **PanHandler** drop down menu at the top of the page. Then click on **import skillets** and at the bottom of the page you can
+    change the repository name and paste the cloned git repository URL in HTPPS or SSH.
+
+.. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
 
 Build The Skillet
 -----------------
