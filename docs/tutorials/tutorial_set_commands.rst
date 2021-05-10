@@ -89,9 +89,10 @@ NGFW
 Having the CLI 'Set Command Ready'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This tutorial will use the Skillet Generator tool but it is also useful to know how to configure the firewall through the CLI. These operations commands below will help you get started with configurations but please also refer to this supplemental article_.
+    This tutorial will use the Skillet Generator tool but it is also useful to know how to configure the firewall through the CLI. These
+    operations commands below will help you get started with configurations but please also refer to this supplemental article_.
 
-  .. code-block:: bash
+    .. code-block:: bash
       
       admin@PA-VM> ssh admin@99.99.999.999
       admin@PA-VM> configure
@@ -101,7 +102,9 @@ This tutorial will use the Skillet Generator tool but it is also useful to know 
       admin@PA-VM> commit
       admin@PA-VM> exit
       exiting configuration mode
-
+      
+    
+    
 .. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
 
 
