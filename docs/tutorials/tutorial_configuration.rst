@@ -125,7 +125,7 @@ Initialize a New Repository and Clone it to Your Local Machine
         :width: 600
 
   Once created, copy the clone URL from the GUI.
-  This is found with the green ‘Clone or download’ button and NOT the browser URL.
+  This is found with the green ‘Code’ button and NOT the browser URL.
 
     .. image:: /images/configure_tutorial/clone_new_repo.png
        :width: 600
@@ -173,37 +173,64 @@ Create the File Structure for the Project
 Start PanHandler
 ~~~~~~~~~~~~~~
 
-  The PanHandler tool will be used to generate and test the skillet.
+  PanHandler is a utility that is used to create, load, and view configuration templates and workflows.
 
-  Open a terminal/bash shell and enter the command below:
+  In order to access the latest stable version of PanHandler, open a terminal/bash shell and enter the command below:
 
   .. code-block:: bash
+
     curl -s -k -L http://bit.ly/2xui5gM | bash
 
-  This will install the latest 'main' PanHandler image. The terminal output will provide updates as it's installing.
-  It will also provide instructions on how to navigate to the PanHandler GUI.
+  Once that is finished running, navigate to the URL below using a web browser (Chrome, Firefox, Safari, etc):
 
-  .. image:: /images/configure_tutorial/panhandler_install.png
-     :width: 800
+  .. code-block:: bash
 
-  Navigate to the GUI and log into the interface with these credentials:
+    http://localhost:8080
 
+  The credentials to log into the PanHandler interface are 'paloalto'[Username] and 'panhandler'[Password]
 
-Import Skillet Builder Tools
+  Please refer to the `PanHandler documentation <https://panhandler.readthedocs.io/en/master/overview.html/>`_
+  for more detailed information on the PanHandler utility.
+
+Restart PanHandler
+~~~~~~~~~~~~~~~~~~
+
+  If you already installed PanHandler, you will eventually need to restart the container.
+
+  Navigate to the Docker Desktop Application on your local machine. You should see the 'panhandler' container listed on
+  the dashboard.
+
+  **insert pic here**
+
+  Click 'Start' to restart the container. You should now be able to access the PanHandler GUI at the same URL as before:
+
+.. code-block:: bash
+
+    http://localhost:8080
+
+Import SkilletBuilder Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  In panHandler import the :ref:`Skillet Builder Tools` repo.
+  In order to utilize the SkilletBuilder tools, the repository needs to be imported into PanHandler.
 
-Skillet Editor
-~~~~~~~~~~~~~~
+  Navigate to the PanHandler menu in the top left corner and click the dropdown arrow. Then click 'Import Skillets.
 
-  The IDE should be ready with:
+  **insert pic here**
 
-  * a full view of files and directories in the skillet
-  * text editor that supports YAML and XML file types
-  * terminal access to interact with Git/Github
 
-|
+  Under the 'Recommended Repositories' section, click 'Import' on the SkilletBuilder Tools option
+
+  **insert pic here**
+
+  Another option to import the repository is to add the git link in the 'Import Repository' section, list the
+  repository name and click 'Submit'. The proper link can be found under the green 'Code' button in the GitHub repository.
+  DO NOT use the browser URL.
+
+  **insert pic here**
+
+  .. note::
+
+    This method is the standard way of importing any valid skillet repositories into PanHandler.
 
 Build the Skillet
 --------------------
