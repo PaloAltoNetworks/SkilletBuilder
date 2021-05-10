@@ -1,6 +1,7 @@
 Basic Configuration With Set Commands
 ==============================
 
+
 Overview
 --------
 
@@ -11,7 +12,7 @@ This Basic Config with Set Commands tutorial will show the user how to:
 * Access and configure the Next Generation Firewall(NGFW) through the web UI and CLI
 * Capture configuration differences made on the NGFW into set commands and automation skillets
 * Learn how to use Panhandler tooling
-* Learn how to use the SLI tool on the CLI
+* Learn how to use the SKillet Line Interface(SLI) tool on the CLI
 
 The video below provides an end-to-end perspective for building a configuration skillet as a complement
 to the documentation content.
@@ -23,7 +24,6 @@ to the documentation content.
     interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 |
-
 You can click on the hyperlink menu below to quickly navigate to different parts of the tutorial.
 
 1. `Prerequisites`_
@@ -69,10 +69,12 @@ It may also be useful to review the following topics before getting started:
 
 This tutorial will be split into 4 main sections below and can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
+
 Set Up Your Environment
 -----------------------
 
 In this section we will set everything up that will be needed to successfully complete this tutorial. 
+
 
 NGFW
 ~~~~
@@ -90,6 +92,7 @@ NGFW
 
     **API Access**
     Login credentials with API access to test playing Skillets and any changes made by using set commands.
+
 
 Having the CLI 'Set Command Ready'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -121,6 +124,7 @@ Having the CLI 'Set Command Ready'
 .. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
 .. _`knowledgebase article`: https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA10g000000ClHoCAK
 
+
 Running PanHandler
 ~~~~~~~~~~~~~~~~~~
 
@@ -145,6 +149,7 @@ Running PanHandler
   
 .. _`PanHandler documentation`: https://panhandler.readthedocs.io/en/master/overview.html
   
+  
 Importing SkilletBuilder Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -153,6 +158,27 @@ Importing SkilletBuilder Tools
     change the repository name and paste the cloned git repository URL in HTPPS or SSH.
 
 .. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
+
+
+Running SLI
+~~~~~~~~~~~
+
+    SLI is a nifty tool that can be used to quickly interact with skillets and your NGFW through the CLI. Please refer to the `SLI 
+    PyPi`_ documentation library for instructions on how to install and use the SLI tool in your CLI.
+    
+.. _`SLI PyPi`: https://pypi.org/project/sli/
+
+
+Skillet Editor
+~~~~~~~~~~~~~~
+
+    The IDE should be ready with:
+    
+    * A full view of files and directories in the skillet
+    * Text editor that supports YAML and XML file types
+    * Terminal access to interact with Git/Github
+    
+|
 
 Build The Skillet
 -----------------
@@ -165,6 +191,7 @@ Build The Skillet
   * use the :ref:`Generate a Skillet` tool to create the initial skillet
   * add the variables
   * commit and push to Github
+
 
 Test and Troubleshoot
 ---------------------
@@ -188,6 +215,7 @@ Document
 
 
 
+**BELOW IS ALL STUFF I HAVENT EDITED YET SO FAR EVERYTHING ABOVE THIS COMMENT IS NEW**
 
 
 
@@ -203,19 +231,7 @@ Document
 
 
 
-Run PanHandler
-~~~~~~~~~~~~~~
 
-  PanHandler will be used to generate and test the skillet.
-
-  Use the curl command found in :ref:`Updating or Running the Master Version` if panHandler is not installed or not running
-  the latest version.
-
-
-Import Skillet Builder Tools
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  In panHandler import the :ref:`Skillet Builder Tools` repo.
 
 Skillet Editor
 ~~~~~~~~~~~~~~
