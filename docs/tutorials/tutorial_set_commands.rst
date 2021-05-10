@@ -50,7 +50,7 @@ Before moving forward with the tutorial, please ensure the following prerequisit
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
   * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. Please refer to and follow the steps in the linked SLI_ page to get started
-    * For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, specifically SkilletBuilder_ tools
+* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, specifically SkilletBuilder_ tools
     
 It may also be useful to review the following topics before getting started:
 
