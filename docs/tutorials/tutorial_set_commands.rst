@@ -25,7 +25,7 @@ Prerequisites
 * Ability to access the NGFW device via GUI[2][3], SSH/CLI[4] and API
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
-  * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. Please refer to and follow the steps in the linked SLI page to get started
+  * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. Please refer to and follow the steps in the linked SLI_ page to get started
 * For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, specifically SkilletBuilder_ tools
 
 .. _PanHandler: https://panhandler.readthedocs.io/en/master/
@@ -38,7 +38,7 @@ Prerequisites
 .. [3] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
 .. [4] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh username@XXX.XXX.XXX.XXX* (with your NGFW's management IP replacing the X's).
 
-This tutorial will be split into # sections below and can either be done via the reading the document or watching the tutorial video. There is a video tutorial for achieving our intended results via use of the PanHandler UI tool and the SLI command line interface tool.
+This tutorial will be split into 4 main sections below and can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
 1- `Setting up the Sandbox`_
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
