@@ -212,6 +212,28 @@ Here we will be walking through logging into GitHub, creating and adding a repo 
 .. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent    
     
 
+Create the File Structure for the Project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  This model places the set command elements within the .skillet.yaml file. This is the standard output used by the
+  Skillet Generator.
+
+  In the editor open the repo directory that was just cloned and add the following:
+
+    * a new folder that will contain the skillet content (eg. tag_edl_block_rules)
+    * in the new folder add an empty ``.meta-cnc.yaml`` file 
+    
+        * The contents of the file will be populated later in the tutorial
+    * in the new folder add an empty README.md file 
+    
+        * The contents of the file will be populated later in the tutorial
+
+  The skillet directory structure will look like:
+
+  .. image:: /images/configure_tutorial/configure_skillet_folder.png
+     :width: 250
+     
+
 Skillet Editor
 ~~~~~~~~~~~~~~
 
