@@ -95,6 +95,8 @@ Having the CLI 'Set Command Ready'
     .. code-block:: bash
       
       admin@PA-VM> ssh admin@99.99.999.999
+      admin@PA-VM> set cli config-output-format set
+      admin@PA-VM> debug cli on
       admin@PA-VM> configure
       Entering configuration mode
       (this is where you will make changes on the NGFW)
@@ -103,12 +105,15 @@ Having the CLI 'Set Command Ready'
       admin@PA-VM> exit
       exiting configuration mode
       
-    We first log in with the *ssh* command, we then enter configuration mode with the keyword, *configure*. Once in configuration mode
-    we can make changes on the NGFW with *set* commands. After all desired changes are made you can commit them to the NGFW via the
-    *commit* command and then exit out of configuration mode with *exit*.
+    We first log in with the *ssh* command, we then enter a *set* command to display configuration data as set commands. *Debug cli on* 
+    will allow for the easy capturing of the specific configuration xpath whenever a change is made via set commands on the cli, this
+    `knowledgebase article`_ is also useful in understanding how to view NGFW configurations in *set* and *xml* formats via the cli.
+    configuration mode with the keyword, *configure*. Once in configuration mode we can make changes on the NGFW with *set* commands.
+    After all desired changes are made you can commit them to the NGFW via the *commit* command and then exit out of configuration mode
+    with *exit*.
     
 .. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
-
+.. _`knowledgebase article`: https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA10g000000ClHoCAK
 
 Build The Skillet
 -----------------
