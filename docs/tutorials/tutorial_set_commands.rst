@@ -22,7 +22,10 @@ to the documentation content.
     <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
     id=17392613-262a-4606-a11a-ab6c010b894e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
     interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
-|
+
+Navigation Menu
+~~~~~~~~~~~~~~~
+
 You can click on the hyperlink menu below to quickly navigate to different parts of the tutorial.
 
 1. `Prerequisites`_
