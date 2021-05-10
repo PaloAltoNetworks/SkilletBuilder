@@ -4,12 +4,13 @@ Configuration
 Overview
 --------
 
-This tutorial is aimed at novice skillet builders who want to work through building a sample skillet.
+This tutorial is designed to help the user build an introductory configuration skillet. The tutorial will showcase
+PanHandler, along with several SkilletBuilder tools that assist the user in creating, editing, and testing skillets.
 The configuration tutorial will create a simple configuration including:
 
-  * An IP External Dynamic List (EDL) object
-  * A Tag object
-  * Security rules (Inbound and Outbound) referencing the EDL and tag objects
+  - An IP External Dynamic List (EDL) object
+  - A Tag object
+  - Security rules (Inbound and Outbound) referencing the EDL and tag objects
 
 The video provides an end-to-end perspective for building a configuration skillet as a complement
 to the documentation content.
@@ -41,9 +42,12 @@ Prerequisites
 Before moving forward with the tutorial, you will need the following:
 
 - NGFW up and running with proper access to GUI and CLI(via SSH)
-- A GitHub account with access permissions to edit repository content
-- Docker desktop installed and running on your local machine
+- A `GitHub <https://github.com/>`_ account with access permissions to edit repository content
+- `Docker <https://www.docker.com/>`_ desktop installed and running on your local machine
 - Text Editor/IDE of choice for XML/YAML editing
+
+    - `PyCharm <https://www.jetbrains.com/pycharm/>`_ and `Sublime Text <https://www.sublimetext.com/>`_ are recommended options for beginners.
+
 - Access to the following repositories:
 
     - `PanHandler <https://github.com/PaloAltoNetworks/panhandler/>`_
@@ -57,74 +61,57 @@ It may also be useful to review the following topics before getting started:
 Set Up Your Environment
 -----------------------
 
-The skillet sandbox specific to this NGFW configuration will consist of 4 basic elements: the NGFW, panHandler,
-the Skillet Builder tools, and the creation/editor environment.
+Your skillet building environment consists of 4 essential parts:
+
+1. NGFW
+2. PanHandler
+3. SkilletBuilder Tools
+4. Text Editor/IDE
 
 NGFW
 ~~~~
 
   This is the device to be configured.
 
-  **Software Version**
-  Note the software version of the configuration device and associated skillets.
-  Skillets configuration elements may be version specific require unique skillets per software release.
+  .. NOTE::
+    Some skillet configuration elements may be version specific and require unique skillets per software release.
+    Verify that the **Software Version** and associated skillets are compatible.
 
   **Baseline Configuration**
-  Recommendation to save a configuration file as ‘baseline’ for easy rollback for generation, testing, and demonstration.
 
-  **API Access**
-  Login credentials with API access to test playing the skillet
+  Before making any configuration changes, it is recommended to save a 'baseline' configuration file. This will make
+  it easier to rollback the NGFW for testing and demonstration purposes.
 
-Having the CLI ‘XML Ready’
+
+Prepare the CLI to be ‘XML Ready’
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  The tutorial will use the Skillet Generator but later stages of testing and tuning may require review and capture
-  of the XPath or XML elements. These operations commands make the CLI XML-ready:
+  The tutorial will use the Skillet Generator tool but later stages of testing and tuning may require review and capture
+  of the XPath or XML elements. These operational mode commands make the CLI XML-ready.
+
+  Log into the NGFW via CLI by opening a terminal/bash shell on your local machine and type the command below;
+  replacing the placeholders with your NGFW's username and MGMT IP address:
 
   .. code-block:: bash
 
-      admin@PA-VM> set cli config-output-format xml
-      admin@PA-VM> debug cli on
+    ssh {username}@{X.X.X.X}
+
+  Enter the password to log into the NGFW. If you are logging into the NGFW for the first time via CLI, you may
+  need to authorize the ECDSA key fingerprint. Type 'yes' before continuing. In your terminal window, enter the
+  following commands:
+
+  .. code-block:: bash
+
+    admin@PA-VM> set cli config-output-format xml
+    admin@PA-VM> debug cli on
 
   The first command will display configuration data as XML and the second will allow for easy capture of the configuration XPath.
   Review the :ref:`XML Basics` if you are not familiar with XML concepts.
 
+Initialize a New Repository and Clone it to Your Local Machine
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Run PanHandler
-~~~~~~~~~~~~~~
-
-  PanHandler will be used to generate and test the skillet.
-
-  Use the curl command found in :ref:`Updating or Running the Master Version` if panHandler is not installed or not running
-  the latest version.
-
-
-Import Skillet Builder Tools
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  In panHandler import the :ref:`Skillet Builder Tools` repo.
-
-Skillet Editor
-~~~~~~~~~~~~~~
-
-  The IDE should be ready with:
-
-  * a full view of files and directories in the skillet
-  * text editor that supports YAML and XML file types
-  * terminal access to interact with Git/Github
-
-|
-
-Build the Skillet
---------------------
-
-The following steps take the user from creating the Github repo, through generating and editing the skillet, to a final
-push of skillet content back to the created repo.
-
-Creating a New Repo and Cloning
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  :ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
+:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
 
   Log in to Github and select ‘New’ to add a new repo.
 
@@ -156,6 +143,73 @@ Creating a New Repo and Cloning
     This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
 
 .. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
+
+
+Create the File Structure for the Project
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  This model places the XML elements within the .skillet.yaml file. This is the standard output used by the
+  Skillet Generator.
+
+  In the editor open the repository you just cloned and add the following:
+
+    - A new folder that will contain the skillet content (eg. tag_edl_block_rules)
+    - Add an empty ``.skillet.yaml`` file inside the new folder
+
+        - The contents of the file will be populated later in the tutorial
+
+    - Add an empty README.md file inside the new folder
+
+        - The contents of the file will be populated later in the tutorial
+
+  The skillet directory structure will look like:
+
+    **need to update this image**
+
+  .. image:: /images/configure_tutorial/configure_skillet_folder.png
+     :width: 250
+
+
+Start PanHandler
+~~~~~~~~~~~~~~
+
+  The PanHandler tool will be used to generate and test the skillet.
+
+  Open a terminal/bash shell and enter the command below:
+
+  .. code-block:: bash
+    curl -s -k -L http://bit.ly/2xui5gM | bash
+
+  This will install the latest 'main' PanHandler image. The terminal output will provide updates as it's installing.
+  It will also provide instructions on how to navigate to the PanHandler GUI.
+
+  .. image:: /images/configure_tutorial/panhandler_install.png
+     :width: 800
+
+  Navigate to the GUI and log into the interface with these credentials:
+
+
+Import Skillet Builder Tools
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  In panHandler import the :ref:`Skillet Builder Tools` repo.
+
+Skillet Editor
+~~~~~~~~~~~~~~
+
+  The IDE should be ready with:
+
+  * a full view of files and directories in the skillet
+  * text editor that supports YAML and XML file types
+  * terminal access to interact with Git/Github
+
+|
+
+Build the Skillet
+--------------------
+
+The following steps take the user from creating the Github repo, through generating and editing the skillet, to a final
+push of skillet content back to the created repo.
 
 
 Create the Configuration in the NGFW
@@ -198,24 +252,6 @@ Create the Configuration in the NGFW
 
 .. image:: /images/configure_tutorial/configure_security_rules.png
     :width: 800
-
-
-Create the Project Skeleton Structure for XML
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  This model places the XML elements within the .meta-cnc.yaml file. This is the standard output used by the
-  Skillet Generator.
-
-  In the editor open the repo directory and add the following:
-
-    * a new folder that will contain the skillet content (eg. tag_edl_block_rules)
-    * in the new folder add an empty ``.meta-cnc.yaml`` file (will populate the text later)
-    * in the new folder add an empty README.md file (will populate the text later)
-
-  The skillet directory structure will look like:
-
-  .. image:: /images/configure_tutorial/configure_skillet_folder.png
-     :width: 250
 
 
 Generate the Skillet
