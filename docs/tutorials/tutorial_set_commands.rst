@@ -32,7 +32,7 @@ You can click on the hyperlink menu below to quickly navigate to different parts
 
 2. `Set Up Your Environment`_
 
-3. `Build the Skillet`_
+3. `Building Skillets with Set Commands`_
 
 4. `Test and Troubleshoot`_
 
