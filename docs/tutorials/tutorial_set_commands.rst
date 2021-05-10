@@ -13,8 +13,9 @@ This Basic Config with Set Commands tutorial will show the user how to:
 * Capture configuration differences made on the NGFW into set commands and automation skillets
 * Learn how to use Panhandler tooling
 * Learn how to use the Skillet Line Interface(SLI) tool on the CLI
+* Learn the basics of using GitHub and repositories
 
-The video below provides an end-to-end perspective for building a configuration skillet as a complement
+The video below provides an end-to-end perspective for building a configuration skillet and can be used as a complement
 to the documentation content.
 
 .. raw:: html
@@ -46,7 +47,7 @@ Before moving forward with the tutorial, please ensure the following prerequisit
 
 * Have an up and running NGFW Virtual Machine(VM)
 * A GitHub_ account with access permissions to edit repository content
-* Docker_ desktop active and running on your machine
+* Docker_ desktop installed, active and running on your machine
 * Personal preference of text editor/IDE(Integrated Development Environment) for XML/YAML editing[1]
 * Ability to access the NGFW device via GUI[2][3], SSH/CLI[4] and API
 * For users wishing to work through the command line have SLI_ set up and ready to go
@@ -64,10 +65,10 @@ It may also be useful to review the following topics before getting started:
 .. _Docker: https://www.docker.com
 .. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
 .. _SLI: https://pypi.org/project/sli/
-.. [1] PyCharm or SublimeText are good options for a beginner text editor or IDE.
+.. [1] PyCharm or SublimeText are good options for a beginner IDE or text editor.
 .. [2] Log in to the NGFW UI by entering this, *https://XXX.XXX.XXX.XXX* (with your NGFW's management IP replacing the X's), into the web browser URL bar.
 .. [3] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
-.. [4] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh username@XXX.XXX.XXX.XXX* (with your NGFW's management IP replacing the X's).
+.. [4] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh {username}@{X.X.X.X}* (with your NGFW's management IP replacing the X's).
 
 This tutorial will be split into 4 main sections below and can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
@@ -75,14 +76,14 @@ This tutorial will be split into 4 main sections below and can either be done by
 Set Up Your Environment
 -----------------------
 
-In this section we will set everything up that will be needed to successfully complete this tutorial. 
+In this section we will set up everything that will be needed to successfully complete the tutorial. 
 
 
 NGFW
 ~~~~
 
     This is the device that we will be working with and configuring during the tutorial. Be sure that you are able to log into the
-    firewall UI by inputting its management IP into the web browser. When logged in it can be useful to make note of a number of things.
+    firewall UI by inputting its management IP into the web browser. When logged in it can be useful to do a number of things.
 
     **Software Version:**
     Please take note of the devices software version when traversing this tutorial. Some configuration elements may be version
@@ -99,9 +100,10 @@ NGFW
 Having the CLI 'Set Command Ready'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    This tutorial will use the Skillet Generator tool but it is also useful to know how to configure the firewall through the CLI. 
+    This tutorial will use the Skillet Generator tool to create automation workflows to alter the NGFW configuration, but it is also
+    useful to know how to configure the firewall through the CLI. 
 
-    These operations commands below will help you get started with configurations but please also refer to this supplemental
+    These operations commands below will help you get started with basic configurations but please also refer to this supplemental
     article_ for more guidance on using the CLI with the NGFW.
 
     .. code-block:: bash
@@ -117,12 +119,12 @@ Having the CLI 'Set Command Ready'
       admin@PA-VM> exit
       exiting configuration mode
       
-    First log in with the "*ssh*" command, we then enter a "*set*" command to display configuration data as set commands. *Debug cli on* 
+    First log in with the *ssh* command, we then enter a *set* command to display configuration data as set commands. *Debug cli on* 
     will allow for the easy capturing of the specific configuration xpath whenever a change is made via set commands on the cli, this
-    `knowledgebase article`_ is also useful in understanding how to view NGFW configurations in "*set*" and "*xml*" formats via the cli.
-    configuration mode with the keyword, "*configure*". Once in configuration mode we can make changes on the NGFW with set commands.
-    After all desired changes are made you can commit them to the NGFW via the "*commit*" command and then exit out of configuration 
-    mode with "*exit*".
+    `knowledgebase article`_ is also useful in understanding how to view NGFW configurations in *set* and *xml* formats via the cli.
+    Next, enter configuration mode by typing the keyword, *configure*. Once in configuration mode we can make changes on the NGFW with
+    set commands. After all desired changes are made you can commit them to the NGFW via entering the *commit* command and then 
+    exiting out of configuration mode with the *exit* command.
     
 .. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
 .. _`knowledgebase article`: https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA10g000000ClHoCAK
@@ -131,13 +133,13 @@ Having the CLI 'Set Command Ready'
 Running PanHandler
 ~~~~~~~~~~~~~~~~~~
 
-    PanHandler is a utility that is used to create, load and view configuration templates and workflows. 
+  PanHandler is a utility that is used to create, load and view configuration templates and workflows. 
 
-    We will be using PanHandler to help create automation templates called "*skillets*" and use these templates to automate the
-    process of deploying set commands to our NGFW.
+  We will be using PanHandler to help create automation templates called *skillets*, and use these templates to automate the
+  process of deploying set commands to our NGFW.
   
   If you have not already installed or run the latest version of PanHandler, in order to access the latest version of the
-  PanHandler web UI you do the following commands in your CLI.
+  PanHandler web UI you can do the following commands in your CLI.
   
   .. code-block:: bash
   
