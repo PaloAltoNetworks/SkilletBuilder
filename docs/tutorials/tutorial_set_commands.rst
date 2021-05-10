@@ -131,17 +131,18 @@ Run PanHandler
   To access the PanHandler web UI you do the following commands in your CLI.
   
   .. code-block:: bash
+  
     > curl -s -k -L http://bit.ly/2xui5gM | bash
   
   Then you want to input the following into your browsers URL.
     
   .. code-block:: html
+  
     > http://localhost:8080
 
-  Please refer to the PanHandler documentation for more detailed information on the many useful functions of the PanHandler utility.
+  Please refer to the `PanHandler documentation`_ for more detailed information on the many useful functions of the PanHandler utility.
   
-  Use the curl command found in :ref:`Updating or Running the Master Version` if panHandler is not installed or not running
-  the latest version.
+.. _`PanHandler documentation`: https://panhandler.readthedocs.io/en/master/overview.html
   
 
 Build The Skillet
