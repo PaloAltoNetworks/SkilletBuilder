@@ -12,7 +12,7 @@ This Basic Config with Set Commands tutorial will show the user how to:
 * Access and configure the Next Generation Firewall(NGFW) through the web UI and CLI
 * Capture configuration differences made on the NGFW into set commands and automation skillets
 * Learn how to use Panhandler tooling
-* Learn how to use the SKillet Line Interface(SLI) tool on the CLI
+* Learn how to use the Skillet Line Interface(SLI) tool on the CLI
 
 The video below provides an end-to-end perspective for building a configuration skillet as a complement
 to the documentation content.
