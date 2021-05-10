@@ -40,6 +40,8 @@ You can click on the hyperlink menu below to quickly navigate to different parts
 Prerequisites
 --------------
 
+Before moving forward with the tutorial, please ensure the following prerequisites have been fulfilled.
+
 * Have an up and running NGFW Virtual Machine(VM)
 * A GitHub_ account with access permissions to edit repository content
 * Docker_ desktop active and running on your machine
@@ -65,8 +67,7 @@ This tutorial will be split into 4 main sections below and can either be done by
 Set Up Your Environment
 -----------------------
 
-  Please ensure all pre-requisites from above have been met for this section.
-  In this section we will set everything up that will be needed to successfully complete this tutorial. 
+In this section we will set everything up that will be needed to successfully complete this tutorial. 
 
 NGFW
 ~~~~
