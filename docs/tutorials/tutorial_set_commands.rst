@@ -97,13 +97,15 @@ Having the CLI 'Set Command Ready'
       admin@PA-VM> ssh admin@99.99.999.999
       admin@PA-VM> configure
       Entering configuration mode
-      (this is where you will make changes on the NGFW for example)
+      (this is where you will make changes on the NGFW)
       admin@PA-VM> set tag new color color3 comments "Example set command"
       admin@PA-VM> commit
       admin@PA-VM> exit
       exiting configuration mode
       
-    
+    We first log in with the *ssh* command, we then enter configuration mode with the keyword, *configure*. Once in configuration mode
+    we can make changes on the NGFW with *set* commands. After all desired changes are made you can commit them to the NGFW via the
+    *commit* command and then exit out of configuration mode with *exit*.
     
 .. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
 
