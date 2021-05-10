@@ -1,5 +1,5 @@
 Basic Configuration With Set Commands
-==============================
+=====================================
 
 
 Overview
@@ -155,6 +155,8 @@ Running PanHandler
 Importing SkilletBuilder Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+This section will go over how to import skillet repositories to PanHandler.
+
     Once you have gained access to the PanHandler UI you will want to import the SkilletBuilder_ repository. This is done by clicking
     the **PanHandler** drop down menu at the top of the page. Then click on **import skillets** and at the bottom of the page you can
     change the repository name and paste the cloned git repository URL in HTPPS or SSH.
@@ -165,11 +167,50 @@ Importing SkilletBuilder Tools
 Running SLI
 ~~~~~~~~~~~
 
-    SLI is a nifty tool that can be used to quickly interact with skillets and your NGFW through the CLI. Please refer to the `SLI 
-    PyPi`_ documentation library for instructions on how to install and use the SLI tool in your CLI.
+SLI is a nifty tool that can be used to quickly interact with skillets and your NGFW through the CLI. 
+    
+    Please refer to the `SLI PyPi`_ documentation library for instructions on how to install and use the SLI tool in your CLI.
     
 .. _`SLI PyPi`: https://pypi.org/project/sli/
 
+Setting Up GitHub
+~~~~~~~~~~~~~~~~~
+
+Here we will be walking through logging into GitHub, creating and adding a repo as well as some GitHub best practices to keep in mind.
+
+:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
+
+  Log in to Github and select ‘New’ to add a new repo.
+
+    .. image:: /images/configure_tutorial/create_new_repo_button.png
+        :width: 600
+
+  Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
+  pushing any EDI directories such as .idea/ used by Pycharm.
+
+    .. image:: /images/configure_tutorial/create_new_repo_fields.png
+        :width: 600
+
+  Once created, copy the clone URL from the GUI.
+  This is found with the green ‘Clone or download’ button and NOT the browser URL.
+
+    .. image:: /images/configure_tutorial/clone_new_repo.png
+       :width: 600
+
+
+  Using a local console or your editor tools, clone the repo to your local system.
+  For example, using the console and the link above:
+
+  .. code-block:: bash
+
+      midleton$ git clone https://github.com/scotchoaf/SBtest.git
+
+  .. NOTE::
+    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
+    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
+
+.. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent    
+    
 
 Skillet Editor
 ~~~~~~~~~~~~~~
