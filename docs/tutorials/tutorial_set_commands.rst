@@ -1,4 +1,4 @@
-Basic Config With Set Commands
+Basic Configuration With Set Commands
 ==============================
 
 Overview
