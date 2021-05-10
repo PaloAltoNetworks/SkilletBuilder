@@ -11,8 +11,30 @@ This Basic Config with Set Commands tutorial will show the user how to:
 * Access and configure the Next Generation Firewall(NGFW) through the web UI and CLI
 * Capture configuration differences made on the NGFW into set commands and automation skillets
 * Learn how to use Panhandler tooling
+* Learn how to use the SLI tool on the CLI
 
-However, in order to be able to run valid set commands to begin with, there are a number of prerequisites that must be satisfied.
+The video below provides an end-to-end perspective for building a configuration skillet as a complement
+to the documentation content.
+
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+    id=17392613-262a-4606-a11a-ab6c010b894e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
+    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+|
+
+You can click on the hyperlink menu below to quickly navigate to different parts of the tutorial.
+
+1. `Prerequisites`_
+
+2. `Set Up Your Environment`_
+
+3. `Build the Skillet`_
+
+4. `Test and Troubleshoot`_
+
+5. `Document`_
 
 
 Prerequisites
@@ -40,50 +62,11 @@ Prerequisites
 
 This tutorial will be split into 4 main sections below and can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
-1- `Setting up the Sandbox`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Set Up Your Environment
+-----------------------
 
   Please ensure all pre-requisites from above have been met for this section.
-
-
-2- `Build the Skillet`_
-~~~~~~~~~~~~~~~~~~~~~~~
-
-  Edit the .meta-cnc.yaml file to create the skillet
-
-  * create the github repo and clone to edit
-  * create an empty .meta-cnc.yaml file
-  * save 'before and after' configuration snapshots
-  * use the :ref:`Generate a Skillet` tool to create the initial skillet
-  * add the variables
-  * commit and push to Github
-
-3- `Test and Troubleshoot`_
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  Test against a live device and fix/tune as needed.
-
-  * Use the :ref:`Skillet Test Tool` to quick test the skillet
-  * Import the skillet into panHandler to test web UI and config loading
-  * Fix any UI or loading errors
-  * Tune the web UI, configuration elements
-
-
-4- `Document and Share`_
-~~~~~~~~~~~~~~~~~~~~~~~~
-
-  The final and important steps are good documentation and sharing with the community.
-
-  * READme.md documentation in the Github repo
-  * Skillet District posting
-  * Others can now import into their tools and use the new skillet
-
-
-Setting up the Sandbox
-----------------------
-.. _`Setting up the Sandbox`:
-
-In this section we will set everything up that will be needed to successfully complete this tutorial. 
+  In this section we will set everything up that will be needed to successfully complete this tutorial. 
 
 NGFW
 ~~~~
@@ -106,55 +89,47 @@ The user will need a valid GitHub account that they can use to create, edit and 
 .. _GitHub: https://github.com
 
 
-Build the Skillet
+Build The Skillet
 -----------------
-.. _`Build the Skillet`:
+
+  Edit the .meta-cnc.yaml file to create the skillet
+
+  * create the github repo and clone to edit
+  * create an empty .meta-cnc.yaml file
+  * save 'before and after' configuration snapshots
+  * use the :ref:`Generate a Skillet` tool to create the initial skillet
+  * add the variables
+  * commit and push to Github
+
+Test and Troubleshoot
+---------------------
+
+  Test against a live device and fix/tune as needed.
+
+  * Use the :ref:`Skillet Test Tool` to quick test the skillet
+  * Import the skillet into panHandler to test web UI and config loading
+  * Fix any UI or loading errors
+  * Tune the web UI, configuration elements
 
 
-
-.. _`Test and Troubleshoot`:
-
-
-
-.. _`Document and Share`: 
-
-
-
-Configuration
-=============
-
-Overview
+Document
 --------
 
-This tutorial is aimed at novice skillet builders who want to work through building a sample skillet.
-The configuration tutorial will create a simple configuration including:
+  The final and important steps are good documentation and sharing with the community.
 
-  * An IP External Dynamic List (EDL) object
-  * A Tag object
-  * Security rules (Inbound and Outbound) referencing the EDL and tag objects
+  * READme.md documentation in the Github repo
+  * Skillet District posting
+  * Others can now import into their tools and use the new skillet
 
-The video provides an end-to-end perspective for building a configuration skillet as a complement
-to the documentation content.
 
-.. raw:: html
 
-    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
-    id=17392613-262a-4606-a11a-ab6c010b894e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
-    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
-|
 
-Click below to jump to a specific section of the tutorial:
 
-1. `Prerequisites`_
 
-2. `Set Up Your Environment`_
 
-3. `Build the Skillet`_
 
-4. `Test and Troubleshoot`_
 
-5. `Document`_
 
 
 Prerequisites
