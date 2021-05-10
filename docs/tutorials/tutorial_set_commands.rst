@@ -81,16 +81,16 @@ In this section we will set everything up that will be needed to successfully co
 NGFW
 ~~~~
 
-    This is the device that we will be working with and configuring during the tutorial. Be sure that you are able to log into the
-    firewall UI by inputting its management IP into the web browser. When logged in it can be useful to make note of a number of things.
+This is the device that we will be working with and configuring during the tutorial. Be sure that you are able to log into the
+firewall UI by inputting its management IP into the web browser. When logged in it can be useful to make note of a number of things.
 
     **Software Version:**
-    Please take note of the devices software version when traversing this tutorial. Some configuration elements may be version specific
-    and require unique skillets per software releases.
+    Please take note of the devices software version when traversing this tutorial. Some configuration elements may be version
+    specific and require unique skillets per software releases.
 
     **Baseline Configuration:** It is recommended to capture a *baseline* configuration of your newly brought up and pre-configured
-    firewall. This is especially useful for testing purposes if you wish to quickly revert any changes made on the NGFW back to a blank
-    slate. This can be done on the NGFW UI via *Devices->Setup->Operations->Save* named configuration snapshot*.
+    firewall. This is especially useful for testing purposes if you wish to quickly revert any changes made on the NGFW back to a
+    blank slate. This can be done on the NGFW UI via *Devices->Setup->Operations->Save* named configuration snapshot*.
 
     **API Access**
     Login credentials with API access to test playing Skillets and any changes made by using set commands.
@@ -99,9 +99,10 @@ NGFW
 Having the CLI 'Set Command Ready'
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    This tutorial will use the Skillet Generator tool but it is also useful to know how to configure the firewall through the CLI. These
-    operations commands below will help you get started with configurations but please also refer to this supplemental article_ for more
-    guidance on using the CLI with the NGFW.
+This tutorial will use the Skillet Generator tool but it is also useful to know how to configure the firewall through the CLI. 
+
+    These operations commands below will help you get started with configurations but please also refer to this supplemental
+    article_ for more guidance on using the CLI with the NGFW.
 
     .. code-block:: bash
       
