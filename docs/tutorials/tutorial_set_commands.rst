@@ -38,7 +38,7 @@ You can click on the hyperlink menu below to quickly navigate to different parts
 
 
 Prerequisites
---------------
+-------------
 
 Before moving forward with the tutorial, please ensure the following prerequisites have been fulfilled.
 
@@ -133,8 +133,7 @@ Document
 
 
 
-Prerequisites
--------------
+
 
 Before moving forward with the tutorial, you will need the following:
 
@@ -152,7 +151,7 @@ It may also be useful to review the following topics before getting started:
 - :ref:`XMLandSkillets`
 - :ref:`jinjaandskillets`
 
-Set Up Your Environment
+ssSet Up Your Environment
 -----------------------
 
 The skillet sandbox specific to this NGFW configuration will consist of 4 basic elements: the NGFW, panHandler,
