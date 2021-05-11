@@ -173,7 +173,7 @@ Having the CLI 'Set Command Ready'
     These operational commands below will help you get started with basic configurations but please also refer to this supplemental
     article_ for more guidance on using the CLI with the NGFW.
 
-    .. :NOTE::
+    .. NOTE::
     If you are logging into the NGFW for the first time via CLI, you may need to authorize the ECDSA key fingerprint. Type 'yes' 
     before continuing.
 
