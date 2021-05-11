@@ -53,10 +53,15 @@ Before moving forward with the tutorial, you will need the following:
     - `PanHandler <https://github.com/PaloAltoNetworks/panhandler/>`_
     - `SkilletBuilder <https://github.com/PaloAltoNetworks/SkilletBuilder/>`_
 
+- For users interested in working through the command line, have `SLI <https://pypi.org/project/sli/>`_ installed on your local machine
+
+    - SLI is a CLI interface for interacting with Skillets. Please refer to the link above to learn about SLI and get started.
+
 It may also be useful to review the following topics before getting started:
 
 - :ref:`XMLandSkillets`
 - :ref:`jinjaandskillets`
+
 
 Set Up Your Environment
 -----------------------
@@ -68,10 +73,12 @@ Your skillet building environment consists of 4 essential parts:
 3. SkilletBuilder Tools
 4. Text Editor/IDE
 
+In this section of the tutorial we will set up everything you need to successfully complete the tutorial.
+
 NGFW
 ~~~~
 
-  This is the device to be configured.
+  This is the device that we will be working with and configuring during the tutorial.
 
   .. NOTE::
     Some skillet configuration elements may be version specific and require unique skillets per software release.
@@ -235,18 +242,28 @@ Import SkilletBuilder Tools
 Build the Skillet
 --------------------
 
-The following steps take the user from creating the Github repo, through generating and editing the skillet, to a final
-push of skillet content back to the created repo.
+Now that everything is set up and ready to go, we can begin building the skillet.
 
 
 Create the Configuration in the NGFW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Before modifying the configuration, ensure you have a snapshot of the 'before' configuration.
+  Before modifying the configuration, ensure you have a snapshot of the 'before/baseline' configuration.
+
+  Navigate to Device > Setup > Operations.
+
+  **insert pic here**
+
+  Click 'Save named configuration snapshot', enter a name for the file (ex. baseline.xml), and click OK.
+
+  **insert pic here**
 
   The tutorial examples use the GUI to create the EDL, tag, and security rules.
   Many of the config values are placeholders that look like variable names (hint, hint).
   You can also load the :ref:`Sample Configuration Skillet` found in the Skillet Builder collection.
+
+  Navigate to Objects > External Dynamic Lists
+  Click 'Add' at the bottom of the page
 
   Configure the external-list object with a name, description, and source URL.
 
@@ -255,6 +272,10 @@ Create the Configuration in the NGFW
 
 
   |
+
+
+  Navigate to Objects > Tags
+  Click 'Add' at the bottom of the page
 
   Configure the tag object with a name, color, and comments (description).
 
@@ -277,12 +298,29 @@ Create the Configuration in the NGFW
   rule names are prepended with the EDL name. In later steps variables are used in the rule names to
   map the EDL and ensure rule names are unique.
 
+  Navigate to Policies > Security
+  Click 'Add' at the bottom of the page
+
 .. image:: /images/configure_tutorial/configure_security_rules.png
     :width: 800
 
 
-Generate the Skillet
-~~~~~~~~~~~~~~~~~~~~
+  Follow the screenshots below to edit the security policy rules. You can assume the default settings if they are not present below.
+
+  **insert pics here**
+
+  Commit the changes you just made and save the configuration file.
+  Navigate back to Device > Setup > Operations and 'Save named configuration snapshot' again, but name the file something you
+  will remember (ex. skilletbuilder.xml).
+
+  **insert pic here**
+
+  Export both the 'baseline' configuration file and the file you just saved to your local machine.
+
+  **insert pic**
+
+Generate the Skillet with PanHandler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   In panHandler use the :ref:`Generate a Skillet` skillet to extract the difference between the baseline and
   modified configuration with offline mode choosing 'From uploaded configs'.
@@ -484,6 +522,14 @@ Generate the Skillet
 
 |
 
+Generate the Skillet with SLI
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+If you prefer to use the command line, SLI can also extract the difference between two configuration files.
+**add pics and more context**
+
+
+
 Copy the Output to .meta-cnc.yaml
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -493,6 +539,90 @@ Copy the Output to .meta-cnc.yaml
         At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play
         the skillet without variables. Common reasons for raw output testing include the possible need for snippet reordering
         and confirmation that the snippet elements will load
+
+Edit the Variables Section
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  Now that the variable set is known, they must be added to the metadata file along with a description to be used
+  in the web form, a default provided in the form, and a type_hint to specify the type of web form field.
+  This metadata allows tools like panHandler to auto-generate the web form without any user specific HTML coding.
+
+  Key is :ref:`Ensuring all variables are defined` in the variables section. In the tutorial we'll use the first
+  grep option to generate a list of added variables.
+
+  .. code-block:: bash
+
+    midleton:SBtest$ grep -r '{{' . |  cut -d'{' -f3 | awk '{ print $1 }' | sort -u
+    edl_description
+    edl_name
+    edl_url
+    tag_color
+    tag_description
+    tag_name
+
+  The output of the grep command shows the six variables used in the tutorial configs.
+
+  From here, edit the variables section of the YAML file. Note that 4 are text and one is a URL while color is using a dropdown.
+  The dropdown is useful when the GUI and XML use different values or limited choices should be offered.
+
+  .. code-block:: yaml
+
+    variables:
+      - name: edl_name
+        description: External-list name
+        default: my_edl
+        type_hint: text
+      - name: edl_description
+        description: External-list description
+        default: my_edl description
+        type_hint: text
+      - name: edl_url
+        description: External-list URL
+        default: my_edl
+        type_hint: url
+      - name: tag_name
+        description: tag name
+        default: my_tag
+        type_hint: text
+      - name: tag_description
+        description: tag description
+        default: tag description
+        type_hint: text
+      - name: tag_color
+        description: tag color
+        default: red
+        type_hint: dropdown
+        dd_list:
+          - key: green
+            value: color2
+          - key: orange
+            value: color6
+          - key: red
+            value: color1
+
+  The values for the tag color require color numbers and not the Web UI presented names. This is common for many dropdown
+  selections in the Web UI. For these types of situations, you can create a set of items (eg. tags)
+  to be displayed in the XML output to match Web UI and XML required values.
+
+  For the tag color values, below is the config showing the 3 color values for green, orange, and red.
+  Additional colors can be extracted by using the GUI to create more tags and then use the CLI and ‘show tag’
+  to see additional color numbers.
+
+  .. code-block:: xml
+
+      <entry name="tag_name">
+        <color>color1</color>
+        <comments>tag_description</comments>
+      </entry>
+      <entry name="tag_orange">
+        <color>color6</color>
+      </entry>
+      <entry name="tag_green">
+        <color>color2</color>
+      </entry>
+
+  This method or the CLI '?' complete action can be used to find the XML specific configuration options instead of the
+  Web UI options.
 
 Add Variables to Snippets
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -643,89 +773,7 @@ Add Variables to Snippets
     variable name where possible. Tools like panHandler will cache web form inputs and auto-populate values
     when the same variable is encountered again.
 
-Edit the Variables Section
-~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Now that the variable set is known, they must be added to the metadata file along with a description to be used
-  in the web form, a default provided in the form, and a type_hint to specify the type of web form field.
-  This metadata allows tools like panHandler to auto-generate the web form without any user specific HTML coding.
-
-  Key is :ref:`Ensuring all variables are defined` in the variables section. In the tutorial we'll use the first
-  grep option to generate a list of added variables.
-
-  .. code-block:: bash
-
-    midleton:SBtest$ grep -r '{{' . |  cut -d'{' -f3 | awk '{ print $1 }' | sort -u
-    edl_description
-    edl_name
-    edl_url
-    tag_color
-    tag_description
-    tag_name
-
-  The output of the grep command shows the six variables used in the tutorial configs.
-
-  From here, edit the variables section of the YAML file. Note that 4 are text and one is a URL while color is using a dropdown.
-  The dropdown is useful when the GUI and XML use different values or limited choices should be offered.
-
-  .. code-block:: yaml
-
-    variables:
-      - name: edl_name
-        description: External-list name
-        default: my_edl
-        type_hint: text
-      - name: edl_description
-        description: External-list description
-        default: my_edl description
-        type_hint: text
-      - name: edl_url
-        description: External-list URL
-        default: my_edl
-        type_hint: url
-      - name: tag_name
-        description: tag name
-        default: my_tag
-        type_hint: text
-      - name: tag_description
-        description: tag description
-        default: tag description
-        type_hint: text
-      - name: tag_color
-        description: tag color
-        default: red
-        type_hint: dropdown
-        dd_list:
-          - key: green
-            value: color2
-          - key: orange
-            value: color6
-          - key: red
-            value: color1
-
-  The values for the tag color require color numbers and not the Web UI presented names. This is common for many dropdown
-  selections in the Web UI. For these types of situations, you can create a set of items (eg. tags)
-  to be displayed in the XML output to match Web UI and XML required values.
-
-  For the tag color values, below is the config showing the 3 color values for green, orange, and red.
-  Additional colors can be extracted by using the GUI to create more tags and then use the CLI and ‘show tag’
-  to see additional color numbers.
-
-  .. code-block:: xml
-
-      <entry name="tag_name">
-        <color>color1</color>
-        <comments>tag_description</comments>
-      </entry>
-      <entry name="tag_orange">
-        <color>color6</color>
-      </entry>
-      <entry name="tag_green">
-        <color>color2</color>
-      </entry>
-
-  This method or the CLI '?' complete action can be used to find the XML specific configuration options instead of the
-  Web UI options.
 
 Local Skillet Test
 ~~~~~~~~~~~~~~~~~~
@@ -735,6 +783,11 @@ Local Skillet Test
   using the default variable values. Check that the configuration loaded into the NGFW.
 
   Common errors at this stage likely include YAML formatting issues, snippet ordering problems, or a variable typo.
+
+Testing with SLI
+~~~~~~~~~~~~~~~~
+
+  **add content here**
 
 Push the Skillet to Github
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -771,7 +824,7 @@ Push the Skillet to Github
 
 
   The skillet now resides in Github. Note however that the page README gives no real indication about
-  what is contained in this repo. We'll get back to that later.
+  what is contained in this repo. We will edit this page later in the tutorial.
 
   .. image:: /images/configure_tutorial/configure_skillet_repo_updated.png
      :width: 800
@@ -780,12 +833,12 @@ Push the Skillet to Github
 Test and Troubleshoot
 ------------------
 
-Now that the skillet has been pushed to Github, the skillet can be imported to panHandler to test the user experience.
+Now that the skillet has been pushed to Github, the skillet can be imported into PanHandler to test the user experience and functionality.
 
 Import the Skillet
 ~~~~~~~~~~~~~~~~~~
 
-  Get the new skillet URL from Github
+  Get the new skillet URL from Github. This is NOT the browser URL for the repository.
 
   .. image:: /images/configure_tutorial/skillet_clone_url.png
      :width: 300
@@ -794,6 +847,7 @@ Import the Skillet
 |
 
   Use ``Import Skillets`` with the ``Clone or download`` Github URL to import the skillet to panHandler.
+  Please refer back to [insert hyperlink here] for a more detailed explanation of importing a skillet.
 
   .. image:: /images/configure_tutorial/configure_skillet_import.png
      :width: 400
@@ -811,23 +865,24 @@ Import the Skillet
 
   **Github URL and branch**
 
-    * validate the correct URL for your skillet
-    * check the Active Branch, master for the tutorial
+    - Validate the correct URL for your skillet
+    - Check the Active Branch, master for the tutorial
 
   **Latest Updates**
 
-    * review the last commit to ensure you are testing the latest push
-    * ``Update to Latest`` as needed to pull recent commits
+    - Review the last commit to ensure you are testing the latest push
+    - ``Update to Latest`` as needed to pull recent commits
+
 
   **Metadata files**
 
-    * check that all skillet Labels are listed; missing labels indicate an error in the YAML file
-    * check that all label names and descriptions are unique and understandable
-    * [Optional] click the gear icon next to a label to locally view the YAML file contents
+    - Check that all skillet Labels are listed; missing labels indicate an error in the YAML file
+    - Check that all label names and descriptions are unique and understandable
+    - [Optional] Click the gear icon next to a label to locally view the YAML file contents
 
   **Collections**
 
-    * verify the collection names are correct and edit YAML files as needed
+    - Verify the collection names are correct and edit YAML files as needed
 
   .. TIP::
     You can run skillets from the Detail page by clicking its Label name. This bypasses the need to click into
@@ -849,6 +904,9 @@ Play the Skillet
 
 |
 
+  .. TIP::
+    In order to save time in the testing phase, choose *Do not commit. Push changes only* in the Commit options.
+
   Before pushing the configuration to the device, you can use the ``Debug`` option to view the rendered skillets.
   This view is used to validate variable substitutions and XML formatting.
 
@@ -856,12 +914,12 @@ Play the Skillet
      :width: 800
 
 
-  Check both the output messages in panHandler and actual NGFW view to test the skillet. Also verify that the
+  Check both the output messages in PanHandler and actual NGFW view to test the skillet. Also verify that the
   configuration loads as candidate and will also commit. If you receive errors messages, common issues may be:
 
-    * snippet load order
-    * variable typos in the snippet section or not included in the variables section
-    * invalid input data that passes web form validation but not NGFW validation checks
+    - Snippet load order
+    - Variable typos in the snippet section or not included in the variables section
+    - Invalid input data that passes web form validation but not NGFW validation checks
 
 Edit, Push, Test
 ~~~~~~~~~~~~~~~~
@@ -909,7 +967,7 @@ README.md
   +-------------------------------------------------------------------------------------+
 
   .. TIP::
-    To view markdown edits in existing Github repos, click on the README.md file, then use the ``Raw``
+    To view markdown edits in existing GitHub repos, click on the README.md file, then use the ``Raw``
     option to display the output as raw markdown text. From here you can copy-paste or review formatting.
 
   Sample README.md file for the tutorial skillet. Paste into the skillet README file and push to Github.
