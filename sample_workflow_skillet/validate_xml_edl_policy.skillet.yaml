@@ -26,6 +26,7 @@ labels:
 # type_hint defines the form field used by panhandler
 # type_hints examples include text, ip_address, or dropdown
 variables:
+  # variables used for connection with NGFW
   - name: TARGET_IP
     description: NGFW IP or Hostname
     default: 192.168.55.10
@@ -50,7 +51,7 @@ variables:
 # snippets section
 # ---------------------------------------------------------------------
 snippets:
-# example output capture and test structure layout
+    # Capture the name of the IP External Dynamic Lists with URL set to user-inputted edl_url
   - name: capture_external_lists
     cmd: parse
     variable: config
@@ -60,6 +61,7 @@ snippets:
       - name: user_edl_name
         capture_value: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list/entry/type/ip/url[text()="{{ edl_url }}"]/../../../@name
 
+    # Verify that the captured name isn't null, meaning an EDL is configured
   - name: test_external_lists
     label: configure IP External Dynamic List (EDL) object
     test: |
@@ -72,6 +74,7 @@ snippets:
       The External Dynamic List (EDL), {{ user_edl_name }}, is configured for {{ edl_url }}.
     documentation_link: https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-web-interface-help/objects/objects-external-dynamic-lists
 
+    # Capture the name of security rules that deny from source/destination EDL
   - name: capture_security_rules
     cmd: parse
     variable: config
@@ -81,7 +84,7 @@ snippets:
       - name: security_rules_with_EDL_destination
         capture_list: /config/devices/entry/vsys/entry/rulebase/security/rules/entry[destination/member/text()="{{ user_edl_name }}"][action/text()="deny"]/@name
 
-
+    # Verify that the captured list isn't null, meaning security rules are configured
   - name: test_security_rules_out
     label: configure security rule blocking traffic to EDL object
     test: |
@@ -92,7 +95,6 @@ snippets:
       There are no security rules denying traffic to the destination of External Dynamic Lists (EDL) object.
     pass_message: At least one security rule with EDL destination is configured.
     documentation_link: https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-admin/policy/use-an-external-dynamic-list-in-policy/enforce-policy-on-an-external-dynamic-list.html
-
   - name: test_security_rules_in
     label: configure security rule blocking traffic from EDL oject
     test: |
