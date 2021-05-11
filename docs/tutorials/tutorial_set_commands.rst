@@ -5,7 +5,11 @@ Basic Configuration With Set Commands
 Overview
 --------
 
-This tutorial is designed to help the user get familiar with using set commands to bring up and apply basic configs to their NGFW. By then end of this tutorial the user should be able to alter their firewall manually through the Command Line Interface(CLI) with set commands. All set/op commands that can be entered in the CLI manually can also be transformed into an automation playlist in the form of a skillet. This allows the user to run a series of set commands to easily configure their NGFW with just the click of a button.
+This tutorial is designed to help the user get familiar with using set commands to bring up and apply basic configs to their NGFW. By then end of this tutorial the user should be able to alter their firewall manually through the Command Line Interface(CLI) with set commands. All set/op commands that can be entered in the CLI manually can also be transformed into an automation playlist in the form of a skillet. This allows the user to run a series of set commands to easily configure their NGFW with just the click of a button. The configuration tutorial will create a simple configuration including:
+
+  - An IP External Dynamic List (EDL) object
+  - A tag object
+  - Security rules (Inbound and Outbound) referencing the EDL and tag objects
 
 This Basic Config with Set Commands tutorial will show the user how to:
 
@@ -23,6 +27,7 @@ to the documentation content.
     <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
     id=17392613-262a-4606-a11a-ab6c010b894e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
     interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
 
 Navigation Menu
 ~~~~~~~~~~~~~~~
@@ -47,9 +52,8 @@ Before moving forward with the tutorial, please ensure the following prerequisit
 
 * Have an up and running NGFW Virtual Machine(VM)
 * A GitHub_ account with access permissions to edit repository content
-* Docker_ desktop installed, active and running on your machine
-* Personal preference of text editor/IDE(Integrated Development Environment) for XML/YAML editing[1]
-* Ability to access the NGFW device via GUI[2][3], SSH/CLI[4] and API
+* Docker_ desktop installed, active and running on your local machine
+* Ability to access the NGFW device via GUI[1][2], SSH/CLI[3] and API
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
   * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. Please refer to and follow the steps in the linked SLI_ page to get started
@@ -65,10 +69,10 @@ It may also be useful to review the following topics before getting started:
 .. _Docker: https://www.docker.com
 .. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
 .. _SLI: https://pypi.org/project/sli/
-.. [1] PyCharm or SublimeText are good options for a beginner IDE or text editor.
-.. [2] Log in to the NGFW UI by entering this, *https://XXX.XXX.XXX.XXX* (with your NGFW's management IP replacing the X's), into the web browser URL bar.
-.. [3] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
-.. [4] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh {username}@{X.X.X.X}* (with your NGFW's management IP replacing the X's).
+
+.. [1] Log in to the NGFW UI by entering this, *https://X.X.X.X* (with your NGFW's management IP replacing the X's), into the web browser URL bar.
+.. [2] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
+.. [3] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh {username}@{X.X.X.X}* (with your NGFW's management IP replacing the X's).
 
 This tutorial will be split into 4 main sections below and can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
@@ -76,25 +80,88 @@ This tutorial will be split into 4 main sections below and can either be done by
 Setting Up Your Environment
 ---------------------------
 
-In this section we will set up everything that will be needed to successfully complete the tutorial. 
+In this section we will set up everything that will be needed to successfully complete the tutorial. Your skillet building environment consists of 4 essential parts:
 
+1. GitHub
+2. NGFW
+3. PanHandler
+4. SkilletBuilder Tools
+
+
+Initialize a New Repository and Clone it to your Local Machine Using GitHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Here we will be walking through logging into GitHub, creating and adding a repository as well as some GitHub best practices to keep
+    in mind.
+
+:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
+
+  Log in to Github and select ‘New’ to add a new repo.
+
+    .. image:: /images/configure_tutorial/create_new_repo_button.png
+        :width: 600
+
+  Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
+  pushing any EDI directories such as .idea/ used by Pycharm.
+
+    .. image:: /images/configure_tutorial/create_new_repo_fields.png
+        :width: 600
+
+  Once created, copy the clone URL from the GUI.
+  This is found with the green ‘Clone or download’ button and NOT the browser URL.
+
+    .. image:: /images/configure_tutorial/clone_new_repo.png
+       :width: 600
+
+
+  Using a local console or your editor tools, clone the repo to your local system.
+  For example, using the console and the link above:
+
+  .. code-block:: bash
+
+      midleton$ git clone https://github.com/scotchoaf/SBtest.git
+
+  .. NOTE::
+    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
+    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
+
+.. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent    
+    
+    
+Create the File Structure for the Project in GitHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  This model places the set command elements within the .skillet.yaml file. This is the standard output used by the Skillet Generator.
+
+  In your terminal open the repo directory that was just cloned and add the following:
+
+    * A new folder that will contain the skillet content (eg. tag_edl_block_rules)
+    * In the new folder add an empty ``.skillet.yaml`` file 
+    
+        * The contents of the file will be populated later in the tutorial
+    * in the new folder add an empty README.md file 
+    
+        * The contents of the file will be populated later in the tutorial
+
+  The skillet directory structure will look like:
+
+UPDATE THIS IMAGE
+
+  .. image:: /images/configure_tutorial/configure_skillet_folder.png
+     :width: 250
 
 NGFW
 ~~~~
 
-    This is the device that we will be working with and configuring during the tutorial. Be sure that you are able to log into the
-    firewall UI by inputting its management IP into the web browser. When logged in it can be useful to do a number of things.
-
-    **Software Version:**
-    Please take note of the devices software version when traversing this tutorial. Some configuration elements may be version
-    specific and require unique skillets per software releases.
+    This is the device that we will be working with and configuring during the tutorial. 
 
     **Baseline Configuration:** It is recommended to capture a *baseline* configuration of your newly brought up and pre-configured
     firewall. This is especially useful for testing purposes if you wish to quickly revert any changes made on the NGFW back to a
     blank slate. This can be done on the NGFW UI via *Devices->Setup->Operations->Save* named configuration snapshot*.
-
-    **API Access**
-    Login credentials with API access to test playing Skillets and any changes made by using set commands.
+    
+    .. NOTE::
+    Some skillet configuration elements may be version specific and require unique skillets per software releases. Verify that your
+    NGFW **Software Version** is compatible with associated skillets.
 
 
 Having the CLI 'Set Command Ready'
@@ -103,8 +170,12 @@ Having the CLI 'Set Command Ready'
     This tutorial will use the Skillet Generator tool to create automation workflows to alter the NGFW configuration, but it is also
     useful to know how to configure the firewall through the CLI. 
 
-    These operations commands below will help you get started with basic configurations but please also refer to this supplemental
+    These operational commands below will help you get started with basic configurations but please also refer to this supplemental
     article_ for more guidance on using the CLI with the NGFW.
+
+    .. :NOTE::
+    If you are logging into the NGFW for the first time via CLI, you may need to authorize the ECDSA key fingerprint. Type 'yes' 
+    before continuing.
 
     .. code-block:: bash
       
@@ -183,65 +254,6 @@ Running SLI
     Please refer to the `SLI PyPi`_ documentation library for instructions on how to install and use the SLI tool in your CLI.
     
 .. _`SLI PyPi`: https://pypi.org/project/sli/
-
-Initialize a New Repository and Clone it to your Local Machine Using GitHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    Here we will be walking through logging into GitHub, creating and adding a repo as well as some GitHub best practices to keep in mind.
-
-:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
-
-  Log in to Github and select ‘New’ to add a new repo.
-
-    .. image:: /images/configure_tutorial/create_new_repo_button.png
-        :width: 600
-
-  Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
-  pushing any EDI directories such as .idea/ used by Pycharm.
-
-    .. image:: /images/configure_tutorial/create_new_repo_fields.png
-        :width: 600
-
-  Once created, copy the clone URL from the GUI.
-  This is found with the green ‘Clone or download’ button and NOT the browser URL.
-
-    .. image:: /images/configure_tutorial/clone_new_repo.png
-       :width: 600
-
-
-  Using a local console or your editor tools, clone the repo to your local system.
-  For example, using the console and the link above:
-
-  .. code-block:: bash
-
-      midleton$ git clone https://github.com/scotchoaf/SBtest.git
-
-  .. NOTE::
-    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
-    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
-
-.. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent    
-    
-
-Create the File Structure for the Project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    This model places the set command elements within the .skillet.yaml file. This is the standard output used by the Skillet Generator.
-
-  In the editor open the repo directory that was just cloned and add the following:
-
-    * a new folder that will contain the skillet content (eg. tag_edl_block_rules)
-    * in the new folder add an empty ``.skillet.yaml`` file 
-    
-        * The contents of the file will be populated later in the tutorial
-    * in the new folder add an empty README.md file 
-    
-        * The contents of the file will be populated later in the tutorial
-
-  The skillet directory structure will look like:
-
-  .. image:: /images/configure_tutorial/configure_skillet_folder.png
-     :width: 250
      
 |
 
