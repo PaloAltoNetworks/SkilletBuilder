@@ -85,10 +85,17 @@ In this section we will set up everything that will be needed to successfully co
 1. GitHub
   * `Initialize a New Repository and Clone it to your Local Machine Using GitHub`_
   * `Create the File Structure for the Project in GitHub`_
-2. NGFW
+2. Firewall
+  * `NGFW`_
+  * `Having the CLI Set Command Ready`_
 3. PanHandler
+  * `Running PanHandler`_
+  * `Restarting PanHandler`_
 4. SkilletBuilder Tools
+  * `Importing SkilletBuilder Tools`_
 5. SLI
+  * `Running SLI`_
+  
 
 
 Initialize a New Repository and Clone it to your Local Machine Using GitHub
@@ -167,8 +174,8 @@ NGFW
     NGFW **Software Version** is compatible with associated skillets.
 
 
-Having the CLI 'Set Command Ready'
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Having the CLI Set Command Ready
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     This tutorial will use the Skillet Generator tool to create automation workflows to alter the NGFW configuration, but it is also
     useful to know how to configure the firewall through the CLI. 
@@ -237,8 +244,8 @@ Running PanHandler
 .. _`PanHandler documentation`: https://panhandler.readthedocs.io/en/master/overview.html
   
 
-Restart PanHandler
-~~~~~~~~~~~~~~~~~~
+Restarting PanHandler
+~~~~~~~~~~~~~~~~~~~~~
 
   If you already installed PanHandler, you will eventually need to restart the container.
 
