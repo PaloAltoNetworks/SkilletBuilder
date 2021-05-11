@@ -80,12 +80,15 @@ This tutorial will be split into 4 main sections below and can either be done by
 Setting Up Your Environment
 ---------------------------
 
-In this section we will set up everything that will be needed to successfully complete the tutorial. Your skillet building environment consists of 4 essential parts:
+In this section we will set up everything that will be needed to successfully complete the tutorial. Your skillet building environment consists of 5 essential parts:
 
 1. GitHub
+  * `Initialize a New Repository and Clone it to your Local Machine Using GitHub`_
+  * `Create the File Structure for the Project in GitHub`_
 2. NGFW
 3. PanHandler
 4. SkilletBuilder Tools
+5. SLI
 
 
 Initialize a New Repository and Clone it to your Local Machine Using GitHub
@@ -212,6 +215,10 @@ Running PanHandler
   If you have not already installed or run the latest version of PanHandler, in order to access the latest version of the
   PanHandler web UI you can do the following commands in your CLI.
   
+  .. NOTE::
+    PanHandler is always coming out with new releases. In order to get the most out of using PanHandler be sure to frequently
+    check for updates for the latest version.
+  
   .. code-block:: bash
   
     > curl -s -k -L http://bit.ly/2xui5gM | bash
@@ -225,23 +232,47 @@ Running PanHandler
  Once you have entered the above command into your browser's URL you will be prompted for a username and password. The default username
  is *paloalto* and the default password is *panhandler*.
 
-  Please refer to the `PanHandler documentation`_ for more detailed information on the many useful functions of the PanHandler utility.
+  Please refer to the `PanHandler documentation`_ for more detailed information on the PanHandler utility tools.
   
 .. _`PanHandler documentation`: https://panhandler.readthedocs.io/en/master/overview.html
+  
+
+Restart PanHandler
+~~~~~~~~~~~~~~~~~~
+
+  If you already installed PanHandler, you will eventually need to restart the container.
+
+  Navigate to the Docker Desktop Application on your local machine. You should see the 'panhandler' container listed on
+  the dashboard.
+
+  **insert pic here**
+
+  Click 'Start' to restart the container. You should now be able to access the PanHandler GUI at the same URL as before:
+
+.. code-block:: bash
+
+    http://localhost:8080
   
   
 Importing SkilletBuilder Tools
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     This section will go over how to import skillet repositories to PanHandler.
-
     
     Once you have gained access to the PanHandler UI you will want to import the SkilletBuilder_ repository. This is done by clicking
-    the **PanHandler** drop down menu at the top of the page. Then click on **Import Skillets** and here under the 
-    *"Recommended Repositories"* section you should see the *"Skillet Builder Tools"* section where you can quickly click **Import**. 
+    the **PanHandler** drop down menu at the top of the page, then click on **Import Skillets**. 
+    
+    ADD IMAGE
+    
+    Here under the  *"Recommended Repositories"* section you should see the *"Skillet Builder Tools"* section where you can quickly
+    click **Import**. 
+    
+    ADD IMAGE
     
     For other repositories you may want to import, you can do so at the bottom of the page under the where you can change the repository 
     name under the *"Import Repository"* section and paste the cloned git repository URL using HTTPS or SSH.
+    
+    ADD IMAGE
 
 .. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
 
