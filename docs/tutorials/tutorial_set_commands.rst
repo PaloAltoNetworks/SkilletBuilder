@@ -517,9 +517,9 @@ ADD IMAGE HERE
       # end of snippets section
 
   .. TIP::
-    YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
-    it can often also be frustrating to work with. A good reference to use to check that your
-    YAML syntax is up to standard is the `YAML Lint site <http://www.yamllint.com/>`_.
+  YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
+  it can often also be frustrating to work with. A good reference to use to check that your
+  YAML syntax is up to standard is the `YAML Lint site <http://www.yamllint.com/>`_.
 
 
 Copy the Output to .skillet.yaml
@@ -534,14 +534,26 @@ Copy the Output to .skillet.yaml
 
 Creating the .conf File
 ~~~~~~~~~~~~~~~~~~~~~~~
-    Since this is specifically a set commands tutorial, we now have to replace the XML output from the ``Generate A Skillet`` tool and
-    somehow replace it with set commands. For that we will use a .conf file. In your GitHub repository create a file and named it
-    something like ``set_commands_tutorial.conf``. Now take all the generated set commands from before and paste them into this file.
+    Since this is specifically a set commands tutorial, we now have to replace the XML output from the ``Generate A Skillet`` tool with 
+    set commands. For that we will use a .conf file. In your GitHub repository create a file and name it something like
+    ``set_commands_tutorial.conf``. Now take all the generated set commands from before and paste them into this file.
     
     ADD IMAGE HERE
 
-    We are going to use this .conf file within our skillet file's ``snippets`` section.
+    We are going to use this .conf file within our skillet file's ``snippets`` section. You can now delete all of the current snippets
+    within the current skillet file as we will be replacing the snippets with our .conf file.
+    
+    ADD IMAGE HERE
 
+
+Organizing the .conf File
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Now that the set commands are all within the .conf file it can be useful to organize them into sections. For example a tag section,
+    an external-list section and a security rules section. This will help make the file more readable and will allow us to make sure the
+    workflow looks right.
+    
+    ADD IMAGE HERE
 
 Test and Troubleshoot
 ---------------------
