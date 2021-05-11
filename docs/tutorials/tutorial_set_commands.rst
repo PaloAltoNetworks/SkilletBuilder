@@ -516,15 +516,31 @@ ADD IMAGE HERE
       # ---------------------------------------------------------------------
       # end of snippets section
 
+  .. TIP::
+    YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
+    it can often also be frustrating to work with. A good reference to use to check that your
+    YAML syntax is up to standard is the `YAML Lint site <http://www.yamllint.com/>`_.
+
 
 Copy the Output to .skillet.yaml
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Copy the output text under the generated skillet and paste it into the .skillet.yaml file.
+    Copy the output text under the generated skillet and paste it into the .skillet.yaml file in your personal GitHub repository.
+    
+    Add Image Here
     
     .. NOTE:: 
-    
     At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play the skillet without variables. Common
     reasons for raw output testing include the possible need for snippet reordering and confirmation that the snippet elements will load
+
+Creating the .conf File
+~~~~~~~~~~~~~~~~~~~~~~~
+    Since this is specifically a set commands tutorial, we now have to replace the XML output from the ``Generate A Skillet`` tool and
+    somehow replace it with set commands. For that we will use a .conf file. In your GitHub repository create a file and named it
+    something like ``set_commands_tutorial.conf``. Now take all the generated set commands from before and paste them into this file.
+    
+    ADD IMAGE HERE
+
+    We are going to use this .conf file within our skillet file's ``snippets`` section.
 
 
 Test and Troubleshoot
