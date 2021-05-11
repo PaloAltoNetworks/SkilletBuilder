@@ -31,7 +31,7 @@ You can click on the hyperlink menu below to quickly navigate to different parts
 
 1. `Prerequisites`_
 
-2. `Set Up Your Environment`_
+2. `Setting Up Your Environment`_
 
 3. `Building Skillets with Set Commands`_
 
@@ -73,8 +73,8 @@ It may also be useful to review the following topics before getting started:
 This tutorial will be split into 4 main sections below and can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
 
-Set Up Your Environment
------------------------
+Setting Up Your Environment
+---------------------------
 
 In this section we will set up everything that will be needed to successfully complete the tutorial. 
 
@@ -145,11 +145,14 @@ Running PanHandler
   
     > curl -s -k -L http://bit.ly/2xui5gM | bash
   
-  Then you want to input the following into your browsers URL.
+  Then you want to input the following into your browser's URL.
     
   .. code-block:: html
   
     http://localhost:8080
+    
+ Once you have entered the above command into your browser's URL you will be prompted for a username and password. The default username
+ is *paloalto* and the default password is *panhandler*.
 
   Please refer to the `PanHandler documentation`_ for more detailed information on the many useful functions of the PanHandler utility.
   
@@ -181,8 +184,8 @@ Running SLI
     
 .. _`SLI PyPi`: https://pypi.org/project/sli/
 
-Setting Up GitHub
-~~~~~~~~~~~~~~~~~
+Initialize a New Repository and Clone it to your Local Machine Using GitHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Here we will be walking through logging into GitHub, creating and adding a repo as well as some GitHub best practices to keep in mind.
 
@@ -228,7 +231,7 @@ Create the File Structure for the Project
   In the editor open the repo directory that was just cloned and add the following:
 
     * a new folder that will contain the skillet content (eg. tag_edl_block_rules)
-    * in the new folder add an empty ``.meta-cnc.yaml`` file 
+    * in the new folder add an empty ``.skillet.yaml`` file 
     
         * The contents of the file will be populated later in the tutorial
     * in the new folder add an empty README.md file 
@@ -240,16 +243,6 @@ Create the File Structure for the Project
   .. image:: /images/configure_tutorial/configure_skillet_folder.png
      :width: 250
      
-
-Skillet Editor
-~~~~~~~~~~~~~~
-
-    The IDE should be ready with:
-    
-    * A full view of files and directories in the skillet
-    * Text editor that supports YAML and XML file types
-    * Terminal access to interact with Git/Github
-    
 |
 
 Building Skillets with Set Commands
@@ -260,7 +253,7 @@ Create the Configuration in the NGFW
 
     Before modifying the configuration, ensure you have a snapshot of the *before* configuration of your NGFW saved
 
-    The tutorial examples use the GUI to create the EDL, tag, and security rules.
+    The tutorial examples use the GUI to create the external dynamic list(EDL), tag, and security rules.
     Many of the config values are placeholders that look like variable names (hint, hint).
     You can also load the :ref:`Sample Configuration Skillet` found in the Skillet Builder collection.
 
@@ -302,8 +295,9 @@ Generate the Set Commands Skillet
     NGFW configurations. To do this in offline mode, click on the dropdown menu underneath *"Source of Changes"* and then click on 
     **"From uploaded configs"**. 
     
-    .. image:: /images/configure_tutorial/configure_skillet_generator.png
-        :width: 800
+    ADD IMAGE HERE
+   .. image:: /images/configure_tutorial/configure_skillet_generator.png
+        :width: 800 
 |
 
     You will want to have 2 XML files that you exported from your NGFW configurations on your local 
@@ -312,6 +306,29 @@ Generate the Set Commands Skillet
     **Devices->Setup->Operations->"Export named configuration snapshot"**. Once here export the baseline and modified versions of
     the NGFW and upload them to the SkilletBuilder tool.
     
+    PLACE IMAGE HERE
+    
+    After the files are added, the PanHandler tool will output a list of set commands that you can use to do the exact same EDL, tag 
+    and security rule configurations you manually made on your NGFW UI. 
+    
+    PLACE IMAGE HERE
+    
+    Once the set commands have been outputted you want to save them by copying them and pasting them into a *.conf* file which we will
+    use as a snippet within our skillet.
+    
+      .. NOTE::
+    Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order. For
+    example it may output the commands in such a way that it will try to load in a security policy before the EDL is created. This would
+    fail if you input it into the NGFW CLI since the EDL doesn't exist yet.
+    
+    SHOW IMAGE OR SOMETHING THAT THIS COULD HAPPEN TO THE USER
+    
+    Next we are going to add the same two base and modified configuration files from before to the *Generate a Skillet* tool in
+    PanHandler. Under the *Skillet Source:* section click on the dropdown menu and click on **From Uploaded Configs**. Upload the 
+    base and modified files again and click on **Submit**.
+    
+ADD IMAGE HERE
+
     After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
     
     .. image:: /images/configure_tutorial/configure_skillet_preamble.png
@@ -334,9 +351,180 @@ Generate the Set Commands Skillet
     * placeholder variables section
     * snippets section with XPath/element entries where each diff found
 
+. toggle-header:: class
+    :header: **show/hide the output .meta-cnc.yaml file**
+
+    .. code-block:: yaml
+
+      # skillet preamble information used by panhandler
+      # ---------------------------------------------------------------------
+      # unique snippet name
+      name: tag_edl_tutorial
+      # label used for menu selection
+      label: Tutorial skillet to configure tag, EDL, and security rules
+      description: The tutorial skillet demonstrates the use of various config snippets and variables
+
+      # type of device configuration
+      # common types are panorama, panos, and template
+      # https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+      type: panos
+      # preload static or default-based templates
+      extends:
+
+      # grouping of like snippets for dynamic menu creation in panhandler
+      labels:
+        collection:
+          - Tutorial
+
+      # ---------------------------------------------------------------------
+      # end of preamble section
+
+      # variables section
+      # ---------------------------------------------------------------------
+      # variables used in the configuration templates
+      # type_hint defines the form field used by panhandler
+      # type_hints can be text, ip_address, or dropdown
+      variables:
+        - name: hostname
+          description: Firewall hostname
+          default: myFirewall
+          type_hint: text
+        - name: choices
+          description: sample dropdown list
+          default: choices
+          type_hint: dropdown
+          dd_list:
+            - key: option1
+              value: option1
+            - key: option2
+              value: option2
+      # ---------------------------------------------------------------------
+      # end of variables section
+
+      # snippets section
+      # ---------------------------------------------------------------------
+      # snippets used for api configuration including xpath and element as file name
+      # files will load in the order listed
+      # NOTE: The following snippets are auto-generated and ordered automatically.
+      # Changing the content of the snippet may be necessary, but do NOT change the order
+
+      # There is a variable called snippets that we can use to auto-generate this section for us
+      snippets:
+
+        - name: entry-953630
+          xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/tag
+          element: |-
+              <entry name="tag_name">
+                            <color>color1</color>
+                            <comments>tag_description</comments>
+                          </entry>
+
+        - name: external-list-467839
+          xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]
+          element: |-
+              <external-list>
+                          <entry name="edl_name">
+                            <type>
+                              <ip>
+                                <recurring>
+                                  <five-minute/>
+                                </recurring>
+                                <description>edl_description</description>
+                                <url>http://someurl.com</url>
+                              </ip>
+                            </type>
+                          </entry>
+                        </external-list>
+
+        - name: entry-702183
+          xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
+          element: |-
+              <entry name="edl_name-out" uuid="29209605-e2f4-40b1-ab12-98edf6ae5b8b">
+                                <to>
+                                  <member>any</member>
+                                </to>
+                                <from>
+                                  <member>any</member>
+                                </from>
+                                <source>
+                                  <member>any</member>
+                                </source>
+                                <destination>
+                                  <member>edl_name</member>
+                                </destination>
+                                <source-user>
+                                  <member>any</member>
+                                </source-user>
+                                <category>
+                                  <member>any</member>
+                                </category>
+                                <application>
+                                  <member>any</member>
+                                </application>
+                                <service>
+                                  <member>application-default</member>
+                                </service>
+                                <hip-profiles>
+                                  <member>any</member>
+                                </hip-profiles>
+                                <tag>
+                                  <member>tag_name</member>
+                                </tag>
+                                <action>deny</action>
+                                <description>outbound EDL IP block rule. EDL info: </description>
+                              </entry>
+
+        - name: entry-978971
+          xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
+          element: |-
+              <entry name="edl_name-in" uuid="20d10cd2-f553-42f2-ba05-3d00bebeac60">
+                                <to>
+                                  <member>any</member>
+                                </to>
+                                <from>
+                                  <member>any</member>
+                                </from>
+                                <source>
+                                  <member>edl_name</member>
+                                </source>
+                                <destination>
+                                  <member>any</member>
+                                </destination>
+                                <source-user>
+                                  <member>any</member>
+                                </source-user>
+                                <category>
+                                  <member>any</member>
+                                </category>
+                                <application>
+                                  <member>any</member>
+                                </application>
+                                <service>
+                                  <member>application-default</member>
+                                </service>
+                                <hip-profiles>
+                                  <member>any</member>
+                                </hip-profiles>
+                                <tag>
+                                  <member>tag_name</member>
+                                </tag>
+                                <action>deny</action>
+                                <description>inbound EDL IP block rule. EDL info: </description>
+                              </entry>
 
 
+      # ---------------------------------------------------------------------
+      # end of snippets section
 
+
+Copy the Output to .skillet.yaml
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    Copy the output text under the generated skillet and paste it into the .skillet.yaml file.
+    
+    .. NOTE:: 
+    
+    At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play the skillet without variables. Common
+    reasons for raw output testing include the possible need for snippet reordering and confirmation that the snippet elements will load
 
 
 Test and Troubleshoot
