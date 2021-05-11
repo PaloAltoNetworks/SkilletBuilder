@@ -174,8 +174,8 @@ Having the CLI 'Set Command Ready'
     article_ for more guidance on using the CLI with the NGFW.
 
     .. NOTE::
-    If you are logging into the NGFW for the first time via CLI, you may need to authorize the ECDSA key fingerprint. Type 'yes' 
-    before continuing.
+      If you are logging into the NGFW for the first time via CLI, you may need to authorize the ECDSA key fingerprint. Type 'yes' 
+      before continuing.
 
     .. code-block:: bash
       
