@@ -344,7 +344,7 @@ Generate the Set Commands Skillet Online Mode
     
     ADD IMAGE HERE
     
-    Scroll down until you find the ``SkilletBuilder`` repository
+    Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Detail** button
     skillet to extract the difference between the baseline and modified 
     NGFW configurations. To do this in offline mode, click on the dropdown menu underneath *"Source of Changes"* and then click on 
     **"From uploaded configs"**. 
