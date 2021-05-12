@@ -297,12 +297,13 @@ Running SLI
 
     SLI is a nifty tool that can be used to quickly interact with skillets and your NGFW through the CLI. 
     
- .. code-block:: bash
-    > mkdir {directory name of your choice}
-    > cd {directory from step above}
-    > python3 -m venv ./venv (Create the venv)
-    > source ./venv/bin/activate (Activate the venv)
-    > pip install sli
+    .. code-block:: bash
+    
+      > mkdir {directory name of your choice}
+      > cd {directory from step above}
+      > python3 -m venv ./venv (Create the venv)
+      > source ./venv/bin/activate (Activate the venv)
+      > pip install sli
     
     Please refer to the `SLI GitLab`_ documentation library for instructions on more in depth information on to installtion and use
     of the SLI tool in your CLI and local machine.
