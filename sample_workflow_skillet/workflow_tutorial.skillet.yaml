@@ -1,0 +1,74 @@
+# skillet preamble information used by panhandler
+# ---------------------------------------------------------------------
+# unique snippet name
+name: workflow_xml_edl_policy
+# label used for menu selection
+label: Sample SkilletBuilder workflow for EDL validation and configuration
+description: Used by SkilletBuilder to demonstrate chaining skillets together as workflow solutions.
+
+# type of device configuration
+# common types are panorama, panos, and template
+# https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+type: workflow
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection:
+    - Skillet Builder
+
+# ---------------------------------------------------------------------
+# end of preamble section
+
+# variables section
+# ---------------------------------------------------------------------
+# variables used in the configuration templates
+# type_hint defines the form field used by panhandler
+# type_hints examples include text, ip_address, or dropdown
+variables:
+  - name: TARGET_IP
+    description: NGFW IP or Hostname
+    default: 192.168.55.10
+    type_hint: fqdn_or_ip
+  - name: TARGET_USERNAME
+    description: NGFW Username
+    default: admin
+    type_hint: text
+  - name: TARGET_PASSWORD
+    description: NGFW Password
+    default: admin
+    type_hint: password
+
+  - name: edl_url
+    description: External Dynamic List's Source URL
+    default: http://someurl.com
+    type_hint: text
+
+  - name: assess_options
+    description: Config Validation Options
+    default: []
+    type_hint: checkbox
+    cbx_list:
+      - key: Validate configuration at the beginning of the workflow
+        value: run_validation_begin
+      - key: Validate configuration at the end of the workflow
+        value: run_validation_end
+
+
+# ---------------------------------------------------------------------
+# end of variables section
+
+# snippets section
+# ---------------------------------------------------------------------
+snippets:
+    # Run the validation skillet if the user checks the checkbox
+  - name: validate_xml_edl_policy
+    when: "'run_validation_begin' in assess_options"
+
+  - name: config_xml_edl_policy
+
+    # Run the validation skillet if the user checks the checkbox
+  - name: validate_xml_edl_policy
+    when: "'run_validation_end' in assess_options"
+
+# ---------------------------------------------------------------------
+# end of snippets section
