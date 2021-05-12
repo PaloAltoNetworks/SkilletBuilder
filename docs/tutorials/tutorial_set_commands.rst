@@ -12,12 +12,12 @@ This tutorial is designed to help the user get familiar with using set commands 
   - Security rules (Inbound and Outbound) referencing the EDL and tag objects
 
 This Basic Config with Set Commands tutorial will show the user how to:
-
-* Access and configure the Next Generation Firewall(NGFW) through the web UI and CLI
-* Capture configuration differences made on the NGFW into set commands and automation skillets
-* Learn how to use Panhandler tooling
-* Learn how to use the Skillet Line Interface(SLI) tool on the CLI
-* Learn the basics of using GitHub and repositories
+  
+  - Access and configure the Next Generation Firewall(NGFW) through the web UI and CLI
+  - Capture configuration differences made on the NGFW into set commands and automation skillets
+  - Learn how to use Panhandler tooling
+  - Learn how to use the Skillet Line Interface(SLI) tool on the CLI
+  - Learn the basics of using GitHub and repositories
 
 The video below provides an end-to-end perspective for building a configuration skillet and can be used as a complement
 to the documentation content.
@@ -56,7 +56,8 @@ Before moving forward with the tutorial, please ensure the following prerequisit
 * Ability to access the NGFW device via GUI[1][2], SSH/CLI[3] and API
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
-  * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. Please refer to and follow the steps in the linked SLI_ page to get started
+  * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. SLI is a CLI interface used for
+  interacting with Skillets. Please refer to and follow the steps in the linked SLI_ page to get started
 * For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, specifically SkilletBuilder_ tools
     
 It may also be useful to review the following topics before getting started:
@@ -134,9 +135,13 @@ Initialize a New Repository and Clone it to your Local Machine Using GitHub
   .. NOTE::
     If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
     This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
+    
+  .. NOTE::
+    Please reference this `PanHandler Link`_ for more information on working with private git repositories and SSH keys in
+    PanHandler. Please click on the side bar sections labeled **Adding a New Skillet Repository -> Using a Private Git Repository**.
 
 .. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent    
-    
+.. _`PanHandler Link`: https://panhandler.readthedocs.io/en/master/using.html#adding-a-new-skillet-repository
     
 Create the File Structure for the Project in GitHub
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
