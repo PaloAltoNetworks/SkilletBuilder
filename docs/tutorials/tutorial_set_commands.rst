@@ -83,7 +83,7 @@ Setting Up Your Environment
 In this section we will set up everything that will be needed to successfully complete the tutorial. Your skillet building environment consists of 5 essential parts:
 
 1. GitHub
-  * `Initialize a New Repository and Clone it to your Local Machine Using GitHub`_
+  * `Initializing a New Repository and Working with SSH Keys`_
   * `Create the File Structure for the Project in GitHub`_
 2. Firewall
   * `NGFW`_
@@ -96,73 +96,6 @@ In this section we will set up everything that will be needed to successfully co
 5. SLI
   * `Running SLI`_
   
-
-
-Initialize a New Repository and Clone it to your Local Machine Using GitHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    Here we will be walking through logging into GitHub, creating and adding a repository as well as some GitHub best practices to keep
-    in mind.
-
-:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
-
-  Log in to Github and select ‘New’ to add a new repo.
-
-    .. image:: /images/configure_tutorial/create_new_repo_button.png
-        :width: 600
-
-  Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
-  pushing any EDI directories such as .idea/ used by Pycharm.
-
-    .. image:: /images/configure_tutorial/create_new_repo_fields.png
-        :width: 600
-
-  Once created, copy the clone URL from the GUI.
-  This is found with the green ‘Clone or download’ button and NOT the browser URL.
-
-    .. image:: /images/configure_tutorial/clone_new_repo.png
-       :width: 600
-
-
-  Using a local console or your editor tools, clone the repo to your local system.
-  For example, using the console and the link above:
-
-  .. code-block:: bash
-
-      midleton$ git clone https://github.com/scotchoaf/SBtest.git
-
-  .. NOTE::
-    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
-    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
-    
-  .. NOTE::
-    Please reference this `PanHandler Link`_ for more information on working with private git repositories and SSH keys in
-    PanHandler. Please click on the side bar sections labeled **Adding a New Skillet Repository -> Using a Private Git Repository**.
-
-.. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent    
-.. _`PanHandler Link`: https://panhandler.readthedocs.io/en/master/using.html#adding-a-new-skillet-repository
-    
-Create the File Structure for the Project in GitHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  This model places the set command elements within the .skillet.yaml file. This is the standard output used by the Skillet Generator.
-
-  In your terminal open the repo directory that was just cloned and add the following:
-
-    * A new folder that will contain the skillet content (eg. tag_edl_block_rules)
-    * In the new folder add an empty ``.skillet.yaml`` file 
-    
-        * The contents of the file will be populated later in the tutorial
-    * in the new folder add an empty README.md file 
-    
-        * The contents of the file will be populated later in the tutorial
-
-  The skillet directory structure will look like:
-
-UPDATE THIS IMAGE
-
-  .. image:: /images/configure_tutorial/configure_skillet_folder.png
-     :width: 250
 
 NGFW
 ~~~~
@@ -178,15 +111,14 @@ NGFW
     NGFW **Software Version** is compatible with associated skillets.
 
 
-DO WE STILL NEED??
-Having the CLI Set Command Ready
+Working on the NGFW with the CLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    This tutorial will use the Skillet Generator tool to create automation workflows to alter the NGFW configuration, but it is also
-    useful to know how to configure the firewall through the CLI. 
+    This section is for users who are interested in learning how to configure the firewall through the CLI. 
 
-    These operational commands below will help you get started with basic configurations but please also refer to this supplemental
-    article_ for more guidance on using the CLI with the NGFW.
+    The command below will help you understand how to log into the NGFW through the CLI, but please also refer to this
+    supplemental article_ for more in depth guidance on using the CLI with the NGFW. For information on making configurations on
+    the NGFW through the CLI please refer to this `knowledgebase article`_.
 
     .. NOTE::
       If you are logging into the NGFW for the first time via CLI, you may need to authorize the ECDSA key fingerprint. Type 'yes' 
@@ -194,23 +126,8 @@ Having the CLI Set Command Ready
 
     .. code-block:: bash
       
-      admin@PA-VM> ssh {username}@{X.X.X.X}
-      admin@PA-VM> set cli config-output-format set
-      admin@PA-VM> debug cli on
-      admin@PA-VM> configure
-      Entering configuration mode
-      (this is where you will make changes on the NGFW)
-      admin@PA-VM> set tag new color color3 comments "Example set command"
-      admin@PA-VM> commit
-      admin@PA-VM> exit
-      exiting configuration mode
+      $ ssh {username}@{X.X.X.X}
       
-    First log in with the *ssh* command, we then enter a *set* command to display configuration data as set commands. *Debug cli on* 
-    will allow for the easy capturing of the specific configuration xpath whenever a change is made via set commands on the cli, this
-    `knowledgebase article`_ is also useful in understanding how to view NGFW configurations in *set* and *xml* formats via the cli.
-    Next, enter configuration mode by typing the keyword, *configure*. Once in configuration mode we can make changes on the NGFW with
-    set commands. After all desired changes are made you can commit them to the NGFW via entering the *commit* command and then 
-    exiting out of configuration mode with the *exit* command.
     
 .. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
 .. _`knowledgebase article`: https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA10g000000ClHoCAK
@@ -264,6 +181,108 @@ Restarting PanHandler
 .. code-block:: bash
 
     http://localhost:8080
+  
+  
+
+Working with GitHub, PanHandler and SSH Keys
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    Here we will be walking through logging into GitHub, creating and adding a repository to our GitHub account as well as some
+    GitHub best practices to keep in mind.
+
+:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
+
+  Log in to Github and click the small **+** sign in the upper right corner of your screen and click on **New repository** to add 
+  a new repo.
+  
+    .. image:: /images/set_command_tutorial/New_repo_github.png
+        :width: 600
+
+  Suggestions are to include a README file and MIT license.
+
+UPDATE IMAGE
+    .. image:: /images/configure_tutorial/create_new_repo_fields.png
+        :width: 600
+
+  Once created, click on the green **Code** button and underneath the ``Clone`` section click on **SSH**. Then click on the small
+  **clipboard** sign on the right of the SSH URL to copy the SSH key. Remember this step as we will circle back to this a little
+  later in the tutorial.
+
+UPDATE IMAGE
+    .. image:: /images/configure_tutorial/clone_new_repo.png
+       :width: 600
+
+
+  Next we want to clone this repository into PanHandler using the SSH key we have copied. Open up the PanHandler UI now and click
+  on the dropdown menu in the top right of the browser that says **paloalto**, from the dropdown click on **View SSH Public Key**.
+  
+  ADD IMAGE HERE
+  
+  This will take you to an ``SSH Public Key`` Page that has the ``ssh-rsa`` for you to copy. copy the whole block of text including 
+  ``ssh-rsa``.
+  
+  ADD IMAGE HERE
+  
+  Now navigate back to your GitHub page and click on your user bubble on the top right corner of the browser, it should be to the
+  right of the ``+`` sign we clicked on before. From the dropdown menu click on **settings**. 
+  
+  ADD IMAGE HERE
+  
+  On the left menu bar you want to click on **SSH and GPG Keys**. Then click on the green **New SSH key** and title it
+  ``PanHandler``. Paste the ``SSH Public Key`` we got from PanHandler earlier here and then click the green **Add SSH key**.
+  
+  ADD IMAGE HERE
+  
+  Upon finishing this step you should be able to import your newly created repository into PanHandler using SSH keys. go back to
+  PanHandler and click on the **PANHANDLER** drop down at the top left corner and the select **Import Skillets** from the menu.
+  
+  ADD IMAGE HERE
+  
+  Finally, at the bottom of the page under the ``Import Repository`` section you can choose your ``Repository Name`` and enter 
+  in the SSH Key that you got from your GitHub repo from the earlier step.
+  
+  ADD IMAGE HERE
+  
+  After this step you should be able to view your newly imported repository in PanHandler!
+  
+  ADD IMAGE HERE
+ 
+  .. NOTE::
+    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
+    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
+    
+  .. NOTE::
+    Please reference this `PanHandler Link`_ for more information on working with private git repositories and SSH keys in
+    PanHandler. Please click on the side bar sections labeled **Adding a New Skillet Repository -> Using a Private Git Repository**.
+
+.. _add an SSH key for Github: https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh    
+.. _`PanHandler Link`: https://panhandler.readthedocs.io/en/master/using.html#adding-a-new-skillet-repository
+    
+    
+Create the File Structure for the Project in GitHub
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  In your Terminal open the repo directory that was just cloned by doing the following commands and add the following folders:
+  
+  .. code-block:: bash
+
+      $ cd {Directory of cloned repo}
+      $ vim 
+
+    * A new folder that will contain the skillet content (eg. tag_edl_block_rules)
+    * In the new folder add an empty ``.skillet.yaml`` file 
+    
+        * The contents of the file will be populated later in the tutorial
+    * in the new folder add an empty README.md file 
+    
+        * The contents of the file will be populated later in the tutorial
+
+  The skillet directory structure will look like:
+
+UPDATE THIS IMAGE
+
+  .. image:: /images/configure_tutorial/configure_skillet_folder.png
+     :width: 250
   
   
 PROBABLY DONT NEED AFTER TALK WITH SCOTT SHOWCASE INERT PANHANDLER "SKILLETBUILDER" FUNCTIONALITY  
