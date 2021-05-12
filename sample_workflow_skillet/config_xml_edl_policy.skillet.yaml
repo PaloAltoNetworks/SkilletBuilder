@@ -1,0 +1,183 @@
+# skillet preamble information used by panhandler
+# ---------------------------------------------------------------------
+# unique snippet name
+name: config_xml_edl_policy
+# label used for menu selection
+label: Sample SkilletBuilder skillet with EDL, tag, and security policy
+description: Used by SkilletBuilder to demonstrate skillet creation and loading and cross-element variables
+
+# type of device configuration
+# common types are panorama, panos, and template
+type: panos
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection:
+    - Skillet Builder
+
+# ---------------------------------------------------------------------
+# end of preamble section
+
+# variables section
+# ---------------------------------------------------------------------
+# variables used in the configuration templates
+# type_hint defines the form field used by panhandler
+# type_hints examples include text, ip_address, or dropdown
+variables:
+  # variables used for connection with NGFW; type_hint of hidden since
+  # the values are cached in the context after the workflow skillet
+  - name: TARGET_IP
+    description: NGFW IP or Hostname
+    default: 192.168.55.10
+    type_hint: hidden
+  - name: TARGET_USERNAME
+    description: NGFW Username
+    default: admin
+    type_hint: hidden
+  - name: TARGET_PASSWORD
+    description: NGFW Password
+    default: admin
+    type_hint: hidden
+
+  - name: edl_name
+    description: name of the external list
+    default: my_edl
+    type_hint: text
+  - name: edl_description
+    description: description of the external list
+    default: this is an ip block list
+    type_hint: text
+  - name: edl_url
+    description: external list url
+    default: http://someurl.com
+    type_hint: text
+  - name: tag_name
+    description: tag name
+    default: tag name
+    type_hint: text
+  - name: tag_description
+    description: tag description
+    default: tag description
+    type_hint: text
+  - name: tag_color
+    description: tag color
+    default: red
+    type_hint: dropdown
+    dd_list:
+      - key: blue
+        value: color3
+      - key: green
+        value: color2
+      - key: orange
+        value: color6
+      - key: red
+        value: color1
+
+# ---------------------------------------------------------------------
+# end of variables section
+
+# snippets section
+# ---------------------------------------------------------------------
+# snippets used for api configuration including xpath and element as file name
+# files will load in the order listed
+snippets:
+  - name: object_tag
+    xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/tag
+    element: |-
+        <entry name="{{ tag_name }}">
+          <color>{{ tag_color }}</color>
+          <comments>{{ tag_description }}</comments>
+        </entry>
+
+  - name: object_edl
+    xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]
+    element: |-
+        <external-list>
+          <entry name="{{ edl_name }}">
+            <type>
+              <ip>
+                <recurring>
+                  <five-minute/>
+                </recurring>
+                <description>{{ edl_desc }}</description>
+                <url>{{ edl_url }}</url>
+              </ip>
+            </type>
+          </entry>
+        </external-list>
+
+  - name: policy_security_outbound
+    xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
+    element: |-
+        <entry name="{{ edl_name }}-out">
+          <to>
+            <member>any</member>
+          </to>
+          <from>
+            <member>any</member>
+          </from>
+          <source>
+            <member>any</member>
+          </source>
+          <destination>
+            <member>{{ edl_name }}</member>
+          </destination>
+          <source-user>
+            <member>any</member>
+          </source-user>
+          <category>
+            <member>any</member>
+          </category>
+          <application>
+            <member>any</member>
+          </application>
+          <service>
+            <member>application-default</member>
+          </service>
+          <hip-profiles>
+            <member>any</member>
+          </hip-profiles>
+          <tag>
+            <member>{{ tag_name }}</member>
+          </tag>
+          <action>deny</action>
+          <description>outbound EDL IP block rule. EDL info: {{ edl_desc }}</description>
+        </entry>
+
+  - name: security_policy_inbound
+    xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
+    element: |-
+        <entry name="{{ edl_name }}-in">
+          <to>
+            <member>any</member>
+          </to>
+          <from>
+            <member>any</member>
+          </from>
+          <source>
+            <member>{{ edl_name }}</member>
+          </source>
+          <destination>
+            <member>any</member>
+          </destination>
+          <source-user>
+            <member>any</member>
+          </source-user>
+          <category>
+            <member>any</member>
+          </category>
+          <application>
+            <member>any</member>
+          </application>
+          <service>
+            <member>application-default</member>
+          </service>
+          <hip-profiles>
+            <member>any</member>
+          </hip-profiles>
+          <tag>
+            <member>{{ tag_name }}</member>
+          </tag>
+          <action>deny</action>
+          <description>inbound EDL IP block rule. EDL info: {{ edl_desc }}</description>
+        </entry>
