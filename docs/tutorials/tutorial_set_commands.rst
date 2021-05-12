@@ -179,6 +179,7 @@ NGFW
     NGFW **Software Version** is compatible with associated skillets.
 
 
+DO WE STILL NEED??
 Having the CLI Set Command Ready
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
