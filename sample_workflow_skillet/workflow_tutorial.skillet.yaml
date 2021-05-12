@@ -70,5 +70,7 @@ snippets:
   - name: validate_xml_edl_policy
     when: "'run_validation_end' in assess_options"
 
+    # Finish with output message of completion to the user
+  - name: template_xml_edl_policy
 # ---------------------------------------------------------------------
 # end of snippets section

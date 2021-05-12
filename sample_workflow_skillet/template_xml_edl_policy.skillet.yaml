@@ -1,0 +1,54 @@
+# skillet preamble information used by panhandler
+# ---------------------------------------------------------------------
+# unique snippet name
+name: template_xml_edl_policy
+# label used for menu selection
+label: Sample template skillet used for workflow tutorial
+description: Used by SkilletBuilder to demonstrate workflow completion output messaging.
+
+# type of device configuration
+# common types are panorama, panos, and template
+# https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+type: template
+
+# grouping of like snippets for dynamic menu creation in panhandler
+labels:
+  collection:
+    - Skillet Builder
+
+# ---------------------------------------------------------------------
+# end of preamble section
+
+# variables section
+# ---------------------------------------------------------------------
+# variables used in the configuration templates
+# type_hint defines the form field used by panhandler
+# type_hints examples include text, ip_address, or dropdown
+variables:
+  # type_hint of hidden since the values are cached in the context
+  # after the workflow skillet
+  - name: TARGET_IP
+    description: NGFW IP or Hostname
+    default: 192.168.55.10
+    type_hint: hidden
+  - name: edl_name
+    description: name of the external list
+    default: my_edl
+    type_hint: hidden
+  - name: tag_name
+    description: tag name
+    default: tag name
+    type_hint: hidden
+
+# ---------------------------------------------------------------------
+# end of variables section
+
+# snippets section
+# ---------------------------------------------------------------------
+snippets:
+# contextual name with the name of the template file
+  - name: output_message
+    file: template_output_report.j2
+
+# ---------------------------------------------------------------------
+# end of snippets section
