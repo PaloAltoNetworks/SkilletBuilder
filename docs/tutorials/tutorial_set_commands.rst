@@ -288,15 +288,28 @@ Importing SkilletBuilder Tools
 
 .. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
 
+  : NOTE::
+    This method is the standard way of importing any valid skillet repositories into PanHandler.
+
 
 Running SLI
 ~~~~~~~~~~~
 
     SLI is a nifty tool that can be used to quickly interact with skillets and your NGFW through the CLI. 
     
-    Please refer to the `SLI PyPi`_ documentation library for instructions on how to install and use the SLI tool in your CLI.
+ .. code-block:: bash
+    > mkdir {directory name of your choice}
+    > cd {directory from step above}
+    > python3 -m venv ./venv (Create the venv)
+    > source ./venv/bin/activate (Activate the venv)
+    > pip install sli
     
-.. _`SLI PyPi`: https://pypi.org/project/sli/
+    Please refer to the `SLI GitLab`_ documentation library for instructions on more in depth information on to installtion and use
+    of the SLI tool in your CLI and local machine.
+    
+.. _`SLI GitLab`: https://gitlab.com/panw-gse/as/sli
+
+  
      
 |
 
