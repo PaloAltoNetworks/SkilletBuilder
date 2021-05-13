@@ -340,22 +340,43 @@ Building Skillets with Set Commands
 Create the Configuration in the NGFW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Before modifying the configuration, ensure you have a snapshot of the *before* configuration of your NGFW saved
+    Before modifying the configuration, ensure you have a snapshot of the ``before`` configuration of your NGFW saved, we will use
+    this saved snapshot to perform an offline configuration difference later. To do this click on the **Devices** tab of your NGFW,
+    then click on the **Setup** tab and then the **Operations** tab. Here you can click on **Save named configuration snapshot** to
+    save the current NGFW config.
+    
+    .. image:: /images/set_command_tutorial/save_config_snapshot.png
+        :width: 600
 
-    The tutorial examples use the GUI to create the external dynamic list(EDL), tag, and security rules.
-    Many of the config values are placeholders that look like variable names (hint, hint).
-    You can also load the :ref:`Sample Configuration Skillet` found in the Skillet Builder collection.
+    The tutorial examples use the GUI to create the external dynamic list(EDL), tag, and security rules. Before starting these steps,
+    make sure you commit whatever most recent changes were made to your NGFW, to do this click on the **Commit** button at the top.
+    right of the NGFW GUI.
+    
+    .. image:: /images/set_command_tutorial/commit_button.png
+        :width: 600
+    
+    Now after commiting we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
+    description, and source URL and then click the **OK** button to save the changes. To get to the ``External Dynamic List`` section
+    on your NGFW navigate through the following, **Objects->External Dynamic Lists->Add**. 
 
-    Configure the external-list object with a name, description, and source URL.
 
-    .. image:: /images/configure_tutorial/configure_edl.png
+    .. image:: /images/set_command_tutorial/External_list.png
+        :width: 600
+
+
+    .. image:: /images/set_command_tutorial/edl_configure.png
         :width: 600
 
 |
 
-    Configure the tag object with a name, color, and comments (description).
+    Next we need to configure the tag object with a name, color, and comments (description) and then click the **OK** button. Tag
+    objects are found by clicking through the following, **Objects->Tags->Add**.
+    
+    .. image:: /images/set_command_tutorial/find_tag.png
+        :width: 400
 
-    .. image:: /images/configure_tutorial/configure_tag.png
+
+    .. image:: /images/set_command_tutorial/tag_configure.png
         :width: 400
 
 |
@@ -369,23 +390,30 @@ Create the Configuration in the NGFW
 
 |
 
-  Configure inbound and outbound security rules referencing the tag and external-list. Note that the
-  rule names are prepended with the EDL name. In later steps variables are used in the rule names to
-  map the EDL and ensure rule names are unique.
+  Configure inbound and outbound security rules referencing the tag and external-list. In order to Add  Security rules please
+  navigate through the following, **Policy->Security->Add**. Note that the rule names are prepended with the EDL name. In later 
+  steps variables are used in the rule names to map the EDL and ensure rule names are unique.
+
+UPDATE PICTURE 2 NEEDED
 
 .. image:: /images/configure_tutorial/configure_security_rules.png
     :width: 800
+    
+  If you want to generate your set commands skillet in offline mode don't forget to save a modified configuration snapshot of your
+  NGFW here just like we did earlier in this section.
+
 
 Generate the Set Commands Skillet Online Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    In PanHandler use the click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
+    In this section of the tutorial we are going to use an online NGFW and PanHandler to create a set commands skillet. Start up
+    PanHandler and click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
     
     ADD IMAGE HERE
     
-    Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Detail** button
-    skillet to extract the difference between the baseline and modified 
-    NGFW configurations. To do this in offline mode, click on the dropdown menu underneath *"Source of Changes"* and then click on 
+    Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Details** button
+    skillet to extract the difference between the baseline and modified  NGFW configurations. To do this in offline mode, click on
+    the dropdown menu underneath *"Source of Changes"* and then click on 
     **"From uploaded configs"**. 
     
     ADD IMAGE HERE
@@ -448,6 +476,24 @@ ADD IMAGE HERE
 Generate the Set Commands Skillet Offline Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    In this section of the tutorial we are going to use an offline NGFW configuration files and PanHandler to create a set commands
+    skillet. Start up PanHandler and click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
+    
+    ADD IMAGE HERE
+    
+    Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Details** button. Once here you want to 
+    locate and click on the **Create Skillet** button. 
+    
+    ADD IMAGE HERE
+    
+    Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
+    offline mode, find the box on this page that says ``Generate Set Commands From Uploaded Files`` and then click on **Upload**.
+    
+    ADD IMAGE HERE
+    
+    Now we will be at a page labeled ``Skillet Generator``. Here we will upload our base and modified configuration files we saved
+    earlier in the tutorial.
+    
     In PanHandler use the :ref:`Generate Set CLI Commands` skillet to extract the difference between the baseline and modified 
     NGFW configurations. To do this in offline mode, click on the dropdown menu underneath *"Source of Changes"* and then click on 
     **"From uploaded configs"**. 
