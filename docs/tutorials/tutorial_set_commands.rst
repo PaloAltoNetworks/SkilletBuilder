@@ -426,15 +426,17 @@ Generate the Set Commands Skillet Online Mode
         :width: 400
     
     
-    skillet to extract the difference between the baseline and modified  NGFW configurations. To do this in offline mode, click on
-    the dropdown menu underneath *"Source of Changes"* and then click on 
-    **"From uploaded configs"**. 
+    Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
+    online mode, find the box on this page that says `Generate Set Commands From PAN-OS` and then click on **Generate CLI**. 
     
     ADD IMAGE HERE
-   .. image:: ../images/configure_tutorial/configure_skillet_generator.png
+   .. image:: ../images/set_command_tutorial/generate_set_cli.png
         :width: 800 
 |
 
+    Once at the `Skillet Generator` page fill in your NGFW information.
+    
+    
     You will want to have 2 XML files that you exported from your NGFW configurations on your local 
     machine. You can then upload these files to *"Base Configuration:"* and *"Modified Configuration:"* sections here. 
     You can get these 2 XML files from your NGFW by navigating to and clicking on 
@@ -501,10 +503,13 @@ Generate the Set Commands Skillet Offline Mode
     
     Here you want to locate and click on the **Create Skillet** button.
     
-    Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
-    offline mode, find the box on this page that says ``Generate Set Commands From Uploaded Files`` and then click on **Upload**.
-    
     ADD IMAGE HERE
+    
+    Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
+    offline mode, find the box on this page that says `Generate Set Commands From Uploaded Files` and then click on **Upload**.
+    
+    .. image:: /images/set_command_tutorial/generate_set_upload.png
+        :width: 400
     
     Now we will be at a page labeled ``Skillet Generator``. Here we will upload our base and modified configuration files we saved
     earlier in the tutorial.
