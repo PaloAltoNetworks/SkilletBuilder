@@ -340,7 +340,7 @@ Building Skillets with Set Commands
 Create the Configuration in the NGFW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Before modifying the configuration, ensure you have a snapshot of the ``before`` configuration of your NGFW saved, we will use
+    Before modifying the configuration, ensure you have a snapshot of the `before` configuration of your NGFW saved, we will use
     this saved snapshot to perform an offline configuration difference later. To do this click on the **Devices** tab of your NGFW,
     then click on the **Setup** tab and then the **Operations** tab. Here you can click on **Save named configuration snapshot** to
     save the current NGFW config.
@@ -356,7 +356,7 @@ Create the Configuration in the NGFW
         :width: 600
     
     Now after commiting we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
-    description, and source URL and then click the **OK** button to save the changes. To get to the ``External Dynamic List`` section
+    description, and source URL and then click the **OK** button to save the changes. To get to the `External Dynamic List` section
     on your NGFW navigate through the following, **Objects->External Dynamic Lists->Add**. 
 
 
@@ -390,17 +390,20 @@ Create the Configuration in the NGFW
 
 |
 
-  Configure inbound and outbound security rules referencing the tag and external-list. In order to Add  Security rules please
+  Configure inbound and outbound security rules referencing the tag and external-list. In order to add Security rules please
   navigate through the following, **Policy->Security->Add**. Note that the rule names are prepended with the EDL name. In later 
   steps variables are used in the rule names to map the EDL and ensure rule names are unique.
 
-UPDATE PICTURE 2 NEEDED
 
-.. image:: /images/configure_tutorial/configure_security_rules.png
-    :width: 800
+  .. image:: /images/set_command_tutorial/navigate_security_policy.png
+      :width: 400
+        
+
+  .. image:: /images/set_command_tutorial/security_policy_add.png
+      :width: 400
     
-  If you want to generate your set commands skillet in offline mode don't forget to save a modified configuration snapshot of your
-  NGFW here just like we did earlier in this section.
+  If you want to be able to generate your set commands skillet in offline mode don't forget to save a modified configuration
+  snapshot of your NGFW here just like we did earlier in this section.
 
 
 Generate the Set Commands Skillet Online Mode
@@ -409,15 +412,26 @@ Generate the Set Commands Skillet Online Mode
     In this section of the tutorial we are going to use an online NGFW and PanHandler to create a set commands skillet. Start up
     PanHandler and click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
     
-    ADD IMAGE HERE
+    .. image:: /images/set_command_tutorial/panhandler_nav.png
+        :width: 400
     
-    Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Details** button
+    Scroll down until you find the `SkilletBuilder` repository and then click on the **Details** button. 
+    
+    .. image:: /images/set_command_tutorial/panhandler_nav.png
+        :width: 400
+    
+    Here you want to locate and click on the **Create Skillet** button.
+    
+    .. image:: /images/set_command_tutorial/create_skillet.png
+        :width: 400
+    
+    
     skillet to extract the difference between the baseline and modified  NGFW configurations. To do this in offline mode, click on
     the dropdown menu underneath *"Source of Changes"* and then click on 
     **"From uploaded configs"**. 
     
     ADD IMAGE HERE
-   .. image:: /images/configure_tutorial/configure_skillet_generator.png
+   .. image:: ../images/configure_tutorial/configure_skillet_generator.png
         :width: 800 
 |
 
@@ -481,10 +495,11 @@ Generate the Set Commands Skillet Offline Mode
     
     ADD IMAGE HERE
     
-    Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Details** button. Once here you want to 
-    locate and click on the **Create Skillet** button. 
+    Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Details** button.  
     
     ADD IMAGE HERE
+    
+    Here you want to locate and click on the **Create Skillet** button.
     
     Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
     offline mode, find the box on this page that says ``Generate Set Commands From Uploaded Files`` and then click on **Upload**.
