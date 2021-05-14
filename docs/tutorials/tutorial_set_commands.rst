@@ -542,41 +542,6 @@ Generate the Set Commands Skillet Offline Mode
 
 .. _`Jinja`: https://skilletbuilder.readthedocs.io/en/latest/building_blocks/jinja_and_skillets.html
 
-    You will want to have 2 XML files that you exported from your NGFW configurations on your local 
-    machine. You can then upload these files to *"Base Configuration:"* and *"Modified Configuration:"* sections here. 
-    You can get these 2 XML files from your NGFW by navigating to and clicking on 
-    **Devices->Setup->Operations->"Export named configuration snapshot"**. Once here export the baseline and modified versions of
-    the NGFW and upload them to the SkilletBuilder tool.
-    
-    PLACE IMAGE HERE
-    
-    After the files are added, the PanHandler tool will output a list of set commands that you can use to do the exact same EDL, tag 
-    and security rule configurations you manually made on your NGFW UI. 
-    
-    PLACE IMAGE HERE
-    
-    Once the set commands have been outputted you want to save them by copying them and pasting them into a *.conf* file which we will
-    use as a snippet within our skillet.
-    
-      .. NOTE::
-    Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order. For
-    example it may output the commands in such a way that it will try to load in a security policy before the EDL is created. This would
-    fail if you input it into the NGFW CLI since the EDL doesn't exist yet.
-    
-    SHOW IMAGE OR SOMETHING THAT THIS COULD HAPPEN TO THE USER
-    
-    Next we are going to add the same two base and modified configuration files from before to the *Generate a Skillet* tool in
-    PanHandler. Under the *Skillet Source:* section click on the dropdown menu and click on **From Uploaded Configs**. Upload the 
-    base and modified files again and click on **Submit**.
-    
-ADD IMAGE HERE
-
-    After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
-    
-    .. image:: /images/configure_tutorial/configure_skillet_preamble.png
-        :width: 800    
-|
-
 
 Using SLI to Perform a Configuration Difference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
