@@ -354,16 +354,15 @@ Create the Configuration in the NGFW
     Now after commiting we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
     description, and source URL and then click the **OK** button to save the changes. To get to the `External Dynamic List` section
     on your NGFW navigate through the following, **Objects->External Dynamic Lists->Add**. 
-|
+
     .. image:: /images/set_command_tutorial/External_list.png
         :width: 600
-        
+|        
     Once in the correct place make the necessary changes as seen below.
-|
+
     .. image:: /images/set_command_tutorial/edl_configure.png
         :width: 600
-
-
+|
     Next we need to configure the tag object with a name, color, and comments (description) and then click the **OK** button. Tag
     objects are found by clicking through the following, **Objects->Tags->Add**.
 |    
