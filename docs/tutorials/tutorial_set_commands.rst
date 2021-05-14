@@ -178,9 +178,9 @@ Restarting PanHandler
 
   Click 'Start' to restart the container. You should now be able to access the PanHandler GUI at the same URL as before:
 
-.. code-block:: bash
+  .. code-block:: bash
 
-    http://localhost:8080
+      http://localhost:8080
   
   
 
