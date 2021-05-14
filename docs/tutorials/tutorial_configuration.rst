@@ -44,14 +44,10 @@ Before moving forward with the tutorial, you will need the following:
 - NGFW up and running with proper access to GUI and CLI(via SSH)
 - A `GitHub <https://github.com/>`_ account with access permissions to edit repository content
 - `Docker <https://www.docker.com/>`_ desktop installed and running on your local machine
-- Text Editor/IDE of choice for XML/YAML editing
-
-    - `PyCharm <https://www.jetbrains.com/pycharm/>`_ and `Sublime Text <https://www.sublimetext.com/>`_ are recommended options for beginners.
 
 - Access to the following repositories:
 
     - `PanHandler <https://github.com/PaloAltoNetworks/panhandler/>`_
-    - `SkilletBuilder <https://github.com/PaloAltoNetworks/SkilletBuilder/>`_
 
 - For users interested in working through the command line, have `SLI <https://pypi.org/project/sli/>`_ installed on your local machine
 
@@ -65,13 +61,6 @@ It may also be useful to review the following topics before getting started:
 
 Set Up Your Environment
 -----------------------
-
-Your skillet building environment consists of 4 essential parts:
-
-1. NGFW
-2. PanHandler
-3. SkilletBuilder Tools
-4. Text Editor/IDE
 
 In this section of the tutorial we will set up everything you need to successfully complete the tutorial.
 
@@ -88,93 +77,6 @@ NGFW
 
   Before making any configuration changes, it is recommended to save a 'baseline' configuration file. This will make
   it easier to rollback the NGFW for testing and demonstration purposes.
-
-
-Prepare the CLI to be ‘XML Ready’
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  The tutorial will use the Skillet Generator tool but later stages of testing and tuning may require review and capture
-  of the XPath or XML elements. These operational mode commands make the CLI XML-ready.
-
-  Log into the NGFW via CLI by opening a terminal/bash shell on your local machine and type the command below;
-  replacing the placeholders with your NGFW's username and MGMT IP address:
-
-  .. code-block:: bash
-
-    ssh {username}@{X.X.X.X}
-
-  Enter the password to log into the NGFW. If you are logging into the NGFW for the first time via CLI, you may
-  need to authorize the ECDSA key fingerprint. Type 'yes' before continuing. In your terminal window, enter the
-  following commands:
-
-  .. code-block:: bash
-
-    admin@PA-VM> set cli config-output-format xml
-    admin@PA-VM> debug cli on
-
-  The first command will display configuration data as XML and the second will allow for easy capture of the configuration XPath.
-  Review the :ref:`XML Basics` if you are not familiar with XML concepts.
-
-Initialize a New Repository and Clone it to Your Local Machine
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
-
-  Log in to Github and select ‘New’ to add a new repo.
-
-    .. image:: /images/configure_tutorial/create_new_repo_button.png
-        :width: 600
-
-  Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
-  pushing any EDI directories such as .idea/ used by Pycharm.
-
-    .. image:: /images/configure_tutorial/create_new_repo_fields.png
-        :width: 600
-
-  Once created, copy the clone URL from the GUI.
-  This is found with the green ‘Code’ button and NOT the browser URL.
-
-    .. image:: /images/configure_tutorial/clone_new_repo.png
-       :width: 600
-
-
-  Using a local console or your editor tools, clone the repo to your local system.
-  For example, using the console and the link above:
-
-  .. code-block:: bash
-
-      midleton$ git clone https://github.com/scotchoaf/SBtest.git
-
-  .. NOTE::
-    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
-    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
-
-.. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-
-
-Create the File Structure for the Project
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  This model places the XML elements within the .skillet.yaml file. This is the standard output used by the
-  Skillet Generator.
-
-  In the editor open the repository you just cloned and add the following:
-
-    - A new folder that will contain the skillet content (eg. tag_edl_block_rules)
-    - Add an empty ``.skillet.yaml`` file inside the new folder
-
-        - The contents of the file will be populated later in the tutorial
-
-    - Add an empty README.md file inside the new folder
-
-        - The contents of the file will be populated later in the tutorial
-
-  The skillet directory structure will look like:
-
-    **need to update this image**
-
-  .. image:: /images/configure_tutorial/configure_skillet_folder.png
-     :width: 250
 
 
 Start PanHandler
@@ -199,6 +101,8 @@ Start PanHandler
   Please refer to the `PanHandler documentation <https://panhandler.readthedocs.io/en/master/overview.html/>`_
   for more detailed information on the PanHandler utility.
 
+  **add section for PanHandler SSH key into github**
+
 Restart PanHandler
 ~~~~~~~~~~~~~~~~~~
 
@@ -207,7 +111,7 @@ Restart PanHandler
   Navigate to the Docker Desktop Application on your local machine. You should see the 'panhandler' container listed on
   the dashboard.
 
-  **insert pic here**
+  **INSERT PIC HERE**
 
   Click 'Start' to restart the container. You should now be able to access the PanHandler GUI at the same URL as before:
 
@@ -215,29 +119,57 @@ Restart PanHandler
 
     http://localhost:8080
 
-Import SkilletBuilder Tools
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  In order to utilize the SkilletBuilder tools, the repository needs to be imported into PanHandler.
+Initialize a New Repository and Import it into PanHandler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Navigate to the PanHandler menu in the top left corner and click the dropdown arrow. Then click 'Import Skillets.
+:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
 
-  **insert pic here**
+  Log in to Github and select ‘New’ to add a new repo.
+
+    .. image:: /images/configure_tutorial/create_new_repo_button.png
+        :width: 600
+
+  Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
+  pushing any EDI directories such as .idea/ used by Pycharm.
+
+    .. image:: /images/configure_tutorial/create_new_repo_fields.png
+        :width: 600
+
+  Once created, copy the clone URL from the GUI.
+  This is found with the green ‘Code’ button and is NOT the browser URL.
+
+    **INSERT PIC HERE**
+
+  Navigate back to PanHandler. Click the PanHandler dropdown menu in the top left corner and select 'Import Skillets'.
+
+  **INSERT PIC HERE**
+
+  Scroll down the page and locate the 'Import Repository' Section. Enter the name of the repository and paste the URL
+  you copied from the above step. Click 'Submit'.
+
+  **INSERT PIC HERE**
+
+  .. NOTE::
+    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
+    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
+
+.. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
 
 
-  Under the 'Recommended Repositories' section, click 'Import' on the SkilletBuilder Tools option
+Install SLI
+~~~~~~~~~~~
 
-  **insert pic here**
+In a terminal/bash shell enter the following to create a virtual python environment and install SLI.
 
-  Another option to import the repository is to add the git link in the 'Import Repository' section, list the
-  repository name and click 'Submit'. The proper link can be found under the green 'Code' button in the GitHub repository.
-  DO NOT use the browser URL.
+.. code-block:: bash
+  > mkdir {directory name of your choice}
+  > cd {directory from step above}
+  > python3 -m venv ./venv (Create the venv)
+  > source ./venv/bin/activate (Activate the venv)
+  > pip install sli
 
-  **insert pic here**
-
-  .. note::
-
-    This method is the standard way of importing any valid skillet repositories into PanHandler.
+  Please refer to the `SLI Documentation <https://pypi.org/project/sli/>`_ for more information on installing and using SLI
 
 Build the Skillet
 --------------------
@@ -252,11 +184,11 @@ Create the Configuration in the NGFW
 
   Navigate to Device > Setup > Operations.
 
-  **insert pic here**
+  **INSERT PIC HERE**
 
   Click 'Save named configuration snapshot', enter a name for the file (ex. baseline.xml), and click OK.
 
-  **insert pic here**
+  **INSERT PIC HERE**
 
   The tutorial examples use the GUI to create the EDL, tag, and security rules.
   Many of the config values are placeholders that look like variable names (hint, hint).
@@ -307,220 +239,58 @@ Create the Configuration in the NGFW
 
   Follow the screenshots below to edit the security policy rules. You can assume the default settings if they are not present below.
 
-  **insert pics here**
+  **INSERT PIC HERE**
 
   Commit the changes you just made and save the configuration file.
   Navigate back to Device > Setup > Operations and 'Save named configuration snapshot' again, but name the file something you
   will remember (ex. skilletbuilder.xml).
 
-  **insert pic here**
+  **INSERT PIC HERE**
 
   Export both the 'baseline' configuration file and the file you just saved to your local machine.
 
-  **insert pic**
+  **INSERT PIC HERE**
 
-Generate the Skillet with PanHandler
+
+Generate the Skillet from Uploaded Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  In panHandler use the :ref:`Generate a Skillet` skillet to extract the difference between the baseline and
-  modified configuration with offline mode choosing 'From uploaded configs'.
+  In the PanHandler dropdown menu, click 'Skillet Repositories' and locate the skillet repository that you imported in an
+  above step. Click 'Details'.
 
-  .. image:: /images/configure_tutorial/configure_skillet_generator.png
-     :width: 800
+  **INSERT PIC HERE**
 
+  Click either of the 'Create Skillet' buttons on the page.
 
-|
+  **INSERT PIC HERE**
 
-  After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
+  Locate the section 'Generate From Uploaded Files' and Click 'Upload'.
 
-  .. image:: /images/configure_tutorial/configure_skillet_preamble.png
-     :width: 800
+  **INSERT PIC HERE**
 
+  Recall the two configuration files that you exported in an above step. Upload the 'baseline' or pre-configuration file
+  in the pre-configuration section. Upload the post-configuration file in the section below. Click 'Submit'.
 
-|
-
-  Suggested tutorial inputs:
-
-    * Skillet ID: tag_edl_tutorial
-    * Skillet Label: Tutorial skillet to configure tag, EDL, and security rules
-    * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
-    * Collection Name: Tutorial
-    * Skillet type: ``panos``
-
-  Clicking ``Submit`` results in a screen output of the .meta-cnc.yaml file.
-
-  The rendered YAML file contains:
-
-    * preamble populated with the web form values
-    * placeholder variables section
-    * snippets section with XPath/element entries where each diff found
-
-  .. toggle-header:: class
-      :header: **show/hide the output .meta-cnc.yaml file**
-
-      .. code-block:: yaml
-
-        # skillet preamble information used by panhandler
-        # ---------------------------------------------------------------------
-        # unique snippet name
-        name: tag_edl_tutorial
-        # label used for menu selection
-        label: Tutorial skillet to configure tag, EDL, and security rules
-        description: The tutorial skillet demonstrates the use of various config snippets and variables
-
-        # type of device configuration
-        # common types are panorama, panos, and template
-        # https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
-        type: panos
-        # preload static or default-based templates
-        extends:
-
-        # grouping of like snippets for dynamic menu creation in panhandler
-        labels:
-          collection:
-            - Tutorial
-
-        # ---------------------------------------------------------------------
-        # end of preamble section
-
-        # variables section
-        # ---------------------------------------------------------------------
-        # variables used in the configuration templates
-        # type_hint defines the form field used by panhandler
-        # type_hints can be text, ip_address, or dropdown
-        variables:
-          - name: hostname
-            description: Firewall hostname
-            default: myFirewall
-            type_hint: text
-          - name: choices
-            description: sample dropdown list
-            default: choices
-            type_hint: dropdown
-            dd_list:
-              - key: option1
-                value: option1
-              - key: option2
-                value: option2
-        # ---------------------------------------------------------------------
-        # end of variables section
-
-        # snippets section
-        # ---------------------------------------------------------------------
-        # snippets used for api configuration including xpath and element as file name
-        # files will load in the order listed
-        # NOTE: The following snippets are auto-generated and ordered automatically.
-        # Changing the content of the snippet may be necessary, but do NOT change the order
-
-        # There is a variable called snippets that we can use to auto-generate this section for us
-        snippets:
-
-          - name: entry-953630
-            xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/tag
-            element: |-
-                <entry name="tag_name">
-                              <color>color1</color>
-                              <comments>tag_description</comments>
-                            </entry>
-
-          - name: external-list-467839
-            xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]
-            element: |-
-                <external-list>
-                            <entry name="edl_name">
-                              <type>
-                                <ip>
-                                  <recurring>
-                                    <five-minute/>
-                                  </recurring>
-                                  <description>edl_description</description>
-                                  <url>http://someurl.com</url>
-                                </ip>
-                              </type>
-                            </entry>
-                          </external-list>
-
-          - name: entry-702183
-            xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
-            element: |-
-                <entry name="edl_name-out" uuid="29209605-e2f4-40b1-ab12-98edf6ae5b8b">
-                                  <to>
-                                    <member>any</member>
-                                  </to>
-                                  <from>
-                                    <member>any</member>
-                                  </from>
-                                  <source>
-                                    <member>any</member>
-                                  </source>
-                                  <destination>
-                                    <member>edl_name</member>
-                                  </destination>
-                                  <source-user>
-                                    <member>any</member>
-                                  </source-user>
-                                  <category>
-                                    <member>any</member>
-                                  </category>
-                                  <application>
-                                    <member>any</member>
-                                  </application>
-                                  <service>
-                                    <member>application-default</member>
-                                  </service>
-                                  <hip-profiles>
-                                    <member>any</member>
-                                  </hip-profiles>
-                                  <tag>
-                                    <member>tag_name</member>
-                                  </tag>
-                                  <action>deny</action>
-                                  <description>outbound EDL IP block rule. EDL info: </description>
-                                </entry>
-
-          - name: entry-978971
-            xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
-            element: |-
-                <entry name="edl_name-in" uuid="20d10cd2-f553-42f2-ba05-3d00bebeac60">
-                                  <to>
-                                    <member>any</member>
-                                  </to>
-                                  <from>
-                                    <member>any</member>
-                                  </from>
-                                  <source>
-                                    <member>edl_name</member>
-                                  </source>
-                                  <destination>
-                                    <member>any</member>
-                                  </destination>
-                                  <source-user>
-                                    <member>any</member>
-                                  </source-user>
-                                  <category>
-                                    <member>any</member>
-                                  </category>
-                                  <application>
-                                    <member>any</member>
-                                  </application>
-                                  <service>
-                                    <member>application-default</member>
-                                  </service>
-                                  <hip-profiles>
-                                    <member>any</member>
-                                  </hip-profiles>
-                                  <tag>
-                                    <member>tag_name</member>
-                                  </tag>
-                                  <action>deny</action>
-                                  <description>inbound EDL IP block rule. EDL info: </description>
-                                </entry>
+  **INSERT PIC HERE**
 
 
-        # ---------------------------------------------------------------------
-        # end of snippets section
+  Edit the Initial Config Settings for the Skillet. Here are some suggested inputs for this tutorial:
 
-|
+  - Skillet ID [must be unique]: Tutorial_Skillet_New
+  - Skillet Label: Tutorial Skillet
+  - Skillet Description: Skillet generated from uploaded files/configs
+  - Skillet Type: PAN-OS
+  - Branch: local
+  - Commit Message: Create New Skillet
+
+  **INSERT PIC HERE**
+
+  To continue on with the tutorial click to go to the next section: `Add Variables to Snippets`_
+
+Generate the Skillet from PAN-OS
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  **SKIP**
 
 Generate the Skillet with SLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -529,251 +299,36 @@ If you prefer to use the command line, SLI can also extract the difference betwe
 **add pics and more context**
 
 
-
-Copy the Output to .meta-cnc.yaml
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  Copy the output text under **Generated Skillet** and paste into the .meta-cnc.yaml file.
-
-  .. NOTE::
-        At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play
-        the skillet without variables. Common reasons for raw output testing include the possible need for snippet reordering
-        and confirmation that the snippet elements will load
-
-Edit the Variables Section
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  Now that the variable set is known, they must be added to the metadata file along with a description to be used
-  in the web form, a default provided in the form, and a type_hint to specify the type of web form field.
-  This metadata allows tools like panHandler to auto-generate the web form without any user specific HTML coding.
-
-  Key is :ref:`Ensuring all variables are defined` in the variables section. In the tutorial we'll use the first
-  grep option to generate a list of added variables.
-
-  .. code-block:: bash
-
-    midleton:SBtest$ grep -r '{{' . |  cut -d'{' -f3 | awk '{ print $1 }' | sort -u
-    edl_description
-    edl_name
-    edl_url
-    tag_color
-    tag_description
-    tag_name
-
-  The output of the grep command shows the six variables used in the tutorial configs.
-
-  From here, edit the variables section of the YAML file. Note that 4 are text and one is a URL while color is using a dropdown.
-  The dropdown is useful when the GUI and XML use different values or limited choices should be offered.
-
-  .. code-block:: yaml
-
-    variables:
-      - name: edl_name
-        description: External-list name
-        default: my_edl
-        type_hint: text
-      - name: edl_description
-        description: External-list description
-        default: my_edl description
-        type_hint: text
-      - name: edl_url
-        description: External-list URL
-        default: my_edl
-        type_hint: url
-      - name: tag_name
-        description: tag name
-        default: my_tag
-        type_hint: text
-      - name: tag_description
-        description: tag description
-        default: tag description
-        type_hint: text
-      - name: tag_color
-        description: tag color
-        default: red
-        type_hint: dropdown
-        dd_list:
-          - key: green
-            value: color2
-          - key: orange
-            value: color6
-          - key: red
-            value: color1
-
-  The values for the tag color require color numbers and not the Web UI presented names. This is common for many dropdown
-  selections in the Web UI. For these types of situations, you can create a set of items (eg. tags)
-  to be displayed in the XML output to match Web UI and XML required values.
-
-  For the tag color values, below is the config showing the 3 color values for green, orange, and red.
-  Additional colors can be extracted by using the GUI to create more tags and then use the CLI and ‘show tag’
-  to see additional color numbers.
-
-  .. code-block:: xml
-
-      <entry name="tag_name">
-        <color>color1</color>
-        <comments>tag_description</comments>
-      </entry>
-      <entry name="tag_orange">
-        <color>color6</color>
-      </entry>
-      <entry name="tag_green">
-        <color>color2</color>
-      </entry>
-
-  This method or the CLI '?' complete action can be used to find the XML specific configuration options instead of the
-  Web UI options.
-
 Add Variables to Snippets
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Snippets can be edited to use contextual names, more coarse or granular snippets,
-  and formatting clean up such as XML elements. The modifications are optional based on Skillet Builder preference.
+  Within the Skillet Editor, you should see the all the settings you input in the previous step. Scroll down to the
+  'Snippets' section; it should be pre-populated with snippets from the configuration files. These snippets represent
+  the pieces of the NGFW configuration that were found to be different between the two files uploaded.
 
-  Adding variables is done in both the snippets and variables sections. The snippets section is edited by
-  adding a :ref:`Jinja Variable` where each value can be modified by the user. This correlates to variables
-  defined in the variables section specifying type for web form display and validation.
+  **INSERT PIC HERE**
 
-  .. TIP::
-    YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
-    it can often also be frustrating to work with. A good reference to use to check your
-    YAML syntax is the `YAML Lint site <http://www.yamllint.com/>`_.
+  Click the 'Edit' button to the far right of the external-list snippet.
 
-  The tag has 3 variables (tag_name, tag_description, tag_color)
+  **INSERT PIC HERE**
 
-  .. code-block:: yaml
+  On the 'Edit PAN-OS Snippet' Page click the 'Edit' button in the bottom right corner.
 
-      - name: object_tag
-        xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/tag
-        element: |-
-            <entry name="{{ tag_name }}">
-              <color>{{ tag_color }}</color>
-              <comments>{{ tag_description }}</comments>
-            </entry>
+  **INSERT PIC HERE**
 
-  The external-list element has 3 variables (edl_name, edl_description, edl_url)
-  that are added into the configuration resulting in:
+  In this editor you can use the 'Text to Replace' feature at the bottom of the page to create the variables.
 
+  **INSERT PIC HERE**
 
-  .. code-block:: yaml
+  Locate the 'entry name' element and enter 'edl_name' in both text boxes at the bottom of the page.
 
-      - name: object_external_list
-        xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]
-        element: |-
-            <external-list>
-                <entry name="{{ edl_name }}">
-                  <type>
-                    <ip>
-                      <recurring>
-                        <five-minute/>
-                      </recurring>
-                      <description>{{ edl_description }}</description>
-                      <url>{{ edl_url }}</url>
-                    </ip>
-                  </type>
-                </entry>
-              </external-list>
+  **INSERT PIC HERE**
 
+  On the right side, click this symbol **INSERT PIC HERE**
+  This will change the variable to align with Jinja formatting.
+  You should see the set of curly brackets appear around the variable name.
 
-  Note that the <recurring> value is static as ``five-minute`` without a variable.
-  Some values may remain static as a best practice or, as with type ``<ip>``, specific to the configuration requirement.
-
-
-  Lastly, the security rules leverage EDL and tag variables (edl name, tag name) as a connected set of template configs.
-
-  .. code-block:: yaml
-
-      - name: security_rule_outbound
-        xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
-        element: |-
-            <entry name="{{ edl_name }}-out">
-              <to>
-                <member>any</member>
-              </to>
-              <from>
-                <member>any</member>
-              </from>
-              <source>
-                <member>any</member>
-              </source>
-              <destination>
-                <member>{{ edl_name }}</member>
-              </destination>
-              <source-user>
-                <member>any</member>
-              </source-user>
-              <category>
-                <member>any</member>
-              </category>
-              <application>
-                <member>any</member>
-              </application>
-              <service>
-                <member>application-default</member>
-              </service>
-              <hip-profiles>
-                <member>any</member>
-              </hip-profiles>
-              <tag>
-                <member>{{ tag_name }}</member>
-              </tag>
-              <action>deny</action>
-              <description>outbound EDL IP block rule. EDL info: {{ edl_description }} </description>
-            </entry>
-
-      - name: security_rule_inbound
-        xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
-        element: |-
-            <entry name="{{ edl_name }}-in">
-              <to>
-                <member>any</member>
-              </to>
-              <from>
-                <member>any</member>
-              </from>
-              <source>
-                <member>{{ edl_name }}</member>
-              </source>
-              <destination>
-                <member>any</member>
-              </destination>
-              <source-user>
-                <member>any</member>
-              </source-user>
-              <category>
-                <member>any</member>
-              </category>
-              <application>
-                <member>any</member>
-              </application>
-              <service>
-                <member>application-default</member>
-              </service>
-              <hip-profiles>
-                <member>any</member>
-              </hip-profiles>
-              <tag>
-                <member>{{ tag_name }}</member>
-              </tag>
-              <action>deny</action>
-              <description>inbound EDL IP block rule. EDL info: {{ edl_description }}</description>
-            </entry>
-
-  In this outbound rule example, not only are the variables used for the standard destination address and tag fields,
-  but text substitution can also be used to create unique entries. In this case, the EDL name is used as
-  a security rule name prefix joined with ‘-out’ and the rule description contains the edl_description.
-
-  .. TIP::
-    When creating the modified configuration for a skillet, you can use variable-type names where applicable to
-    simplify the variable insertion into the snippets. Simply wrap the names with ``{{  }}`` or even use
-    search-replace when text content is unique within the file.
-
-  .. TIP::
-    If the variables are used across multiple skillets as part of defined Steps or a workflow, reuse the same
-    variable name where possible. Tools like panHandler will cache web form inputs and auto-populate values
-    when the same variable is encountered again.
-
-
+  **INSERT PIC HERE**
 
 Local Skillet Test
 ~~~~~~~~~~~~~~~~~~
@@ -792,105 +347,11 @@ Testing with SLI
 Push the Skillet to Github
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  At this stage initial building is complete. The YAML file preamble, variables, and snippets sections all have
-  relevant content added. Now we want to push this to Github for additional testing and tuning.
-
-  Use:
-
-    * ``git add .`` to add the modified files to the commit
-    * ``commit -m "message"`` to commit the files with a change message
-    * ``git push origin master`` to push to the repo master branch
-
-  .. code-block:: bash
-
-    midleton:SBtest:$
-    midleton:SBtest:$ git add .
-    midleton:SBtest:$ git commit -m "first commit to Github"
-    [master 5f73017] first commit to Github
-     2 files changed, 177 insertions(+)
-     create mode 100644 tag_edl_block_rules/.meta-cnc.yaml
-     create mode 100644 tag_edl_block_rules/README.md
-    midleton:SBtest:$ git push origin master
-    Enumerating objects: 6, done.
-    Counting objects: 100% (6/6), done.
-    Delta compression using up to 12 threads
-    Compressing objects: 100% (4/4), done.
-    Writing objects: 100% (5/5), 1.62 KiB | 1.62 MiB/s, done.
-    Total 5 (delta 1), reused 0 (delta 0)
-    remote: Resolving deltas: 100% (1/1), completed with 1 local object.
-    To github.com:scotchoaf/SBtest.git
-       61b3520..5f73017  master -> master
-    midleton:SBtest:$
-
-
-  The skillet now resides in Github. Note however that the page README gives no real indication about
-  what is contained in this repo. We will edit this page later in the tutorial.
-
-  .. image:: /images/configure_tutorial/configure_skillet_repo_updated.png
-     :width: 800
 
 
 Test and Troubleshoot
 ------------------
 
-Now that the skillet has been pushed to Github, the skillet can be imported into PanHandler to test the user experience and functionality.
-
-Import the Skillet
-~~~~~~~~~~~~~~~~~~
-
-  Get the new skillet URL from Github. This is NOT the browser URL for the repository.
-
-  .. image:: /images/configure_tutorial/skillet_clone_url.png
-     :width: 300
-
-
-|
-
-  Use ``Import Skillets`` with the ``Clone or download`` Github URL to import the skillet to panHandler.
-  Please refer back to [insert hyperlink here] for a more detailed explanation of importing a skillet.
-
-  .. image:: /images/configure_tutorial/configure_skillet_import.png
-     :width: 400
-
-
-|
-
-  View the skillet ``Detail`` from the ``Skillet Repositories`` page.
-
-  .. image:: /images/configure_tutorial/configure_skillet_detail.png
-     :width: 800
-
-
-|
-
-  **Github URL and branch**
-
-    - Validate the correct URL for your skillet
-    - Check the Active Branch, master for the tutorial
-
-  **Latest Updates**
-
-    - Review the last commit to ensure you are testing the latest push
-    - ``Update to Latest`` as needed to pull recent commits
-
-
-  **Metadata files**
-
-    - Check that all skillet Labels are listed; missing labels indicate an error in the YAML file
-    - Check that all label names and descriptions are unique and understandable
-    - [Optional] Click the gear icon next to a label to locally view the YAML file contents
-
-  **Collections**
-
-    - Verify the collection names are correct and edit YAML files as needed
-
-  .. TIP::
-    You can run skillets from the Detail page by clicking its Label name. This bypasses the need to click into
-    a Collection for each push update during testing.
-
-  .. NOTE::
-    If you receive errors during import, the most common issue is an error with YAML formatting.
-    Check alignment and syntax, push to Github, then try to import again.
 
 Play the Skillet
 ~~~~~~~~~~~~~~~~
