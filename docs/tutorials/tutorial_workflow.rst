@@ -27,14 +27,13 @@ Overview
 Prerequisites
 -------------
 
-    1. Deploy a Next Generation Firewall for testing
-    2. Installing PanHandler using Docker
-    3. Installing Appetizer using Docker
-    4. Installing SLI using a Python virtual environment
-    5. Creating a GitHub repository
-    6. Opening a text editor or IDE that's connected to GitHub
+    Before moving forward with the tutorial, you will need to do the following:
 
-|
+        1. Create a GitHub repository, instructions here
+        2. Open your repository in a text editor or IDE, instructions here
+        3. Install PanHandler using Docker, instructions here
+        4. Install SLI using a Python virtual environment, instructions here
+        5. Deploy a Next Generation Firewall for testing, instructions here
 
 
 Design the Solution
@@ -44,14 +43,14 @@ Design the Solution
     development.
 
     From a high level, workflow skillets begin execution by prompting the user for input, which get
-    saved as variables. Once the user finishes with the prompted workflow menu, each skillet
-    in the workflow gets executed in a defined sequence. This sequence can be static, or it can conditionally
+    saved as variables. Once the user finishes with the prompted workflow menu, each workflow sub-skillet
+    gets executed in a defined sequence. This sequence can be static, or it can conditionally
     change depending on the user's input.
 
     As a result, when designing a workflow, you must think about:
 
-      * Overall sequence of skillets
-      * Conditional execution of each skillet
+      * Overall sequence of sub-skillets
+      * Conditional execution of each sub-skillet
       * User-facing menu options
 
 Design this Tutorial's Solution
@@ -62,10 +61,14 @@ Design this Tutorial's Solution
       .. image:: /images/workflow_tutorial/workflow_sequence.png
          :width: 800
 
-    In this tutorial, you will walk through the steps to create the workflow skillet itself, but
-    it is assumed that the individual skillets that the workflow calls are previously developed.
+    In this tutorial, you will walk through the steps to create the main workflow skillet.
+    It is assumed that the individual sub-skillets that the workflow calls are previously developed.
+    You can use developed skillets from the `Quickplay Solution's LIVEcommunity page`_; you can use
+    GitHub submodules to incorporate developed skillets; or you can develop your own skillets.
     For information on developing other skillet types, please look through the tutorials under
     the **Tutorials** section.
+
+    .. _Quickplay Solution's LIVEcommunity page: https://live.paloaltonetworks.com/t5/quickplay-solutions/ct-p/Quickplay_Solutions
 
       .. NOTE::
             You can **NOT** call a workflow skillet inside of a workflow skillet.
@@ -85,8 +88,8 @@ Design this Tutorial's Solution
 Build the Skillet
 --------------------
 
-    The following steps take the user from creating the Github repo, through generating and editing the skillet, to a final
-    push of skillet content back to the created repo.
+    The following steps take the user from creating the Github repo, through generating and editing the main skillet,
+    to a final push of the main skillet content back to the created repo.
 
 Set-up the Directory Structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,9 +98,9 @@ Set-up the Directory Structure
   will contain all of the skillet contents (eg. edl_xml_policy_workflow). Inside of this newly created folder,
   add the following files:
 
-    * An empty ``workflow_tutorial.skillet.yaml`` file for the workflow skillet contents (to be populated later)
+    * An empty ``workflow_tutorial.skillet.yaml`` file for the main workflow skillet contents (to be populated later)
     * An empty ``README.md`` file (to be populate later)
-    * ``config_xml_edl_policy.skillet.yaml`` file with the configuration skillet contents
+    * ``config_xml_edl_policy.skillet.yaml`` file with the configuration sub-skillet contents
 
           .. toggle-header:: class
               :header: **Show/Hide the configuration skillet contents**
@@ -288,7 +291,7 @@ Set-up the Directory Structure
                           <description>inbound EDL IP block rule. EDL info: {{ edl_desc }}</description>
                         </entry>
 
-    * ``validate_xml_edl_policy.skillet.yaml`` file with the validation skillet contents
+    * ``validate_xml_edl_policy.skillet.yaml`` file with the validation sub-skillet contents
 
           .. toggle-header:: class
               :header: **Show/Hide the validation skillet contents**
@@ -408,7 +411,7 @@ Set-up the Directory Structure
                 # end of snippets section
 
 
-    * ``template_xml_edl_policy.skillet.yaml`` file with the template skillet contents
+    * ``template_xml_edl_policy.skillet.yaml`` file with the template sub-skillet contents
 
           .. toggle-header:: class
               :header: **Show/Hide the template skillet contents**
@@ -493,9 +496,9 @@ Set-up the Directory Structure
                 </div>
 
 
-  The skillet directory structure will look like:
+  The directory structure will look like:
 
-      .. image:: /images/workflow_tutorial/
+      .. image:: /images/workflow_tutorial/workflow_directory_structure.png
          :width: 250
 
 
@@ -517,15 +520,14 @@ Create the Workflow Skillet Skeleton
     Scroll down the **Skillet Builder Collections** page until you find the
     *Skillet YAML File Template* tile, and click **Go**.
 
-    .. image:: /images/workflow_tutorial/skillet_yaml_file_template.png
-     :width: 250
+        .. image:: /images/workflow_tutorial/skillet_yaml_file_template.png
+         :width: 250
 
     The :ref:`Skillet YAML File Template` provides an easy user interface for building the skillet structure
     and populating the :ref:`Preamble Attributes`.
 
         .. image:: /images/workflow_tutorial/workflow_skeleton_template.png
          :width: 800
-|
 
     Here are the suggested tutorial inputs:
 
@@ -543,7 +545,7 @@ Create the Workflow Skillet Skeleton
 
     Copy this template and paste it into the ``workflow_tutorial.skillet.yaml`` file in your repository's
     ``edl_xml_policy_workflow`` folder. Since the variables and snippets sections are populated with filler,
-    you can delete these sections to get the workflow skeleton.
+    you can delete these sections to get the main workflow skillet's skeleton.
 
           .. toggle-header:: class
               :header: **Show/Hide the workflow skillet skeleton**
@@ -595,7 +597,24 @@ Create the Workflow Skillet Skeleton
 Add Variables to the Skillet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    Similar to other skillet types, workflow skillets utilize :ref:`Variables` in the variables section
+    to prompt the user for input, which gets checked for proper formatting, and to vary the automation
+    workflow (in an expected way) to handle many use cases.
 
+    In workflow skillets, users can be prompted for input in two main situations:
+
+        1. On the beginning workflow menu, defined in the main workflow's YAML file
+        2. In the middle of the workflow, defined in a sub-skillet's YAML file
+
+    Variables defined in the main workflow YAML file are saved to context and can be used by all of the
+    following sub-skillets. This option is useful for variables that are already known to the user going into
+    the automation and that do not depend on a sub-skillet's execution. For example, each sub-skillet in
+    the tutorial workflow needs to know the firewall's access credentials, which will not change during
+    the workflow execution, so defining the IP, username, and password in the main workflow menu minimizes
+    and streamlines user input.
+
+    Add the following YAML code to the **variables** section of the ``workflow_tutorial.skillet.yaml``
+    file:
 
     .. code-block:: yaml
 
@@ -637,32 +656,84 @@ Add Variables to the Skillet
         # ---------------------------------------------------------------------
         # end of variables section
 
+    .. NOTE::
+        When you move variables to the front of the workflow, you **MUST** still include the necessary
+        variables in each individual sub-skillet.
+
+        A sub-skillet will only ever see the variables defined in its variables list, even if that variable
+        is loaded into the context.
+
+    In order to minimize the amount of user interaction, you will need to change the variables'
+    **type_hint** in each sub-skillet's variables section to *hidden*. This will load the variable
+    from context for the sub-skillet to use and will not prompt a user to re-define it.
+
+    The validation skillet's **variables** section is then changed to:
+
+    .. code-block:: yaml
+
+        variables:
+          # variables used for connection with NGFW; type_hint of hidden since
+          # the values are cached in the context after the workflow skillet
+          - name: TARGET_IP
+            description: NGFW IP or Hostname
+            default: 192.168.55.10
+            type_hint: hidden
+          - name: TARGET_USERNAME
+            description: NGFW Username
+            default: admin
+            type_hint: hidden
+          - name: TARGET_PASSWORD
+            description: NGFW Password
+            default: admin
+            type_hint: hidden
+
+          - name: edl_url
+            description: External Dynamic List URL
+            default: http://someurl.com
+            type_hint: hidden
+
+        # ---------------------------------------------------------------------
+        # end of variables section
+
+    .. TIP::
+        YAML is notoriously finicky about whitespace and formatting. While it's a relatively
+        simple structure and easy to learn, it can often also be frustrating to work with.
+        A good reference to use to check your YAML syntax is the
+        `YAML Lint site <http://www.yamllint.com/>`_.
+
+    A common problem with developing workflow skillets is variable name matching across all the
+    skillets. You must make sure that a variable's name matches from skillet to skillet. If they do
+    not match and you don't have the ability to change the names (This could happen if you don't own the sub-skillets),
+    you can use a **transform** attribute in the snippets section to map one sub-skillet's output variable
+    to another sub-skillet's input variable. For examples of this attribute in a workflow, navigate to
+    the `SkilletLib repo in GitHub`_.
 
 Add Snippets to the Skillet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    For workflow skillets, each *snippet* in the **snippets** section is the name of a
-    skillet to be executed in turn. You can find the unique name of each specific skillet by
-    opening the skillet's YAML file and locating the ``name`` keyword in the preamble
-    section. Each of the skillet's names have to be globally unique for the workflow skillet to
-    understand which skillet to execute.The skillet's ``name`` gets carried over to the
-    snippet section and placed in order of the desired execution.
+    For main workflow skillets, each *snippet* in the **snippets** section is the name of a
+    skillet to be executed in turn. You can find the unique name of each sub-skillet by
+    opening the sub-skillet's YAML file and locating the **name** attribute in the preamble
+    section. Each of the sub-skillet's names have to be globally unique for the main workflow skillet to
+    understand which sub-skillet to execute.
 
-    Conditional execution of a skillet is accomplished by using the ``when`` keyword
-    underneath the specific skillet's name in question. That snippet will only run
+    Conditional execution of a sub-skillet is accomplished by using the **when** attribute
+    underneath the sub-skillet's name in question. That snippet will only run
     when the conditional logic defined with the :ref:`when` attribute evaluates as True.
-|
 
-    For this tutorial, if the user decides to validate at both the beginning and the end,
-    the designed sequence of execution is validate, config, validate, and then output message.
-    As seen in the workflow skillet's snippet section below, this sequence was achieved by
+    For this tutorial, if the user decides to validate at both the beginning and end of the workflow,
+    the sequence of execution is validate, config, validate, and then output message.
+    As seen in the main workflow skillet's snippet section below, this sequence was achieved by
     the intentional ordering of snippet names.
 
     In order to take the user's input into account regarding the validation ordering,
-    ``when`` attributes are placed after each validation snippet and defined with the logical
+    **when** attributes are placed after each validation snippet and defined with the logical
     statement of ``"'run_validation_begin' in assess_options"``. This evaluates to when the
     ``assess_options`` checkbox's list item with the *value* ``run_validation_beginning`` is
     checked, run the snippet.
+
+    Add the following YAML code to the **snippets** section of the ``workflow_tutorial.skillet.yaml``
+    file:
 
     .. code-block:: yaml
 
@@ -684,19 +755,27 @@ Add Snippets to the Skillet
         # ---------------------------------------------------------------------
         # end of snippets section
 
-    In addition to ``when`` attributes, the only other attribute used in the snippet section
-    of workflow skillets is ``transform``.  You may optionally also include a ``transform``
-    attribute, which will map the output from one skillet to the input of another. For an
+    In addition to **when** attributes, the only other attribute used in the snippet section
+    of workflow skillets is **transform**.  You may optionally also include a **transform**
+    attribute, which will map the output from one sub-skillet to the input of another. For an
     example of a workflow skillet using transform, navigate to the `SkilletLib repo in GitHub`_.
 
     .. _SkilletLib repo in GitHub: https://github.com/PaloAltoNetworks/skilletlib/tree/master/example_skillets/workflow_transform
 
     .. NOTE::
-        REMEMBER: To avoid PanHandler skillet import errors, skillets' names must be globally unique.
+        **REMEMBER**: To avoid PanHandler skillet import errors, skillets' names must be globally unique.
 
 Push the Skillet to Github
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    At this stage initial building is complete. The YAML file preamble, variables, and snippets sections all have
+    relevant content added. Now we want to push this to GitHub for additional testing and tuning.
+
+    Use:
+
+    * ``git add .`` to add the modified files to the commit
+    * ``git commit -m "message"`` to commit the files with a change message
+    * ``git push origin master`` to push to the repo master branch
 
 
 Test and Troubleshoot
