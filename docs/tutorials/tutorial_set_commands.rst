@@ -329,7 +329,6 @@ Running SLI
     of the SLI tool in your CLI and local machine.
     
 .. _`SLI GitLab`: https://gitlab.com/panw-gse/as/sli
-
   
      
 |
