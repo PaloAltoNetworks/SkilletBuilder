@@ -493,17 +493,54 @@ Generate the Set Commands Skillet Offline Mode
     .. image:: /images/set_command_tutorial/generate_set_upload.png
         :width: 400
     
-    Now we will be at a page labeled ``Skillet Generator``. Here we will upload our base and modified configuration files we saved
-    earlier in the tutorial.
+    Now we will be at a page labeled ``Skillet Generator``. Here we will upload the config files we saved earlier. Click on the white
+    **Choose File** buttons to upload files. Our base config file should be uploaded under the `Pre-Configuration` section and our
+    modified configuration file under the `Post-Configuration` section. After uploading both files hit the submit button.
     
-    In PanHandler use the :ref:`Generate Set CLI Commands` skillet to extract the difference between the baseline and modified 
-    NGFW configurations. To do this in offline mode, click on the dropdown menu underneath *"Source of Changes"* and then click on 
-    **"From uploaded configs"**. 
+    .. image:: /images/set_command_tutorial/pre_post_skillet.png
+        :width: 400
     
-    ADD IMAGE HERE
-   .. image:: /images/configure_tutorial/configure_skillet_generator.png
-        :width: 800 
-|
+    On the next page we want to fill out some details about the skillet we want to create. 
+    
+    .. image:: /images/set_command_tutorial/configure_skillet_generator.png
+        :width: 400    
+    
+    Suggested tutorial inputs:
+
+    * Skillet ID: tag_edl_tutorial
+    * Skillet Label: Tutorial skillet to configure tag, EDL, and security rules
+    * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
+    * Collection Name: Tutorial
+    * Skillet type: ``panos``
+    * Branch: Local
+    * Commit Message: Create Tutorial Skillet
+
+    After everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
+    will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
+    the config diff. To access the set commands you want to view the snippets in `edit` mode by clicking the blue **edit** button 
+    all the way on the right of the snippets section.
+
+    .. image:: /images/set_command_tutorial/snippets_edit.png
+        :width: 400    
+        
+    Upon clicking the **edit** button you will land at an `Edit template snippet` page showcasing all the set commands retrieved from
+    the config diff. Here is where we can get into working with a cool templating language called `Jinja`_ to allow for variable value
+    substitution within our skillets. Thankfully with this skillet editor tool there is a very simple and easy way to transform text
+    within our set commands into Jinja variables. Click into the small blue **edit** button near the bottom right of the screen again.
+    
+    .. image:: /images/set_command_tutorial/set_command_snippet_edit.png
+        :width: 400 
+        
+    This will take us to a page titled `Edit Text`, this is where we can make text substitutions for variables. For example if we 
+    wanted to change all instances of the text "tag_name" into a jinja variable you would enter in "tag_name" to the left box and then
+    whatever you wanted the variable to be called in the right box. Next hit the button containing 2 arrows pointing in opposite
+    directions to create your variables! Dont forget to click **Update** to save your changes!
+    
+    .. image:: /images/set_command_tutorial/switch_variables.png
+        :width: 400 
+    
+
+.. _`Jinja`: https://skilletbuilder.readthedocs.io/en/latest/building_blocks/jinja_and_skillets.html
 
     You will want to have 2 XML files that you exported from your NGFW configurations on your local 
     machine. You can then upload these files to *"Base Configuration:"* and *"Modified Configuration:"* sections here. 
