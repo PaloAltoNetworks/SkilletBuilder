@@ -558,6 +558,62 @@ ADD IMAGE HERE
         :width: 800    
 |
 
+
+Using SLI to Perform a Configuration Difference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  In this section we will be going over how to use the SLI tool in the CLI to get a config diff. First head into the folder in which
+  you cloned the SLI repository, activate the venv and perform the pip install command. For more in depth guidance please refer to 
+  `SLI documentation`_.
+  
+  .. image:: /images/set_command_tutorial/sli_setup.png
+      :width: 400
+      
+  From here all that needs to be done is run following simple SLI command.
+  
+  .. code-block:: bash
+  
+    > sli diff -of set
+    
+  After entering this command you will be prompted to enter your NGFW information, after entering the correct information you will
+  receive all of the config differences output as set commands as can be seen below.
+  
+  .. image:: /images/set_command_tutorial/sli_output.png
+      :width: 400
+      
+  From here you can copy all of these set commands and paste them into a .txt file in the same directory as your SLI cloned repo.
+  
+  .. image:: /images/set_command_tutorial/sli_set_txt.png
+      :width: 400  
+  
+  While in that directory you can run SLI and pass in the .txt file containing all of the set commands to automatically configure the
+  NGFW with all provided set commands.
+  
+  .. code-block:: bash
+  
+    > sli load_set -uc set_commands.txt
+  
+  .. image:: /images/set_command_tutorial/sli_load_txt.png
+      :width: 400    
+      
+      
+  .. NOTE:: 
+    Another handy function that comes with SLI is its ability to locate errors in specific set commands. If any of the set commands
+    entered in through SLI are faulty, SLI will error out and print the faulty set command line for your viewing pleasure!
+    
+  .. TIP::
+        You can also add a -v to the end of the above command to make it look like, `sli load_set -uc {text_file} -v`. This will
+        output all the set commands being passed to the NGFW as they SLI is running in place of the black loading bar showcasing
+        % complete.
+      
+  At this point all configurations should have been made in your NGFW, simply log in and commit the changes.
+
+.. _`SLI documentation`: https://gitlab.com/panw-gse/as/sli
+
+
+Results of Skillet Generation
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
   Suggested tutorial inputs:
 
     * Skillet ID: tag_edl_tutorial
@@ -739,10 +795,6 @@ ADD IMAGE HERE
       # ---------------------------------------------------------------------
       # end of snippets section
 
-  .. TIP::
-  YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
-  it can often also be frustrating to work with. A good reference to use to check that your
-  YAML syntax is up to standard is the `YAML Lint site <http://www.yamllint.com/>`_.
 
 
 Copy the Output to .skillet.yaml
@@ -755,33 +807,28 @@ Copy the Output to .skillet.yaml
     At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play the skillet without variables. Common
     reasons for raw output testing include the possible need for snippet reordering and confirmation that the snippet elements will load
 
-Creating the .conf File
-~~~~~~~~~~~~~~~~~~~~~~~
-    Since this is specifically a set commands tutorial, we now have to replace the XML output from the ``Generate A Skillet`` tool with 
-    set commands. For that we will use a .conf file. In your GitHub repository create a file and name it something like
-    ``set_commands_tutorial.conf``. Now take all the generated set commands from before and paste them into this file.
-    
-    ADD IMAGE HERE
-
-    We are going to use this .conf file within our skillet file's ``snippets`` section. You can now delete all of the current snippets
-    within the current skillet file as we will be replacing the snippets with our .conf file.
-    
-    ADD IMAGE HERE
-
-
-Organizing the .conf File
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    Now that the set commands are all within the .conf file it can be useful to organize them into sections. For example a tag section,
-    an external-list section and a security rules section. This will help make the file more readable and will allow us to make sure the
-    workflow looks right.
-    
-    ADD IMAGE HERE
-
 Test and Troubleshoot
 ---------------------
 
+Local Skillet Test
+~~~~~~~~~~~~~~~~~~
+
+  Before pushing the skillet to Github, use the :ref:`Skillet Test Tool` to validate the final YAML file formatting
+  and variable additions. Paste the contents of the YAML file into the test tool and submit. This will play the skillet
+  using the default variable values. Check that the configuration is correctly loaded into the NGFW.
+
+  Common errors at this stage likely include YAML formatting issues, snippet ordering problems, or a variable typo.
+  
+  .. TIP::
+  YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
+  it can often also be frustrating to work with. A good reference to use to check that your
+  YAML syntax is up to standard is the `YAML Lint site <http://www.yamllint.com/>`_.
   Test against a live device and fix/tune as needed.
+
+Testing with SLI
+~~~~~~~~~~~~~~~~
+
+
 
   * Use the :ref:`Skillet Test Tool` to quick test the skillet
   * Import the skillet into panHandler to test web UI and config loading
