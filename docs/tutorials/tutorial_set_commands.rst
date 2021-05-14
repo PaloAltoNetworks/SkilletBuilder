@@ -511,7 +511,7 @@ Generate the Set Commands Skillet Offline Mode
     * Skillet Label: Tutorial skillet to configure tag, EDL, and security rules
     * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
     * Collection Name: Tutorial
-    * Skillet type: ``panos``
+    * Skillet type: ``Template``
     * Branch: Local
     * Commit Message: Create Tutorial Skillet
 
