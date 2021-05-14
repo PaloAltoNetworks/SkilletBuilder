@@ -1,4 +1,726 @@
 Workflow
-========
+=============
 
-Workflow Skillet tutorials coming soon!
+Overview
+--------
+
+    This tutorial is aimed at novice skillet developers who want to build a sample workflow skillet.
+    Workflows are a simple way to tie together multiple skillets into one chain of execution.
+    This solution type is preferred in these specific use cases:
+
+      * Joining together skillets of multiple types
+      * Breaking the automation into many steps with human input in the middle
+
+    This workflow tutorial considers both of these use cases when developing a solution
+    that chains a **validation** skillet, a **configuration** skillet, and a **template** skillet into
+    one cohesive workflow solution.
+
+
+    Click below to jump to a specific section of the tutorial:
+      1. `Prerequisites`_
+      2. `Design the Solution`_
+      3. `Build the Skillet`_
+      4. `Test and Troubleshoot`_
+      5. `Document`_
+
+
+Prerequisites
+-------------
+
+    1. Deploy a Next Generation Firewall for testing
+    2. Installing PanHandler using Docker
+    3. Installing Appetizer using Docker
+    4. Installing SLI using a Python virtual environment
+    5. Creating a GitHub repository
+    6. Opening a text editor or IDE that's connected to GitHub
+
+|
+
+
+Design the Solution
+-------------------
+
+    Designing the execution flow of a workflow skillet is one of the most important aspect of its
+    development.
+
+    From a high level, workflow skillets begin execution by prompting the user for input, which get
+    saved as variables. Once the user finishes with the prompted workflow menu, each skillet
+    in the workflow gets executed in a defined sequence. This sequence can be static, or it can conditionally
+    change depending on the user's input.
+
+    As a result, when designing a workflow, you must think about:
+
+      * Overall sequence of skillets
+      * Conditional execution of each skillet
+      * User-facing menu options
+
+Design this Tutorial's Solution
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    The sequence of this tutorial's workflow solution is described in the image below.
+
+      .. image:: /images/workflow_tutorial/workflow_sequence.png
+         :width: 800
+
+    In this tutorial, you will walk through the steps to create the workflow skillet itself, but
+    it is assumed that the individual skillets that the workflow calls are previously developed.
+    For information on developing other skillet types, please look through the tutorials under
+    the **Tutorials** section.
+
+      .. NOTE::
+            You can **NOT** call a workflow skillet inside of a workflow skillet.
+
+    The last design decision for this workflow solution is the user-facing workflow menu options.
+    Since the automation will be accessing a Next Generation Firewall (NGFW), it will need access credentials.
+    In addition, the solution will need configuration details specific to the configuration skillet. Lastly,
+    it will need to know when the user wants the validation skillets run.
+
+    With this information, we can outline what the menu options should look like:
+
+      .. image:: /images/workflow_tutorial/workflow_menu.png
+         :width: 800
+
+|
+
+Build the Skillet
+--------------------
+
+    The following steps take the user from creating the Github repo, through generating and editing the skillet, to a final
+    push of skillet content back to the created repo.
+
+Set-up the Directory Structure
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  In your text editor/IDE of choice, open the repository's root directory, and add a subdirectory/folder, which
+  will contain all of the skillet contents (eg. edl_xml_policy_workflow). Inside of this newly created folder,
+  add the following files:
+
+    * An empty ``workflow_tutorial.skillet.yaml`` file for the workflow skillet contents (to be populated later)
+    * An empty ``README.md`` file (to be populate later)
+    * ``config_xml_edl_policy.skillet.yaml`` file with the configuration skillet contents
+
+          .. toggle-header:: class
+              :header: **Show/Hide the configuration skillet contents**
+
+              .. code-block:: yaml
+
+                # skillet preamble information used by panhandler
+                # ---------------------------------------------------------------------
+                # unique snippet name
+                name: config_xml_edl_policy
+                # label used for menu selection
+                label: Sample SkilletBuilder skillet with EDL, tag, and security policy
+                description: Used by SkilletBuilder to demonstrate skillet creation and loading and cross-element variables
+
+                # type of device configuration
+                # common types are panorama, panos, and template
+                type: panos
+
+                # grouping of like snippets for dynamic menu creation in panhandler
+                labels:
+                  collection:
+                    - Skillet Builder
+
+                # ---------------------------------------------------------------------
+                # end of preamble section
+
+                # variables section
+                # ---------------------------------------------------------------------
+                # variables used in the configuration templates
+                # type_hint defines the form field used by panhandler
+                # type_hints examples include text, ip_address, or dropdown
+                variables:
+                  # variables used for connection with NGFW; type_hint of hidden since
+                  # the values are cached in the context after the workflow skillet
+                  - name: TARGET_IP
+                    description: NGFW IP or Hostname
+                    default: 192.168.55.10
+                    type_hint: hidden
+                  - name: TARGET_USERNAME
+                    description: NGFW Username
+                    default: admin
+                    type_hint: hidden
+                  - name: TARGET_PASSWORD
+                    description: NGFW Password
+                    default: admin
+                    type_hint: hidden
+
+                  - name: edl_name
+                    description: name of the external list
+                    default: my_edl
+                    type_hint: text
+                  - name: edl_description
+                    description: description of the external list
+                    default: this is an ip block list
+                    type_hint: text
+                  - name: edl_url
+                    description: external list url
+                    default: http://someurl.com
+                    type_hint: text
+                  - name: tag_name
+                    description: tag name
+                    default: tag name
+                    type_hint: text
+                  - name: tag_description
+                    description: tag description
+                    default: tag description
+                    type_hint: text
+                  - name: tag_color
+                    description: tag color
+                    default: red
+                    type_hint: dropdown
+                    dd_list:
+                      - key: blue
+                        value: color3
+                      - key: green
+                        value: color2
+                      - key: orange
+                        value: color6
+                      - key: red
+                        value: color1
+
+                # ---------------------------------------------------------------------
+                # end of variables section
+
+                # snippets section
+                # ---------------------------------------------------------------------
+                # snippets used for api configuration including xpath and element as file name
+                # files will load in the order listed
+                snippets:
+                  - name: object_tag
+                    xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/tag
+                    element: |-
+                        <entry name="{{ tag_name }}">
+                          <color>{{ tag_color }}</color>
+                          <comments>{{ tag_description }}</comments>
+                        </entry>
+
+                  - name: object_edl
+                    xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]
+                    element: |-
+                        <external-list>
+                          <entry name="{{ edl_name }}">
+                            <type>
+                              <ip>
+                                <recurring>
+                                  <five-minute/>
+                                </recurring>
+                                <description>{{ edl_desc }}</description>
+                                <url>{{ edl_url }}</url>
+                              </ip>
+                            </type>
+                          </entry>
+                        </external-list>
+
+                  - name: policy_security_outbound
+                    xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
+                    element: |-
+                        <entry name="{{ edl_name }}-out">
+                          <to>
+                            <member>any</member>
+                          </to>
+                          <from>
+                            <member>any</member>
+                          </from>
+                          <source>
+                            <member>any</member>
+                          </source>
+                          <destination>
+                            <member>{{ edl_name }}</member>
+                          </destination>
+                          <source-user>
+                            <member>any</member>
+                          </source-user>
+                          <category>
+                            <member>any</member>
+                          </category>
+                          <application>
+                            <member>any</member>
+                          </application>
+                          <service>
+                            <member>application-default</member>
+                          </service>
+                          <hip-profiles>
+                            <member>any</member>
+                          </hip-profiles>
+                          <tag>
+                            <member>{{ tag_name }}</member>
+                          </tag>
+                          <action>deny</action>
+                          <description>outbound EDL IP block rule. EDL info: {{ edl_desc }}</description>
+                        </entry>
+
+                  - name: security_policy_inbound
+                    xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]/rulebase/security/rules
+                    element: |-
+                        <entry name="{{ edl_name }}-in">
+                          <to>
+                            <member>any</member>
+                          </to>
+                          <from>
+                            <member>any</member>
+                          </from>
+                          <source>
+                            <member>{{ edl_name }}</member>
+                          </source>
+                          <destination>
+                            <member>any</member>
+                          </destination>
+                          <source-user>
+                            <member>any</member>
+                          </source-user>
+                          <category>
+                            <member>any</member>
+                          </category>
+                          <application>
+                            <member>any</member>
+                          </application>
+                          <service>
+                            <member>application-default</member>
+                          </service>
+                          <hip-profiles>
+                            <member>any</member>
+                          </hip-profiles>
+                          <tag>
+                            <member>{{ tag_name }}</member>
+                          </tag>
+                          <action>deny</action>
+                          <description>inbound EDL IP block rule. EDL info: {{ edl_desc }}</description>
+                        </entry>
+
+    * ``validate_xml_edl_policy.skillet.yaml`` file with the validation skillet contents
+
+          .. toggle-header:: class
+              :header: **Show/Hide the validation skillet contents**
+
+              .. code-block:: yaml
+
+                # skillet preamble information used by panhandler
+                # ---------------------------------------------------------------------
+                # unique snippet name
+                name: validate_xml_edl_policy
+                # label used for menu selection
+                label: Sample SkilletBuilder validation for EDL, tag, and security policy
+                description: |
+                  Used by SkilletBuilder to demonstrate configuration capturing and validation skillet creation.
+
+                # type of device configuration
+                # common types are panorama, panos, and template
+                # https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+                type: pan_validation
+
+                # grouping of like snippets for dynamic menu creation in panhandler
+                labels:
+                  collection:
+                    - Skillet Builder
+
+                # ---------------------------------------------------------------------
+                # end of preamble section
+
+                # variables section
+                # ---------------------------------------------------------------------
+                # variables used in the configuration templates
+                # type_hint defines the form field used by panhandler
+                # type_hints examples include text, ip_address, or dropdown
+                variables:
+                  # variables used for connection with NGFW; type_hint of hidden since
+                  # the values are cached in the context after the workflow skillet
+                  - name: TARGET_IP
+                    description: NGFW IP or Hostname
+                    default: 192.168.55.10
+                    type_hint: hidden
+                  - name: TARGET_USERNAME
+                    description: NGFW Username
+                    default: admin
+                    type_hint: hidden
+                  - name: TARGET_PASSWORD
+                    description: NGFW Password
+                    default: admin
+                    type_hint: hidden
+
+                  - name: edl_url
+                    description: External Dynamic List URL
+                    default: http://someurl.com
+                    type_hint: hidden
+
+                # ---------------------------------------------------------------------
+                # end of variables section
+
+                # snippets section
+                # ---------------------------------------------------------------------
+                snippets:
+                    # Capture the name of the IP External Dynamic Lists with URL set to user-inputted edl_url
+                  - name: capture_external_lists
+                    cmd: parse
+                    variable: config
+                    outputs:
+                      - name: external_lists
+                        capture_object: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list
+                      - name: user_edl_name
+                        capture_value: /config/devices/entry[@name='localhost.localdomain']/vsys/entry[@name='vsys1']/external-list/entry/type/ip/url[text()="{{ edl_url }}"]/../../../@name
+
+                    # Verify that the captured name isn't null, meaning an EDL is configured
+                  - name: test_external_lists
+                    label: configure IP External Dynamic List (EDL) object
+                    test: |
+                      (
+                       user_edl_name | length
+                      )
+                    fail_message: |
+                      There are no External Dynamic Lists (EDL) configured on this firewall for {{ edl_url }}.
+                    pass_message: |
+                      The External Dynamic List (EDL), {{ user_edl_name }}, is configured for {{ edl_url }}.
+                    documentation_link: https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-web-interface-help/objects/objects-external-dynamic-lists
+
+                    # Capture the name of security rules that deny from source/destination EDL
+                  - name: capture_security_rules
+                    cmd: parse
+                    variable: config
+                    outputs:
+                      - name: security_rules_with_EDL_source
+                        capture_list: /config/devices/entry/vsys/entry/rulebase/security/rules/entry[source/member/text()="{{ user_edl_name }}"][action/text()="deny"]/@name
+                      - name: security_rules_with_EDL_destination
+                        capture_list: /config/devices/entry/vsys/entry/rulebase/security/rules/entry[destination/member/text()="{{ user_edl_name }}"][action/text()="deny"]/@name
+
+                    # Verify that the captured list isn't null, meaning security rules are configured
+                  - name: test_security_rules_out
+                    label: configure security rule blocking traffic to EDL object
+                    test: |
+                      (
+                       security_rules_with_EDL_destination | length
+                      )
+                    fail_message: |
+                      There are no security rules denying traffic to the destination of External Dynamic Lists (EDL) object.
+                    pass_message: At least one security rule with EDL destination is configured.
+                    documentation_link: https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-admin/policy/use-an-external-dynamic-list-in-policy/enforce-policy-on-an-external-dynamic-list.html
+                  - name: test_security_rules_in
+                    label: configure security rule blocking traffic from EDL oject
+                    test: |
+                      (
+                       security_rules_with_EDL_source | length
+                      )
+                    fail_message: |
+                      There are no security rules denying traffic from the source of External Dynamic Lists (EDL) object.
+                    pass_message: At least one security rule with EDL source is configured.
+                    documentation_link: https://docs.paloaltonetworks.com/pan-os/10-0/pan-os-admin/policy/use-an-external-dynamic-list-in-policy/enforce-policy-on-an-external-dynamic-list.html
+
+                # ---------------------------------------------------------------------
+                # end of snippets section
+
+
+    * ``template_xml_edl_policy.skillet.yaml`` file with the template skillet contents
+
+          .. toggle-header:: class
+              :header: **Show/Hide the template skillet contents**
+
+              .. code-block:: yaml
+
+                # skillet preamble information used by panhandler
+                # ---------------------------------------------------------------------
+                # unique snippet name
+                name: template_xml_edl_policy
+                # label used for menu selection
+                label: Sample template skillet used for workflow tutorial
+                description: Used by SkilletBuilder to demonstrate workflow completion output messaging.
+
+                # type of device configuration
+                # common types are panorama, panos, and template
+                # https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+                type: template
+
+                # grouping of like snippets for dynamic menu creation in panhandler
+                labels:
+                  collection:
+                    - Skillet Builder
+
+                # ---------------------------------------------------------------------
+                # end of preamble section
+
+                # variables section
+                # ---------------------------------------------------------------------
+                # variables used in the configuration templates
+                # type_hint defines the form field used by panhandler
+                # type_hints examples include text, ip_address, or dropdown
+                variables:
+                  # type_hint of hidden since the values are cached in the context
+                  # after the workflow skillet
+                  - name: TARGET_IP
+                    description: NGFW IP or Hostname
+                    default: 192.168.55.10
+                    type_hint: hidden
+                  - name: edl_name
+                    description: name of the external list
+                    default: my_edl
+                    type_hint: hidden
+                  - name: tag_name
+                    description: tag name
+                    default: tag name
+                    type_hint: hidden
+
+                # ---------------------------------------------------------------------
+                # end of variables section
+
+                # snippets section
+                # ---------------------------------------------------------------------
+                snippets:
+                # contextual name with the name of the template file
+                  - name: output_message
+                    file: template_output_report.j2
+
+                # ---------------------------------------------------------------------
+                # end of snippets section
+
+
+
+    * ``template_output_report.j2`` file with the template HTML output contents
+
+          .. toggle-header:: class
+              :header: **Show/Hide the template HTML output contents**
+
+              .. code-block:: html
+
+                <div>
+                <br/>
+                <h2 style="text-align:center;">WORKFLOW COMPLETED</h2>
+                <br/>
+                The External Dynamic List, named <i>{{ edl_name }}</i>, was added to
+                the configuration of the NGFW ({{ TARGET_IP }}). In addition, security policies with the tag <i>{{ tag_name }}</i>
+                were configured to deny traffic to and from this EDL.
+                <br/>
+                <br/>
+                For a step-by-step tutorial on building workflows, please navigate to the <a href="">Workflow Tutorial</a>
+                in the SkilletBuilder documentation.
+                </div>
+
+
+  The skillet directory structure will look like:
+
+      .. image:: /images/workflow_tutorial/
+         :width: 250
+
+
+Create the Workflow Skillet Skeleton
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    In your PanHandler Web GUI, navigate to *PanHandler* dropdown menu in the top left
+    of the page, and click on **Skillet Collections**.
+
+        .. image:: /images/workflow_tutorial/panhandler_dropdown.png
+         :width: 250
+
+    Scroll down the **Skillet Collections** page until you find the *Skillet Builder* tile,
+    and click **Go**.
+
+        .. image:: /images/workflow_tutorial/skillet_builder_tile.png
+         :width: 250
+
+    Scroll down the **Skillet Builder Collections** page until you find the
+    *Skillet YAML File Template* tile, and click **Go**.
+
+    .. image:: /images/workflow_tutorial/skillet_yaml_file_template.png
+     :width: 250
+
+    The :ref:`Skillet YAML File Template` provides an easy user interface for building the skillet structure
+    and populating the :ref:`Preamble Attributes`.
+
+        .. image:: /images/workflow_tutorial/workflow_skeleton_template.png
+         :width: 800
+|
+
+    Here are the suggested tutorial inputs:
+
+        * **Skillet ID**: workflow_xml_edl_policy
+        * **Skillet Label**: Sample SkilletBuilder workflow for EDL validation and configuration
+        * **Skillet Description**: Used by SkilletBuilder to demonstrate chaining skillets together as workflow solutions.
+        * **Collection Name**: Skillet Builder
+        * **Skillet Type**: ``workflow``
+
+    Click **Submit** to view the rendered template. This YAML file template contains:
+
+        1. Preamble populated with the web form values
+        2. Variables section with placeholder values
+        3. Snippets section with placeholder values
+
+    Copy this template and paste it into the ``workflow_tutorial.skillet.yaml`` file in your repository's
+    ``edl_xml_policy_workflow`` folder. Since the variables and snippets sections are populated with filler,
+    you can delete these sections to get the workflow skeleton.
+
+          .. toggle-header:: class
+              :header: **Show/Hide the workflow skillet skeleton**
+
+              .. code-block:: yaml
+
+                # skillet preamble information used by panhandler
+                # ---------------------------------------------------------------------
+                # unique snippet name
+                name: workflow_xml_edl_policy
+                # label used for menu selection
+                label: Sample SkilletBuilder workflow for EDL validation and configuration
+                description: Used by SkilletBuilder to demonstrate chaining skillets together as workflow solutions.
+
+                # type of device configuration
+                # common types are panorama, panos, and template
+                # https://github.com/PaloAltoNetworks/panhandler/blob/develop/docs/metadata_configuration.rst
+                type: workflow
+
+                # grouping of like snippets for dynamic menu creation in panhandler
+                labels:
+                  collection:
+                    - Skillet Builder
+
+                # ---------------------------------------------------------------------
+                # end of preamble section
+
+                # variables section
+                # ---------------------------------------------------------------------
+                # variables used in the configuration templates
+                # type_hint defines the form field used by panhandler
+                # type_hints examples include text, ip_address, or dropdown
+                variables:
+
+
+                # ---------------------------------------------------------------------
+                # end of variables section
+
+                # snippets section
+                # ---------------------------------------------------------------------
+                snippets:
+
+
+                # ---------------------------------------------------------------------
+                # end of snippets section
+
+
+
+Add Variables to the Skillet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+    .. code-block:: yaml
+
+            # variables section
+        # ---------------------------------------------------------------------
+        # variables used in the configuration templates
+        # type_hint defines the form field used by panhandler
+        # type_hints examples include text, ip_address, or dropdown
+        variables:
+          - name: TARGET_IP
+            description: NGFW IP or Hostname
+            default: 192.168.55.10
+            type_hint: fqdn_or_ip
+          - name: TARGET_USERNAME
+            description: NGFW Username
+            default: admin
+            type_hint: text
+          - name: TARGET_PASSWORD
+            description: NGFW Password
+            default: admin
+            type_hint: password
+
+          - name: edl_url
+            description: External Dynamic List's Source URL
+            default: http://someurl.com
+            type_hint: text
+
+          - name: assess_options
+            description: Config Validation Options
+            default: []
+            type_hint: checkbox
+            cbx_list:
+              - key: Validate configuration at the beginning of the workflow
+                value: run_validation_begin
+              - key: Validate configuration at the end of the workflow
+                value: run_validation_end
+
+
+        # ---------------------------------------------------------------------
+        # end of variables section
+
+
+Add Snippets to the Skillet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    For workflow skillets, each *snippet* in the **snippets** section is the name of a
+    skillet to be executed in turn. You can find the unique name of each specific skillet by
+    opening the skillet's YAML file and locating the ``name`` keyword in the preamble
+    section. Each of the skillet's names have to be globally unique for the workflow skillet to
+    understand which skillet to execute.The skillet's ``name`` gets carried over to the
+    snippet section and placed in order of the desired execution.
+
+    Conditional execution of a skillet is accomplished by using the ``when`` keyword
+    underneath the specific skillet's name in question. That snippet will only run
+    when the conditional logic defined with the :ref:`when` attribute evaluates as True.
+|
+
+    For this tutorial, if the user decides to validate at both the beginning and the end,
+    the designed sequence of execution is validate, config, validate, and then output message.
+    As seen in the workflow skillet's snippet section below, this sequence was achieved by
+    the intentional ordering of snippet names.
+
+    In order to take the user's input into account regarding the validation ordering,
+    ``when`` attributes are placed after each validation snippet and defined with the logical
+    statement of ``"'run_validation_begin' in assess_options"``. This evaluates to when the
+    ``assess_options`` checkbox's list item with the *value* ``run_validation_beginning`` is
+    checked, run the snippet.
+
+    .. code-block:: yaml
+
+        # snippets section
+        # ---------------------------------------------------------------------
+        snippets:
+            # Run the validation skillet if the user checks the checkbox
+          - name: validate_xml_edl_policy
+            when: "'run_validation_begin' in assess_options"
+
+          - name: config_xml_edl_policy
+
+            # Run the validation skillet if the user checks the checkbox
+          - name: validate_xml_edl_policy
+            when: "'run_validation_end' in assess_options"
+
+            # Finish with output message of completion to the user
+          - name: template_xml_edl_policy
+        # ---------------------------------------------------------------------
+        # end of snippets section
+
+    In addition to ``when`` attributes, the only other attribute used in the snippet section
+    of workflow skillets is ``transform``.  You may optionally also include a ``transform``
+    attribute, which will map the output from one skillet to the input of another. For an
+    example of a workflow skillet using transform, navigate to the `SkilletLib repo in GitHub`_.
+
+    .. _SkilletLib repo in GitHub: https://github.com/PaloAltoNetworks/skilletlib/tree/master/example_skillets/workflow_transform
+
+    .. NOTE::
+        REMEMBER: To avoid PanHandler skillet import errors, skillets' names must be globally unique.
+
+Push the Skillet to Github
+~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
+Test and Troubleshoot
+------------------
+
+
+Import the Skillet
+~~~~~~~~~~~~~~~~~~
+
+
+Play the Skillet
+~~~~~~~~~~~~~~~~
+
+Edit, Push, Test
+~~~~~~~~~~~~~~~~
+
+
+Document
+-------------
+
+
+README.md
+~~~~~~~~~
+
+
+Live Community
+~~~~~~~~~~~~~~
