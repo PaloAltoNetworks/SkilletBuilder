@@ -787,23 +787,39 @@ Test and Troubleshoot
     Now that the skillet has been pushed to GitHub, the skillet can be imported to PanHandler or loaded into
     SLI to test the user experience.
 
+Test the Skillet in PanHandler
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    need to link to main page and PanHandler
 
-Import the Skillet
-~~~~~~~~~~~~~~~~~~
+    Import the workflow skillet into PanHandler (instructions found here), and open the **Sample SkilletBuilder workflow for
+    EDL validation and configuration** workflow skillet from either the *Skillet Collections* or *Skillet Repositories*
+    page.
+
+    From this page, make sure that all of the workflow menu options appear as expected. If they do not appear as expected,
+    you must go back into the **variables** section of the workflow skillet and troubleshoot. For advanced variable
+    types and attributes, such as **toggle_hint**, be extra careful that they appear as expected.
+
+        .. image:: /images/workflow_tutorial/run_workflow_menu.png
+         :width: 800
+
+    The main workflow skillet itself does not have a *Debug* tool like the other skillet types, so you will need to
+    manually verify that the skillet sequence is correct with various conditionals. If a sub-skillet gets skipped or
+    runs when it's not expected to, check that the **when** attributes and other varibles by :ref:`Checking Variable Values with Context`.
 
 
-Play the Skillet
-~~~~~~~~~~~~~~~~
 
-Edit, Push, Test
-~~~~~~~~~~~~~~~~
+    -- do some more here
 
-    If errors are found, repeat the steps above until a clean skillet can be loaded and committed.
+Test the Skillet with SLI
+~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+
 
 |
 
 Document
--------------
+--------
 
     The final stage is to document key details about the skillet to provide contextual information
     to the user community.
