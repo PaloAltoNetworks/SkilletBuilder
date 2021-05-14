@@ -408,62 +408,82 @@ Generate the Set Commands Skillet Online Mode
     PanHandler and click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
     
     .. image:: /images/set_command_tutorial/panhandler_nav.png
-        :width: 400
+        :width: 600
 |    
     Scroll down until you find the `SkilletBuilder` repository and then click on the **Details** button. 
     
     .. image:: /images/set_command_tutorial/skilletbuilder_details.png
-        :width: 400
+        :width: 600
 |   
     Here you want to locate and click on the **Create Skillet** button.
     
     .. image:: /images/set_command_tutorial/create_skillet.png
-        :width: 400
+        :width: 600
 |       
     Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
     online mode, find the box on this page that says `Generate Set Commands From PAN-OS` and then click on **Generate CLI**. 
     
-   .. image:: /images/set_command_tutorial/generate_set_cli.png
-        :width: 800 
+    .. image:: /images/set_command_tutorial/generate_set_cli.png
+        :width: 600
 |
     Once at the `Skillet Generator` page fill in your NGFW information and click **Submit**.
     
-   .. image:: /images/set_command_tutorial/skillet_generator_fill.png
-        :width: 800 
+    .. image:: /images/set_command_tutorial/skillet_generator_fill.png
+        :width: 600
 |
         
-   .. NOTE::
+    You will then end up at another `Skillet Generator` page where you will need to choose some NGFW configuration options to 
+    pull from in a couple of drop-down menus. Under the `Pre-Configuration Source` menu, choose the baseline configuration.
+    Under the `Post Configuration Source` menu choose your modified configuration that you want to get the difference between.
+    After the correct files are chosen hit **Submit**.
+    
+    .. image:: /images/set_command_tutorial/pre_post_choose_cli.png
+        :width: 600
+|    
+    After the files are added and submitted, the next stage of the workflow is a web form for the YAML file preamble attributes.
+    Suggested tutorial inputs for this section are as follows:
+
+      * Skillet ID: tag_edl_tutorial
+      * Skillet Label: Tutorial skillet
+      * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
+      * Skillet type: ``Template``
+      * Branch: Local
+      * Commit Message: Create Tutorial Skillet
+      
+    After everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
+    will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
+    the config diff. To access the set commands you want to view the snippets in `edit` mode by clicking the blue **edit** button 
+    all the way on the right of the snippets section. 
+      
+    .. image:: /images/configure_tutorial/preamble_yaml_fill.png
+        :width: 800    
+|
+
+    Clicking **Submit** results in a `Skillet Editor` page with the output of the .skillet.yaml file that was just generated. 
+
+    The rendered YAML file contains:
+
+      * preamble populated with the web form values
+      * placeholder variables section
+      * snippets section with set command entries where each diff found
+      
+    On this `Skillet Editor` page we will now 
+    
+    .. image:: /images/configure_tutorial/preamble_yaml_fill.png
+        :width: 800   
+        
+    .. NOTE::
       Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
       For example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
       example of this is shown in the screenshot below. This would fail if you input it into the NGFW CLI since the EDL doesn't exist
       yet.
     
-   .. image:: /images/set_command_tutorial/out_of_order.png
+    .. image:: /images/set_command_tutorial/out_of_order.png
         :width: 800    
     
-   SHOW THIS IN VIDEO
+    SHOW THIS IN VIDEO
 
-   After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
-    
-   .. image:: /images/configure_tutorial/configure_skillet_preamble.png
-        :width: 800    
 |
-
-  Suggested tutorial inputs:
-
-    * Skillet ID: tag_edl_tutorial
-    * Skillet Label: Tutorial skillet to configure tag, EDL, and security rules
-    * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
-    * Collection Name: Tutorial
-    * Skillet type: ``panos``
-
-  Clicking **Submit** results in a screen output of the .skillet.yaml file.
-
-  The rendered YAML file contains:
-
-    * preamble populated with the web form values
-    * placeholder variables section
-    * snippets section with XPath/element entries where each diff found
 
 
 Generate the Set Commands Skillet Offline Mode
@@ -473,50 +493,50 @@ Generate the Set Commands Skillet Offline Mode
     skillet. Start up PanHandler and click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
     
     .. image:: /images/set_command_tutorial/panhandler_nav.png
-        :width: 400
+        :width: 600
     
     Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Details** button.  
     
     .. image:: /images/set_command_tutorial/skilletbuilder_details.png
-        :width: 400
+        :width: 600
     
     Here you want to locate and click on the **Create Skillet** button.
     
     .. image:: /images/set_command_tutorial/create_skillet.png
-        :width: 400
+        :width: 600
     
     Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
     offline mode, find the box on this page that says `Generate Set Commands From Uploaded Files` and then click on **Upload**.
     
     .. image:: /images/set_command_tutorial/generate_set_upload.png
-        :width: 400
+        :width: 600
     
     Now we will be at a page labeled ``Skillet Generator``. Here we will upload the config files we saved earlier. Click on the white
     **Choose File** buttons to upload files. Our base config file should be uploaded under the `Pre-Configuration` section and our
     modified configuration file under the `Post-Configuration` section. After uploading both files hit the submit button.
     
     .. image:: /images/set_command_tutorial/pre_post_skillet.png
-        :width: 400
+        :width: 600
     
     On the next page we want to fill out some details about the skillet we want to create. 
     
     .. image:: /images/set_command_tutorial/configure_skillet_generator.png
-        :width: 400    
+        :width: 600    
     
-    Suggested tutorial inputs:
+    After the files are added and submitted, the next stage of the workflow is a web form for the YAML file preamble attributes.
+    Suggested tutorial inputs for this section are as follows:
 
-    * Skillet ID: tag_edl_tutorial
-    * Skillet Label: Tutorial skillet to configure tag, EDL, and security rules
-    * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
-    * Collection Name: Tutorial
-    * Skillet type: ``Template``
-    * Branch: Local
-    * Commit Message: Create Tutorial Skillet
-
+      * Skillet ID: tag_edl_tutorial
+      * Skillet Label: Tutorial skillet
+      * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
+      * Skillet type: ``Template``
+      * Branch: Local
+      * Commit Message: Create Tutorial Skillet
+      
     After everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
     will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
     the config diff. To access the set commands you want to view the snippets in `edit` mode by clicking the blue **edit** button 
-    all the way on the right of the snippets section.
+    all the way on the right of the snippets section. 
 
     .. image:: /images/set_command_tutorial/snippets_edit.png
         :width: 400    
