@@ -88,7 +88,7 @@ Design this Tutorial's Solution
 Build the Skillet
 --------------------
 
-    The following steps take the user from creating the Github repo, through generating and editing the main skillet,
+    The following steps take the user from creating the GitHub repo, through generating and editing the main skillet,
     to a final push of the main skillet content back to the created repo.
 
 Set-up the Directory Structure
@@ -765,7 +765,7 @@ Add Snippets to the Skillet
     .. NOTE::
         **REMEMBER**: To avoid PanHandler skillet import errors, skillets' names must be globally unique.
 
-Push the Skillet to Github
+Push the Skillet to GitHub
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     At this stage initial building is complete. The YAML file preamble, variables, and snippets sections all have
@@ -781,6 +781,9 @@ Push the Skillet to Github
 Test and Troubleshoot
 ------------------
 
+    Now that the skillet has been pushed to GitHub, the skillet can be imported to PanHandler or loaded into
+    SLI to test the user experience.
+
 
 Import the Skillet
 ~~~~~~~~~~~~~~~~~~
@@ -792,14 +795,99 @@ Play the Skillet
 Edit, Push, Test
 ~~~~~~~~~~~~~~~~
 
+    If errors are found, repeat the steps above until a clean skillet can be loaded and committed.
 
 Document
 -------------
 
+    The final stage is to document key details about the skillet to provide contextual information
+    to the user community.
 
 README.md
 ~~~~~~~~~
 
+    The workflow skillet repository has an emtpy placeholder README.md that should give an overview of the solution.
+    The README.md should provide skillet-specific details such as what the skillet does, variable input descriptions,
+    and caveats and requirements.
 
-Live Community
-~~~~~~~~~~~~~~
+    README.md uses the markdown format. Numerous examples can be found in the skillet files. There is also a
+    wide array of `markdown cheat sheets`_ you can find using Google searches.
+    Below are a few common markdown elements you can use in your documentation. Most IDEs can display the user view
+    as you edit the markdown file.
+
+    .. _markdown cheat sheets: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+        +-------------------------------------------------------------------------------------+
+        | Markdown syntax options                                                             |
+        +=====================================================================================+
+        | `#, ##, ###` for header text levels (H1, H2, H3, etc.)                              |
+        +-------------------------------------------------------------------------------------+
+        | `**text**` for bold text                                                            |
+        +-------------------------------------------------------------------------------------+
+        | `*text*` or `_text_` to underline                                                   |
+        +-------------------------------------------------------------------------------------+
+        | `1. text` to create numbered lists                                                  |
+        +-------------------------------------------------------------------------------------+
+        | `* text`, `+ text`, `- text` for bullet style lists                                 |
+        +-------------------------------------------------------------------------------------+
+        | `[text](url)` for inline web links                                                  |
+        +-------------------------------------------------------------------------------------+
+        | \`test\` to highlight a text string                                                 |
+        +-------------------------------------------------------------------------------------+
+        | \`\`\`text block - one or more lines\`\`\` to create a highlighted text block       |
+        +-------------------------------------------------------------------------------------+
+
+    .. TIP::
+        To view markdown edits for existing GitHub repos, click on the README.md file, then use the **Raw**
+        option to display the output as raw markdown text. From here, you can copy and paste or review formatting.
+
+    Paste this sample README.md file into your repository and push to GitHub
+
+    .. code-block:: md
+
+        # Sample Configuration Skillet
+
+        This is used in the training material as part of the tutorial.
+
+        The skillet has 3 xml elements:
+
+        * tag: create a tag using inputs for name, description, and color
+        * external-list: create an edl using inputs for name, description, and url
+        * security policies: inbound and outbound security policies referencing the edl and tag names
+
+        ## variables
+
+        * tag_name: name of a newly created tag and used in the security rules
+        * tag_description: text field to describe the tag
+        * tag_color: dropdown mapping color names to color numbers (required in the xml configuration)
+
+        * edl_name: name of the newly created external-list
+        * edl_description: text field used to describe the external-list
+        * edl_url: url used for the external-list
+
+        The 'recurring' value for the EDL is set to five-minutes. This could be added as a variable but for this example, the
+        value is considered a recommended practice so not configurable in the skillet.
+
+        The EDL type is set to IP since used in the security policy and is not configurable in the skillet.
+
+        ## security policy referencing variables
+
+        The security policy does not have its own variables asking for rule name, zones, or actions. The rules are
+        hardcoded with 'any' for most attributes and action as deny to block traffic matching the EDL IP list.
+
+        The security rule names use the EDL name followed by '-in' and '-out' to create unique security policies for each
+        EDL. This is denoted in the yaml file with ```{{ edl_name }}``` included in the rule name.
+
+    **Support Policy Text**
+
+        Skillets are not part of Palo Alto Networks supported product so the policy text is appended to the
+        README file to specify skillets are not supported. Sample text to copy/paste is found in the `SkilletBuilder repo README`_
+
+    .. _SkilletBuilder repo README: https://raw.githubusercontent.com/PaloAltoNetworks/SkilletBuilder/master/README.md
+
+LIVEcommunity
+~~~~~~~~~~~~~
+
+    Skillets can be shared in the LIVEcommunity as Community or Personal skillets. Community Skillets
+    are expected to have a higher quality of testing, documentation, and ongoing support. Personal skillets
+    can be shared as-is to create awareness and eventually become upgraded as Community Skillets.
