@@ -344,20 +344,20 @@ Create the Configuration in the NGFW
         :width: 600
 |
     The tutorial examples use the GUI to create the external dynamic list(EDL), tag, and security rules. Before starting these steps,
-    make sure you commit whatever most recent changes were made to your NGFW, to do this click on the **Commit** button at the top.
-    right of the NGFW GUI.
+    make sure you commit the most recent changes made to the NGFW, to do this click on the **Commit** button located at the top-right 
+    of the NGFW GUI.
     
     .. image:: /images/set_command_tutorial/commit_button.png
         :width: 600
 |    
-    Now after commiting we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
-    description, and source URL and then click the **OK** button to save the changes. To get to the `External Dynamic List` section
-    on your NGFW navigate through the following, **Objects->External Dynamic Lists->Add**. 
+    Now after committing we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
+    description, and source URL. To get to the `External Dynamic List` section on your NGFW navigate through the following, 
+    **Objects->External Dynamic Lists->Add**.  
 
     .. image:: /images/set_command_tutorial/External_list.png
         :width: 600
 |        
-    Once in the correct place make the necessary changes as seen below.
+    Once in the correct place make the necessary changes as seen below. Click the **OK** button to save the changes.
 
     .. image:: /images/set_command_tutorial/edl_configure.png
         :width: 600
@@ -383,10 +383,9 @@ Create the Configuration in the NGFW
 
 |
 
-  Finally, configure inbound and outbound security rules referencing the tag and external-list. In order to add Security rules please
+  Finally, configure inbound and outbound security rules referencing the tag and external-list. In order to add security rules please
   navigate through the following, **Policy->Security->Add**. Note that the rule names are prepended with the EDL name. In later 
   steps variables are used in the rule names to map the EDL and ensure rule names are unique.
-
 
   .. image:: /images/set_command_tutorial/navigate_security_policy.png
       :width: 800
@@ -396,16 +395,18 @@ Create the Configuration in the NGFW
 
   .. image:: /images/set_command_tutorial/security_policy_add.png
       :width: 800
- |
+|
+ 
   If you want to be able to generate your set commands skillet in offline mode later in the tutorial, don't forget to commit and save
-  a modified configuration snapshot of your NGFW here just like we did earlier in this section.
+  a modified configuration snapshot of your NGFW here. Now with the NGFW UI fully configured we can move into the quick generation of 
+  config diff capturing set commands and turn them into skillets!
 
 |
 Generate the Set Commands Skillet Online Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    In this section of the tutorial we are going to use an online NGFW and PanHandler to create a set commands skillet. Start up
-    PanHandler and click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
+    In this section of the tutorial we are going to use an online NGFW and the PanHandler utilityto create a set commands skillet. Start
+    up PanHandler, click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
     
     .. image:: /images/set_command_tutorial/panhandler_nav.png
         :width: 600
@@ -434,7 +435,7 @@ Generate the Set Commands Skillet Online Mode
         
     You will then end up at another `Skillet Generator` page where you will need to choose some NGFW configuration options to 
     pull from in a couple of drop-down menus. Under the `Pre-Configuration Source` menu, choose the baseline configuration.
-    Under the `Post Configuration Source` menu choose your modified configuration that you want to get the difference between.
+    Under the `Post Configuration Source` menu choose your modified configuration that you want to get the config difference between.
     After the correct files are chosen hit **Submit**.
     
     .. image:: /images/set_command_tutorial/pre_post_choose_cli.png
@@ -455,7 +456,7 @@ Generate the Set Commands Skillet Online Mode
     the config diff. To access the set commands you want to view the snippets in `edit` mode by clicking the blue **edit** button 
     all the way on the right of the snippets section. 
       
-    .. image:: /images/configure_tutorial/preamble_yaml_fill.png
+    .. image:: /images/set_command_tutorial/preamble_yaml_fill.png
         :width: 800    
 |
 
@@ -469,7 +470,7 @@ Generate the Set Commands Skillet Online Mode
       
     On this `Skillet Editor` page we will now 
     
-    .. image:: /images/configure_tutorial/preamble_yaml_fill.png
+    .. image:: /images/set_command_tutorial/preamble_yaml_fill.png
         :width: 800   
         
     .. NOTE::
