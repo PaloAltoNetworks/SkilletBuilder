@@ -18,7 +18,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'SkilletBuilder'
-copyright = '2020, Scott Shoaf'
+copyright = '2021, Scott Shoaf'
 author = 'Scott Shoaf'
 
 # The full version, including alpha/beta/rc tags

@@ -1,3 +1,5 @@
+.. _jinjaandskillets:
+
 Jinja and Skillets
 ==================
 
