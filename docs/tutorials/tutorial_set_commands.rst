@@ -337,10 +337,9 @@ Building Skillets with Set Commands
 Create the Configuration in the NGFW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Before modifying the configuration, ensure you have a snapshot of the `before` configuration of your NGFW saved, we will use
-    this saved snapshot to perform an offline configuration difference later. To do this click on the **Devices** tab of your NGFW,
-    then click on the **Setup** tab and then the **Operations** tab. Here you can click on **Save named configuration snapshot** to
-    save the current NGFW config.
+    Before modifying the configuration, ensure you have a snapshot of the `before/baseline` configuration of your NGFW saved, 
+    we will use this saved snapshot to perform an offline configuration difference later. To do this navigate through 
+    **Devices->Setup->Operations->Save named configuration snapshot** to save the current NGFW config.
     
     .. image:: /images/set_command_tutorial/save_config_snapshot.png
         :width: 600
@@ -355,26 +354,26 @@ Create the Configuration in the NGFW
     Now after commiting we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
     description, and source URL and then click the **OK** button to save the changes. To get to the `External Dynamic List` section
     on your NGFW navigate through the following, **Objects->External Dynamic Lists->Add**. 
-
-
+|
     .. image:: /images/set_command_tutorial/External_list.png
         :width: 600
-
-
+        
+    Once in the correct place make the necessary changes as seen below.
+|
     .. image:: /images/set_command_tutorial/edl_configure.png
         :width: 600
 
-|
 
     Next we need to configure the tag object with a name, color, and comments (description) and then click the **OK** button. Tag
     objects are found by clicking through the following, **Objects->Tags->Add**.
-    
+|    
     .. image:: /images/set_command_tutorial/find_tag.png
-        :width: 400
-
+        :width: 600
+        
+    Once you have hit the add button make necessary changes as seen below.
 
     .. image:: /images/set_command_tutorial/tag_configure.png
-        :width: 400
+        :width: 600
 
 |
 
@@ -387,20 +386,20 @@ Create the Configuration in the NGFW
 
 |
 
-  Configure inbound and outbound security rules referencing the tag and external-list. In order to add Security rules please
+  Finally, configure inbound and outbound security rules referencing the tag and external-list. In order to add Security rules please
   navigate through the following, **Policy->Security->Add**. Note that the rule names are prepended with the EDL name. In later 
   steps variables are used in the rule names to map the EDL and ensure rule names are unique.
 
 
   .. image:: /images/set_command_tutorial/navigate_security_policy.png
-      :width: 400
-        
+      :width: 800
+|       
 
   .. image:: /images/set_command_tutorial/security_policy_add.png
-      :width: 400
+      :width: 800
     
-  If you want to be able to generate your set commands skillet in offline mode don't forget to save a modified configuration
-  snapshot of your NGFW here just like we did earlier in this section.
+  If you want to be able to generate your set commands skillet in offline mode later in the tutorial, don't forget to commit and save
+  a modified configuration snapshot of your NGFW here just like we did earlier in this section.
 
 
 Generate the Set Commands Skillet Online Mode
