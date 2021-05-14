@@ -451,27 +451,31 @@ Generate the Set Commands Skillet Online Mode
       * Branch: Local
       * Commit Message: Create Tutorial Skillet
       
-    After everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
-    will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
-    the config diff. To access the set commands you want to view the snippets in `edit` mode by clicking the blue **edit** button 
-    all the way on the right of the snippets section. 
-      
     .. image:: /images/set_command_tutorial/preamble_yaml_fill.png
         :width: 800    
 |
-
-    Clicking **Submit** results in a `Skillet Editor` page with the output of the .skillet.yaml file that was just generated. 
-
     The rendered YAML file contains:
 
       * preamble populated with the web form values
       * placeholder variables section
       * snippets section with set command entries where each diff found
       
-    On this `Skillet Editor` page we will now 
+    After everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
+    will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
+    the config diff. To access the set commands you want to view the snippets in `edit` mode by clicking the blue **edit** button 
+    all the way on the right of the snippets section. 
+      
+    .. image:: /images/set_command_tutorial/snippets_edit.png
+        :width: 600 
+        
+      
+    Upon clicking the **edit** button you will land at an `Edit template snippet` page showcasing all the set commands retrieved from
+    the config diff. Here is where we can get into working with a cool templating language called `Jinja`_ to allow for variable value
+    substitution within our skillets. Thankfully with this skillet editor tool there is a very simple and easy way to transform text
+    within our set commands into Jinja variables. Click into the small blue **Edit** button near the bottom right of the screen again.
     
-    .. image:: /images/set_command_tutorial/preamble_yaml_fill.png
-        :width: 800   
+    .. image:: /images/set_command_tutorial/set_command_snippet_edit.png
+        :width: 600
         
     .. NOTE::
       Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
@@ -480,9 +484,26 @@ Generate the Set Commands Skillet Online Mode
       yet.
     
     .. image:: /images/set_command_tutorial/out_of_order.png
-        :width: 800    
-    
+        :width: 400  
+|
     SHOW THIS IN VIDEO
+    
+    This will take us to a page titled `Edit Text`, this is where we can make text substitutions for variables. For example if we 
+    wanted to change all instances of the text "tag_name" into a jinja variable you would enter in "tag_name" to the left box and then
+    whatever you wanted the variable to be called in the right box. Next hit the **Replace** button containing 2 arrows pointing in
+    opposite directions to create your variables! Dont forget to click **Update** twice to confirm and save your changes!
+    
+    .. image:: /images/set_command_tutorial/switch_variables.png
+        :width: 600
+        
+    Once the **Update** button has been pushed and changes have been made you will be brought back to the `Skillet Editor` screen from 
+    before. Here you should see that the previously empty variables section has now been populated with your newly created variables. you
+    can now click into the blue **Edit** buttons to the right of the variable names to edit their descriptions, names, etc.
+
+    .. image:: /images/set_command_tutorial/skillet_editor_update.png
+        :width: 600
+        
+    
 
 |
 
@@ -540,7 +561,7 @@ Generate the Set Commands Skillet Offline Mode
     all the way on the right of the snippets section. 
 
     .. image:: /images/set_command_tutorial/snippets_edit.png
-        :width: 400    
+        :width: 600  
         
     Upon clicking the **edit** button you will land at an `Edit template snippet` page showcasing all the set commands retrieved from
     the config diff. Here is where we can get into working with a cool templating language called `Jinja`_ to allow for variable value
@@ -548,7 +569,7 @@ Generate the Set Commands Skillet Offline Mode
     within our set commands into Jinja variables. Click into the small blue **edit** button near the bottom right of the screen again.
     
     .. image:: /images/set_command_tutorial/set_command_snippet_edit.png
-        :width: 400 
+        :width: 600 
         
     This will take us to a page titled `Edit Text`, this is where we can make text substitutions for variables. For example if we 
     wanted to change all instances of the text "tag_name" into a jinja variable you would enter in "tag_name" to the left box and then
@@ -556,7 +577,7 @@ Generate the Set Commands Skillet Offline Mode
     directions to create your variables! Dont forget to click **Update** to save your changes!
     
     .. image:: /images/set_command_tutorial/switch_variables.png
-        :width: 400 
+        :width: 600
     
 
 .. _`Jinja`: https://skilletbuilder.readthedocs.io/en/latest/building_blocks/jinja_and_skillets.html
