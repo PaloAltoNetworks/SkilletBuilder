@@ -57,17 +57,15 @@ Before moving forward with the tutorial, please ensure the following prerequisit
 * For users wishing to work through the command line have SLI_ set up and ready to go
 
   * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. SLI is a CLI interface used for interacting with Skillets. Please refer to and follow the steps in the linked SLI_ page to get started
-* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, specifically SkilletBuilder_ tools
+* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets
     
 It may also be useful to review the following topics before getting started:
 
-- :ref:`XMLandSkillets`
 - :ref:`jinjaandskillets`
 
 .. _PanHandler: https://panhandler.readthedocs.io/en/master/
 .. _GitHub: https://github.com
 .. _Docker: https://www.docker.com
-.. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
 .. _SLI: https://pypi.org/project/sli/
 
 .. [1] Log in to the NGFW UI by entering this, *https://X.X.X.X* (with your NGFW's management IP replacing the X's), into the web browser URL bar.
@@ -82,15 +80,15 @@ Setting Up Your Environment
 
 In this section we will set up everything that will be needed to successfully complete the tutorial. Your skillet building environment consists of 5 essential parts:
 
-1. GitHub
-  * `Initializing a New Repository and Working with SSH Keys`_
-  * `Create the File Structure for the Project in GitHub`_
-2. Firewall
+1. Firewall
   * `NGFW`_
   * `Having the CLI Set Command Ready`_
-3. PanHandler
+2. PanHandler
   * `Running PanHandler`_
   * `Restarting PanHandler`_
+3. GitHub
+  * `Initializing a New Repository and Working with SSH Keys`_
+  * `Create the File Structure for the Project in GitHub`_ 
 4. SkilletBuilder Tools
   * `Importing SkilletBuilder Tools`_
 5. SLI
