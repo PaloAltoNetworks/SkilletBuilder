@@ -364,10 +364,10 @@ Create the Configuration in the NGFW
 |
     Next we need to configure the tag object with a name, color, and comments (description) and then click the **OK** button. Tag
     objects are found by clicking through the following, **Objects->Tags->Add**.
-|    
+ 
     .. image:: /images/set_command_tutorial/find_tag.png
         :width: 600
-        
+|        
     Once you have hit the add button make necessary changes as seen below.
 
     .. image:: /images/set_command_tutorial/tag_configure.png
