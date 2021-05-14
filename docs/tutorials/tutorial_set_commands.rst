@@ -417,7 +417,7 @@ Generate the Set Commands Skillet Online Mode
     
     Scroll down until you find the `SkilletBuilder` repository and then click on the **Details** button. 
     
-    .. image:: /images/set_command_tutorial/panhandler_nav.png
+    .. image:: /images/set_command_tutorial/skilletbuilder_details.png
         :width: 400
     
     Here you want to locate and click on the **Create Skillet** button.
@@ -429,42 +429,22 @@ Generate the Set Commands Skillet Online Mode
     Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
     online mode, find the box on this page that says `Generate Set Commands From PAN-OS` and then click on **Generate CLI**. 
     
-    ADD IMAGE HERE
-   .. image:: ../images/set_command_tutorial/generate_set_cli.png
+   .. image:: /images/set_command_tutorial/generate_set_cli.png
         :width: 800 
 |
 
     Once at the `Skillet Generator` page fill in your NGFW information.
     
-    
-    You will want to have 2 XML files that you exported from your NGFW configurations on your local 
-    machine. You can then upload these files to *"Base Configuration:"* and *"Modified Configuration:"* sections here. 
-    You can get these 2 XML files from your NGFW by navigating to and clicking on 
-    **Devices->Setup->Operations->"Export named configuration snapshot"**. Once here export the baseline and modified versions of
-    the NGFW and upload them to the SkilletBuilder tool.
-    
-    PLACE IMAGE HERE
-    
-    After the files are added, the PanHandler tool will output a list of set commands that you can use to do the exact same EDL, tag 
-    and security rule configurations you manually made on your NGFW UI. 
-    
-    PLACE IMAGE HERE
-    
-    Once the set commands have been outputted you want to save them by copying them and pasting them into a *.conf* file which we will
-    use as a snippet within our skillet.
-    
       .. NOTE::
     Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order. For
-    example it may output the commands in such a way that it will try to load in a security policy before the EDL is created. This would
-    fail if you input it into the NGFW CLI since the EDL doesn't exist yet.
+    example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
+    example of this is shown in the screenshot below. This would fail if you input it into the NGFW CLI since the EDL doesn't exist
+    yet.
     
-    SHOW IMAGE OR SOMETHING THAT THIS COULD HAPPEN TO THE USER
+   .. image:: /images/set_command_tutorial/out_of_order.png
+        :width: 800    
     
-    Next we are going to add the same two base and modified configuration files from before to the *Generate a Skillet* tool in
-    PanHandler. Under the *Skillet Source:* section click on the dropdown menu and click on **From Uploaded Configs**. Upload the 
-    base and modified files again and click on **Submit**.
-    
-ADD IMAGE HERE
+    SHOW THIS IN VIDEO
 
     After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
     
@@ -495,15 +475,18 @@ Generate the Set Commands Skillet Offline Mode
     In this section of the tutorial we are going to use an offline NGFW configuration files and PanHandler to create a set commands
     skillet. Start up PanHandler and click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
     
-    ADD IMAGE HERE
+    .. image:: /images/set_command_tutorial/panhandler_nav.png
+        :width: 400
     
     Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Details** button.  
     
-    ADD IMAGE HERE
+    .. image:: /images/set_command_tutorial/skilletbuilder_details.png
+        :width: 400
     
     Here you want to locate and click on the **Create Skillet** button.
     
-    ADD IMAGE HERE
+    .. image:: /images/set_command_tutorial/create_skillet.png
+        :width: 400
     
     Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
     offline mode, find the box on this page that says `Generate Set Commands From Uploaded Files` and then click on **Upload**.
