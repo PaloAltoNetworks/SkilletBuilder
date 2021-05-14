@@ -327,8 +327,7 @@ Running SLI
     of the SLI tool in your CLI and local machine.
     
 .. _`SLI GitLab`: https://gitlab.com/panw-gse/as/sli
-  
-     
+    
 |
 
 Building Skillets with Set Commands
@@ -343,14 +342,14 @@ Create the Configuration in the NGFW
     
     .. image:: /images/set_command_tutorial/save_config_snapshot.png
         :width: 600
-
+|
     The tutorial examples use the GUI to create the external dynamic list(EDL), tag, and security rules. Before starting these steps,
     make sure you commit whatever most recent changes were made to your NGFW, to do this click on the **Commit** button at the top.
     right of the NGFW GUI.
     
     .. image:: /images/set_command_tutorial/commit_button.png
         :width: 600
-    
+|    
     Now after commiting we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
     description, and source URL and then click the **OK** button to save the changes. To get to the `External Dynamic List` section
     on your NGFW navigate through the following, **Objects->External Dynamic Lists->Add**. 
@@ -373,15 +372,14 @@ Create the Configuration in the NGFW
 
     .. image:: /images/set_command_tutorial/tag_configure.png
         :width: 600
-
 |
 
     .. TIP::
         The skillet will only add a single tag to the configuration.
-        However, the GUI shows a color name while the XML data in the NGFW is based on a color number.
+        However, the GUI shows a color name while the set command is based on a color number.
         The use of multiple tag entries is used to extract the color values.
-        So note that in some cases the GUI and XML can use different values and we can use sample configs
-        like this to discover those values.
+        So note that in some cases the GUI and set commands can use different values and we can use 
+        sample configs like this to discover those values.
 
 |
 
@@ -392,15 +390,17 @@ Create the Configuration in the NGFW
 
   .. image:: /images/set_command_tutorial/navigate_security_policy.png
       :width: 800
-|       
+|      
+  Once you have hit the add button make necessary changes as seen below, please make sure you have all the configurations shown 
+  below copied into your security policy.      
 
   .. image:: /images/set_command_tutorial/security_policy_add.png
       :width: 800
-    
+ |
   If you want to be able to generate your set commands skillet in offline mode later in the tutorial, don't forget to commit and save
   a modified configuration snapshot of your NGFW here just like we did earlier in this section.
 
-
+|
 Generate the Set Commands Skillet Online Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -409,41 +409,43 @@ Generate the Set Commands Skillet Online Mode
     
     .. image:: /images/set_command_tutorial/panhandler_nav.png
         :width: 400
-    
+|    
     Scroll down until you find the `SkilletBuilder` repository and then click on the **Details** button. 
     
     .. image:: /images/set_command_tutorial/skilletbuilder_details.png
         :width: 400
-    
+|   
     Here you want to locate and click on the **Create Skillet** button.
     
     .. image:: /images/set_command_tutorial/create_skillet.png
         :width: 400
-    
-    
+|       
     Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
     online mode, find the box on this page that says `Generate Set Commands From PAN-OS` and then click on **Generate CLI**. 
     
    .. image:: /images/set_command_tutorial/generate_set_cli.png
         :width: 800 
 |
-
-    Once at the `Skillet Generator` page fill in your NGFW information.
+    Once at the `Skillet Generator` page fill in your NGFW information and click **Submit**.
     
-      .. NOTE::
-    Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order. For
-    example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
-    example of this is shown in the screenshot below. This would fail if you input it into the NGFW CLI since the EDL doesn't exist
-    yet.
+   .. image:: /images/set_command_tutorial/skillet_generator_fill.png
+        :width: 800 
+|
+        
+   .. NOTE::
+      Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
+      For example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
+      example of this is shown in the screenshot below. This would fail if you input it into the NGFW CLI since the EDL doesn't exist
+      yet.
     
    .. image:: /images/set_command_tutorial/out_of_order.png
         :width: 800    
     
-    SHOW THIS IN VIDEO
+   SHOW THIS IN VIDEO
 
-    After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
+   After the files are added, the next stage of the workflow is a web form for the YAML file preamble attributes.
     
-    .. image:: /images/configure_tutorial/configure_skillet_preamble.png
+   .. image:: /images/configure_tutorial/configure_skillet_preamble.png
         :width: 800    
 |
 
