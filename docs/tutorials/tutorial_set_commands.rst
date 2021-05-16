@@ -436,7 +436,7 @@ Generate the Set Commands Skillet Online Mode
     You will then end up at another `Skillet Generator` page where you will need to choose some NGFW configuration options to 
     pull from in a couple of drop-down menus. Under the `Pre-Configuration Source` menu, choose the baseline configuration.
     Under the `Post Configuration Source` menu choose your modified configuration that you want to get the config difference between.
-    After the correct files are chosen hit **Submit**.
+    After the correct NGFW commit versions are chosen hit **Submit**.
     
     .. image:: /images/set_command_tutorial/pre_post_choose_cli.png
         :width: 600
@@ -452,13 +452,13 @@ Generate the Set Commands Skillet Online Mode
       * Commit Message: Create Tutorial Skillet
       
     .. image:: /images/set_command_tutorial/preamble_yaml_fill.png
-        :width: 800    
+        :width: 600   
 |
     The rendered YAML file contains:
 
-      * preamble populated with the web form values
-      * placeholder variables section
-      * snippets section with set command entries where each diff found
+      * Preamble populated with the web form values
+      * Placeholder variables section
+      * Snippets section with set command entries where each diff is found
       
     After everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
     will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
@@ -470,9 +470,10 @@ Generate the Set Commands Skillet Online Mode
         
       
     Upon clicking the **edit** button you will land at an `Edit template snippet` page showcasing all the set commands retrieved from
-    the config diff. Here is where we can get into working with a cool templating language called `Jinja`_ to allow for variable value
-    substitution within our skillets. Thankfully with this skillet editor tool there is a very simple and easy way to transform text
-    within our set commands into Jinja variables. Click into the small blue **Edit** button near the bottom right of the screen again.
+    the config diff. Here is where we can get into working with a cool templating language called `Jinja`_, to allow for user inputted
+    value substitution within the variables in our skillets. Thankfully with this skillet editor tool there is a very simple and easy way
+    to transform plain text within our set commands into Jinja variables. Click into the small blue **Edit** button near the bottom right
+    of the screen again.
     
     .. image:: /images/set_command_tutorial/set_command_snippet_edit.png
         :width: 600
@@ -480,8 +481,8 @@ Generate the Set Commands Skillet Online Mode
     .. NOTE::
       Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
       For example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
-      example of this is shown in the screenshot below. This would fail if you input it into the NGFW CLI since the EDL doesn't exist
-      yet.
+      example of this is shown in the screenshot below. As you can see the `set rulebase security rules` set commands are appearing before
+      the set commands that create the edl. This would fail if you input it into the NGFW CLI since the EDL doesn't exist yet.
     
     .. image:: /images/set_command_tutorial/out_of_order.png
         :width: 400  
@@ -503,7 +504,35 @@ Generate the Set Commands Skillet Online Mode
     .. image:: /images/set_command_tutorial/skillet_editor_update.png
         :width: 600
         
+    From here, we can save all aspects of our generated skillet by clicking the blue **Save** button at the bottom right of the screen.
+        
+    .. image:: /images/set_command_tutorial/save_skillet.png
+        :width: 600
+        
+    Now that the skillet has been saved in PanHandler it will show up as a skillet on the next page titled `Repository Detail for
+    SkilletBuilder`. 
     
+    .. image:: /images/set_command_tutorial/repo_detail_skilletbuilder.png
+        :width: 600
+    
+    On this page simply scroll down until you find your saved skillet, in this case it should be called `Tutorial Skillet`. Locate the 
+    skillet and click on the **Gear** icon to inspect the skillets raw YAML data file. 
+    
+    .. image:: /images/set_command_tutorial/inspect_tutorial.png
+        :width: 600 
+        
+    You can also click the **Edit** button on this page again to go into your skillet and make changes.
+        
+    .. image:: /images/set_command_tutorial/tutorial_edit.png
+        :width: 600 
+    
+    Choosing to click into the **Gear** should allow you to see the fully function skillets YAML file including all generated set commands
+    within as well as the variables that were updated prior.
+    
+    .. image:: /images/set_command_tutorial/skillet_metadata.png
+        :width: 600 
+
+
 
 |
 
