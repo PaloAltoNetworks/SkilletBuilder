@@ -408,7 +408,7 @@ Create the Configuration in the NGFW
 Generate the Set Commands Skillet
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    In this section of the tutorial we are going to use an the PanHandler utility and our NGFW to create a set commands skillet. 
+    In this section of the tutorial we are going to use the PanHandler utility and our NGFW to create a set commands skillet. 
     To begin, start up PanHandler by clicking on the **PanHandler** tab at the top and then clicking on **Skillet Repositories**. 
     
     .. image:: /images/set_command_tutorial/panhandler_nav.png
@@ -432,10 +432,10 @@ Generate the Set Commands Skillet
         
 |        
     .. NOTE::
-      There is also an option to upload previously saved NGFW XML files manually to the PanHandler SkilletBuilder utility from your local machine. 
-      To do this you would have to find the box titled `Generate Set Commands From Uploaded Files` from the previous step and click on the 
-      blue **Upload** button. On the resulting page titled `Skillet Generator` you can upload your previously saved NGFW configuration files 
-      under the `Pre-Configuration` and `Post-Configuration` sections.
+        There is also an option to upload previously saved NGFW XML files manually to the PanHandler SkilletBuilder utility from your local machine. 
+        To do this you would have to find the box titled `Generate Set Commands From Uploaded Files` from the previous step and click on the 
+        blue **Upload** button. On the resulting page titled `Skillet Generator` you can upload your previously saved NGFW configuration files 
+        under the `Pre-Configuration` and `Post-Configuration` sections.
       
 |
     Once at the `Skillet Generator` page fill in your NGFW information and click **Submit**.
@@ -465,16 +465,24 @@ Generate the Set Commands Skillet
     .. image:: /images/set_command_tutorial/preamble_yaml_fill.png
         :width: 600   
 |
+    Once everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
+    will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
+    the config diff.
+
     The rendered YAML file contains:
 
       * Preamble populated with the web form values
       * Placeholder variables section
       * Snippets section with set command entries where each diff is found
+
       
-    After everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
-    will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
-    the config diff. To access the set commands you want to view the snippets in `edit` mode by clicking the blue **edit** button 
-    all the way on the right of the snippets section. 
+Working with Snippets and Variables
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+      
+    In section we will be editing the snippets and variables sections that were just rendered in the YAML file.
+      
+    To access the set commands found within the snippets you want to view the snippets in `edit` mode by clicking the blue **edit** 
+    button all the way on the right of the snippets section. 
       
     .. image:: /images/set_command_tutorial/snippets_edit.png
         :width: 600 
@@ -489,13 +497,16 @@ Generate the Set Commands Skillet
         :width: 600
 |       
     .. NOTE::
-      Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
-      For example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
-      example of this is shown in the screenshot below. As you can see the `set rulebase security rules` set commands are appearing before
-      the set commands that create the edl. This would fail if you input it into the NGFW CLI since the EDL doesn't exist yet.
+        Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
+        For example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
+        example of this is shown in the screenshot below. As you can see the `set rulebase security rules` set commands are appearing before
+        the set commands that create the edl. This would fail if you input it into the NGFW CLI since the EDL doesn't exist yet.
     
-    .. image:: /images/set_command_tutorial/out_of_order.png
-        :width: 400  
+   .. toggle-header:: class
+      :header: **Set Commands Out of Order Example**
+          
+          .. image:: /images/set_command_tutorial/out_of_order.png
+              :width: 400 
         
 |
     SHOW THIS IN VIDEO
@@ -567,25 +578,33 @@ Generate the Set Commands Skillet
     
 |
     On this page simply scroll down until you find your saved skillet, in this case it should be called `Tutorial Skillet`. Locate the 
-    skillet and click on the **Gear** icon to inspect the skillets raw YAML data file. 
+    skillet and click on the **Gear** icon to inspect the skillets raw YAML data file. Choosing to click into the **Gear** should allow 
+    you to see the fully function skillets YAML file including all generated set commands within as well as the variables that were updated 
+    prior.
     
     .. image:: /images/set_command_tutorial/inspect_tutorial.png
         :width: 600 
    
 |
-    You can also click the **Edit** button on this page again to go into your skillet and make changes.
+    You can also click the **Edit** button on this page to access your skillet in `edit` mode and make changes.
         
     .. image:: /images/set_command_tutorial/tutorial_edit.png
         :width: 600 
     
 |
-    Choosing to click into the **Gear** should allow you to see the fully function skillets YAML file including all generated set commands
-    within as well as the variables that were updated prior.
+    Your raw skillet YAML file should look something like the screenshots below.
     
-    .. image:: /images/set_command_tutorial/skillet_metadata.png
-        :width: 600 
+    .. toggle-header:: class
+        :header: **Skillet Raw Yaml**
 
-|
+            .. image:: /images/set_command_tutorial/skillet_metadata1.png
+              :width: 600
+          |
+
+            .. image:: /images/set_command_tutorial/skillet_metadata2.png
+              :width: 600
+          |
+    
     In order to test your skillet and see if it works as expected you can also click on the name of the generated skillet. If you go back to 
     the `Repository Detail for SkilletBuilder` you can find and click on the skillet.
     
