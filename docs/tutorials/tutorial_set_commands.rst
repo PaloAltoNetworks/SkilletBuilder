@@ -405,8 +405,8 @@ Create the Configuration in the NGFW
 Generate the Set Commands Skillet Online Mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    In this section of the tutorial we are going to use an online NGFW and the PanHandler utilityto create a set commands skillet. Start
-    up PanHandler, click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
+    In this section of the tutorial we are going to use an the PanHandler utility and our NGFW to create a set commands skillet. 
+    To begin start up PanHandler, click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
     
     .. image:: /images/set_command_tutorial/panhandler_nav.png
         :width: 600
@@ -426,12 +426,19 @@ Generate the Set Commands Skillet Online Mode
     
     .. image:: /images/set_command_tutorial/generate_set_cli.png
         :width: 600
+        
+    .. NOTE::
+      You can also generate a config diff by uploading previously saved NGFW XML files to the PanHandler SkilletBuilder utility. 
+      To do this you would have to find the box titled `Generate Set Commands From Uploaded Files` and click on the blue 
+      **Upload** button. On the resulting page you can upload your previously saved NGFW configuration files under the `Pre-Configuration` 
+      and `Post-Configuration` sections.
+      
 |
     Once at the `Skillet Generator` page fill in your NGFW information and click **Submit**.
     
     .. image:: /images/set_command_tutorial/skillet_generator_fill.png
         :width: 600
-|
+|        
         
     You will then end up at another `Skillet Generator` page where you will need to choose some NGFW configuration options to 
     pull from in a couple of drop-down menus. Under the `Pre-Configuration Source` menu, choose the baseline configuration.
@@ -532,6 +539,13 @@ Generate the Set Commands Skillet Online Mode
     .. image:: /images/set_command_tutorial/skillet_metadata.png
         :width: 600 
 
+    In order to test your skillet and see if it works as expected you can also click on the name of the generated skillet. If you go back to 
+    the `Repository Detail for SkilletBuilder` you can find and click on the skillet.
+    
+    .. image:: /images/set_command_tutorial/test_skillet.png
+        :width: 600 
+        
+    
 
 
 |
