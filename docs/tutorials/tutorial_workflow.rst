@@ -724,7 +724,7 @@ Add Snippets to the Skillet
     when the conditional logic defined with the :ref:`when` attribute evaluates as True.
 
     For this tutorial, if the user decides to validate at both the beginning and end of the workflow,
-    the sequence of execution is validate, config, validate, and then output message.
+    the sequence of execution is validate, config, validate, and then output a message.
     As seen in the main workflow skillet's snippet section below, this sequence was achieved by
     the intentional ordering of snippet names.
 
@@ -782,7 +782,7 @@ Push the Skillet to GitHub
 |
 
 Test and Troubleshoot
-------------------
+---------------------
 
     Now that the skillet has been pushed to GitHub, the skillet can be imported or loaded into one of the skillet
     player tools, such as PanHandler or SLI, for testing. Similar to designing, testing involves three main
@@ -796,7 +796,7 @@ Test and Troubleshoot
 
 
 Test the Skillet in PanHandler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     Import the workflow skillet into PanHandler (instructions and troubleshooting found here), and open the
     **Sample SkilletBuilder workflow for EDL validation and configuration** workflow skillet from either
@@ -824,7 +824,7 @@ Test the Skillet in PanHandler
           :width: 800
 
     Continuing the workflow, you should see the validation output. Verify this output using the validation skillet
-    testing found in :ref:`the Validation Tutorial<Push to Github and Test in panHandler>`. In addition, you can find more
+    testing found in :ref:`the Validation Tutorial<Push to GitHub and Test in panHandler>`. In addition, you can find more
     resources in the PanHandler documentation for `Creating and Debugging Validation Skillets`_.
 
         .. image:: /images/workflow_tutorial/validation_output.png
@@ -862,8 +862,89 @@ Test the Skillet in PanHandler
 Test the Skillet with SLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+    The SLI python package provides users a command line interface (CLI) for interacting with skillets, including a
+    workflow skillet. Testing with SLI is very similar to :ref:`Test the Skillet in PanHandler`, except that you are
+    using the command line instead of a Web GUI.
 
+    After installing SLI in a python virtual environment and cloning your GitHub repository onto your local
+    machine, change directory into the root of your repository. This SLI tutorial is going to use the SkilletBuilder's
+    repository as an example of your GitHub repo.
 
+    Start by loading and viewing all skillets inside your repository, using ``sli load``.
+
+        .. code-block:: bash
+
+            (venv) testing-device:~/SkilletBuilder$ sli load
+              Name                                     Type
+            -----------------------------------------------------------
+              preview_xml_changes                      workflow
+              generate_skillet_preview_output          template
+              generate_skillet_preview_online          python3
+              generate_skillet_preview_offline         python3
+              SkilletBuilderSample_EDL_policy          panos
+              configuration_explorer                   python3
+              template_xml_edl_policy                  template
+              validate_xml_edl_policy                  pan_validation
+              workflow_xml_edl_policy                  workflow
+              config_xml_edl_policy                    panos
+              skeleton_yaml_file_xml                   template
+              generate_set_cli                         workflow
+              generate_set_cli_online                  python3
+              generate_set_cli_offline                 python3
+              generate_ansible_playbook                python3
+              test_skillet_inline                      python3
+              sample_validation_skilletbuilder         pan_validation
+              skeleton_yaml_file_any                   template
+              Generate_Skillet_workflow_exp            workflow
+              generate_skillet_snippets_from_device    python3
+              generate_skillet_snippets_from_config    python3
+            (venv) testing-device:~/SkilletBuilder$
+
+    Next, run the workflow skillet using the context with ``sli workflow -uc --name workflow_xml_edl_policy``, where
+    *workflow_xml_edl_policy* is the name of your workflow skillet as seen in the load command. This executes the main
+    workflow skillet and starts the user-interaction piece of the skillet menu.
+
+        .. code-block:: bash
+
+            (venv) testing-device:~/SkilletBuilder$ sli workflow -uc --name workflow_xml_edl_policy
+            Device: 192.168.1.1
+            Username: admin
+            Password:
+            NGFW IP or Hostname (192.168.1.1):
+            NGFW Username (admin):
+            NGFW Password:
+            Confirm - NGFW Password:
+            External Dynamic List's Source URL (http://someurl.com): http://sampleurl.com
+
+            Config Validation Options
+            -------------------------
+
+            Validate configuration at the beginning of the workflow (y/n default: no): y
+            Validate configuration at the end of the workflow (y/n default: no): y
+
+              Input                                                      Value
+            --------------------------------------------------------------------
+              Validate configuration at the beginning of the workflow    Yes
+              Validate configuration at the end of the workflow          Yes
+
+            Are These answers ok? (y/n): y
+            End of user variables.
+            Running skillet validate_xml_edl_policy - pan_validation
+            .
+            .
+            .
+
+    .. NOTE::
+        Variables in the user-input stage are either defined as a user's input to the command line or as
+        the value currently stored in the context (as seen next to a variable in parenthesis). To use the
+        context's value, the user **MUST** only input **enter**.
+
+    To view the values stored in the context, use the command ``sli show_context -nc``. The ``-nc`` flag
+    removes the entire configuration XML from the output for easier viewing.
+
+    For additional information about SLI, view the documentation on `the SLI PyPI page`_.
+
+    .. _the SLI PyPi page: https://pypi.org/project/sli/
 
 |
 
@@ -876,11 +957,11 @@ Document
 README.md
 ~~~~~~~~~
 
-    The workflow skillet repository has an emtpy placeholder README.md that should give an overview of the solution.
-    The README.md should provide skillet-specific details such as what the skillet does, variable input descriptions,
+    The workflow skillet repository has an empty placeholder ``README.md`` that should give an overview of the solution.
+    The ``README.md`` should provide skillet-specific details such as what the skillet does, variable input descriptions,
     and caveats and requirements.
 
-    README.md uses the markdown format. Numerous examples can be found in the skillet files. There is also a
+    ``README.md`` uses the markdown formatting language. Numerous examples can be found in the skillet files. There is also a
     wide array of `markdown cheat sheets`_ you can find using Google searches.
     Below are a few common markdown elements you can use in your documentation. Most IDEs can display the user view
     as you edit the markdown file.
@@ -911,7 +992,7 @@ README.md
         To view markdown edits for existing GitHub repos, click on the README.md file, then use the **Raw**
         option to display the output as raw markdown text. From here, you can copy and paste or review formatting.
 
-    Paste this sample README.md file into your repository and push to GitHub
+    Paste this sample ``README.md`` file into your repository and push to GitHub.
 
     .. code-block:: md
 
