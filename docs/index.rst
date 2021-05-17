@@ -48,4 +48,7 @@ Skillet Builder Documentation
 
    tutorials/tutorial_configuration
    tutorials/tutorial_validation
+   tutorials/tutorial_set_commands
+   tutorials/tutorial_workflow
+   tutorials/tutorial_includes
 
