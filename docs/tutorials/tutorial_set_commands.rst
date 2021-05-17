@@ -338,7 +338,7 @@ Create the Configuration in the NGFW
 
     Before modifying the configuration, ensure you have a snapshot of the `before/baseline` configuration of your NGFW saved, 
     we will use this saved snapshot to perform an offline configuration difference later. To do this navigate through 
-    **Devices->Setup->Operations->Save named configuration snapshot** to save the current NGFW config.
+    **Device->Setup->Operations->Save named configuration snapshot** to save the current NGFW config.
     
     .. image:: /images/set_command_tutorial/save_config_snapshot.png
         :width: 600
@@ -352,15 +352,16 @@ Create the Configuration in the NGFW
 |    
     Now after committing we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
     description, and source URL. To get to the `External Dynamic List` section on your NGFW navigate through the following, 
-    **Objects->External Dynamic Lists->Add**.  
+    **Objects->External Dynamic Lists->Add**. 
+    
+    .. image:: /images/set_command_tutorial/add_edl.png
+        :width: 600 
+    
+    Once in the correct place make the necessary changes as seen below. Click the **OK** button to save the changes.
 
     .. image:: /images/set_command_tutorial/External_list.png
         :width: 600
-|        
-    Once in the correct place make the necessary changes as seen below. Click the **OK** button to save the changes.
 
-    .. image:: /images/set_command_tutorial/edl_configure.png
-        :width: 600
 |
     Next we need to configure the tag object with a name, color, and comments (description) and then click the **OK** button. Tag
     objects are found by clicking through the following, **Objects->Tags->Add**.
@@ -368,45 +369,47 @@ Create the Configuration in the NGFW
     .. image:: /images/set_command_tutorial/find_tag.png
         :width: 600
 |        
-    Once you have hit the add button make necessary changes as seen below.
+    Once you have hit the add button make necessary changes as seen below and click the **OK** button.
 
     .. image:: /images/set_command_tutorial/tag_configure.png
         :width: 600
+        
 |
-
     .. TIP::
         The skillet will only add a single tag to the configuration.
         However, the GUI shows a color name while the set command is based on a color number.
         The use of multiple tag entries is used to extract the color values.
         So note that in some cases the GUI and set commands can use different values and we can use 
         sample configs like this to discover those values.
-
 |
 
-  Finally, configure inbound and outbound security rules referencing the tag and external-list. In order to add security rules please
-  navigate through the following, **Policy->Security->Add**. Note that the rule names are prepended with the EDL name. In later 
-  steps variables are used in the rule names to map the EDL and ensure rule names are unique.
+    Finally, configure inbound and outbound security rules referencing the tag and external-list. In order to add security rules please
+    navigate through the following, **Policy->Security->Add**. Note that the rule names are prepended with the EDL name. In later 
+    steps variables are used in the rule names to map the EDL and ensure rule names are unique.
 
-  .. image:: /images/set_command_tutorial/navigate_security_policy.png
-      :width: 800
+    .. image:: /images/set_command_tutorial/navigate_security_policy.png
+        :width: 800
 |      
-  Once you have hit the add button make necessary changes as seen below, please make sure you have all the configurations shown 
-  below copied into your security policy.      
+    Once you have hit the add button make necessary changes as seen below, please make sure you have all the configurations shown 
+    below copied into your security policy.      
 
-  .. image:: /images/set_command_tutorial/security_policy_add.png
-      :width: 800
+    .. image:: /images/set_command_tutorial/security_policy_add.png
+        :width: 800
 |
  
-  If you want to be able to generate your set commands skillet in offline mode later in the tutorial, don't forget to commit and save
-  a modified configuration snapshot of your NGFW here. Now with the NGFW UI fully configured we can move into the quick generation of 
-  config diff capturing set commands and turn them into skillets!
-
+    If you want to be able to generate your set commands skillet in offline mode later in the tutorial, don't forget to commit and save
+    a modified configuration snapshot of your NGFW here. With your baseline and modified configurations saved you can export the files to your 
+    local machine for later use! You can do this by navigating to, **Devices->Setup->Operations->Export named configuration snapshot**.
+  
+    .. image:: /images/set_command_tutorial/export_snapshot.png
+        :width: 800
 |
-Generate the Set Commands Skillet Online Mode
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Generate the Set Commands Skillet
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     In this section of the tutorial we are going to use an the PanHandler utility and our NGFW to create a set commands skillet. 
-    To begin start up PanHandler, click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
+    To begin, start up PanHandler by clicking on the **PanHandler** tab at the top and then clicking on **Skillet Repositories**. 
     
     .. image:: /images/set_command_tutorial/panhandler_nav.png
         :width: 600
@@ -421,17 +424,18 @@ Generate the Set Commands Skillet Online Mode
     .. image:: /images/set_command_tutorial/create_skillet.png
         :width: 600
 |       
-    Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
-    online mode, find the box on this page that says `Generate Set Commands From PAN-OS` and then click on **Generate CLI**. 
+    Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this directly from
+    your connected NGFW find the box on this page that says `Generate Set Commands From PAN-OS` and then click on **Generate CLI**. 
     
     .. image:: /images/set_command_tutorial/generate_set_cli.png
         :width: 600
         
+|        
     .. NOTE::
-      You can also generate a config diff by uploading previously saved NGFW XML files to the PanHandler SkilletBuilder utility. 
-      To do this you would have to find the box titled `Generate Set Commands From Uploaded Files` and click on the blue 
-      **Upload** button. On the resulting page you can upload your previously saved NGFW configuration files under the `Pre-Configuration` 
-      and `Post-Configuration` sections.
+      There is also an option to upload previously saved NGFW XML files manually to the PanHandler SkilletBuilder utility from your local machine. 
+      To do this you would have to find the box titled `Generate Set Commands From Uploaded Files` from the previous step and click on the 
+      blue **Upload** button. On the resulting page titled `Skillet Generator` you can upload your previously saved NGFW configuration files 
+      under the `Pre-Configuration` and `Post-Configuration` sections.
       
 |
     Once at the `Skillet Generator` page fill in your NGFW information and click **Submit**.
@@ -474,8 +478,7 @@ Generate the Set Commands Skillet Online Mode
       
     .. image:: /images/set_command_tutorial/snippets_edit.png
         :width: 600 
-        
-      
+|          
     Upon clicking the **edit** button you will land at an `Edit template snippet` page showcasing all the set commands retrieved from
     the config diff. Here is where we can get into working with a cool templating language called `Jinja`_, to allow for user inputted
     value substitution within the variables in our skillets. Thankfully with this skillet editor tool there is a very simple and easy way
@@ -484,7 +487,7 @@ Generate the Set Commands Skillet Online Mode
     
     .. image:: /images/set_command_tutorial/set_command_snippet_edit.png
         :width: 600
-        
+|       
     .. NOTE::
       Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
       For example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
@@ -493,187 +496,168 @@ Generate the Set Commands Skillet Online Mode
     
     .. image:: /images/set_command_tutorial/out_of_order.png
         :width: 400  
+        
 |
     SHOW THIS IN VIDEO
     
     This will take us to a page titled `Edit Text`, this is where we can make text substitutions for variables. For example if we 
     wanted to change all instances of the text "tag_name" into a jinja variable you would enter in "tag_name" to the left box and then
-    whatever you wanted the variable to be called in the right box. Next hit the **Replace** button containing 2 arrows pointing in
-    opposite directions to create your variables! Dont forget to click **Update** twice to confirm and save your changes!
+    whatever you wanted the variable to be called in the right box. It is best practice to name your variables something identifiable 
+    and descriptive. Next hit the **Replace** button containing 2 arrows pointing in opposite directions to create your variables! Dont 
+    forget to click **Update** twice to confirm and save your changes!
     
     .. image:: /images/set_command_tutorial/switch_variables.png
         :width: 600
-        
+
+    .. NOTE::
+      For the purpose of this Tutorial you should have 6 variables in the variables section of the Skillet Editor. Please refer
+      to the SkilletBuilder `variables`_ documentation for a more in depth look at the different kinds of variables and their use
+      cases.
+
+|
     Once the **Update** button has been pushed and changes have been made you will be brought back to the `Skillet Editor` screen from 
     before. Here you should see that the previously empty variables section has now been populated with your newly created variables. you
-    can now click into the blue **Edit** buttons to the right of the variable names to edit their descriptions, names, etc.
+    can now click into the blue **Edit** buttons to the right of the variable names to edit their descriptions, names, etc. For example, 
+    let's edit our `tag_color` variable to contain a dropdown menu option. For your convenience we have provided a handy table below to show 
+    what tag colors map to what values.
 
     .. image:: /images/set_command_tutorial/skillet_editor_update.png
         :width: 600
-        
-    From here, we can save all aspects of our generated skillet by clicking the blue **Save** button at the bottom right of the screen.
+    
+    +-------------------------------------------------------------------------------------+
+    | Tag Color Mappings                                                                  |
+    +=====================================================================================+
+    | Red - color1                                                                        |
+    +-------------------------------------------------------------------------------------+
+    | Green - color2                                                                      |
+    +-------------------------------------------------------------------------------------+
+    | Blue - color3                                                                       |
+    +-------------------------------------------------------------------------------------+
+    | Yellow - color4                                                                     |
+    +-------------------------------------------------------------------------------------+
+    | Copper - color5                                                                     |
+    +-------------------------------------------------------------------------------------+
+    | Orange - color6                                                                     |
+    +-------------------------------------------------------------------------------------+
+    | Purple - color7                                                                     |
+    +-------------------------------------------------------------------------------------+
+    | Gray - color8                                                                       |
+    +-------------------------------------------------------------------------------------+
+    
+|
+    On the `Edit Variable` page click on the **Variable Type** dropdown menu and choose the **Dropdown Select** option. From here you can type
+    in key:value pairs similar to a dictionary and then click on the **+** sign on the right to add them as dropdown menu options for your
+    variable color type. Add all the color options you would like and then hit **Update** at the bottom to save the changes in your variable.
+    
+    .. image:: /images/set_command_tutorial/dropdown.png
+        :width: 600
+    
+    Back on the `Skillet Editor` page, we can save all aspects of our generated skillet by clicking the blue **Save** button at the bottom right 
+    of the screen.
         
     .. image:: /images/set_command_tutorial/save_skillet.png
         :width: 600
-        
+     
+|
     Now that the skillet has been saved in PanHandler it will show up as a skillet on the next page titled `Repository Detail for
     SkilletBuilder`. 
     
     .. image:: /images/set_command_tutorial/repo_detail_skilletbuilder.png
         :width: 600
     
+|
     On this page simply scroll down until you find your saved skillet, in this case it should be called `Tutorial Skillet`. Locate the 
     skillet and click on the **Gear** icon to inspect the skillets raw YAML data file. 
     
     .. image:: /images/set_command_tutorial/inspect_tutorial.png
         :width: 600 
-        
+   
+|
     You can also click the **Edit** button on this page again to go into your skillet and make changes.
         
     .. image:: /images/set_command_tutorial/tutorial_edit.png
         :width: 600 
     
+|
     Choosing to click into the **Gear** should allow you to see the fully function skillets YAML file including all generated set commands
     within as well as the variables that were updated prior.
     
     .. image:: /images/set_command_tutorial/skillet_metadata.png
         :width: 600 
 
+|
     In order to test your skillet and see if it works as expected you can also click on the name of the generated skillet. If you go back to 
     the `Repository Detail for SkilletBuilder` you can find and click on the skillet.
     
     .. image:: /images/set_command_tutorial/test_skillet.png
         :width: 600 
+     
+|
+    This takes you to a `Render Template` page where you can customize and run your newly generated skillet such as custom variable names in
+    a web UI. Here you can alter the `tag_name` and `edl_name` and then hit **Submit** to view the rendered changes.
         
+    .. image:: /images/set_command_tutorial/render_template.png
+        :width: 600 
+        
+|
     
+        
+.. _`Jinja`: https://skilletbuilder.readthedocs.io/en/latest/building_blocks/jinja_and_skillets.html
+.. _`variables`: https://skilletbuilder.readthedocs.io/en/latest/reference_examples/variables.html
 
 
 |
 
-
-Generate the Set Commands Skillet Offline Mode
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    In this section of the tutorial we are going to use an offline NGFW configuration files and PanHandler to create a set commands
-    skillet. Start up PanHandler and click on the **PanHandler** tab at the top and then click on **Skillet Repositories**. 
-    
-    .. image:: /images/set_command_tutorial/panhandler_nav.png
-        :width: 600
-    
-    Scroll down until you find the ``SkilletBuilder`` repository and then click on the **Details** button.  
-    
-    .. image:: /images/set_command_tutorial/skilletbuilder_details.png
-        :width: 600
-    
-    Here you want to locate and click on the **Create Skillet** button.
-    
-    .. image:: /images/set_command_tutorial/create_skillet.png
-        :width: 600
-    
-    Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this in
-    offline mode, find the box on this page that says `Generate Set Commands From Uploaded Files` and then click on **Upload**.
-    
-    .. image:: /images/set_command_tutorial/generate_set_upload.png
-        :width: 600
-    
-    Now we will be at a page labeled ``Skillet Generator``. Here we will upload the config files we saved earlier. Click on the white
-    **Choose File** buttons to upload files. Our base config file should be uploaded under the `Pre-Configuration` section and our
-    modified configuration file under the `Post-Configuration` section. After uploading both files hit the submit button.
-    
-    .. image:: /images/set_command_tutorial/pre_post_skillet.png
-        :width: 600
-    
-    On the next page we want to fill out some details about the skillet we want to create. 
-    
-    .. image:: /images/set_command_tutorial/configure_skillet_generator.png
-        :width: 600    
-    
-    After the files are added and submitted, the next stage of the workflow is a web form for the YAML file preamble attributes.
-    Suggested tutorial inputs for this section are as follows:
-
-      * Skillet ID: tag_edl_tutorial
-      * Skillet Label: Tutorial skillet
-      * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
-      * Skillet type: ``Template``
-      * Branch: Local
-      * Commit Message: Create Tutorial Skillet
-      
-    After everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
-    will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
-    the config diff. To access the set commands you want to view the snippets in `edit` mode by clicking the blue **edit** button 
-    all the way on the right of the snippets section. 
-
-    .. image:: /images/set_command_tutorial/snippets_edit.png
-        :width: 600  
-        
-    Upon clicking the **edit** button you will land at an `Edit template snippet` page showcasing all the set commands retrieved from
-    the config diff. Here is where we can get into working with a cool templating language called `Jinja`_ to allow for variable value
-    substitution within our skillets. Thankfully with this skillet editor tool there is a very simple and easy way to transform text
-    within our set commands into Jinja variables. Click into the small blue **edit** button near the bottom right of the screen again.
-    
-    .. image:: /images/set_command_tutorial/set_command_snippet_edit.png
-        :width: 600 
-        
-    This will take us to a page titled `Edit Text`, this is where we can make text substitutions for variables. For example if we 
-    wanted to change all instances of the text "tag_name" into a jinja variable you would enter in "tag_name" to the left box and then
-    whatever you wanted the variable to be called in the right box. Next hit the button containing 2 arrows pointing in opposite
-    directions to create your variables! Dont forget to click **Update** to save your changes!
-    
-    .. image:: /images/set_command_tutorial/switch_variables.png
-        :width: 600
-    
-
-.. _`Jinja`: https://skilletbuilder.readthedocs.io/en/latest/building_blocks/jinja_and_skillets.html
-
-
 Using SLI to Perform a Configuration Difference
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  In this section we will be going over how to use the SLI tool in the CLI to get a config diff. First head into the folder in which
-  you cloned the SLI repository, activate the venv and perform the pip install command. For more in depth guidance please refer to 
-  `SLI documentation`_.
+    In this section we will be going over how to use the SLI tool in the CLI to get a config diff. First head into the folder in which
+    you cloned the SLI repository, activate the venv and perform the pip install command. For more in depth guidance please refer to 
+    `SLI documentation`_.
   
-  .. image:: /images/set_command_tutorial/sli_setup.png
-      :width: 400
+    .. image:: /images/set_command_tutorial/sli_setup.png
+        :width: 600
       
-  From here all that needs to be done is run following simple SLI command.
+|
+    From here all that needs to be done is run following simple SLI command.
   
-  .. code-block:: bash
+    .. code-block:: bash
   
-    > sli diff -of set
+      > sli diff -of set
     
-  After entering this command you will be prompted to enter your NGFW information, after entering the correct information you will
-  receive all of the config differences output as set commands as can be seen below.
+    After entering this command you will be prompted to enter your NGFW information, after entering the correct information you will
+    receive all of the config differences output as set commands as can be seen below.
   
-  .. image:: /images/set_command_tutorial/sli_output.png
-      :width: 400
+    .. image:: /images/set_command_tutorial/sli_output.png
+        :width: 600
       
-  From here you can copy all of these set commands and paste them into a .txt file in the same directory as your SLI cloned repo.
+|      
+    From here you can copy all of these set commands and paste them into a .txt file in the same directory as your SLI cloned repo.
   
-  .. image:: /images/set_command_tutorial/sli_set_txt.png
-      :width: 400  
+    .. image:: /images/set_command_tutorial/sli_set_txt.png
+        :width: 600  
   
-  While in that directory you can run SLI and pass in the .txt file containing all of the set commands to automatically configure the
-  NGFW with all provided set commands.
+|
+    While in that directory you can run SLI and pass in the .txt file containing all of the set commands to automatically configure the
+    NGFW with all provided set commands.
   
-  .. code-block:: bash
+    .. code-block:: bash
   
-    > sli load_set -uc set_commands.txt
+      > sli load_set -uc set_commands.txt
   
-  .. image:: /images/set_command_tutorial/sli_load_txt.png
-      :width: 400    
+    .. image:: /images/set_command_tutorial/sli_load_txt.png
+      :width: 600    
       
-      
-  .. NOTE:: 
-    Another handy function that comes with SLI is its ability to locate errors in specific set commands. If any of the set commands
-    entered in through SLI are faulty, SLI will error out and print the faulty set command line for your viewing pleasure!
+    .. NOTE:: 
+      Another handy function that comes with SLI is its ability to locate errors in specific set commands. If any of the set commands
+      entered in through SLI are faulty, SLI will error out and print the faulty set command line for your viewing pleasure!
     
-  .. TIP::
+    .. TIP::
         You can also add a -v to the end of the above command to make it look like, `sli load_set -uc {text_file} -v`. This will
         output all the set commands being passed to the NGFW as they SLI is running in place of the black loading bar showcasing
         % complete.
       
-  At this point all configurations should have been made in your NGFW, simply log in and commit the changes.
+    At this point all configurations should have been made in your NGFW, simply log in and commit the changes.
 
 .. _`SLI documentation`: https://gitlab.com/panw-gse/as/sli
 
@@ -685,8 +669,8 @@ Copy the Output to .skillet.yaml
     Add Image Here
     
     .. NOTE:: 
-    At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play the skillet without variables. Common
-    reasons for raw output testing include the possible need for snippet reordering and confirmation that the snippet elements will load
+      At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play the skillet without variables. Common
+      reasons for raw output testing include the possible need for snippet reordering and confirmation that the snippet elements will load
 
 Test and Troubleshoot
 ---------------------
