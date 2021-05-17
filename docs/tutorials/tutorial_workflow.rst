@@ -513,13 +513,13 @@ Create the Workflow Skillet Skeleton
         .. image:: /images/workflow_tutorial/panhandler_dropdown.png
          :width: 250
 
-    Scroll down the **Skillet Collections** page until you find the *Skillet Builder* tile,
+    Scroll down the *Skillet Collections* page until you find the *Skillet Builder* tile,
     and click **Go**.
 
         .. image:: /images/workflow_tutorial/skillet_builder_tile.png
          :width: 250
 
-    Scroll down the **Skillet Builder Collections** page until you find the
+    Scroll down the *Skillet Builder Collections* page until you find the
     *Skillet YAML File Template* tile, and click **Go**.
 
         .. image:: /images/workflow_tutorial/skillet_yaml_file_template.png
@@ -784,31 +784,80 @@ Push the Skillet to GitHub
 Test and Troubleshoot
 ------------------
 
-    Now that the skillet has been pushed to GitHub, the skillet can be imported to PanHandler or loaded into
-    SLI to test the user experience.
+    Now that the skillet has been pushed to GitHub, the skillet can be imported or loaded into one of the skillet
+    player tools, such as PanHandler or SLI, for testing. Similar to designing, testing involves three main
+    components:
+
+        1. User-facing menu options
+        2. Overall sequence of sub-skillets
+        3. Conditional execution of each sub-skillet
+
+    Continue reading to see how to test these components in various skillet players.
+
 
 Test the Skillet in PanHandler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    need to link to main page and PanHandler
 
-    Import the workflow skillet into PanHandler (instructions found here), and open the **Sample SkilletBuilder workflow for
-    EDL validation and configuration** workflow skillet from either the *Skillet Collections* or *Skillet Repositories*
-    page.
+    Import the workflow skillet into PanHandler (instructions and troubleshooting found here), and open the
+    **Sample SkilletBuilder workflow for EDL validation and configuration** workflow skillet from either
+    the *Skillet Collections* or *Skillet Repositories* page.
 
-    From this page, make sure that all of the workflow menu options appear as expected. If they do not appear as expected,
-    you must go back into the **variables** section of the workflow skillet and troubleshoot. For advanced variable
-    types and attributes, such as **toggle_hint**, be extra careful that they appear as expected.
+    From this page, make sure that all of the workflow menu options appear as expected. For advanced variable
+    types and attributes, such as **toggle_hint**, test all variations of the workflow menu and verify that these
+    variables appear appropriately. If they do not appear as expected, you must go back into the **variables**
+    section of the workflow skillet and troubleshoot.
 
         .. image:: /images/workflow_tutorial/run_workflow_menu.png
          :width: 800
 
     The main workflow skillet itself does not have a *Debug* tool like the other skillet types, so you will need to
-    manually verify that the skillet sequence is correct with various conditionals. If a sub-skillet gets skipped or
-    runs when it's not expected to, check that the **when** attributes and other varibles by :ref:`Checking Variable Values with Context`.
+    manually verify that the overall sub-skillet sequence is correct by stepping through the workflow. However,
+    configuration sub-skillets do allow for inline debugging with the Skillet Debugger. Continue by clicking **Submit**.
 
+    You should now be prompted with the user-input section of the first sub-skillet, the validation skillet. All of this
+    sub-skillet's variables (firewall IP, username, and password and EDL URL) will not appear on the screen since they
+    are defined as type **hidden**. Do know that every variable defined in the variable section of the sub-skillet's
+    YAML file will get loaded from the context. Use :ref:`this guide<Checking Variable Values with Context>` to view
+    all variables and their values in the context.
 
+        .. image:: /images/workflow_tutorial/validation_user_input.png
+          :width: 800
 
-    -- do some more here
+    Continuing the workflow, you should see the validation output. Verify this output using the validation skillet
+    testing found in :ref:`the Validation Tutorial<Push to Github and Test in panHandler>`. In addition, you can find more
+    resources in the PanHandler documentation for `Creating and Debugging Validation Skillets`_.
+
+        .. image:: /images/workflow_tutorial/validation_output.png
+          :width: 800
+
+    .. _Creating and Debugging Validation Skillets: https://panhandler.readthedocs.io/en/master/skillets.html#creating-and-debugging-validation-skillets
+
+    Click **Continue**, and then fill out the forms for the *Sample SkilletBuilder skillet with EDL, tag, and security policy*
+    configuration skillet. Click **Continue** to land on the *Configure Target Information* screen.
+
+        .. image:: /images/workflow_tutorial/configure_target_screen.png
+          :width: 800
+
+    On the target screen, you can click **Debug**, which gives an inline overview of each snippet in the configuration skillet.
+    You can check here to make sure your user inputs are correct and the XML is formatted properly.
+
+        .. image:: /images/workflow_tutorial/skillet_debugger.png
+          :width: 800
+
+    Finish out the workflow by continuing through each of the steps until you land on the *Workflow Completed* page, which is
+    rendered from the final template sub-skillet.
+
+        .. image:: /images/workflow_tutorial/workflow_completed.png
+          :width: 800
+
+    If a sub-skillet gets skipped or runs when it's not intended to, check the :ref:`Context<Checking Variable Values with Context>`
+    for variable names and values currently cached. In addition, you can troubleshoot by viewing the context both before and after
+    a sub-skillet is run to see which variables get generated during the sub-skillet execution.
+
+    .. NOTE::
+        If your workflow has a sequence of configure then validate, you will need to commit after the configuration
+        skillet to see any changes in the validation skillet since the validation only looks at the running configuration.
+
 
 Test the Skillet with SLI
 ~~~~~~~~~~~~~~~~~~~~~~~~~
