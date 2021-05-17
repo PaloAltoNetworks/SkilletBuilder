@@ -127,14 +127,12 @@ Initialize a New Repository and Import it into PanHandler
 
   Log in to Github and select ‘New’ to add a new repo.
 
-    .. image:: /images/configure_tutorial/create_new_repo_button.png
-        :width: 600
+    **INSERT PIC HERE**
 
   Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
   pushing any EDI directories such as .idea/ used by Pycharm.
 
-    .. image:: /images/configure_tutorial/create_new_repo_fields.png
-        :width: 600
+    **INSERT PIC HERE**
 
   Once created, copy the clone URL from the GUI.
   This is found with the green ‘Code’ button and is NOT the browser URL.
@@ -184,12 +182,14 @@ Create the Configuration in the NGFW
 
   Navigate to Device > Setup > Operations.
 
-  **INSERT PIC HERE**
-
+  .. image:: /images/configure_tutorial/save_named_config.png
+    :width: 800
+|
   Click 'Save named configuration snapshot', enter a name for the file (ex. baseline.xml), and click OK.
 
-  **INSERT PIC HERE**
-
+  .. image:: /images/configure_tutorial/save_baseline.png
+    :width: 650
+|
   The tutorial examples use the GUI to create the EDL, tag, and security rules.
   Many of the config values are placeholders that look like variable names (hint, hint).
   You can also load the :ref:`Sample Configuration Skillet` found in the Skillet Builder collection.
@@ -199,22 +199,16 @@ Create the Configuration in the NGFW
 
   Configure the external-list object with a name, description, and source URL.
 
-  .. image:: /images/configure_tutorial/configure_edl.png
-     :width: 600
-
-
-  |
-
-
+  .. image:: /images/configure_tutorial/edl_settings.png
+    :width: 500
+|
   Navigate to Objects > Tags
   Click 'Add' at the bottom of the page
 
   Configure the tag object with a name, color, and comments (description).
 
-  .. image:: /images/configure_tutorial/configure_tag.png
-     :width: 400
-
-
+  .. image:: /images/configure_tutorial/tag_settings.png
+    :width: 400
 |
 
 .. TIP::
@@ -233,24 +227,58 @@ Create the Configuration in the NGFW
   Navigate to Policies > Security
   Click 'Add' at the bottom of the page
 
-.. image:: /images/configure_tutorial/configure_security_rules.png
-    :width: 800
-
-
   Follow the screenshots below to edit the security policy rules. You can assume the default settings if they are not present below.
 
-  **INSERT PIC HERE**
+  .. toggle-header:: class
+      :header: **Inbound Security Policy [show/hide screenshots]**
+
+          .. image:: /images/configure_tutorial/inbound_edl_1.png
+            :width: 650
+        |
+
+          .. image:: /images/configure_tutorial/inbound_edl_2.png
+            :width: 650
+        |
+
+          .. image:: /images/configure_tutorial/inbound_edl_3.png
+            :width: 650
+        |
+
+          .. image:: /images/configure_tutorial/inbound_edl_4.png
+            :width: 650
+        |
+|
+
+  .. toggle-header:: class
+      :header: **Outbound Security Policy [show/hide screenshots]**
+
+          .. image:: /images/configure_tutorial/outbound_edl_1.png
+            :width: 650
+        |
+
+          .. image:: /images/configure_tutorial/outbound_edl_2.png
+            :width: 650
+        |
+
+          .. image:: /images/configure_tutorial/outbound_edl_3.png
+            :width: 650
+        |
+
+          .. image:: /images/configure_tutorial/outbound_edl_4.png
+            :width: 650
+        |
+|
 
   Commit the changes you just made and save the configuration file.
   Navigate back to Device > Setup > Operations and 'Save named configuration snapshot' again, but name the file something you
   will remember (ex. skilletbuilder.xml).
 
-  **INSERT PIC HERE**
 
   Export both the 'baseline' configuration file and the file you just saved to your local machine.
 
-  **INSERT PIC HERE**
-
+  .. image:: /images/configure_tutorial/export_configs.png
+    :width: 800
+|
 
 Generate the Skillet from Uploaded Files
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -258,21 +286,28 @@ Generate the Skillet from Uploaded Files
   In the PanHandler dropdown menu, click 'Skillet Repositories' and locate the skillet repository that you imported in an
   above step. Click 'Details'.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/repo_details.png
+    :width: 400
+|
 
   Click either of the 'Create Skillet' buttons on the page.
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/create_skillet_button.png
+    :width: 800
+|
 
   Locate the section 'Generate From Uploaded Files' and Click 'Upload'.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/gen_from_files.png
+    :width: 700
+|
 
   Recall the two configuration files that you exported in an above step. Upload the 'baseline' or pre-configuration file
   in the pre-configuration section. Upload the post-configuration file in the section below. Click 'Submit'.
 
-  **INSERT PIC HERE**
-
+    .. image:: /images/configure_tutorial/pre_post_configs.png
+    :width: 700
+|
 
   Edit the Initial Config Settings for the Skillet. Here are some suggested inputs for this tutorial:
 
@@ -283,7 +318,9 @@ Generate the Skillet from Uploaded Files
   - Branch: local
   - Commit Message: Create New Skillet
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/initial_skillet_config.png
+    :width: 700
+|
 
   To continue on with the tutorial click to go to the next section: `Add Variables to Snippets`_
 
@@ -302,90 +339,228 @@ If you prefer to use the command line, SLI can also extract the difference betwe
 Add Variables to Snippets
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
+  During the configuration of the NGFW, you should have configured an EDL, a tag, and two security policies.
+  Now we can utilize those parts of the configuration to add variables which allow for user input when playing the skillet.
+
   Within the Skillet Editor, you should see the all the settings you input in the previous step. Scroll down to the
   'Snippets' section; it should be pre-populated with snippets from the configuration files. These snippets represent
   the pieces of the NGFW configuration that were found to be different between the two files uploaded.
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/skillet_editor_snippets.png
+    :width: 700
+|
 
   Click the 'Edit' button to the far right of the external-list snippet.
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/external_list_edit.png
+    :width: 700
+|
 
   On the 'Edit PAN-OS Snippet' Page click the 'Edit' button in the bottom right corner.
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/snippet_edit_button.png
+    :width: 700
+|
 
   In this editor you can use the 'Text to Replace' feature at the bottom of the page to create the variables.
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/text_to_replace.png
+    :width: 700
+|
 
   Locate the 'entry name' element and enter 'edl_name' in both text boxes at the bottom of the page.
+  If you have different text compared to the tutorial or want to name the variable something different, you can make
+  those changes now. Just make sure you take note of what your variables are called. It is best practice to name the
+  variable something that is easily identifiable.
 
   **INSERT PIC HERE**
 
-  On the right side, click this symbol **INSERT PIC HERE**
+  On the right side, click the replace button **INSERT PIC HERE**
   This will change the variable to align with Jinja formatting.
-  You should see the set of curly brackets appear around the variable name.
+  You should see the double set of curly brackets appear around the variable name.
 
   **INSERT PIC HERE**
 
-Local Skillet Test
-~~~~~~~~~~~~~~~~~~
+  In this snippet, there are a few other variables to add.
+  Copy the contents of everything inside the 'url' element, paste it in the 'Text to Replace' section.
+  Name the variable 'edl_url' and click the replace button again.
 
-  Before pushing the skillet to Github, use the :ref:`Skillet Test Tool` to validate the final YAML file formatting
-  and variable additions. Paste the contents of the YAML file into the test tool and submit. This will play the skillet
-  using the default variable values. Check that the configuration loaded into the NGFW.
+  **INSERT PIC HERE**
 
-  Common errors at this stage likely include YAML formatting issues, snippet ordering problems, or a variable typo.
+  For the description element, do the same steps as above for 'edl_description'.
+
+  **INSERT PIC HERE**
+
+  You should have three variables input into the EDL snippet at this point.
+  Click the 'Update' button at the bottom right in order to save the variables.
+
+  **INSERT PIC HERE**
+
+  Click 'Update' again in the Editor page to save the snippet edits.
+
+  **INSERT PIC HERE**
+
+  In the main Skillet Editor, you should now see three variables populated in the Variables section.
+
+  **INSERT PIC HERE**
+
+  Next, locate the 'tag' snippet and open the editor. There are three variables to add in this section.
+
+  - tag_name
+  - tag_color
+  - tag_description
+
+  Follow the same instructions from the previous to replace the text with the variable names.
+
+  **INSERT PIC HERE**
+
+  .. NOTE::
+    Don't forget to click the 'Update' button on both pages to save your work!
+
+
+Edit Variable Types
+~~~~~~~~~~~~~~~~~~~
+
+  You should have 6 variables in the Variables section of the Skillet Editor. You also may notice that all of the variable
+  types are 'text'. This variable type works in some scenarios, but not all. For certain cases, you may want a dropdown
+  menu, radio buttons, or only accept IP addresses/URLs/emails, etc.
+
+  We need to change the 'tag_color' variable to provide the user with a list of options in the form of a dropdown menu.
+  If you noticed earlier on in the tutorial, we chose red for the tag_color in the GUI, but the color in XML was color1.
+  A user will likely not know the number associated with the color they want, so this will make it easier.
+
+  **INSERT PIC HERE**
+
+  **INSERT PIC HERE**
+
+  Click the 'Edit' button on the tag_color variable.
+  Under 'Variable Type:' select 'Dropdown Select'.
+  This should reveal another section of settings.
+  Here is a list of suggested colors associated with their number [key,value].
+
+  +-------------------------------------------------------------------------------------+
+  | Tag Color Mappings                                                                  |
+  +=====================================================================================+
+  | Red - color1                                                                        |
+  +-------------------------------------------------------------------------------------+
+  | Green - color2                                                                      |
+  +-------------------------------------------------------------------------------------+
+  | Blue - color3                                                                       |
+  +-------------------------------------------------------------------------------------+
+  | Yellow - color4                                                                     |
+  +-------------------------------------------------------------------------------------+
+  | Copper - color5                                                                     |
+  +-------------------------------------------------------------------------------------+
+  | Orange - color6                                                                     |
+  +-------------------------------------------------------------------------------------+
+  | Purple - color7                                                                     |
+  +-------------------------------------------------------------------------------------+
+  | Gray - color8                                                                       |
+  +-------------------------------------------------------------------------------------+
+
+  Enter the key,value of the color you want and click the 'plus' button to add it.
+  Add 3-6 colors and click 'Update'.
+
+  **INSERT PIC HERE**
+
+  Please refer to the Variables_ Page for more information on variable types.
+
+
+Test and Troubleshoot
+---------------------
+
+
+Debug
+~~~~~
+
+  Now that all the desired changes have been made to the Skillet, it is recommended to use the Debug tool to check for errors.
+
+  At the bottom of the Skillet Editor page, click the green 'Debug' button.
+
+  **INSERT PIC HERE**
+
+  This tool allows you to do some quick testing of the snippets to make sure they function as expected.
+  In the context section, enter values based on your information:
+
+  **INSERT PIC HERE**
+
+  In the 'Step Through Snippets' section click the 'play' button to execute the snippet.
+  Expected output may look something like the screenshot below:
+
+  **INSERT PIC HERE**
+
+  Continue to step through the snippets. If you encounter an error, be sure to check the syntax in the 'Context' section.
+  Look for missing quotes '"', colons ':', etc.
+
+  Once you have finished debugging, click the orange 'Dismiss' button to close the page.
+
+
+Commit and Save
+~~~~~~~~~~~~~~~
+
+  The skillet is now ready to be saved and committed to the GitHub repository.
+  At the bottom of the Skillet Editor, enter a relevant commit message:
+
+  **INSERT PIC HERE**
+
+
+  Click 'Save'.
+
+  Now your skillet should show up in the 'Skillets' section of the Repository Details.
+
+  **INSERT PIC HERE**
+
+
+Play
+~~~~
+
+  On the Repository Details page, click on the Skillet in the 'Skillets' section.
+
+  **INSERT PIC HERE**
+
+  Now you should recognize all the variables that you added earlier on in the tutorial.
+
+  **INSERT PIC HERE**
+
+  Add your desired values for the variables. Click 'Submit'
+
+  **INSERT PIC HERE**
+
+  Enter in the information for your NGFW (device to be configured).
+  Under Commit Options, it is recommended to keep 'Do not Commit. Push changes only'.
+  This will save time during the testing phase.
+
+  **INSERT PIC HERE**
+
+  Before clicking 'Submit', you can also view the 'Debug' page. This gives an overview of each snippet. You can check here
+  to make sure your user inputs are correct and the XML is formatted properly.
+
+  **INSERT PIC HERE**
+
+  Click 'Continue' to exit the debugger.
+  Click 'Submit' to play the Skillet. It may take between 30 seconds - 1 minute to finish.
+  Once pushed, you should see this message:
+
+  **INSERT PIC HERE**
+
+  It is recommended to also check the NGFW to make sure the changes have been pushed.
+  Once you have confirmation that the skillet is working as expected, you can change the Commit Options to 'Commit and wait to finish'
+
+  **INSERT PIC HERE**
+
+  If you receive errors messages, common issues may be:
+
+    - Snippet load order
+    - Variable typos in the snippet section or not included in the variables section
+    - Invalid input data that passes web form validation but not NGFW validation checks
+
+  Continue to edit, push, and test the skillet until it is free of errors and can be loaded onto the NGFW.
 
 Testing with SLI
 ~~~~~~~~~~~~~~~~
 
   **add content here**
 
-Push the Skillet to Github
-~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
-Test and Troubleshoot
-------------------
-
-
-Play the Skillet
-~~~~~~~~~~~~~~~~
-
-  From the Detail or Collection view, play the skillet. Although you may have tested with the Test Tool,
-  playing the imported skillet allows the builder to review the Web UI elements presented to the user.
-
-  .. image:: /images/configure_tutorial/configure_skillet_play.png
-     :width: 800
-
-
-|
-
-  .. TIP::
-    In order to save time in the testing phase, choose *Do not commit. Push changes only* in the Commit options.
-
-  Before pushing the configuration to the device, you can use the ``Debug`` option to view the rendered skillets.
-  This view is used to validate variable substitutions and XML formatting.
-
-  .. image:: /images/configure_tutorial/configure_skillet_debug.png
-     :width: 800
-
-
-  Check both the output messages in PanHandler and actual NGFW view to test the skillet. Also verify that the
-  configuration loads as candidate and will also commit. If you receive errors messages, common issues may be:
-
-    - Snippet load order
-    - Variable typos in the snippet section or not included in the variables section
-    - Invalid input data that passes web form validation but not NGFW validation checks
-
-Edit, Push, Test
-~~~~~~~~~~~~~~~~
-
- If errors are found, repeat the steps above until a clean skillet can be loaded and committed.
 
 Document
 -------------
