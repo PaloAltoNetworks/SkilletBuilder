@@ -70,7 +70,8 @@ It may also be useful to review the following topics before getting started:
 .. [2] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
 .. [3] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh {username}@{X.X.X.X}* (with your NGFW's management IP replacing the X's).
 
-This tutorial will be split into 4 main sections below and can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended results via use of the PanHandler UI tool and the SLI command line interface tool.
+This tutorial can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended 
+results via use of the PanHandler UI tool and the SLI command line interface tool.
 
 
 |
