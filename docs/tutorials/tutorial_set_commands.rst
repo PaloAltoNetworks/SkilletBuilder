@@ -403,8 +403,9 @@ Using SLI to Perform a Configuration Difference
       
 |
     .. NOTE:: 
-      Another handy function that comes with SLI is its ability to locate errors in specific set commands. If any of the set commands
-      entered in through SLI are faulty, SLI will error out and print the faulty set command line for your viewing pleasure!
+        Another handy function that comes with SLI is its ability to locate errors in specific set commands. If any of the set commands
+        entered in through SLI are faulty, SLI will error out and print the faulty set command line for your viewing pleasure!
+    
     
     .. TIP::
         You can also add a -v to the end of the above command to make it look like, `sli load_set -uc {text_file} -v`. This will
