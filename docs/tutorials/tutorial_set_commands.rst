@@ -611,7 +611,7 @@ Document
 
       This is used in the training material as part of the tutorial.
 
-      The skillet has 3 xml elements:
+      The skillet has 3 set elements:
 
       * tag: create a tag using inputs for name, description, and color
       * external-list: create an edl using inputs for name, description, and url
@@ -621,8 +621,7 @@ Document
 
       * tag_name: name of a newly created tag and used in the security rules
       * tag_description: text field to describe the tag
-      * tag_color: dropdown mapping color names to color numbers (required in the xml configuration)
-
+      * tag_color: dropdown mapping color names to color numbers 
       * edl_name: name of the newly created external-list
       * edl_description: text field used to describe the external-list
       * edl_url: url used for the external-list
