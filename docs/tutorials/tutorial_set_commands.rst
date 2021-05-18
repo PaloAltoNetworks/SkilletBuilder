@@ -598,8 +598,8 @@ Document
     +-------------------------------------------------------------------------------------+
     
     .. TIP::
-      To view markdown edits in existing GitHub repos, click on the README.md file, then use the ``Raw``
-      option to display the output as raw markdown text. From here you can copy-paste or review formatting.
+        To view markdown edits in existing GitHub repos, click on the README.md file, then use the ``Raw``
+        option to display the output as raw markdown text. From here you can copy-paste or review formatting.
 |
 
     Sample README.md file for the tutorial skillet. Paste into the skillet README file and push to Github.
