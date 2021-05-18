@@ -366,6 +366,7 @@ Working with Snippets and Variables
               :width: 600
           |
     
+|
     At this point you should have a fully functioning set commands skillet! However we aren't done yet, you always
     want to be sure to test your skillet for any possible issues before committing it back to your repository. Please
     refer to the `Testing and Troubleshooting` section in this tutorial for more guidance on testing methods.
@@ -429,6 +430,7 @@ Using SLI to Perform a Configuration Difference
         You can also add a -v to the end of the above command to make it look like, `sli load_set -uc {text_file} -v`. This will
         output all the set commands being passed to the NGFW as they SLI is running in place of the black loading bar showcasing
         % complete.
+      
       
     At this point all configurations should have been made in your NGFW, simply log in to validate and commit the changes in your NGFW.
 
@@ -506,8 +508,8 @@ Play the Skillet
 Commit and Save
 ~~~~~~~~~~~~~~~
 
-  The skillet is now ready to be saved and committed to the GitHub repository.
-  At the bottom of the Skillet Editor, enter a relevant commit message:
+  The skillet is now ready to be saved and committed to the GitHub repository. On the `Repository Detail for Set_Commands_Tutorial` click
+  on the green **Push Local Changes** button to commit your changes back to your GitHub repository.
 
   **INSERT PIC HERE**
 
