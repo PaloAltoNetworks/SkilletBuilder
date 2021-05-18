@@ -118,8 +118,8 @@ Create the Configuration in the NGFW
 
     .. image:: /images/set_command_tutorial/tag_configure.png
         :width: 600
-        
-|
+
+
     .. TIP::
         The skillet will only add a single tag to the configuration.
         However, the GUI shows a color name while the set command is based on a color number.
@@ -402,6 +402,8 @@ Using SLI to Perform a Configuration Difference
       :width: 600    
       
 |
+
+
     .. NOTE:: 
         Another handy function that comes with SLI is its ability to locate errors in specific set commands. If any of the set commands
         entered in through SLI are faulty, SLI will error out and print the faulty set command line for your viewing pleasure!
