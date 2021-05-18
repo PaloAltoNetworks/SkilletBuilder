@@ -281,33 +281,6 @@ UPDATE THIS IMAGE
 
   .. image:: /images/configure_tutorial/configure_skillet_folder.png
      :width: 250
-  
-  
-PROBABLY DONT NEED AFTER TALK WITH SCOTT SHOWCASE INERT PANHANDLER "SKILLETBUILDER" FUNCTIONALITY  
-Importing SkilletBuilder Tools
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    This section will go over how to import skillet repositories to PanHandler.
-    
-    Once you have gained access to the PanHandler UI you will want to import the SkilletBuilder_ repository. This is done by clicking
-    the **PanHandler** drop down menu at the top of the page, then click on **Import Skillets**. 
-    
-    ADD IMAGE
-    
-    Here under the  *"Recommended Repositories"* section you should see the *"Skillet Builder Tools"* section where you can quickly
-    click **Import**. 
-    
-    ADD IMAGE
-    
-    For other repositories you may want to import, you can do so at the bottom of the page under the where you can change the repository 
-    name under the *"Import Repository"* section and paste the cloned git repository URL using HTTPS or SSH.
-    
-    ADD IMAGE
-
-.. _SkilletBuilder: https://github.com/PaloAltoNetworks/SkilletBuilder
-
-  : NOTE::
-    This method is the standard way of importing any valid skillet repositories into PanHandler.
 
 
 Running SLI
@@ -329,6 +302,7 @@ Running SLI
 .. _`SLI GitLab`: https://gitlab.com/panw-gse/as/sli
     
 |
+
 
 Building Skillets with Set Commands
 -----------------------------------
