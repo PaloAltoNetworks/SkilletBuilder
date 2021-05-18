@@ -36,13 +36,11 @@ You can click on the hyperlink menu below to quickly navigate to different parts
 
 1. `Prerequisites`_
 
-2. `Setting Up Your Environment`_
+2. `Building Skillets with Set Commands`_
 
-3. `Building Skillets with Set Commands`_
+3. `Test and Troubleshoot`_
 
-4. `Test and Troubleshoot`_
-
-5. `Document`_
+4. `Document`_
 
 
 Prerequisites
@@ -51,13 +49,13 @@ Prerequisites
 Before moving forward with the tutorial, please ensure the following prerequisites have been fulfilled.
 
 * Have an up and running NGFW Virtual Machine(VM)
-* A GitHub_ account with access permissions to edit repository content
-* Docker_ desktop installed, active and running on your local machine
+* A GitHub_ account with access permissions to edit repository content, please refer to "Insert link to getting started page here"
+* Docker_ desktop installed, active and running on your local machine, please refer to "Insert link to getting started page here"
 * Ability to access the NGFW device via GUI[1][2], SSH/CLI[3] and API
-* For users wishing to work through the command line have SLI_ set up and ready to go
+* For users wishing to work through the command line have SLI_ set up and ready to go, please refer to "Insert link to getting started page here"
 
   * SLI can be set up locally on your machine to run quick and efficient commands on your local CLI. SLI is a CLI interface used for interacting with Skillets. Please refer to and follow the steps in the linked SLI_ page to get started
-* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets
+* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets, please refer to "Insert link to getting started page here"
     
 It may also be useful to review the following topics before getting started:
 
@@ -75,235 +73,7 @@ It may also be useful to review the following topics before getting started:
 This tutorial will be split into 4 main sections below and can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended results via use of the PanHandler UI tool and the SLI command line interface tool.
 
 
-Setting Up Your Environment
----------------------------
-
-In this section we will set up everything that will be needed to successfully complete the tutorial. Your skillet building environment consists of 5 essential parts:
-
-1. Firewall
-  * `NGFW`_
-  * `Having the CLI Set Command Ready`_
-2. PanHandler
-  * `Running PanHandler`_
-  * `Restarting PanHandler`_
-3. GitHub
-  * `Initializing a New Repository and Working with SSH Keys`_
-  * `Create the File Structure for the Project in GitHub`_ 
-4. SkilletBuilder Tools
-  * `Importing SkilletBuilder Tools`_
-5. SLI
-  * `Running SLI`_
-  
-
-NGFW
-~~~~
-
-    This is the device that we will be working with and configuring during the tutorial. 
-
-    **Baseline Configuration:** It is recommended to capture a *baseline* configuration of your newly brought up and pre-configured
-    firewall. This is especially useful for testing purposes if you wish to quickly revert any changes made on the NGFW back to a
-    blank slate. This can be done on the NGFW UI via *Devices->Setup->Operations->Save* named configuration snapshot*.
-    
-    .. NOTE::
-    Some skillet configuration elements may be version specific and require unique skillets per software releases. Verify that your
-    NGFW **Software Version** is compatible with associated skillets.
-
-
-Working on the NGFW with the CLI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    This section is for users who are interested in learning how to configure the firewall through the CLI. 
-
-    The command below will help you understand how to log into the NGFW through the CLI, but please also refer to this
-    supplemental article_ for more in depth guidance on using the CLI with the NGFW. For information on making configurations on
-    the NGFW through the CLI please refer to this `knowledgebase article`_.
-
-    .. NOTE::
-      If you are logging into the NGFW for the first time via CLI, you may need to authorize the ECDSA key fingerprint. Type 'yes' 
-      before continuing.
-
-    .. code-block:: bash
-      
-      $ ssh {username}@{X.X.X.X}
-      
-    
-.. _article: https://docs.paloaltonetworks.com/pan-os/9-0/pan-os-cli-quick-start.html
-.. _`knowledgebase article`: https://knowledgebase.paloaltonetworks.com/KCSArticleDetail?id=kA10g000000ClHoCAK
-
-
-Running PanHandler
-~~~~~~~~~~~~~~~~~~
-
-  PanHandler is a utility that is used to create, load and view configuration templates and workflows. 
-
-  We will be using PanHandler to help create automation templates called *skillets*, and use these templates to automate the
-  process of deploying set commands to our NGFW.
-  
-  If you have not already installed or run the latest version of PanHandler, in order to access the latest version of the
-  PanHandler web UI you can do the following commands in your CLI.
-  
-  .. NOTE::
-    PanHandler is always coming out with new releases. In order to get the most out of using PanHandler be sure to frequently
-    check for updates for the latest version.
-  
-  .. code-block:: bash
-  
-    > curl -s -k -L http://bit.ly/2xui5gM | bash
-  
-  Then you want to input the following into your browser's URL.
-    
-  .. code-block:: html
-  
-    http://localhost:8080
-    
- Once you have entered the above command into your browser's URL you will be prompted for a username and password. The default username
- is *paloalto* and the default password is *panhandler*.
-
-  Please refer to the `PanHandler documentation`_ for more detailed information on the PanHandler utility tools.
-  
-.. _`PanHandler documentation`: https://panhandler.readthedocs.io/en/master/overview.html
-  
-
-Restarting PanHandler
-~~~~~~~~~~~~~~~~~~~~~
-
-  If you already installed PanHandler, you will eventually need to restart the container.
-
-  Navigate to the Docker Desktop Application on your local machine. You should see the 'panhandler' container listed on
-  the dashboard.
-
-  **insert pic here**
-
-  Click 'Start' to restart the container. You should now be able to access the PanHandler GUI at the same URL as before:
-
-  .. code-block:: bash
-
-      http://localhost:8080
-  
-  
-
-Working with GitHub, PanHandler and SSH Keys
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    Here we will be walking through logging into GitHub, creating and adding a repository to our GitHub account as well as some
-    GitHub best practices to keep in mind.
-
-:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
-
-  Log in to Github and click the small **+** sign in the upper right corner of your screen and click on **New repository** to add 
-  a new repo.
-  
-    .. image:: /images/set_command_tutorial/New_repo_github.png
-        :width: 600
-
-  Suggestions are to include a README file and MIT license.
-
-UPDATE IMAGE
-    .. image:: /images/configure_tutorial/create_new_repo_fields.png
-        :width: 600
-
-  Once created, click on the green **Code** button and underneath the ``Clone`` section click on **SSH**. Then click on the small
-  **clipboard** sign on the right of the SSH URL to copy the SSH key. Remember this step as we will circle back to this a little
-  later in the tutorial.
-
-UPDATE IMAGE
-    .. image:: /images/configure_tutorial/clone_new_repo.png
-       :width: 600
-
-
-  Next we want to clone this repository into PanHandler using the SSH key we have copied. Open up the PanHandler UI now and click
-  on the dropdown menu in the top right of the browser that says **paloalto**, from the dropdown click on **View SSH Public Key**.
-  
-  ADD IMAGE HERE
-  
-  This will take you to an ``SSH Public Key`` Page that has the ``ssh-rsa`` for you to copy. copy the whole block of text including 
-  ``ssh-rsa``.
-  
-  ADD IMAGE HERE
-  
-  Now navigate back to your GitHub page and click on your user bubble on the top right corner of the browser, it should be to the
-  right of the ``+`` sign we clicked on before. From the dropdown menu click on **settings**. 
-  
-  ADD IMAGE HERE
-  
-  On the left menu bar you want to click on **SSH and GPG Keys**. Then click on the green **New SSH key** and title it
-  ``PanHandler``. Paste the ``SSH Public Key`` we got from PanHandler earlier here and then click the green **Add SSH key**.
-  
-  ADD IMAGE HERE
-  
-  Upon finishing this step you should be able to import your newly created repository into PanHandler using SSH keys. go back to
-  PanHandler and click on the **PANHANDLER** drop down at the top left corner and the select **Import Skillets** from the menu.
-  
-  ADD IMAGE HERE
-  
-  Finally, at the bottom of the page under the ``Import Repository`` section you can choose your ``Repository Name`` and enter 
-  in the SSH Key that you got from your GitHub repo from the earlier step.
-  
-  ADD IMAGE HERE
-  
-  After this step you should be able to view your newly imported repository in PanHandler!
-  
-  ADD IMAGE HERE
- 
-  .. NOTE::
-    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
-    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
-    
-  .. NOTE::
-    Please reference this `PanHandler Link`_ for more information on working with private git repositories and SSH keys in
-    PanHandler. Please click on the side bar sections labeled **Adding a New Skillet Repository -> Using a Private Git Repository**.
-
-.. _add an SSH key for Github: https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh    
-.. _`PanHandler Link`: https://panhandler.readthedocs.io/en/master/using.html#adding-a-new-skillet-repository
-    
-    
-Create the File Structure for the Project in GitHub
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-  In your Terminal open the repo directory that was just cloned by doing the following commands and add the following folders:
-  
-  .. code-block:: bash
-
-      $ cd {Directory of cloned repo}
-      $ vim 
-
-    * A new folder that will contain the skillet content (eg. tag_edl_block_rules)
-    * In the new folder add an empty ``.skillet.yaml`` file 
-    
-        * The contents of the file will be populated later in the tutorial
-    * in the new folder add an empty README.md file 
-    
-        * The contents of the file will be populated later in the tutorial
-
-  The skillet directory structure will look like:
-
-UPDATE THIS IMAGE
-
-  .. image:: /images/configure_tutorial/configure_skillet_folder.png
-     :width: 250
-
-
-Running SLI
-~~~~~~~~~~~
-
-    SLI is a nifty tool that can be used to quickly interact with skillets and your NGFW through the CLI. 
-    
-    .. code-block:: bash
-    
-      > mkdir {directory name of your choice}
-      > cd {directory from step above}
-      > python3 -m venv ./venv (Create the venv)
-      > source ./venv/bin/activate (Activate the venv)
-      > pip install sli
-    
-    Please refer to the `SLI GitLab`_ documentation library for instructions on more in depth information on to installtion and use
-    of the SLI tool in your CLI and local machine.
-    
-.. _`SLI GitLab`: https://gitlab.com/panw-gse/as/sli
-    
 |
-
-
 Building Skillets with Set Commands
 -----------------------------------
 
@@ -455,11 +225,12 @@ Working with Snippets and Variables
       
     In section we will be editing the snippets and variables sections that were just rendered in the YAML file.
       
-    To access the set commands found within the snippets you want to view the snippets in `edit` mode by clicking the blue **edit** 
+    To access the set commands found within the snippets you want to view the snippets in `edit` mode by clicking the blue **Edit** 
     button all the way on the right of the snippets section. 
       
     .. image:: /images/set_command_tutorial/snippets_edit.png
         :width: 600 
+        
 |          
     Upon clicking the **edit** button you will land at an `Edit template snippet` page showcasing all the set commands retrieved from
     the config diff. Here is where we can get into working with a cool templating language called `Jinja`_, to allow for user inputted
@@ -469,6 +240,7 @@ Working with Snippets and Variables
     
     .. image:: /images/set_command_tutorial/set_command_snippet_edit.png
         :width: 600
+        
 |       
     .. NOTE::
         Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
@@ -482,9 +254,7 @@ Working with Snippets and Variables
           .. image:: /images/set_command_tutorial/out_of_order.png
               :width: 400 
         
-|
-    SHOW THIS IN VIDEO
-    
+|   
     This will take us to a page titled `Edit Text`, this is where we can make text substitutions for variables. For example if we 
     wanted to change all instances of the text "tag_name" into a jinja variable you would enter in "tag_name" to the left box and then
     whatever you wanted the variable to be called in the right box. It is best practice to name your variables something identifiable 
@@ -579,21 +349,10 @@ Working with Snippets and Variables
               :width: 600
           |
     
-    In order to test your skillet and see if it works as expected you can also click on the name of the generated skillet. If you go back to 
-    the `Repository Detail for SkilletBuilder` you can find and click on the skillet.
-    
-    .. image:: /images/set_command_tutorial/test_skillet.png
-        :width: 600 
-     
-|
-    This takes you to a `Render Template` page where you can customize and run your newly generated skillet such as custom variable names in
-    a web UI. Here you can alter the `tag_name` and `edl_name` and then hit **Submit** to view the rendered changes.
-        
-    .. image:: /images/set_command_tutorial/render_template.png
-        :width: 600 
-        
-|
-    
+    At this point you should have a fully functioning set commands skillet! However we aren't done yet, you always
+    want to be sure to test your skillet for any possible issues before committing it back to your repository. Please
+    refer to the `Testing and Troubleshooting` section in this tutorial for more guidance on testing methods.
+  
         
 .. _`Jinja`: https://skilletbuilder.readthedocs.io/en/latest/building_blocks/jinja_and_skillets.html
 .. _`variables`: https://skilletbuilder.readthedocs.io/en/latest/reference_examples/variables.html
@@ -641,6 +400,7 @@ Using SLI to Perform a Configuration Difference
     .. image:: /images/set_command_tutorial/sli_load_txt.png
       :width: 600    
       
+|
     .. NOTE:: 
       Another handy function that comes with SLI is its ability to locate errors in specific set commands. If any of the set commands
       entered in through SLI are faulty, SLI will error out and print the faulty set command line for your viewing pleasure!
@@ -650,58 +410,138 @@ Using SLI to Perform a Configuration Difference
         output all the set commands being passed to the NGFW as they SLI is running in place of the black loading bar showcasing
         % complete.
       
-    At this point all configurations should have been made in your NGFW, simply log in and commit the changes.
+    At this point all configurations should have been made in your NGFW, simply log in to validate and commit the changes in your NGFW.
 
 .. _`SLI documentation`: https://gitlab.com/panw-gse/as/sli
 
 
-Copy the Output to .skillet.yaml
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Copy the output text under the generated skillet and paste it into the .skillet.yaml file in your personal GitHub repository.
-    
-    Add Image Here
-    
-    .. NOTE:: 
-      At this point if building your own skillet you can use the :ref:`Skillet Test Tool` to play the skillet without variables. Common
-      reasons for raw output testing include the possible need for snippet reordering and confirmation that the snippet elements will load
-
 Test and Troubleshoot
 ---------------------
 
-Local Skillet Test
-~~~~~~~~~~~~~~~~~~
+Debug
+~~~~~
 
-  Before pushing the skillet to Github, use the :ref:`Skillet Test Tool` to validate the final YAML file formatting
-  and variable additions. Paste the contents of the YAML file into the test tool and submit. This will play the skillet
-  using the default variable values. Check that the configuration is correctly loaded into the NGFW.
+    Now that all the desired changes have been made to the Skillet, it is recommended to use the `Debug` tool to check for errors.
 
-  Common errors at this stage likely include YAML formatting issues, snippet ordering problems, or a variable typo.
-  
-  .. TIP::
-  YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
-  it can often also be frustrating to work with. A good reference to use to check that your
-  YAML syntax is up to standard is the `YAML Lint site <http://www.yamllint.com/>`_.
-  Test against a live device and fix/tune as needed.
+    At the bottom of the Skillet Editor page, click the green **Debug** button.
 
-Testing with SLI
+    .. image:: /images/set_command_tutorial/debug_button.png
+        :width: 600  
+
+    This tool allows you to do some quick testing of the snippets to make sure they function as expected.
+    In the context section, enter values based on your information:
+
+    .. image:: /images/set_command_tutorial/context_section.png
+        :width: 600  
+
+    In the 'Step Through Snippets' section click the **Play** button to execute the snippet.
+    Expected output may look something like the screenshot below:
+
+    .. image:: /images/set_command_tutorial/play_snippet.png
+        :width: 600 
+
+    Continue to step through the snippets. If you encounter an error, be sure to check the syntax in the 'Context' section.
+    Look for missing quotes '"', colons ':', etc.
+
+    Once you have finished debugging, click the orange **Dismiss** button towards the bottom to close the page.
+
+Play the Skillet
 ~~~~~~~~~~~~~~~~
 
+    On the Repository Details page, click on the Skillet in the 'Skillets' section.
+
+    .. image:: /images/set_command_tutorial/test_skillet.png
+        :width: 600 
+
+    Now you should recognize all the variables that you added earlier on in the tutorial.
+    Add your desired values for the variables. and click **Submit**.
+
+    .. image:: /images/set_command_tutorial/render_template.png
+        :width: 600 
+
+    After submitting your customized variable names you will reach a page titled `Output`. Here you will be shown the output
+    of your set command template skillet. You should see all the proper set commands with the respective variable names
+    substituted where they should be. 
+
+    .. image:: /images/set_command_tutorial/template_skillet_output.png
+        :width: 600 
+
+    If you receive errors messages, common issues may be:
+
+      - Snippet load order
+      - Set command load order, make sure set commands were loaded in the right order
+      - Variable typos in the snippet section or not included in the variables section
+      - YAML file invalidity
+      
+      
+    .. TIP::
+       YAML is notoriously finicky about whitespace and formatting. While it's a relatively simple structure and easy to learn,
+       it can often also be frustrating to work with. A good reference to use to check that your
+       YAML syntax is up to standard is the `YAML Lint site <http://www.yamllint.com/>`_.
+       Test against a live device and fix/tune as needed.
+
+    Continue to edit, push, and test the skillet until it is free of errors and performs as expected.
 
 
-  * Use the :ref:`Skillet Test Tool` to quick test the skillet
-  * Import the skillet into panHandler to test web UI and config loading
-  * Fix any UI or loading errors
-  * Tune the web UI, configuration elements
+Commit and Save
+~~~~~~~~~~~~~~~
+
+  The skillet is now ready to be saved and committed to the GitHub repository.
+  At the bottom of the Skillet Editor, enter a relevant commit message:
+
+  **INSERT PIC HERE**
+
+  Click 'Save'.
+
+  Now your skillet should show up in the 'Skillets' section of the Repository Details.
+
+  **INSERT PIC HERE**
 
 
 Document
 --------
 
-  The final and important steps are good documentation and sharing with the community.
+    The final stage is to document key details about the skillet to provide contextual information to the user community.
 
-  * READme.md documentation in the Github repo
-  * Skillet District posting
-  * Others can now import into their tools and use the new skillet
+    The skillet repo created has a placeholder README.md and earlier in the tutorial we created a README.md within
+    the skillet directory. The main README gives an overview of the repo for any user viewing the page. The skillet
+    directory README should provide skillet-specific details such as what the skillet does, variable input descriptions,
+    and caveats and requirements.
+    
+    README.md uses the markdown format. Numerous examples can be found in the skillet files. There is also a
+    wide array of `markdown cheat sheets`_ you can find using Google searches.
+    Below are a few common markdown elements you can use in your documentation. Most EDIs can display the user view
+    as you edit the markdown file.
+    
+.. _`markdown cheat sheets`: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+    +-------------------------------------------------------------------------------------+
+    | Markdown syntax options                                                             |
+    +=====================================================================================+
+    | `#, ##, ###` for header text levels (H1, H2, H3, etc.)                              |
+    +-------------------------------------------------------------------------------------+
+    | `**text**` for bold text                                                            |
+    +-------------------------------------------------------------------------------------+
+    | `*text*` or `_text_` to underline                                                   |
+    +-------------------------------------------------------------------------------------+
+    | `1. text` to create numbered lists                                                  |
+    +-------------------------------------------------------------------------------------+
+    | `* text`, `+ text`, `- text` for bullet style lists                                 |
+    +-------------------------------------------------------------------------------------+
+    | `[text](url)` for inline web links                                                  |
+    +-------------------------------------------------------------------------------------+
+    | \`test\` to highlight a text string                                                 |
+    +-------------------------------------------------------------------------------------+
+    | \`\`\`text block - one or more lines\`\`\` to create a highlighted text block       |
+    +-------------------------------------------------------------------------------------+
+    
+    .. TIP::
+      To view markdown edits in existing GitHub repos, click on the README.md file, then use the ``Raw``
+      option to display the output as raw markdown text. From here you can copy-paste or review formatting.
+      
+    Sample README.md file for the tutorial skillet. Paste into the skillet README file and push to Github.
+    View the skillet repo to see the updated page text.
+
 
 
 
