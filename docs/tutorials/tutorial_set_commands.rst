@@ -544,6 +544,66 @@ Document
     Sample README.md file for the tutorial skillet. Paste into the skillet README file and push to Github.
     View the skillet repo to see the updated page text.
 
+  .. code-block:: md
+
+      # Sample Configuration Skillet
+
+      This is used in the training material as part of the tutorial.
+
+      The skillet has 3 xml elements:
+
+      * tag: create a tag using inputs for name, description, and color
+      * external-list: create an edl using inputs for name, description, and url
+      * security policies: inbound and outbound security policies referencing the edl and tag names
+
+      ## variables
+
+      * tag_name: name of a newly created tag and used in the security rules
+      * tag_description: text field to describe the tag
+      * tag_color: dropdown mapping color names to color numbers (required in the xml configuration)
+
+      * edl_name: name of the newly created external-list
+      * edl_description: text field used to describe the external-list
+      * edl_url: url used for the external-list
+
+      The 'recurring' value for the EDL is set to five-minutes. This could be added as a variable but for this example, the
+      value is considered a recommended practice so not configurable in the skillet.
+
+      The EDL type is set to IP since used in the security policy and is not configurable in the skillet.
+
+      ## security policy referencing variables
+
+      The security policy does not have its own variables asking for rule name, zones, or actions. The rules are
+      hardcoded with 'any' for most attributes and action as deny to block traffic matching the EDL IP list.
+
+      The security rule names use the EDL name followed by '-in' and '-out' to create unique security policies for each
+      EDL. This is denoted in the yaml file with ```{{ edl_name }}``` included in the rule name.
+
+Live Community
+~~~~~~~~~~~~~~
+
+    Skillets can be shared in the Live community as Community or Personal skillets. Community Skillets
+    are expected to have a higher quality of testing, documentation, and ongoing support. Personal skillets
+    can be shared as-is to create awareness and eventually become upgraded as Community Skillets.
+
+SkilletBuilder Support Policy
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    The code and templates in the repo are released under an as-is, best effort,
+    support policy. These scripts should be seen as community supported and
+    Palo Alto Networks will contribute our expertise as and when possible.
+    We do not provide technical support or help in using or troubleshooting the
+    components of the project through our normal support options such as
+    Palo Alto Networks support teams, or ASC (Authorized Support Centers)
+    partners and backline support options. The underlying product used
+    (the VM-Series firewall) by the scripts or templates are still supported,
+    but the support is only for the product functionality and not for help in
+    deploying or using the template or script itself. Unless explicitly tagged,
+    all projects or work posted in our GitHub repository
+    (at https://github.com/PaloAltoNetworks) or sites other than our official
+    Downloads page on https://support.paloaltonetworks.com are provided under
+    the best effort policy.
+
 
 
 
