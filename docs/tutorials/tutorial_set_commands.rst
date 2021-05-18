@@ -176,6 +176,8 @@ Generate the Set Commands Skillet
         :width: 600
         
 |        
+
+
     .. NOTE::
         There is also an option to upload previously saved NGFW XML files manually to the PanHandler SkilletBuilder utility from your local machine. 
         To do this you would have to find the box titled `Generate Set Commands From Uploaded Files` from the previous step and click on the 
@@ -243,6 +245,8 @@ Working with Snippets and Variables
         :width: 600
         
 |       
+
+
     .. NOTE::
         Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
         For example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
@@ -542,7 +546,8 @@ Document
     .. TIP::
       To view markdown edits in existing GitHub repos, click on the README.md file, then use the ``Raw``
       option to display the output as raw markdown text. From here you can copy-paste or review formatting.
-      
+|
+
     Sample README.md file for the tutorial skillet. Paste into the skillet README file and push to Github.
     View the skillet repo to see the updated page text.
 
