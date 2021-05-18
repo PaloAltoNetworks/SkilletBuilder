@@ -508,18 +508,58 @@ Play the Skillet
 Commit and Save
 ~~~~~~~~~~~~~~~
 
-  The skillet is now ready to be saved and committed to the GitHub repository. On the `Repository Detail for Set_Commands_Tutorial` click
-  on the green **Push Local Changes** button to commit your changes back to your GitHub repository.
+    The skillet is now ready to be saved and committed to the GitHub repository. On the `Repository Detail for Set_Commands_Tutorial` click
+    on the green **Push Local Changes** button to commit your changes back to your GitHub repository. Doing this will push the local changes you
+    made to your skillet in PanHandler back to GitHub under the chosen branch, in this case the changes will be pushed under the `Local` branch.
 
-  **INSERT PIC HERE**
+    .. image:: /images/set_command_tutorial/push_github.png
+        :width: 600 
 
-  Click 'Save'.
+|
+    If the push was successful you should see a green message stating `Changes Pushed Upstream`!
+    
+    .. image:: /images/set_command_tutorial/changes_pushed.png
+        :width: 600 
 
-  Now your skillet should show up in the 'Skillets' section of the Repository Details.
+|
+    Now navigating back to your GitHub repository for this tutorial, you will want to locate the branches dropdown menu and click on it
+    to expand your branch options. In this case click on **Main** branch and then navigate to the branch that your changes got pushed to,
+    here it would be **Local**.
 
-  **INSERT PIC HERE**
+    .. image:: /images/set_command_tutorial/github_branch.png
+        :width: 600 
+        
+|
+    Once in the correct branch you will want to merge your changes into the main branch via a pull request. You will want to find the section
+    shown below and then click on **Pull Request** in order to start merging the branches.
+    
+    .. image:: /images/set_command_tutorial/find_pull.png
+        :width: 600 
+        
+|
+    On the `Open a Pull Request` page you should give a descriptive title on what functionality the pull request will add to the repository.
+    You can also go into more detail in the `description` portion of the pull request. Once everything has been filled in click the 
+    **Create Pull Request** button.
+    
+    .. image:: /images/set_command_tutorial/pull_message.png
+        :width: 600 
 
+|       
+    You will then find yourself on the final page of the pull request. Here you should make sure there are no merge conflicts and everything
+    is cleared to merge. If everything checks out you should click the **Merge Pull Request** button and then the **Confirm Merge** button
+    that replaces it once clicked. 
+    
+    .. image:: /images/set_command_tutorial/final_pull.png
+        :width: 600 
+ 
+|
+    You should see a message stating `Pull request successfully merged and closed`, upon seeing this message you can click the 
+    **Delete branch** button and navigate back to your main repository to see your changes all successfully merged!
+    
+    .. image:: /images/set_command_tutorial/merge_done.png
+        :width: 600 
 
+|
 Document
 --------
 
