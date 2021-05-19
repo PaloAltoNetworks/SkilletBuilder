@@ -67,7 +67,8 @@ collection
 ~~~~~~~~~~
 
   The `collection` label is used to group like Skillets. A skillet may belong to multiple collections. The collection
-  label value is a list of collection to which the skillet belongs.
+  label value is a list of collection to which the skillet belongs. Skillets with no `collection` label will be placed
+  in the *Unknown* Collection.
 
 .. code-block:: yaml
 
@@ -152,6 +153,13 @@ The variables section is used to define variables and web UI attributes.
 name
 ~~~~
     name assigned to the variable
+
+    .. note::
+
+        The variable name must not contain special characters such as '-' or '*' or spaces. Variable names can be any
+        length and can consist of uppercase and lowercase letters ( A-Z , a-z ), digits ( 0-9 ), and the underscore
+        character ( _ ). An additional restriction is that, although a variable name can contain digits, the first
+        character of a variable name cannot be a digit.
 
 description
 ~~~~~~~~~~~
