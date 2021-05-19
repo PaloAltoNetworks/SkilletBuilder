@@ -645,6 +645,9 @@ Live Community
     Skillets can be shared in the Live community as Community or Personal skillets. Community Skillets
     are expected to have a higher quality of testing, documentation, and ongoing support. Personal skillets
     can be shared as-is to create awareness and eventually become upgraded as Community Skillets.
+    
+    Click `here <https://live.paloaltonetworks.com/t5/quickplay-solutions/ct-p/Quickplay_Solutions>`_ to view the
+    Quickplay Solutions homepage.
 
 SkilletBuilder Support Policy
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
