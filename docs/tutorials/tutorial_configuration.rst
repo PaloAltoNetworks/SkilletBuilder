@@ -135,7 +135,7 @@ Initialize a New Repository and Import it into PanHandler
     **INSERT PIC HERE**
 
   Once created, copy the clone URL from the GUI.
-  This is found with the green ‘Code’ button and is NOT the browser URL.
+  This is found with the green ‘Code’ button and is NOT the browser URL. Click the SSH option.
 
     **INSERT PIC HERE**
 
@@ -144,7 +144,7 @@ Initialize a New Repository and Import it into PanHandler
   **INSERT PIC HERE**
 
   Scroll down the page and locate the 'Import Repository' Section. Enter the name of the repository and paste the URL
-  you copied from the above step. Click 'Submit'.
+  you copied from the above step. Click 'Submit'. Make sure you are using the SSH URL as opposed to the HTTPS URL.
 
   **INSERT PIC HERE**
 
@@ -161,6 +161,7 @@ Install SLI
 In a terminal/bash shell enter the following to create a virtual python environment and install SLI.
 
 .. code-block:: bash
+
   > mkdir {directory name of your choice}
   > cd {directory from step above}
   > python3 -m venv ./venv (Create the venv)
@@ -280,8 +281,8 @@ Create the Configuration in the NGFW
     :width: 800
 |
 
-Generate the Skillet from Uploaded Files
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Generate the Skillet from Uploaded Files [Offline Mode]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
   In the PanHandler dropdown menu, click 'Skillet Repositories' and locate the skillet repository that you imported in an
   above step. Click 'Details'.
@@ -293,20 +294,20 @@ Generate the Skillet from Uploaded Files
   Click either of the 'Create Skillet' buttons on the page.
 
     .. image:: /images/configure_tutorial/create_skillet_button.png
-    :width: 800
+      :width: 800
 |
 
   Locate the section 'Generate From Uploaded Files' and Click 'Upload'.
 
   .. image:: /images/configure_tutorial/gen_from_files.png
-    :width: 700
+      :width: 700
 |
 
   Recall the two configuration files that you exported in an above step. Upload the 'baseline' or pre-configuration file
   in the pre-configuration section. Upload the post-configuration file in the section below. Click 'Submit'.
 
     .. image:: /images/configure_tutorial/pre_post_configs.png
-    :width: 700
+      :width: 700
 |
 
   Edit the Initial Config Settings for the Skillet. Here are some suggested inputs for this tutorial:
@@ -319,21 +320,71 @@ Generate the Skillet from Uploaded Files
   - Commit Message: Create New Skillet
 
     .. image:: /images/configure_tutorial/initial_skillet_config.png
-    :width: 700
+      :width: 700
 |
 
   To continue on with the tutorial click to go to the next section: `Add Variables to Snippets`_
 
-Generate the Skillet from PAN-OS
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Generate the Skillet from PAN-OS [Online Mode]
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  **SKIP**
+  In the PanHandler dropdown menu, click 'Skillet Repositories' and locate the skillet repository that you imported in an
+  above step. Click 'Details'.
 
-Generate the Skillet with SLI
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  .. image:: /images/configure_tutorial/repo_details.png
+    :width: 400
+|
 
-If you prefer to use the command line, SLI can also extract the difference between two configuration files.
-**add pics and more context**
+  Click either of the 'Create Skillet' buttons on the page.
+
+    .. image:: /images/configure_tutorial/create_skillet_button.png
+      :width: 800
+|
+
+  Locate the section 'Generate From PAN-OS' and Click 'Generate'.
+
+  .. image:: /images/configure_tutorial/gen_from_files.png
+      :width: 700
+|
+
+  Enter in the NGFW information and click 'Submit'. This sends an API call to the NGFW and pulls all the configuration
+  information into PanHandler.
+
+  **INSERT PIC HERE**
+
+  Choose your pre-configuration baseline file and your post-configuration file and click 'Submit'.
+
+  **INSERT PIC HERE**
+
+  Edit the Initial Config Settings for the Skillet. Here are some suggested inputs for this tutorial:
+
+  - Skillet ID [must be unique]: Tutorial_Skillet_New
+  - Skillet Label: Tutorial Skillet
+  - Skillet Description: Skillet generated from NGFW using skillet_baseline.xml and skillet_builder.xml
+  - Skillet Type: PAN-OS
+  - Branch: local
+  - Commit Message: Create New Skillet
+
+    .. image:: /images/configure_tutorial/initial_skillet_config.png
+      :width: 700
+|
+  To continue on with the tutorial click to go to the next section: `Add Variables to Snippets`_
+
+Use SLI to Perform a Configuration Difference
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+  If you prefer to use the command line, SLI can also extract the difference between two configuration files.
+  See instructions above for installing SLI locally on your machine.
+
+  To get the difference between two configs in XML format, run the following command:
+
+  .. code-block:: bash
+
+    > sli diff -of xml
+
+  After entering this command, you will be prompted to enter your NGFW information. After entering the correct
+  information you will receive the configuration differences between the candidate and running configs output as
+  XML (seen below).
 
 
 Add Variables to Snippets
@@ -347,25 +398,25 @@ Add Variables to Snippets
   the pieces of the NGFW configuration that were found to be different between the two files uploaded.
 
     .. image:: /images/configure_tutorial/skillet_editor_snippets.png
-    :width: 700
+      :width: 700
 |
 
   Click the 'Edit' button to the far right of the external-list snippet.
 
     .. image:: /images/configure_tutorial/external_list_edit.png
-    :width: 700
+      :width: 700
 |
 
   On the 'Edit PAN-OS Snippet' Page click the 'Edit' button in the bottom right corner.
 
     .. image:: /images/configure_tutorial/snippet_edit_button.png
-    :width: 700
+      :width: 700
 |
 
   In this editor you can use the 'Text to Replace' feature at the bottom of the page to create the variables.
 
     .. image:: /images/configure_tutorial/text_to_replace.png
-    :width: 700
+      :width: 700
 |
 
   Locate the 'entry name' element and enter 'edl_name' in both text boxes at the bottom of the page.
@@ -373,36 +424,49 @@ Add Variables to Snippets
   those changes now. Just make sure you take note of what your variables are called. It is best practice to name the
   variable something that is easily identifiable.
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/edl_name_variable.png
+      :width: 700
 
-  On the right side, click the replace button **INSERT PIC HERE**
+  On the right side, click the replace button [seen above] to replace the text with the variable in the editor.
   This will change the variable to align with Jinja formatting.
   You should see the double set of curly brackets appear around the variable name.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/edl_name_replaced.png
+      :width: 700
+|
 
   In this snippet, there are a few other variables to add.
   Copy the contents of everything inside the 'url' element, paste it in the 'Text to Replace' section.
   Name the variable 'edl_url' and click the replace button again.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/edl_url_variable.png
+      :width: 700
+|
 
   For the description element, do the same steps as above for 'edl_description'.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/edl_description_variable.png
+      :width: 700
+|
 
   You should have three variables input into the EDL snippet at this point.
   Click the 'Update' button at the bottom right in order to save the variables.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/edl_vars_updated.png
+      :width: 700
+|
 
   Click 'Update' again in the Editor page to save the snippet edits.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/update_edl_snippet.png
+      :width: 700
+|
 
   In the main Skillet Editor, you should now see three variables populated in the Variables section.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/vars_section_edl.png
+      :width: 700
+|
 
   Next, locate the 'tag' snippet and open the editor. There are three variables to add in this section.
 
@@ -412,7 +476,9 @@ Add Variables to Snippets
 
   Follow the same instructions from the previous to replace the text with the variable names.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/tag_variables_replaced.png
+      :width: 700
+|
 
   .. NOTE::
     Don't forget to click the 'Update' button on both pages to save your work!
@@ -429,13 +495,18 @@ Edit Variable Types
   If you noticed earlier on in the tutorial, we chose red for the tag_color in the GUI, but the color in XML was color1.
   A user will likely not know the number associated with the color they want, so this will make it easier.
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/all_variables.png
+      :width: 700
+|
 
-  **INSERT PIC HERE**
-
-  Click the 'Edit' button on the tag_color variable.
+  Click the 'Edit' button on the right side of the tag_color variable.
   Under 'Variable Type:' select 'Dropdown Select'.
   This should reveal another section of settings.
+
+  .. image:: /images/configure_tutorial/edit_variable_type.png
+      :width: 700
+|
+
   Here is a list of suggested colors associated with their number [key,value].
 
   +-------------------------------------------------------------------------------------+
@@ -461,7 +532,9 @@ Edit Variable Types
   Enter the key,value of the color you want and click the 'plus' button to add it.
   Add 3-6 colors and click 'Update'.
 
-  **INSERT PIC HERE**
+    .. image:: /images/configure_tutorial/tag_colors.png
+      :width: 700
+    |
 
   Please refer to the Variables_ Page for more information on variable types.
 
@@ -477,76 +550,124 @@ Debug
 
   At the bottom of the Skillet Editor page, click the green 'Debug' button.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/green_debug.png
+      :width: 700
+|
 
   This tool allows you to do some quick testing of the snippets to make sure they function as expected.
-  In the context section, enter values based on your information:
+  In the 'Context' section, enter values based on your information:
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/debug_context.png
+      :width: 700
+|
 
   In the 'Step Through Snippets' section click the 'play' button to execute the snippet.
+
+  .. image:: /images/configure_tutorial/play_snippets.png
+      :width: 700
+|
+
   Expected output may look something like the screenshot below:
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/debug_snippet_output.png
+      :width: 700
+|
 
   Continue to step through the snippets. If you encounter an error, be sure to check the syntax in the 'Context' section.
   Look for missing quotes '"', colons ':', etc.
 
   Once you have finished debugging, click the orange 'Dismiss' button to close the page.
 
+  .. image:: /images/configure_tutorial/dismiss_snippet_debug.png
+      :width: 700
+|
 
 Commit and Save
 ~~~~~~~~~~~~~~~
 
-  The skillet is now ready to be saved and committed to the GitHub repository.
+  The skillet is now ready to be saved and committed to PanHandler.
   At the bottom of the Skillet Editor, enter a relevant commit message:
 
-  **INSERT PIC HERE**
-
+  .. image:: /images/configure_tutorial/commit_and_save.png
+      :width: 700
+|
 
   Click 'Save'.
 
   Now your skillet should show up in the 'Skillets' section of the Repository Details.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/skillets_section.png
+      :width: 700
+|
 
+
+  To push your local repository changes to GitHub, click the green 'Push Local Changes' button on the
+  'Repository Details' page.
+
+  **INSERT PIC HERE**
 
 Play
 ~~~~
 
   On the Repository Details page, click on the Skillet in the 'Skillets' section.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/skillet_link.png
+      :width: 700
+|
+
+  Skillet Controls Explained (from Left to Right)
+
+  - Add skillet to favorites
+  - View skillet YAML
+  - Edit the skillet
+  - Copy skillet contents into context
+  - Delete the skillet
+
+  .. image:: /images/configure_tutorial/skillet_controls.png
+      :width: 700
+|
 
   Now you should recognize all the variables that you added earlier on in the tutorial.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/variables_empty.png
+      :width: 700
+|
 
   Add your desired values for the variables. Click 'Submit'
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/variables_user_input.png
+      :width: 700
+|
 
   Enter in the information for your NGFW (device to be configured).
   Under Commit Options, it is recommended to keep 'Do not Commit. Push changes only'.
   This will save time during the testing phase.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/NGFW_info.png
+      :width: 700
+|
 
   Before clicking 'Submit', you can also view the 'Debug' page. This gives an overview of each snippet. You can check here
   to make sure your user inputs are correct and the XML is formatted properly.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/debug_output.png
+      :width: 700
+|
 
   Click 'Continue' to exit the debugger.
   Click 'Submit' to play the Skillet. It may take between 30 seconds - 1 minute to finish.
   Once pushed, you should see this message:
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/push_skillet.png
+      :width: 700
+|
 
   It is recommended to also check the NGFW to make sure the changes have been pushed.
   Once you have confirmation that the skillet is working as expected, you can change the Commit Options to 'Commit and wait to finish'
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/commit_skillet.png
+      :width: 700
+|
 
   If you receive errors messages, common issues may be:
 
@@ -556,10 +677,52 @@ Play
 
   Continue to edit, push, and test the skillet until it is free of errors and can be loaded onto the NGFW.
 
-Testing with SLI
-~~~~~~~~~~~~~~~~
+Play a Skillet with SLI
+~~~~~~~~~~~~~~~~~~~~~~~
 
-  **add content here**
+  Clone your skillet of choice in the SLI directory you are currently working in.
+
+  .. code-block:: bash
+
+     > git clone {skillet repo}
+
+
+  To load and view the skillets available in the current working directory, type the following:
+
+  .. code-block:: bash
+
+    > sli load
+
+
+  You can also specify a skillet directory by:
+
+  .. code-block:: bash
+
+    > sli load -sd {skillet directory}
+
+
+  To play the skillet, type the following:
+
+  .. code-block:: bash
+
+    > sli configure --name {name of skillet}
+
+
+  To specify a directory when playing the skillet enter:
+
+  .. code-block:: bash
+
+    > sli configure -sd {skillet directory} --name {name of skillet}
+
+
+  After entering this command, you will be prompted to enter your NGFW information and the values to the variables
+  in the skillet.
+
+  **INSERT PIC HERE**
+
+  .. NOTE::
+    If tag_color is a variable in the skillet, you must enter the color number (color1, color2, etc.) and NOT
+    the actual color, otherwise the skillet will not work. Please refer to the color mappings table above.
 
 
 Document
@@ -658,3 +821,5 @@ Live Community
   are expected to have a higher quality of testing, documentation, and ongoing support. Personal skillets
   can be shared as-is to create awareness and eventually become upgraded as Community Skillets.
 
+  Click `here <https://live.paloaltonetworks.com/t5/quickplay-solutions/ct-p/Quickplay_Solutions>`_ to view the
+  Quickplay Solutions homepage.
