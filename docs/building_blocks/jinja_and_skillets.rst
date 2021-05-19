@@ -237,3 +237,31 @@ Filters are used by including `` | filter `` after a variable:
 | var | int                                    |  convert a string to an integer                 |
 +----------------------------------------------+-------------------------------------------------+
 
+Jinja Whitespace Control
+------------------------
+
+Care must usually be taken to ensure no extra whitespace creeps into your templates due to Jinja looping
+constructs or control characters. For example, consider the following fragment:
+
+.. code-block:: jinja
+
+    <dns-servers>
+    {% for member in CLIENT_DNS_SUFFIX %}
+        <member>{{ member }}</member>
+    {% endfor %}
+    </dns-servers>
+
+This fragment will result in blank lines being inserted where the `for` and `endfor` control tags are placed. To
+ensure this does not happen and to prevent any unintentioal whitespace, you can use Jinja whitespace control like
+so:
+
+.. code-block:: jinja
+
+    <dns-servers>
+    {%- for member in CLIENT_DNS_SUFFIX %}
+        <member>{{ member }}</member>
+    {%- endfor %}
+    </dns-servers>
+
+.. note:: Note the '-' after the leading '{%'. This instructs jinja to remove these blank lines in the resulting
+    parsed output template.
