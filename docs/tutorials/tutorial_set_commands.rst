@@ -228,6 +228,7 @@ Generate the Set Commands Skillet
     will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
     the config diff.
 
+|
     The rendered YAML file contains:
 
       * Preamble populated with the web form values
