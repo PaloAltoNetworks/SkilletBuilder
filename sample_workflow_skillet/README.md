@@ -1,6 +1,7 @@
 # Sample Workflow Skillet
 
-This is used in the training material as part of the Workflow tutorial.
+This is used in the training material as part of the SkilletBuilder
+[Workflow tutorial](https://skilletbuilder.readthedocs.io/en/latest/tutorials/tutorial_workflow.html).
 
 The solution utilizes three skillets:
 
