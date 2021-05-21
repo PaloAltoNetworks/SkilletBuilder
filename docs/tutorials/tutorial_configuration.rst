@@ -335,11 +335,15 @@ Generate the Skillet from PAN-OS [Online Mode]
   Enter in the NGFW information and click 'Submit'. This sends an API call to the NGFW and pulls all the configuration
   information into PanHandler.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/connect_to_device.png
+      :width: 700
+|
 
   Choose your pre-configuration baseline file and your post-configuration file and click 'Submit'.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/pre_post_configs.png
+      :width: 700
+|
 
   Edit the Initial Config Settings for the Skillet. Here are some suggested inputs for this tutorial:
 
@@ -571,7 +575,9 @@ Commit and Save
   To push your local repository changes to GitHub, click the green 'Push Local Changes' button on the
   'Repository Details' page.
 
-  **INSERT PIC HERE**
+  .. image:: /images/configure_tutorial/push_local_changes.png
+      :width: 700
+|
 
 Play
 ~~~~
@@ -643,12 +649,6 @@ Play
     - Invalid input data that passes web form validation but not NGFW validation checks
 
   Continue to edit, push, and test the skillet until it is free of errors and can be loaded onto the NGFW.
-
-Play a Skillet with SLI
-~~~~~~~~~~~~~~~~~~~~~~~
-
-
-
 
 Document
 -------------
