@@ -111,8 +111,7 @@ help_link
           help_link: https://panhandler.readthedocs.io/en/master/variables.html
 
 
-help_link_title
-~~~~~~~~~~~~~~~
+    .. _skilletlib Workflow with Transform:https://github.com/PaloAltoNetworks/skilletlib/blob/master/example_skillets/workflow_transform/workflow_transform.skillet.yaml
 
   The **help_link_title** will set the displayed title of the **help_link** in the Help dialog.
 
@@ -284,6 +283,27 @@ transform
 
     .. _skilletlib Workflow with Transform:https://github.com/PaloAltoNetworks/skilletlib/blob/master/example_skillets/workflow_transform/workflow_transform.skillet.yaml
 
+        See Example here: :ref:`example_rest` and here: :ref:`example_rest_with_output`
+
+    * **template**
+
+        * **name** - name of this snippet
+        * **file** - path to the Jinja2 template to load and parse
+        * **template_title** - (Optional) title to include in rendered output
+        * **when** - (Optional) conditional logic for snippets execution
+
+    * **terraform**
+
+        * None - snippets are not used for terraform
+
+        See Example here: :ref:`example_terraform`
+
+    * **workflow**
+
+        * **name** - name of this sub-skillet to play
+        * **when** - (Optional) conditional logic for sub-skillet execution
+        * **transform** - (Optional) mapping of another snippet's output variable to this
+          snippet's input variable.
 
 |
 ------------------------------------------------------
@@ -335,6 +355,7 @@ custom inputs
 ~~~~~~~~~~~~~
     In this case instead of a **cmd** option, the skillet includes a command line string, such as ``ansible playbook command``.
 
+    * **rest**
 
 |
 ------------------------------------------------------
@@ -417,4 +438,11 @@ Below describes the fields for a snippet depending on the skillet type:
         * **transform** - (Optional) mapping of another snippet's output variable to this
           snippet's input variable.
 
+        * **name** - unique name for this rest operation
+        * **path** - REST URL path component ``path: http://host/api/?type=keygen&user={{ username }}&password={{ password }}``
+        * **operation** - type of REST operation (GET, POST, DELETE, etc)
+        * **payload** - path to a Jinja2 template to load and parse to be send as POSTed payload. For ``x-www-form-urlencded``,
+          this must be a json dictionary
+        * **headers** - a dict of key value pairs to add to the http headers. For example, ``Content-Type: application/json``.
+        * **when** - (Optional) conditional logic for snippets execution
 

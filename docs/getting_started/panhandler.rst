@@ -90,7 +90,7 @@ To remove all unused containers, networks, images (both dangling and unreference
 Playing Skillets from the Repo Detail Page
 ------------------------------------------
 
-Instead of going back and forth between the repo detail andcollections page, you can run skillets from the repo Detail page.
+Instead of going back and forth between the repo detail and collections page, you can run skillets from the repo Detail page.
 
   .. image:: /images/panhandler/panhandler_repo_detail.png
      :width: 600
