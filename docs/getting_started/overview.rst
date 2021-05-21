@@ -12,7 +12,6 @@ This video contains a quick Skillet overview and a few demonstrations playing Sk
     id=8b8cb56c-f1dd-4d6e-821e-ab98014d9046&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
     interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
-|
 
 The purpose of Skillets is to capture knowledge and expertise into sharable units that can be
 consumed by users to reduce complexity. This can complement or remove the requirement to
@@ -90,3 +89,12 @@ Supported players and utilities include:
   .. _skilletCLI or interacting with skillets: https://github.com/adambaumeister/skilletcli
   .. _Ansible Skillet Collection: https://github.com/PaloAltoNetworks/skillet_ansible
 
+
+
+Skillet Implementation
+----------------------
+
+Skillets are implemented using the `'Command' Design Pattern <https://en.wikipedia.org/wiki/Command_pattern>`_.
+This allows all aspects of working with APIs to be encapsulated behind a clean, single method interface. This
+significantly reduces the complexity of building automation tooling that often requires access
+to many different APIs, vendor devices, and systems.
