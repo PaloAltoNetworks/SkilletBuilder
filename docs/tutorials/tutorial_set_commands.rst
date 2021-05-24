@@ -51,7 +51,6 @@ Before moving forward with the tutorial, please ensure the following prerequisit
 * Have an up and running NGFW Virtual Machine(VM)
 * Familiarity with `SkilletBuilder tooling <https://skilletbuilder.readthedocs.io/en/latest/reference_examples/builder_tools.html>`
 * A GitHub_ account with access permissions to edit repository content
-
   * Please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/github.html>`_ for guidance on setting up GitHub for this tutorial
 * Docker_ desktop installed, active and running on your local machine
 * Ability to access the NGFW device via the GUI[1][2] and SSH/CLI[3]
