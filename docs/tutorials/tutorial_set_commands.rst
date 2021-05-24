@@ -50,17 +50,11 @@ Before moving forward with the tutorial, please ensure the following prerequisit
 
 * Have an up and running NGFW Virtual Machine(VM)
 * Familiarity with `SkilletBuilder tooling <https://skilletbuilder.readthedocs.io/en/latest/reference_examples/builder_tools.html>`
-* A GitHub_ account with access permissions to edit repository content
-  * Please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/github.html>`_ for guidance on setting up GitHub for this tutorial
+* A GitHub_ account with access permissions to edit repository content. Please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/github.html>`_ for guidance on setting up GitHub for this tutorial
 * Docker_ desktop installed, active and running on your local machine
 * Ability to access the NGFW device via the GUI[1][2] and SSH/CLI[3]
-* For users wishing to work through the command line have SLI_ set up and ready to go, please refer to "Insert link to getting started page here"
-
-  * Please refer to and follow the steps in the linked `SLI page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/sli.html>`_ to get started with using SLI within the context of this tutorial 
-  
-* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets
-
-  * For more assistance on using PanHandler tooling within the context of this tutorial please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/panhandler.html>`_
+* For users wishing to work through the command line have SLI_ set up and ready to go. Please refer to and follow the steps in the linked `SLI page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/sli.html>`_ to get started with using SLI within the context of this tutorial  
+* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets. For more assistance on using PanHandler tooling within the context of this tutorial please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/panhandler.html>`_
     
 It may also be useful to review the following topics before getting started:
 
