@@ -30,11 +30,13 @@ Prerequisites
 
     Before moving forward with the tutorial, you will need to do the following:
 
-        1. Create a GitHub repository, instructions here
-        2. Open your repository in a text editor or IDE, instructions here
-        3. Install PanHandler using Docker, instructions here
-        4. Install SLI using a Python virtual environment, instructions here
-        5. Deploy a Next Generation Firewall for testing, instructions here
+        1. Create a GitHub repository, :ref:`instructions here<Create a New GitHub Repository>`
+        2. Open your repository in a text editor or IDE
+        3. Install PanHandler using Docker,  `instructions here`_
+        4. Install SLI using a Python virtual environment, :ref:`instructions here<Install SLI>`
+        5. Deploy a Next Generation Firewall for testing with proper access to GUI and CLI(via SSH)
+
+    .. _instructions here: https://panhandler.readthedocs.io/en/master/running.html#quick-start
 
 |
 
