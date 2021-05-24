@@ -1,3 +1,6 @@
+.. This page is outdated and very specific to PanHandler. Information from this page that was not already in the SkilletBuilder
+    documentation was added to different sections.
+
 Skillets Defined
 ================
 

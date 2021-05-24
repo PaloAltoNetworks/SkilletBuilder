@@ -59,6 +59,26 @@ The skillet player captures the variable values with output as a rendered XML el
           <comments>block rules based on EDL destinations</comments>
         </entry>
 
+Ensuring All Variables Are Defined
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+When working with a large amount of configuration templates, it's easy to miss a variable definition. Use this one-liner
+to find them all.
+
+Change directories into a skillet directory and run this to find all configured variables:
+
+.. code-block:: bash
+
+    grep -r '{{' . |  cut -d'{' -f3 | awk '{ print $1 }' | sort -u
+
+
+Or, if you have `perl` available, the following may also catch any configuration commands that may have
+more than one variable defined:
+
+.. code-block:: bash
+
+    grep -r '{{' . | perl -pne 'chomp(); s/.*?{{ (.*?) }}/$1\n/g;' | sort -u
+
 |
 
 Jinja If Conditional
@@ -237,3 +257,31 @@ Filters are used by including `` | filter `` after a variable:
 | var | int                                    |  convert a string to an integer                 |
 +----------------------------------------------+-------------------------------------------------+
 
+Jinja Whitespace Control
+------------------------
+
+Care must usually be taken to ensure no extra whitespace creeps into your templates due to Jinja looping
+constructs or control characters. For example, consider the following fragment:
+
+.. code-block:: jinja
+
+    <dns-servers>
+    {% for member in CLIENT_DNS_SUFFIX %}
+        <member>{{ member }}</member>
+    {% endfor %}
+    </dns-servers>
+
+This fragment will result in blank lines being inserted where the `for` and `endfor` control tags are placed. To
+ensure this does not happen and to prevent any unintentioal whitespace, you can use Jinja whitespace control like
+so:
+
+.. code-block:: jinja
+
+    <dns-servers>
+    {%- for member in CLIENT_DNS_SUFFIX %}
+        <member>{{ member }}</member>
+    {%- endfor %}
+    </dns-servers>
+
+.. note:: Note the '-' after the leading '{%'. This instructs jinja to remove these blank lines in the resulting
+    parsed output template.

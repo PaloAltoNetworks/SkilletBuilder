@@ -8,44 +8,49 @@ Skillet Builder Documentation
 
 .. toctree::
    :maxdepth: 1
-   :caption: Getting Started
+   :caption: Skillets Overview
 
    getting_started/overview
    getting_started/skillet_framework
-   getting_started/panhandler
-   getting_started/appetizer
 
 .. toctree::
    :maxdepth: 1
-   :caption: Reference
+   :caption: Core Elements
 
    reference_examples/skillet_types
-   reference_examples/builder_tools
    reference_examples/metadata_attributes
    reference_examples/variables
+   building_blocks/jinja_and_skillets
    reference_examples/jinja_custom_filters
+   building_blocks/xml_and_skillets
    reference_examples/capture_output
 
 .. toctree::
-   :caption: Building Blocks
+   :caption: Skillet Utilities
    :maxdepth: 1
 
-   building_blocks/xml_and_skillets
-   building_blocks/jinja_and_skillets
+   getting_started/github
+   reference_examples/builder_tools
+   getting_started/panhandler
+   getting_started/appetizer
+   getting_started/sli
+
 
 .. toctree::
    :maxdepth: 1
-   :caption: Examples
+   :caption: Developing Skillets Tutorials
 
-   reference_examples/skillets
+   tutorials/tutorial_configuration
+   tutorials/tutorial_set_commands
+   tutorials/tutorial_validation
+   tutorials/tutorial_workflow
+   tutorials/tutorial_includes
+
+
+.. toctree::
+   :maxdepth: 1
+   :caption: Example Skillets
+
    reference_examples/example_skillet
    reference_examples/validation_skillet
    reference_examples/examples/example_skillets
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Tutorials
-
-   tutorials/tutorial_configuration
-   tutorials/tutorial_validation
-
