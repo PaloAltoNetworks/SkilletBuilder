@@ -15,6 +15,13 @@ Overview
     that chains a **validation** skillet, a **configuration** skillet, and a **template** skillet into
     one cohesive workflow solution.
 
+    .. raw:: html
+
+        <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+        id=8de94a22-d38f-4e3c-beed-ad3b00156c85&autoplay=false&offerviewer=true&showtitle=true
+        &showbrand=false&start=0&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+|
 
     Click below to jump to a specific section of the tutorial:
       1. `Prerequisites`_
