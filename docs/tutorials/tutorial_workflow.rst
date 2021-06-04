@@ -15,6 +15,13 @@ Overview
     that chains a **validation** skillet, a **configuration** skillet, and a **template** skillet into
     one cohesive workflow solution.
 
+    .. raw:: html
+
+        <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
+        id=8de94a22-d38f-4e3c-beed-ad3b00156c85&autoplay=false&offerviewer=true&showtitle=true
+        &showbrand=false&start=0&interactivity=all" height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+|
 
     Click below to jump to a specific section of the tutorial:
       1. `Prerequisites`_
@@ -30,11 +37,13 @@ Prerequisites
 
     Before moving forward with the tutorial, you will need to do the following:
 
-        1. Create a GitHub repository, instructions here
-        2. Open your repository in a text editor or IDE, instructions here
-        3. Install PanHandler using Docker, instructions here
-        4. Install SLI using a Python virtual environment, instructions here
-        5. Deploy a Next Generation Firewall for testing, instructions here
+        1. Create a GitHub repository, :ref:`instructions here<Create a New GitHub Repository>`
+        2. Open your repository in a text editor or IDE
+        3. Install PanHandler using Docker,  `instructions here`_
+        4. Install SLI using a Python virtual environment, :ref:`instructions here<Install SLI>`
+        5. Deploy a Next Generation Firewall for testing with proper access to GUI and CLI(via SSH)
+
+    .. _instructions here: https://panhandler.readthedocs.io/en/master/running.html#quick-start
 
 |
 
