@@ -1,4 +1,4 @@
-.. _Variables:
+.. _variables:
 
 Variables
 =========

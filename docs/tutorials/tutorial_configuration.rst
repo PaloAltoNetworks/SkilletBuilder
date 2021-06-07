@@ -17,9 +17,9 @@ to the documentation content.
 
 .. raw:: html
 
-    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
-    id=17392613-262a-4606-a11a-ab6c010b894e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
-    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=699be819-070e-4b40-8d00-
+    ad3c01765a6e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="405"
+    width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 |
 
@@ -27,13 +27,11 @@ Click below to jump to a specific section of the tutorial:
 
 1. `Prerequisites`_
 
-2. `Set Up Your Environment`_
+2. `Build the Skillet`_
 
-3. `Build the Skillet`_
+3. `Test and Troubleshoot`_
 
-4. `Test and Troubleshoot`_
-
-5. `Document`_
+4. `Document`_
 
 
 Prerequisites
@@ -43,11 +41,15 @@ Before moving forward with the tutorial, you will need the following:
 
 - NGFW up and running with proper access to GUI and CLI(via SSH)
 - A `GitHub <https://github.com/>`_ account with access permissions to edit repository content
+
+    - Please refer to the `GitHub <https://skilletbuilder.readthedocs.io/en/latest/getting_started/github.html>`_
+      page for more info on setting up a repository and importing Skillets into PanHandler.
+
 - `Docker <https://www.docker.com/>`_ desktop installed and running on your local machine
 
-- Access to the following repositories:
-
-    - `PanHandler <https://github.com/PaloAltoNetworks/panhandler/>`_
+- For users interested in working through the browser GUI, have
+  `PanHandler <https://skilletbuilder.readthedocs.io/en/latest/getting_started/panhandler.html>`_ installed and
+  running on your local machine.
 
 - For users interested in working through the command line, have `SLI <https://pypi.org/project/sli/>`_ installed on your local machine
 
@@ -59,112 +61,15 @@ It may also be useful to review the following topics before getting started:
 - :ref:`jinjaandskillets`
 
 
-Set Up Your Environment
------------------------
-
-In this section of the tutorial we will set up everything you need to successfully complete the tutorial.
-
-NGFW
-~~~~
-
-  This is the device that we will be working with and configuring during the tutorial.
-
-  .. NOTE::
-    Some skillet configuration elements may be version specific and require unique skillets per software release.
-    Verify that the **Software Version** and associated skillets are compatible.
-
-  **Baseline Configuration**
-
-  Before making any configuration changes, it is recommended to save a 'baseline' configuration file. This will make
-  it easier to rollback the NGFW for testing and demonstration purposes.
-
-
-Start PanHandler
-~~~~~~~~~~~~~~
-
-  PanHandler is a utility that is used to create, load, and view configuration templates and workflows.
-
-  In order to access the latest stable version of PanHandler, open a terminal/bash shell and enter the command below:
-
-  .. code-block:: bash
-
-    curl -s -k -L http://bit.ly/2xui5gM | bash
-
-  Once that is finished running, navigate to the URL below using a web browser (Chrome, Firefox, Safari, etc):
-
-  .. code-block:: bash
-
-    http://localhost:8080
-
-  The credentials to log into the PanHandler interface are 'paloalto'[Username] and 'panhandler'[Password]
-
-  Please refer to the `PanHandler documentation <https://panhandler.readthedocs.io/en/master/overview.html/>`_
-  for more detailed information on the PanHandler utility.
-
-  **add section for PanHandler SSH key into github**
-
-Restart PanHandler
-~~~~~~~~~~~~~~~~~~
-
-  If you already installed PanHandler, you will eventually need to restart the container.
-
-  Navigate to the Docker Desktop Application on your local machine. You should see the 'panhandler' container listed on
-  the dashboard.
-
-  **INSERT PIC HERE**
-
-  Click 'Start' to restart the container. You should now be able to access the PanHandler GUI at the same URL as before:
-
-.. code-block:: bash
-
-    http://localhost:8080
-
-
-Initialize a New Repository and Import it into PanHandler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-:ref:`The Skillet Framework` uses Github as the primary option for storing skillets.
-
-  Log in to Github and select ‘New’ to add a new repo.
-
-    **INSERT PIC HERE**
-
-  Suggestions are to include a README file and MIT license. You can also add a .gitignore file, primarily to ignore
-  pushing any EDI directories such as .idea/ used by Pycharm.
-
-    **INSERT PIC HERE**
-
-  Once created, copy the clone URL from the GUI.
-  This is found with the green ‘Code’ button and is NOT the browser URL. Click the SSH option.
-
-    **INSERT PIC HERE**
-
-  Navigate back to PanHandler. Click the PanHandler dropdown menu in the top left corner and select 'Import Skillets'.
-
-  **INSERT PIC HERE**
-
-  Scroll down the page and locate the 'Import Repository' Section. Enter the name of the repository and paste the URL
-  you copied from the above step. Click 'Submit'. Make sure you are using the SSH URL as opposed to the HTTPS URL.
-
-  **INSERT PIC HERE**
-
-  .. NOTE::
-    If your account or repo is set up requiring 2-factor authentication then you should clone using the SSH link instead.
-    This is required to push configuration changes back to the repo.  You may have to `add an SSH key for Github`_
-
-.. _add an SSH key for Github: https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent
-
-
 Build the Skillet
 --------------------
-
-Now that everything is set up and ready to go, we can begin building the skillet.
 
 
 Create the Configuration in the NGFW
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-  Before modifying the configuration, ensure you have a snapshot of the 'before/baseline' configuration.
+  Before modifying the configuration, ensure you have a snapshot of the 'before/baseline' configuration of your
+  configuration saved. We will use this saved snapshot to perform an offline configuration difference later.
 
   Navigate to Device > Setup > Operations.
 
@@ -196,16 +101,13 @@ Create the Configuration in the NGFW
   .. image:: /images/configure_tutorial/tag_settings.png
     :width: 400
 |
-
 .. TIP::
     The skillet will only add a single tag to the configuration.
     However, the GUI shows a color name while the XML data in the NGFW is based on a color number.
     The use of multiple tag entries is used to extract the color values.
     So note that in some cases the GUI and XML can use different values and we can use sample configs
     like this to discover those values.
-
 |
-
   Configure Inbound and Outbound security rules referencing the tag and external-list. Note that the
   rule names are prepended with the EDL name. In later steps variables are used in the rule names to
   map the EDL and ensure rule names are unique.
@@ -273,13 +175,13 @@ Generate the Skillet from Uploaded Files [Offline Mode]
   above step. Click 'Details'.
 
   .. image:: /images/configure_tutorial/repo_details.png
-    :width: 400
+    :width: 250
 |
 
   Click either of the 'Create Skillet' buttons on the page.
 
     .. image:: /images/configure_tutorial/create_skillet_button.png
-      :width: 800
+      :width: 700
 |
 
   Locate the section 'Generate From Uploaded Files' and Click 'Upload'.
@@ -317,18 +219,18 @@ Generate the Skillet from PAN-OS [Online Mode]
   above step. Click 'Details'.
 
   .. image:: /images/configure_tutorial/repo_details.png
-    :width: 400
+    :width: 250
 |
 
   Click either of the 'Create Skillet' buttons on the page.
 
     .. image:: /images/configure_tutorial/create_skillet_button.png
-      :width: 800
+      :width: 700
 |
 
   Locate the section 'Generate From PAN-OS' and Click 'Generate'.
 
-  .. image:: /images/configure_tutorial/gen_from_files.png
+  .. image:: /images/configure_tutorial/gen_from_panos.png
       :width: 700
 |
 
@@ -403,7 +305,7 @@ Add Variables to Snippets
   You should see the double set of curly brackets appear around the variable name.
 
   .. image:: /images/configure_tutorial/edl_name_replaced.png
-      :width: 700
+      :width: 500
 |
 
   In this snippet, there are a few other variables to add.
@@ -424,7 +326,7 @@ Add Variables to Snippets
   Click the 'Update' button at the bottom right in order to save the variables.
 
   .. image:: /images/configure_tutorial/edl_vars_updated.png
-      :width: 700
+      :width: 600
 |
 
   Click 'Update' again in the Editor page to save the snippet edits.
@@ -448,7 +350,7 @@ Add Variables to Snippets
   Follow the same instructions from the previous to replace the text with the variable names.
 
   .. image:: /images/configure_tutorial/tag_variables_replaced.png
-      :width: 700
+      :width: 600
 |
 
   .. NOTE::
@@ -475,7 +377,7 @@ Edit Variable Types
   This should reveal another section of settings.
 
   .. image:: /images/configure_tutorial/edit_variable_type.png
-      :width: 700
+      :width: 500
 |
 
   Here is a list of suggested colors associated with their number [key,value].
@@ -504,10 +406,10 @@ Edit Variable Types
   Add 3-6 colors and click 'Update'.
 
     .. image:: /images/configure_tutorial/tag_colors.png
-      :width: 700
+      :width: 400
     |
 
-  Please refer to the Variables_ Page for more information on variable types.
+  Please refer to the :ref:`variables` Page for more information on variable types.
 
 
 Test and Troubleshoot
