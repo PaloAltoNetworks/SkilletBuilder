@@ -1,8 +1,6 @@
 Building and Testing with SLI
 =============================
 
-  Please refer to the `SLI Documentation <https://pypi.org/project/sli/>`_ for more information on installing and using SLI
-
 Install SLI
 ~~~~~~~~~~~
 
@@ -36,7 +34,6 @@ Use SLI to Perform a Configuration Difference
     .. image:: /images/skillet_utilities/sli_config_diff.png
       :width: 700
 |
-
   You can utilize these XML snippets to create a skillet. Copy this XML snippet somewhere you can easily access it.
 
   Refer to the GitHub page in order to create a new repository and clone it to your local machine.
@@ -44,7 +41,8 @@ Use SLI to Perform a Configuration Difference
 
   Use this basic template to begin populating the file with skillet content:
 
-  .. code-block:: yaml
+  .. code-block:: YAML
+
     name: New_Skillet
     label: Tutorial Skillet
     description: Skillet template for use with SLI
@@ -64,14 +62,34 @@ Use SLI to Perform a Configuration Difference
   For this basic example we will use the edl snippet from the instructions and screenshot above.
   Add the content for the name, xpath, and element of the snippet.
 
-    .. image:: /images/skillet_utilities/sli_snippet.png
-      :width: 700
-|
+  .. code-block:: YAML
+
+      - name: external-list-820753
+        xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]
+        element: |-
+            <external-list>
+                        <entry name="edl_name">
+                          <type>
+                            <ip>
+                              <recurring>
+                                <five-minute/>
+                              </recurring>
+                              <url>http://someurl.com</url>
+                              <description>edl_description</description>
+                            </ip>
+                          </type>
+                        </entry>
+                      </external-list>
+        cmd: set
+        file: ''
+        template_title: ''
+
 
   For more customization, you can also add variables. For this example we will add a variable to change the name of the
   edl. Enter the following into the variables section:
 
-  .. code-block::
+  .. code-block:: YAML
+
     variables:
     -   name: edl_name
         description: name of edl
@@ -81,11 +99,70 @@ Use SLI to Perform a Configuration Difference
   Next, modify the snippet to use Jinja variable formatting and replace the current edl_name with the variable.
   It is important to keep the spacing between the curly brackets and the variable name.
 
-    .. image:: /images/skillet_utilities/sli_snippet_jinja.png
-      :width: 700
-|
+  .. code-block:: YAML
 
-  Here you can add other desired variables and snippets
+      - name: external-list-820753
+        xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]
+        element: |-
+            <external-list>
+                        <entry name="{{ edl_name }}">
+                          <type>
+                            <ip>
+                              <recurring>
+                                <five-minute/>
+                              </recurring>
+                              <url>http://someurl.com</url>
+                              <description>edl_description</description>
+                            </ip>
+                          </type>
+                        </entry>
+                      </external-list>
+        cmd: set
+        file: ''
+        template_title: ''
+
+  Here you can add other desired variables and snippets. You can create a variable for the url and description.
+
+  .. code-block:: YAML
+
+      - name: external-list-820753
+        xpath: /config/devices/entry[@name="localhost.localdomain"]/vsys/entry[@name="vsys1"]
+        element: |-
+            <external-list>
+                        <entry name="{{ edl_name }}">
+                          <type>
+                            <ip>
+                              <recurring>
+                                <five-minute/>
+                              </recurring>
+                              <url>{{ edl_url }}</url>
+                              <description>{{ edl_description }}</description>
+                            </ip>
+                          </type>
+                        </entry>
+                      </external-list>
+        cmd: set
+        file: ''
+        template_title: ''
+
+
+  Don't forget to add the variables in the variables section.
+
+  .. code-block:: YAML
+
+        variables:
+        -   name: edl_description
+            description: edl_description
+            type_hint: text
+            default: ''
+        -   name: edl_url
+            description: edl_url
+            type_hint: text
+            default: ''
+        -   name: edl_name
+            description: edl_name
+            type_hint: text
+            default: ''
 
 Play a Skillet with SLI
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -145,16 +222,19 @@ Store User Context in SLI
   As you play a skillet for the first time, use '-uc' in the command to store the context from the skillet.
 
   .. code-block:: bash
+
     > sli configure --name {name of skillet} -uc
 
   To view the context stored in SLI type:
 
   .. code-block:: bash
+
     > sli show_context
 
   To clear the context stored in SLI type:
 
   .. code-block:: bash
+
     > sli clear_context
 
 For more in depth instructions on the context manager refer to the `SLI Documentation. <https://pypi.org/project/sli/>`_
@@ -165,9 +245,10 @@ Help with SLI
   In a terminal/bash shell type the following to list all available actions for SLI:
 
   .. code-block:: bash
+
     > sli --help
 
-    .. image:: /images/skillet_utilities/sli_help.png
-      :width: 700
+.. image:: /images/skillet_utilities/sli_help.png
+  :width: 700
 |
 
