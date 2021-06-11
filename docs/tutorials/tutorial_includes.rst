@@ -202,11 +202,23 @@ Including Variables
 Test and Troubleshoot
 ---------------------
 
+    Now that the skillet has been pushed to GitHub, the skillet can be imported or loaded into one of the skillet
+    player tools, such as PanHandler or SLI, for testing. This Tutorial will show how to test and debug using PanHandler.
+    Testing involves three main components:
 
-Import the Skillet
+        1. User-facing variable menu
+        2. Overall sequence of sub-skillets
+        3. Overrides of any sub-skillet features
+
+    Continue reading to see how to test these components in PanHandler.
+
+
+Import the Playlist
 ~~~~~~~~~~~~~~~~~~
 
-Debug and Play the Skillet
+
+
+Debug and Play the Playlist
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Things to look for
@@ -216,7 +228,6 @@ Things to look for
 - any overrides go through
 
 Common errors
-
 -
 -
 -
@@ -237,6 +248,7 @@ README.md
 
 - Include information about the submodules included and the content they contain.
 - Remind users to update the submodule as needed, since that is not done automatically as new commits are released.
+    - ``git submodule update --remote --merge``
 
 LIVEcommunity
 ~~~~~~~~~~~~~~
