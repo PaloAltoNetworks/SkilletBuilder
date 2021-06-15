@@ -19,15 +19,14 @@ This Basic Config with Set Commands tutorial will show the user how to:
   - Learn how to use the Skillet Line Interface(SLI) tool on the CLI
   - Learn the basics of using GitHub and repositories
 
-The video below provides an end-to-end perspective for building a configuration skillet and can be used as a complement
-to the documentation content.
+The video below provides an end-to-end perspective for building a configuration skillet through PanHandler and can be
+used as a complement to the documentation content.
 
 .. raw:: html
 
-    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?
-    id=17392613-262a-4606-a11a-ab6c010b894e&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&
-    interactivity=all" width=720 height=405 style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
-
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=87ef13bc-9e2f-46c1-87d7-ad48013
+    e9138&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="405"
+    width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
 Navigation Menu
 ~~~~~~~~~~~~~~~
