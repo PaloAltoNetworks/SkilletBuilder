@@ -28,6 +28,16 @@ used as a complement to the documentation content.
     e9138&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="405"
     width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
+The video below provides an end-to-end perspective for getting a configuration difference in set command format, saving
+the config diff to a file and then using the SLI utility tool to load it into an NGFW.
+
+.. raw:: html
+
+    <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=85ec045b-9ef8-4bd3-902a-ad49016
+    5825c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="405"
+    width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
+
+
 Navigation Menu
 ~~~~~~~~~~~~~~~
 
