@@ -127,7 +127,7 @@ working tree of the host repository and will be viewable if the host repository 
 to a folder within the host repository before initiating a submodule to keep your working tree clean. On GitHub, the
 submodule will appear similarly to the ones below.
 
-  .. image:: /images/skillet_framework/submodule_in_repository.png
+  .. image:: /images/skillet_utilities/submodule_in_repository.png
      :width: 800
 
 When a submodule is added to a host repository for the first time, a new ``.gitmodules`` file will be created automatically.
