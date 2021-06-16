@@ -45,7 +45,7 @@ Prerequisites and Set Up
 
         1. Create a GitHub repository, :ref:`instructions here<Create a New GitHub Repository>`
         2. Open your repository in a text editor or IDE
-        3. Install PanHandler using Docker,  `instructions here`_
+        3. Install or Update PanHandler using Docker,  `instructions here`_
         4. Deploy a Next Generation Firewall and Panorama for testing with proper access to GUI and CLI (via SSH)
 
     .. _instructions here: https://panhandler.readthedocs.io/en/master/running.html#quick-start
@@ -261,48 +261,101 @@ Playlist Preamble
 Including Snippets
 ~~~~~~~~~~~~~~~~~~
 
-    There are different ways to include snippets from sub-skillets. The main ways are listed below, and will be highlighted
-    when building out the playlists:
+    There are different ways to include snippets from sub-skillets in a playlist. The main ways are listed below, and
+    will be highlighted when building out the playlists in the following section:
       * Load entire sub-skillet as is
       * Load only certain snippets from a sub-skillet
       * Load and change the element of snippets in a sub-skillet
       * Load and change xpath of snippets in a sub-skillet (particularly useful with different panorama setups)
 
-    .. code-block:: yaml
+**Load entire sub-skillet as is**
 
-        - name: panos_ngfw_device_system_10_0
-        include: panos_ngfw_device_system_10_0
-
-
-    .. code-block:: yaml
-
-        - name: panos_ngfw_profile_antivirus_10_1
-        include: panos_ngfw_profile_antivirus_10_1
-        include_snippets:
-          - name: ironskillet_antivirus_alert_all
-
+    To include an entire sub-skillet into a playlist, in the **snippet** section of the *playlist*, create entries that
+    have a **name** and **include** set to the internal sub-skillet name defined in the preamble of the sub-skillet. In
+    this example, all of the snippets from the Device System sub-skillet will be included in the playlist. Any variables
+    in the sub-skillet are included by default.
 
     .. code-block:: yaml
 
-        - name: panos_ngfw_device_system_10_0
-        include: panos_ngfw_device_system_10_0
-        include_variables: all
-        include_snippets:
-          - name: ironskillet_device_system_dynamic_updates
-            element: |-
-                <>
+        snippets:
+            - name: panos_ngfw_device_system_10_0
+            include: panos_ngfw_device_system_10_0
+
+**Load only certain snippets from a sub-skillet**
+
+    If only certain snippets within a sub-skillet should be included in a playlist, still specify the **name** and **include**
+    of the entry in the **snippet** section of the *playlist* like the above example. Then, add an **include_snippets**
+    attribute and list out each name of the snippets from the sub-skillet to be included. In this example, only the Alert Only
+    Antivirus security profile is included from the Antivirus sub-skillet.
 
 
     .. code-block:: yaml
 
-        - name: panorama_device_mgt_config_10_0
-        include: panorama_device_mgt_config_10_0
-        include_variables: all
-        include_snippets:
-          - name: ironskillet_device_mgt_users
-            xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
-          - name: ironskillet_device_mgt_password_complexity
-            xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
+        snippets:
+            - name: panos_ngfw_profile_antivirus_10_1
+            include: panos_ngfw_profile_antivirus_10_1
+            include_snippets:
+              - name: ironskillet_antivirus_alert_all
+
+    .. NOTE::
+        Any variables in the sub-skillet must be specifically included when choosing a subset of snippets to include.
+        This is covered in the :ref:`Including Variables<Including Variables>` section of this tutorial.
+
+
+**Change the element of a snippet in a sub-skillet**
+
+    Sometimes, there may be one snippet in a sub-skillet that has XML changes needed in a playlist. This can easily be
+    done through overwriting the element attribute of the snippet from the sub-skillet. In this example the login banner
+    snippet was changed from the default in the Device System sub-skillet, but the other five snippets were kept as is.
+    Notice that there is an ``include_variables: all`` attribute before the ``include_snippets:``. This is because there
+    are variables used in the other snippets that need to be carried over into the playlist. When making overrides to
+    snippets using ``include_snippets:``, this is a required step.
+
+    .. code-block:: yaml
+
+        snippets:
+            - name: panos_ngfw_device_system_10_0
+            include: panos_ngfw_device_system_10_0
+            include_variables: all
+            include_snippets:
+              - name: ironskillet_device_system_dynamic_updates
+              - name: ironskillet_device_system_snmp
+              - name: ironskillet_device_system_ntp
+              - name: ironskillet_device_system_timezone
+              - name: ironskillet_device_system_hostname
+              - name: ironskillet_device_system_login_banner
+                element: |-
+                    <login-banner>You have accessed a protected system.
+                    If not authorized, log off immediately.</login-banner>
+
+
+**Change xpath of a snippet in a sub-skillet**
+
+    Similar to the above example, sometime the xpath of a snippet will need to be changed due to device configuration. The
+    xpath specifies where in the XML the element should be placed, which can change due to how the device is set up.
+    Panorama in particular often has a different xpath depending if it is a shared or not-shared setup. See
+    `IronSkillet Documentation <https://iron-skillet.readthedocs.io/en/docs_master/panorama_template_guide.html>`_ for
+    more information about this. In `ironskillet-components <https://github.com/PaloAltoNetworks/ironskillet-components>`_,
+    the shared xpath was chosen as the default for the xpath attribute in the panorama sub-skillets. In this example,
+    a Not-Shared playlist is being built, so the xpath will have to be changed to the not-shared version for some
+    sub-skillets. Each snippet in the sub-skillet must be individually included and have the xpath 'overwritten', even
+    though the xpath for all snippets in the file might be changing to the same path.
+
+    .. code-block:: yaml
+
+        snippets:
+            - name: panorama_device_mgt_config_10_0
+            include: panorama_device_mgt_config_10_0
+            include_variables: all
+            include_snippets:
+              - name: ironskillet_device_mgt_users
+                xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
+              - name: ironskillet_device_mgt_password_complexity
+                xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
+
+    .. NOTE::
+        Notice that there is a new ``STACK`` variable introduced in the changed xpaths. This variable will need to be
+        included in the playlist ``variables:`` section.
 
 
 
@@ -312,13 +365,40 @@ Including Variables
     Generally when including snippets from a sub-skillet, all of the variables from the sub-skillet should be loaded as
     well, since they are needed to execute the snippets. This is the default action when loading an entire sub-skillet,
     but if only certain snippets are loaded, or if changes to the snippet are made in the playlist, it is important to
-    specify how variables are included. The following are some scenarios where this will need to be addressed.
-      *
+    specify how variables are included. Basically, anytime the ``include_snippets:`` attribute is used, ``include_variables:``
+    should also be specified, as long as there are variables in the sub-skillet to include.
 
-    Need to specify variables in the playlist file for any variables seen
-      * menu options for custom loads
+    Take the xpath override example from the previous section:
+
+    .. code-block:: yaml
+
+        snippets:
+            - name: panorama_device_mgt_config_10_0
+            include: panorama_device_mgt_config_10_0
+            include_variables: all
+            include_snippets:
+              - name: ironskillet_device_mgt_users
+                xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
+              - name: ironskillet_device_mgt_password_complexity
+                xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
+
+    This also highlights another important factor, which is that any **new** variables introduced to the playlist in
+    snippet changes must be included in the ``variables:`` section of the playlist. Here, the STACK variable should be
+    added to the Not-Shared DGTemplate playlists as follows:
+
+    .. code-block:: yaml
+
+        variables:
+          - name: STACK
+            description: Template stack name for Panorama
+            default: sample_stack
+            type_hint: text
+            help_text: creates a sample template stack with IronSkillet configuration elements
+
+
+    Other use cases that might come up are:
+      * menu options for custom loads (checkboxes in a workflow)
       * when conditional includes
-      * xpath changes
 
 
 
@@ -327,6 +407,9 @@ Test and Troubleshoot
 
     Now that the skillet has been pushed to GitHub, the skillet can be imported or loaded into one of the skillet
     player tools, such as PanHandler or SLI, for testing. This Tutorial will show how to test and debug using PanHandler.
+    Make sure to `update to the latest release <https://panhandler.readthedocs.io/en/master/running.html#quick-start>`_,
+    as playlists are a new feature.
+
     Testing playlists involves three main components:
 
         1. User-facing variables
