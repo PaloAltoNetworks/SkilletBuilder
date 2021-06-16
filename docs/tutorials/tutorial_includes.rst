@@ -53,7 +53,7 @@ Prerequisites and Set Up
 
 
 Set Up the Submodule
------------------
+--------------------
 
     In this tutorial we are using `ironskillet-components`_, which contains all of the sub-skillets for IronSkillet 9.1+.
     Each folder for the PAN-OS version has all of the panos and panorama sub-skillets, which are broken down into separate
@@ -125,17 +125,30 @@ Sub-Skillets in Submodule
             collection:
               - IronSkillet 10.0 PAN-OS Snippets
 
-    The last important best practice to mention is that each sub-skillet should include all information needed to run
-    by itself. This means that any variables used or xml included in the snippet **must** be included directly in the
-    sub-skillet. This allows each sub-skillet to be run and debugged by itself, and ensures that the playlist that
-    includes the sub-skillet will be able to find all the information needed to run the snippet. Also, it is not possible
-    to include a skillet include, which is why any xml must be directly specified within the snippets of a sub-skillet.
-
     When ``ironskillet-components`` is imported into PanHandler (as of the writing of this tutorial), the following
     collections are available. Each of the sub-skillets within these collections loaded can be run individually.
 
       .. image:: /images/includes_tutorial/ironskillet_components_collections.png
          :width: 800
+
+    Another best practice to mention is that each sub-skillet should include all information needed to configure all snippets
+    by itself. This means that any variables used or xml included in the snippet **must** be included directly in the
+    sub-skillet. This allows each sub-skillet to be run and debugged individually, and ensures that the playlist that
+    includes the sub-skillet will be able to find all the information needed to run the snippet. Also, it is not possible
+    to include a skillet include, which is why any xml must be directly specified within the snippets of a sub-skillet.
+
+    The final recommendation for sub-skillets pertains to the individual snippets within the sub-skillet. Each of the
+    snippets in a sub-skillet should include a piece of xml small enough to encompass one action. For example,
+    each of the IronSkillet antivirus security profiles are broken down into their own snippets. For the five profiles (alert-only,
+    inbound, outbound, internal, and exception), there exists a snippet that can then be included or not included in a playlist.
+    This subsetting of information is important to provide granularity in choosing what can be included or excluded from
+    a playlist down the road.
+    See the `panos_ngfw_profile_antivirus_10_0.skillet.yaml <https://github.com/PaloAltoNetworks/ironskillet-components/blob/main/panos_v10.0/ngfw/panos_ngfw_profile_antivirus_10_0.skillet.yaml>`_
+    for more in depth information.
+
+    .. NOTE::
+        All snippets and sub-skillets within a submodule repository **must** have unique names. This is required for
+        referencing later in playlist includes.
 
 
 
@@ -170,22 +183,29 @@ Set Up the Directory Structure
 Playlist Preamble
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    Link to Configuration Tutorial
-    Each playlist should have a Preamble, just like any skillet or sub-skillet
+    Each playlist should have a preamble, just like any skillet or sub-skillet. Since there a lot of sub-skillets,
+    snippets, and playlists to keep track of with this model and with this tutorial, it is recommended to keep a
+    consistent naming scheme. With the sub-skillet names following ``file_name.skillet.yaml``, it is highly recommended
+    to use the ``file_name`` portion as the internal skillet or playlist name.
 
-    Since there a lot of sub-skillets, snippets, and playlists to keep track of with this model and with this tutorial,
-    it is recommended to choose a consistent naming scheme. With the file names following ``file_name.skillet.yaml``,
-    it is suggested to use the ``file_name`` portion as the internal skillet or playlist name. For example, the playlist
-    file ``ironskillet_full_10_0.skillet.yaml`` would have an interal name of ``ironskillet_full_10_0``. Similarly one of
-    the sub-skillets named ``panos_ngfw_device_system_10_0.skillet.yaml`` would have an internal skillet name of
-    ``panos_ngfw_device_system_10_0``. This makes it easy to know how to reference the snippets from the sub-skillet
+    For example, the playlist file ``ironskillet_panos_full_10_0.skillet.yaml`` would have an internal name of
+    ``ironskillet_full_10_0``. Similarly, one of the sub-skillets named ``panos_ngfw_device_system_10_0.skillet.yaml``
+    would have an internal skillet name of ``panos_ngfw_device_system_10_0``. This makes it easy to know how to reference
+    the sub_skillets in the playlist using skillet includes.
 
-    All headers should look like the following:
+    Specifying the ``label``, ``description``, ``type``, and ``collection`` are also highly recommended, as they allow
+    for easier viewing of the playlists once loaded into PanHandler, and is generally good practice for documentation. In
+    particular, the ``type`` is very important, as that tells the skillet player of your choice what type of snippets
+    will be included in a configuration.
+
+    The playlist preambles should look like the following:
+
+    **PAN-OS Full PLaylist**
 
     .. code-block:: yaml
 
-        name: ironskillet_full_10_0
-        label: IronSkillet 10.0
+        name: ironskillet_panos_full_10_0
+        label: IronSkillet PAN-OS 10.0
         description: |-
           group of snippets for ironskillet 10.0
         type: panos
@@ -197,6 +217,42 @@ Playlist Preamble
 
         snippets:
 
+
+    **PAN-OS Alert Only Playlist**
+
+    .. code-block:: yaml
+
+        name: ironskillet_panos_alert_only_10_0
+        label: IronSkillet Alert-Only 10.0
+        description: |-
+          group of alert only policies for ironskillet 10.0
+        type: panos
+        labels:
+          collection:
+            - IronSkillet Playlists
+
+        variables:
+
+        snippets:
+
+    **Panorama Not-Shared Security Policies Playlist**
+
+    .. code-block:: yaml
+
+        name: ironskillet_panorama_notshared_security_policies_10_0
+        label: IronSkillet Panorama Not-Shared Security Policies 10.0
+        description: |-
+          group of security policies for panorama not-shared ironskillet 10.0
+        type: panorama
+        labels:
+          collection:
+            - IronSkillet Playlists
+
+        variables:
+
+        snippets:
+
+
     See :ref:`Metadata Attributes page<Metadata Attributes>` for more information on Preamble Attributes and further
     options to specify. The ``variables:`` and `` snippets:`` sections are blank for now, but will be added to in the
     following sections.
@@ -205,21 +261,28 @@ Playlist Preamble
 Including Snippets
 ~~~~~~~~~~~~~~~~~~
 
-    There are different ways to include snippets from sub-skillets. The main ways are listed below.
+    There are different ways to include snippets from sub-skillets. The main ways are listed below, and will be highlighted
+    when building out the playlists:
       * Load entire sub-skillet as is
       * Load only certain snippets from a sub-skillet
       * Load and change the element of snippets in a sub-skillet
-      * Load and change xpath of snippets in a sub-skillet (particularly with different panos/panorama setups)
+      * Load and change xpath of snippets in a sub-skillet (particularly useful with different panorama setups)
 
     .. code-block:: yaml
 
         - name: panos_ngfw_device_system_10_0
         include: panos_ngfw_device_system_10_0
 
+
+    .. code-block:: yaml
+
         - name: panos_ngfw_profile_antivirus_10_1
         include: panos_ngfw_profile_antivirus_10_1
         include_snippets:
           - name: ironskillet_antivirus_alert_all
+
+
+    .. code-block:: yaml
 
         - name: panos_ngfw_device_system_10_0
         include: panos_ngfw_device_system_10_0
@@ -229,6 +292,9 @@ Including Snippets
             element: |-
                 <>
 
+
+    .. code-block:: yaml
+
         - name: panorama_device_mgt_config_10_0
         include: panorama_device_mgt_config_10_0
         include_variables: all
@@ -237,6 +303,8 @@ Including Snippets
             xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
           - name: ironskillet_device_mgt_password_complexity
             xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
+
+
 
 Including Variables
 ~~~~~~~~~~~~~~~~~~~
@@ -259,22 +327,32 @@ Test and Troubleshoot
 
     Now that the skillet has been pushed to GitHub, the skillet can be imported or loaded into one of the skillet
     player tools, such as PanHandler or SLI, for testing. This Tutorial will show how to test and debug using PanHandler.
-    Testing involves three main components:
+    Testing playlists involves three main components:
 
-        1. User-facing variable menu
+        1. User-facing variables
         2. Overall sequence of sub-skillets
         3. Overrides of any sub-skillet features
 
     Continue reading to see how to test these components in PanHandler.
 
 
-Import the Playlist
-~~~~~~~~~~~~~~~~~~
+Import the Playlists
+~~~~~~~~~~~~~~~~~~~~
 
+    Import the playlists into PanHandler (see menu for location to do this below), and open the
+    **IronSkillet Playlists** collection from either the *Skillet Collections* or *Skillet Repositories* page.
+
+        .. image:: /images/includes_tutorial/import_playlist_panhandler.png
+         :width: 800
+
+    .. NOTE::
+        If there are other repositories (for example PANW IronSkillet) already loaded into PanHandler that have
+        the same skillet names as the playlists, the new playlists will not load. To fix this, remove both repositories
+        with duplicate names and try importing the playlist repository again.
 
 
 Debug and Play the Playlist
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Things to look for
 
