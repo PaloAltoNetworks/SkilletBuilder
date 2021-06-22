@@ -121,7 +121,7 @@ A submodule is a reference within a host Github repository that points to a spec
 Submodules are used to include external content in a repository in a manner that can be easy updates and referenced.
 In terms of skillets, the Playlist Include skillet framework uses submodules to reference
 
-To initiate a submodule within a host repository, use the command ``git submodule init <submodule_clone_link>``. This is
+To initiate a submodule within a host repository, use the command ``git submodule add <submodule_clone_link>``. This is
 similar to cloning a repository to a host machine. The contents of the submodule repository will be 'copied' to the
 working tree of the host repository and will be viewable if the host repository is cloned. It is recommended to navigate
 to a folder within the host repository before initiating a submodule to keep your working tree clean. On GitHub, the
@@ -142,6 +142,14 @@ An example of an entry in the ``.gitmodules`` file is:
         path = submodules/ironskillet-components
         url = https://gitlab.com/panw-gse/as/ironskillet-components.git
 
+
+When cloning a repository with a submodule, existing submodules will need to be initiated and updated before use.
+To do this, run the following commands:
+    * clone the repository
+    * open the repository
+    * run ``git submodule init``
+    * run ``git submodule update``
+
 Submodules are tied to a specific commit when initiated, so they will need to be updated to pull the newest
-content from the submodule repository as needed. This can be done using the ``git submodule update`` command. This will
-update all submodules added within a host repository to the latest commit.
+content from the submodule repository as needed. This can be done using the ``git submodule update --remote --merge``
+command. This will update all submodules added within a host repository to the latest commit.

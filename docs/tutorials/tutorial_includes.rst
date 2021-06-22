@@ -73,7 +73,7 @@ Add the Submodule
       * Open the new repository in your IDE or text editor of choice
       * Create a new folder in the root directory called **Submodules**
       * Navigate into that folder
-      * Run ``git submodule init https://github.com/PaloAltoNetworks/ironskillet-components.git``
+      * Run ``git submodule add https://github.com/PaloAltoNetworks/ironskillet-components.git``
 
 
     This will add a copy of the files at that specific commit to your working directory. A ``.gitmodules`` file will
@@ -162,13 +162,15 @@ Build the Playlist
 Set Up the Directory Structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-      * Open the new repository in your IDE or text editor of choice
-      * Create a new folder in the root directory called **Playlists**
-      * Navigate into that folder
-      * Create three new files with the following names
-          * ``ironskillet_panos_full_10_0.skillet.yaml``
-          * ``ironskillet_panos_alert_only_10_0.skillet.yaml``
-          * ``ironskillet_panorama_notshared_security_policies_10_0.skillet.yaml``
+* Open the new repository in your IDE or text editor of choice
+* Create a new folder in the root directory called **Playlists**
+* Navigate into that folder
+* Create three new files with the following names
+
+    * ``ironskillet_panos_full_10_0.skillet.yaml``
+    * ``ironskillet_panos_alert_only_10_0.skillet.yaml``
+    * ``ironskillet_panorama_notshared_security_policies_10_0.skillet.yaml``
+
 
     Playlist file names should follow the pattern ``playlist_name.skillet.yaml``. This allows the skillet players
     (PanHandler, SLI) to recognize that it is a playlist and load the snippets accordingly. In this tutorial, playlist
@@ -193,14 +195,14 @@ Playlist Preamble
     would have an internal skillet name of ``panos_ngfw_device_system_10_0``. This makes it easy to know how to reference
     the sub_skillets in the playlist using skillet includes.
 
-    Specifying the ``label``, ``description``, ``type``, and ``collection`` are also highly recommended, as they allow
+    Specifying the **label**, **description**, **type**, and **collection** are also highly recommended, as they allow
     for easier viewing of the playlists once loaded into PanHandler, and is generally good practice for documentation. In
-    particular, the ``type`` is very important, as that tells the skillet player of your choice what type of snippets
+    particular, the **type** is very important, as that tells the skillet player of your choice what type of snippets
     will be included in a configuration.
 
     The playlist preambles should look like the following:
 
-    **PAN-OS Full PLaylist**
+    **PAN-OS Full Playlist**
 
     .. code-block:: yaml
 
@@ -358,6 +360,47 @@ Including Snippets
         included in the playlist ``variables:`` section.
 
 
+**Add Snippets to Playlists**
+
+    Using the processes explained above, the sub-skillets should now be added to the playlist as follows:
+
+    .. toggle-header:: class
+      :header: **PAN-OS Full Playlist [show/hide snippets]**
+
+          .. code-block:: yaml
+
+            snippets:
+                - name: panos_ngfw_profile_antivirus_10_1
+                include: panos_ngfw_profile_antivirus_10_1
+                include_snippets:
+                  - name: ironskillet_antivirus_alert_all
+
+    .. toggle-header:: class
+      :header: **PAN-OS Alert Only Playlist [show/hide snippets]**
+
+          .. code-block:: yaml
+
+            snippets:
+                - name: panos_ngfw_profile_antivirus_10_1
+                include: panos_ngfw_profile_antivirus_10_1
+                include_snippets:
+                  - name: ironskillet_antivirus_alert_all
+
+    .. toggle-header:: class
+      :header: **Panorama Not-Shared Security Policies Playlist [show/hide snippets]**
+
+          .. code-block:: yaml
+
+            snippets:
+                - name: panos_ngfw_profile_antivirus_10_1
+                include: panos_ngfw_profile_antivirus_10_1
+                include_snippets:
+                  - name: ironskillet_antivirus_alert_all
+
+    .. NOTE::
+        It is not currently possible to include another include. This means that a playlist cannot effectively include a
+        snippet from another playlist that already has a ``snippet_include`` defined. If this needs to be done, instead
+        try referencing the same sub-skillets directly in both playlists.
 
 Including Variables
 ~~~~~~~~~~~~~~~~~~~
@@ -396,9 +439,10 @@ Including Variables
             help_text: creates a sample template stack with IronSkillet configuration elements
 
 
-    Other use cases that might come up are:
+    Other use cases that might come up:
       * menu options for custom loads (checkboxes in a workflow)
       * when conditional includes
+      * See the `Workflow Tutorial <https://skilletbuilder.readthedocs.io/en/latest/tutorials/tutorial_workflow.html#add-variables-to-the-skillet>`_ for more examples of variable usage
 
 
 
@@ -455,16 +499,122 @@ Edit, Push, Test
 Document
 --------
 
-- The final stage is to document key details about the playlist to provide contextual information to the user community.
-- Add documentation to allow others to know
+    The final stage is to document key details about the skillet to provide contextual information
+    to the user community. Documentation is especially important when using the Playlist Framework, as there is
+    additional content being included and referenced through the submodule and sub-skillets.
 
 
 README.md
 ~~~~~~~~~
 
-- Include information about the submodules included and the content they contain.
-- Remind users to update the submodule as needed, since that is not done automatically as new commits are released.
-    - ``git submodule update --remote --merge``
+    The playlist repository has an empty placeholder ``README.md`` that should give an overview of the solution.
+    The ``README.md`` should provide skillet-specific details such as what the playlist does, variable input descriptions,
+    and caveats and requirements. Some playlist-specific information to include:
+        * Information about the submodules and the content they contain
+        * A reminder that when cloning a repository with a submodule, existing submodules will need to be initiated and
+          updated before use. To do this, run the following commands:
+            * Clone the repository ``git clone <clone_link>``
+            * ``git submodule init``
+            * ``git submodule update``
+        * Remind users to update the submodule as needed, since that is not done automatically as new commits are released
+            * Open the playlist repository
+            * Run ``git submodule update --remote --merge``
+            * Commit and Push any changes
+
+    ``README.md`` uses the markdown formatting language. Numerous examples can be found in the skillet files. There is also a
+    wide array of `markdown cheat sheets`_ you can find using Google searches.
+    Below are a few common markdown elements you can use in your documentation. Most IDEs can display the user view
+    as you edit the markdown file.
+
+    .. _markdown cheat sheets: https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+
+        +-------------------------------------------------------------------------------------+
+        | Markdown syntax options                                                             |
+        +=====================================================================================+
+        | `#, ##, ###` for header text levels (H1, H2, H3, etc.)                              |
+        +-------------------------------------------------------------------------------------+
+        | `**text**` for bold text                                                            |
+        +-------------------------------------------------------------------------------------+
+        | `*text*` or `_text_` to underline                                                   |
+        +-------------------------------------------------------------------------------------+
+        | `1. text` to create numbered lists                                                  |
+        +-------------------------------------------------------------------------------------+
+        | `* text`, `+ text`, `- text` for bullet style lists                                 |
+        +-------------------------------------------------------------------------------------+
+        | `[text](url)` for inline web links                                                  |
+        +-------------------------------------------------------------------------------------+
+        | \`test\` to highlight a text string                                                 |
+        +-------------------------------------------------------------------------------------+
+        | \`\`\`text block - one or more lines\`\`\` to create a highlighted text block       |
+        +-------------------------------------------------------------------------------------+
+
+    .. TIP::
+        To view markdown edits for existing GitHub repos, click on the README.md file, then use the **Raw**
+        option to display the output as raw markdown text. From here, you can copy and paste or review formatting.
+
+    Paste this sample ``README.md`` file into your repository and push to GitHub.
+
+    .. code-block:: md
+
+        # Sample Playlist Includes Skillet
+
+        This is used in the training material as part of the Playlist Includes tutorial.
+
+        The solution utilizes three playlists:
+
+        1. A full IronSkillet PAN-OS 10.0 configuration
+        2. An Alert-Only Security Profiles IronSkillet PAN-OS 10.0 configuration
+            * only includes Alert-Only Security Profiles
+            * the IronSkillet version tag is included as well for documentation
+        3. A IronSkillet Not-Shared Panorama 10.0 Security Profiles Only
+
+        The configuration skillet was taken from the Configuration Tutorial for Skillet Builder documentation
+        (https://skilletbuilder.readthedocs.io/en/latest/tutorials/tutorial_configuration.html#).
+
+
+        ## Variables
+
+        ### Main Workflow Menu Options:
+
+        * *TARGET_IP*: IP of firewall to validate and configure
+        * *TARGET_USERNAME*: Username of firewall management user
+        * *TARGET_PASSWORD*: Password of the above user
+        * *edl_url*: URL used for the External Dynamic List
+        * *assess_options*: Checkbox for validation skillet execution orders (beginning and/or
+          end of the workflow)
+
+        ### Configuration Sub-Skillet Options:
+
+        * *tag_name*: Name of a newly created tag that is used in the security rules
+        * *tag_description*: Text field to describe the tag
+        * *tag_color*: Dropdown menu mapping color names to color numbers (required in the XML configuration)
+
+        * *edl_name*: Name of the newly created External Dynamic List
+        * *edl_description*: Text field used to describe the External Dynamic List
+
+        The 'recurring' value for the EDL is set to *five-minutes*. This could be added as a variable but for this example, the
+        value is considered a recommended practice so not configurable in the skillet.
+
+        The EDL type is set to IP since used in the security policy and is not configurable in the skillet.
+
+        ### Configuration Sub-Skillet Security Policy Referencing Variables
+
+        The security policy does not have its own variables asking for rule name, zones, or actions. The rules are
+        hardcoded with 'any' for most attributes and action as _deny_ to block traffic matching the EDL IP list.
+
+        The security rule names use the EDL name followed by '-in' and '-out' to create unique security policies for each
+        EDL. This is denoted in the yaml file with ```{{ edl_name }}``` included in the rule name.
+
+
+
+    **Support Policy Text**
+
+        Skillets are not part of Palo Alto Networks supported product so the policy text is appended to the
+        README file to specify skillets are not supported. Sample text to copy/paste is found in the `SkilletBuilder repo README`_
+
+    .. _SkilletBuilder repo README: https://raw.githubusercontent.com/PaloAltoNetworks/SkilletBuilder/master/README.md
+
+
 
 LIVEcommunity
 ~~~~~~~~~~~~~~
@@ -477,5 +627,10 @@ LIVEcommunity
 Other Applications
 ------------------
 
-- Submodules can be any developed skillets, or smaller skillets pre-built
-- If don't want to use submodules, can add the sub-skillets directly to the host repository
+    With the Playlist Framework, there are many new options for how skillets can be built. A few use cases not included
+    in this tutorial are listed below.
+        * Any repo with developed skillets can be added as a submodule
+        * Existing skillets can be broken into smaller sub-skillets and included in a playlist
+        * If submodules are too complex, the sub-skillets can be added directly to the host repository
+        * Playlist Includes can see any sub-skillets within the playlist repository directory or submodule
+        * More than one submodule can be added, if needed

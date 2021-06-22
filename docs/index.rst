@@ -12,6 +12,7 @@ Skillet Builder Documentation
 
    getting_started/overview
    getting_started/skillet_framework
+   getting_started/feedback
 
 .. toctree::
    :maxdepth: 1
