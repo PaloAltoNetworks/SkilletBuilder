@@ -1,8 +1,9 @@
 SkilletBuilder Feedback
 =======================
 
-Feedback is encouraged and welcome. Feel free to `submit an issue <https://github.com/PaloAltoNetworks/SkilletBuilder/issues>`_
-with suggestions, descriptions of bugs, or feature requests.
+Feedback on all aspects of SkilletBuilder and this documentation encouraged and welcome. Feel free to
+`submit an issue <https://github.com/PaloAltoNetworks/SkilletBuilder/issues>`_
+on GitHub with suggestions, descriptions of bugs, or feature requests.
 
 
 Support Policy

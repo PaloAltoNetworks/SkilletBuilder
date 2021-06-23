@@ -22,6 +22,8 @@ Overview
 
     .. _ironskillet-components: https://github.com/PaloAltoNetworks/ironskillet-components
 
+    The final repository built from this tutorial can be viewed `here <https://github.com/madelinemccombe/Playlist_Includes_Tutorial>`_.
+
 
     .. NOTE::
         Video walkthrough coming soon!
@@ -91,6 +93,18 @@ Add the Submodule
 
       .. image:: /images/includes_tutorial/submodule_init_github.png
          :width: 800
+
+    The final repository built from this tutorial can be viewed `here <https://github.com/madelinemccombe/Playlist_Includes_Tutorial>`_.
+    If trying to explore the submodule in the tutorial example after cloning, the submodule will need to be initiated and
+    updated beforehand. To do this, follow these steps.
+        * Clone the repository
+        * Open the repository (in an IDE, or ``cd`` in a terminal)
+        * Run ``git submodule init``
+        * Run ``git submodule update``
+
+    This will use the ``.gitmodules`` file to initiate the ironskillet-components repo in the submodules folder, and then
+    pull down the latest commit.
+
 
 Sub-Skillets in Submodule
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,7 +197,7 @@ Set Up the Directory Structure
 
 
 Playlist Preamble
-~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~
 
     Each playlist should have a preamble, just like any skillet or sub-skillet. Since there a lot of sub-skillets,
     snippets, and playlists to keep track of with this model and with this tutorial, it is recommended to keep a
@@ -346,17 +360,14 @@ Including Snippets
     .. code-block:: yaml
 
         snippets:
-            - name: panorama_device_mgt_config_10_0
-            include: panorama_device_mgt_config_10_0
-            include_variables: all
+          - name: panorama_tag_10_0
+            include: panorama_tag_10_0
             include_snippets:
-              - name: ironskillet_device_mgt_users
-                xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
-              - name: ironskillet_device_mgt_password_complexity
-                xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
+              - name: ironskillet_tag_ironskillet_version
+                xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/tag
 
     .. NOTE::
-        Notice that there is a new ``STACK`` variable introduced in the changed xpaths. This variable will need to be
+        Notice that there is a new ``DEVICE_GROUP`` variable introduced in the changed xpaths. This variable will need to be
         included in the playlist ``variables:`` section.
 
 
@@ -370,10 +381,72 @@ Including Snippets
           .. code-block:: yaml
 
             snippets:
-                - name: panos_ngfw_profile_antivirus_10_1
-                include: panos_ngfw_profile_antivirus_10_1
-                include_snippets:
-                  - name: ironskillet_antivirus_alert_all
+
+              # IronSkillet baseline
+              # general device system and setting configs
+              - name: panos_ngfw_device_system_mgmt_ip_10_0
+                include: panos_ngfw_device_system_mgmt_ip_10_0
+              - name: panos_ngfw_device_system_dns_10_0
+                include: panos_ngfw_device_system_dns_10_0
+              - name: panos_ngfw_device_system_10_0
+                include: panos_ngfw_device_system_10_0
+              - name: panos_ngfw_device_setting_10_0
+                include: panos_ngfw_device_setting_10_0
+              - name: panos_ngfw_mgt_config_users_10_0
+                include: panos_ngfw_mgt_config_users_10_0
+              - name: panos_ngfw_password_complexity_10_0
+                include: panos_ngfw_password_complexity_10_0
+              # shared log settings and profile
+              - name: panos_ngfw_shared_log_settings_10_0
+                include: panos_ngfw_shared_log_settings_10_0
+              - name: panos_ngfw_shared_log_settings_email_profile_10_0
+                include: panos_ngfw_shared_log_settings_email_profile_10_0
+              - name: panos_ngfw_shared_log_settings_email_system_critical_10_0
+                include: panos_ngfw_shared_log_settings_email_system_critical_10_0
+              # tag object
+              - name: panos_ngfw_tag_10_0
+                include: panos_ngfw_tag_10_0
+                # log settings
+              - name: panos_ngfw_log_settings_profiles_10_0
+                include: panos_ngfw_log_settings_profiles_10_0
+              - name: panos_ngfw_log_settings_profiles_email_10_0
+                include: panos_ngfw_log_settings_profiles_email_10_0
+              # security profiles and profile groups
+              - name: panos_ngfw_profile_custom_urlFiltering_10_0
+                include: panos_ngfw_profile_custom_urlFiltering_10_0
+              - name: panos_ngfw_profile_decryption_10_0
+                include: panos_ngfw_profile_decryption_10_0
+              - name: panos_ngfw_profile_antivirus_10_0
+                include: panos_ngfw_profile_antivirus_10_0
+              - name: panos_ngfw_profile_spyware_10_0
+                include: panos_ngfw_profile_spyware_10_0
+              - name: panos_ngfw_profile_vulnerability_10_0
+                include: panos_ngfw_profile_vulnerability_10_0
+              - name: panos_ngfw_profile_file-blocking_10_0
+                include: panos_ngfw_profile_file-blocking_10_0
+              - name: panos_ngfw_profile_urlFiltering_10_0
+                include: panos_ngfw_profile_urlFiltering_10_0
+              - name: panos_ngfw_profile_wildfire_analysis_10_0
+                include: panos_ngfw_profile_wildfire_analysis_10_0
+              - name: panos_ngfw_profile_group_10_0
+                include: panos_ngfw_profile_group_10_0
+              # rulebase
+              - name: panos_ngfw_rulebase_default_security_rules_10_0
+                include: panos_ngfw_rulebase_default_security_rules_10_0
+              - name: panos_ngfw_rulebase_security_10_0
+                include: panos_ngfw_rulebase_security_10_0
+              - name: panos_ngfw_rulebase_decryption_10_0
+                include: panos_ngfw_rulebase_decryption_10_0
+              - name: panos_ngfw_zone_protection_10_0
+                include: panos_ngfw_zone_protection_10_0
+              # reports and email
+              - name: panos_ngfw_reports_simple_10_0
+                include: panos_ngfw_reports_simple_10_0
+              - name: panos_ngfw_report_group_simple_10_0
+                include: panos_ngfw_report_group_simple_10_0
+              - name: panos_ngfw_email_scheduler_10_0
+                include: panos_ngfw_email_scheduler_10_0
+
 
     .. toggle-header:: class
       :header: **PAN-OS Alert Only Playlist [show/hide snippets]**
@@ -381,10 +454,49 @@ Including Snippets
           .. code-block:: yaml
 
             snippets:
-                - name: panos_ngfw_profile_antivirus_10_1
-                include: panos_ngfw_profile_antivirus_10_1
+
+              # tag object
+              - name: panos_ngfw_tag_10_0
+                include: panos_ngfw_tag_10_0
+                include_snippets:
+                  - name: ironskillet_tag_ironskillet_version
+              # security profiles and profile groups
+              - name: panos_ngfw_profile_custom_urlFiltering_10_0
+                include: panos_ngfw_profile_custom_urlFiltering_10_0
+                include_snippets:
+                  - name: ironskillet_custom_url_category_allow
+              - name: panos_ngfw_profile_decryption_10_0
+                include: panos_ngfw_profile_decryption_10_0
+              - name: panos_ngfw_profile_antivirus_10_0
+                include: panos_ngfw_profile_antivirus_10_0
                 include_snippets:
                   - name: ironskillet_antivirus_alert_all
+              - name: panos_ngfw_profile_spyware_10_0
+                include: panos_ngfw_profile_spyware_10_0
+                include_variables: all
+                include_snippets:
+                  - name: ironskillet_spyware_alert_all
+              - name: panos_ngfw_profile_vulnerability_10_0
+                include: panos_ngfw_profile_vulnerability_10_0
+                include_snippets:
+                  - name: ironskillet_vulnerability_alert_all
+              - name: panos_ngfw_profile_file-blocking_10_0
+                include: panos_ngfw_profile_file-blocking_10_0
+                include_snippets:
+                  - name: ironskillet_file_blocking_alert_all
+              - name: panos_ngfw_profile_urlFiltering_10_0
+                include: panos_ngfw_profile_urlFiltering_10_0
+                include_snippets:
+                  - name: ironskillet_url_alert_all
+              - name: panos_ngfw_profile_wildfire_analysis_10_0
+                include: panos_ngfw_profile_wildfire_analysis_10_0
+                include_snippets:
+                  - name: ironskillet_wildfire_alert_all
+              - name: panos_ngfw_profile_group_10_0
+                include: panos_ngfw_profile_group_10_0
+                include_snippets:
+                  - name: ironskillet_profile_group_alert_all
+
 
     .. toggle-header:: class
       :header: **Panorama Not-Shared Security Policies Playlist [show/hide snippets]**
@@ -392,22 +504,123 @@ Including Snippets
           .. code-block:: yaml
 
             snippets:
-                - name: panos_ngfw_profile_antivirus_10_1
-                include: panos_ngfw_profile_antivirus_10_1
+
+              # tag object
+              - name: panorama_tag_10_0
+                include: panorama_tag_10_0
+                include_snippets:
+                  - name: ironskillet_tag_ironskillet_version
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/tag
+              # security profiles
+              - name: panorama_profiles_custom_url_category_10_0
+                include: panorama_profiles_custom_url_category_10_0
+                include_snippets:
+                  - name: ironskillet_custom_url_category_block
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/custom-url-category
+                  - name: ironskillet_custom_url_category_allow
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/custom-url-category
+                  - name: ironskillet_custom_url_category_no_decrypt
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/custom-url-category
+              - name: panorama_profiles_decryption_10_0
+                include: panorama_profiles_decryption_10_0
+                include_snippets:
+                  - name: ironskillet_decryption_profile
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/decryption
+              - name: panorama_profiles_virus_10_0
+                include: panorama_profiles_virus_10_0
                 include_snippets:
                   - name: ironskillet_antivirus_alert_all
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/virus
+                  - name: ironskillet_antivirus_outbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/virus
+                  - name: ironskillet_antivirus_inbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/virus
+                  - name: ironskillet_antivirus_internal
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/virus
+                  - name: ironskillet_antivirus_exception
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/virus
+              - name: panorama_profiles_spyware_10_0
+                include: panorama_profiles_spyware_10_0
+                include_variables: all
+                include_snippets:
+                  - name: ironskillet_spyware_outbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/spyware
+                  - name: ironskillet_spyware_inbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/spyware
+                  - name: ironskillet_spyware_internal
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/spyware
+                  - name: ironskillet_spyware_alert_all
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/spyware
+                  - name: ironskillet_exception
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/spyware
+              - name: panorama_profiles_vulnerability_10_0
+                include: panorama_profiles_vulnerability_10_0
+                include_snippets:
+                  - name: ironskillet_vulnerability_outbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/vulnerability
+                  - name: ironskillet_vulnerability_inbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/vulnerability
+                  - name: ironskillet_vulnerability_internal
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/vulnerability
+                  - name: ironskillet_vulnerability_alert_all
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/vulnerability
+              - name: panorama_profiles_file_blocking_10_0
+                include: panorama_profiles_file_blocking_10_0
+                include_snippets:
+                  - name: ironskillet_file_blocking_outbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/file-blocking
+                  - name: ironskillet_file_blocking_inbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/file-blocking
+                  - name: ironskillet_file_blocking_internal
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/file-blocking
+                  - name: ironskillet_file_blocking_alert_all
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/file-blocking
+              - name: panorama_profiles_url_filtering_10_0
+                include: panorama_profiles_url_filtering_10_0
+                include_snippets:
+                  - name: ironskillet_url_outbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/url-filtering
+                  - name: ironskillet_url_alert_all
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/url-filtering
+                  - name: ironskillet_url_exception
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/url-filtering
+              - name: panorama_profiles_wildfire_analysis_10_0
+                include: panorama_profiles_wildfire_analysis_10_0
+                include_snippets:
+                  - name: ironskillet_wildfire_outbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/wildfire-analysis
+                  - name: ironskillet_wildfire_inbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/wildfire-analysis
+                  - name: ironskillet_wildfire_internal
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/wildfire-analysis
+                  - name: ironskillet_wildfire_alert_all
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/wildfire-analysis
+              - name: panorama_profile_group_10_0
+                include: panorama_profile_group_10_0
+                include_snippets:
+                  - name: ironskillet_profile_group_outbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profile-group
+                  - name: ironskillet_profile_group_inbound
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profile-group
+                  - name: ironskillet_profile_group_internal
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profile-group
+                  - name: ironskillet_profile_group_alert_all
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profile-group
+                  - name: ironskillet_profile_group_default
+                    xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profile-group
+
 
     .. NOTE::
         It is not currently possible to include another include. This means that a playlist cannot effectively include a
-        snippet from another playlist that already has a ``snippet_include`` defined. If this needs to be done, instead
+        snippet from another playlist that already has a ``include_snippets:`` defined. If this needs to be done, instead
         try referencing the same sub-skillets directly in both playlists.
 
 Including Variables
 ~~~~~~~~~~~~~~~~~~~
 
     Generally when including snippets from a sub-skillet, all of the variables from the sub-skillet should be loaded as
-    well, since they are needed to execute the snippets. This is the default action when loading an entire sub-skillet,
-    but if only certain snippets are loaded, or if changes to the snippet are made in the playlist, it is important to
+    well, since they are needed to execute the snippets. This is the default action when loading an entire sub-skillet.
+    However, if only certain snippets are loaded, or if changes to the snippet are made in the playlist, it is important to
     specify how variables are included. Basically, anytime the ``include_snippets:`` attribute is used, ``include_variables:``
     should also be specified, as long as there are variables in the sub-skillet to include.
 
@@ -416,27 +629,24 @@ Including Variables
     .. code-block:: yaml
 
         snippets:
-            - name: panorama_device_mgt_config_10_0
-            include: panorama_device_mgt_config_10_0
-            include_variables: all
+          - name: panorama_tag_10_0
+            include: panorama_tag_10_0
             include_snippets:
-              - name: ironskillet_device_mgt_users
-                xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
-              - name: ironskillet_device_mgt_password_complexity
-                xpath: /config/devices/entry[@name='localhost.localdomain']/template-stack/entry[@name='{{ STACK }}']/config/mgt-config
+              - name: ironskillet_tag_ironskillet_version
+                xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/tag
 
     This also highlights another important factor, which is that any **new** variables introduced to the playlist in
-    snippet changes must be included in the ``variables:`` section of the playlist. Here, the STACK variable should be
+    snippet changes must be included in the ``variables:`` section of the playlist. Here, the **DEVICE_GROUP** variable should be
     added to the Not-Shared DGTemplate playlists as follows:
 
     .. code-block:: yaml
 
         variables:
-          - name: STACK
-            description: Template stack name for Panorama
-            default: sample_stack
+          - name: DEVICE_GROUP
+            description: Device-group name for Panorama
+            default: sample_devicegroup
             type_hint: text
-            help_text: creates a sample template stack with IronSkillet configuration elements
+            help_text: creates a sample device-group with IronSkillet configuration elements
 
 
     Other use cases that might come up:
@@ -472,29 +682,95 @@ Import the Playlists
         .. image:: /images/includes_tutorial/import_playlist_panhandler.png
          :width: 800
 
+    If the repository did load correctly, then it should take you to the **Repository Detail** page. This page has
+    a Details overview section, a preview of the latest commits to the repository, the skillets (and playlists) found
+    and loaded from the repository, and links to the collections found from the skillets. An option to checkout a
+    different branch from the default is all the way at the bottom of the page.
+
+    If the playlist did not load correctly into PanHandler, an error message should pop up
+    naming the playlist and snippet where the error occurred. This could be due to an incorrect name reference, missing
+    variables, or general YAML syntax errors. If this happens, fix what was named in the error, commit/push those changes,
+    and then hit the **Update To Latest** button (green oval) at the top of the repository **Details** page.
+
+        .. image:: /images/includes_tutorial/repository_details_panhandler.png
+         :width: 800
+
     .. NOTE::
-        If there are other repositories (for example PANW IronSkillet) already loaded into PanHandler that have
-        the same skillet names as the playlists, the new playlists will not load. To fix this, remove both repositories
-        with duplicate names and try importing the playlist repository again.
+    If there are other repositories (for example PANW IronSkillet) already loaded into PanHandler that have
+    the same skillet names as the playlists, the new playlists will not load. This will not throw an error, so it will
+    appear that the new repository loaded correctly, but it could be missing playlists. To fix this, remove both repositories
+    with duplicate names and try importing the playlist repository again.
 
 
 Debug and Play the Playlist
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Things to look for
+    Once the repository is loaded into PanHandler without any errors, there are a few playlist-specific features that
+    should be double checked. To play a playlist, click on the name of the playlist from the repository **Details** page,
+    or the Collection page the playlist belongs to (**IronSkillet Playlists** in this tutorial).
 
-- Variables loaded correctly
-- xpath and xml snippets loaded correctly
-- any overrides go through
 
-Common errors
--
--
--
+    All variables loaded into a skillet will show up in the first menu when evaluating the playlist. The correct
+    variable menus are shown below for each playlist.
+
+    **PAN-OS Full**
+        .. image:: /images/includes_tutorial/panos_full_variables.png
+         :width: 800
+
+    **PAN-OS Alert Only**
+        .. image:: /images/includes_tutorial/alert_only_variables.png
+         :width: 800
+
+    **Panorama Not-Shared Security Policies**
+        .. image:: /images/includes_tutorial/panorama_variables.png
+         :width: 800
+
+    After hitting the **Submit** button at the bottom right of the variables menu, the **Target Information** menu will
+    show up. Here, a valid NGFW or Panorama IP, username, and password should be inputted. **DO NOT HIT SUBMIT**, but
+    instead click the **Debug** button (pink box). This opens up a super helpful menu that shows how the XML snippets
+    rendered from the playlist and variables specified. This **Debug** view will be used to double-check three
+    important aspects of playlists below.
+
+        .. image:: /images/includes_tutorial/debug_button_panhandler.png
+         :width: 800
+
+**Check variables loaded correctly**
+
+
+**Check xml snippets and xpaths loaded correctly**
+
+
+**Confirm xml, xpath, and variable overrides**
+
+
+
+    Some common errors are:
+        * Using the incorrect sub-skillet or snippet name in an ``include_snippets:`` attribute
+        * Not including variables needed
+        * Using the same name between sub-skillets and playlists, or between separate repositories loaded in PanHandler
+
 
 Edit, Push, Test
 ~~~~~~~~~~~~~~~~
 
+    As changes are made to the skillets while debugging, the following steps should be taken to see the changes reflected
+    in PanHandler:
+        * Commit and Push changes from the IDE/code editor to GitHub
+        * In PanHandler open up the **Imported Repositories** page using the **Skillet Repositories** menu option (blue box)
+
+    Once on the **Imported Repositories** page, there are two options to update
+        1. Click the **Update All Repostiories** button (purple box)
+        OR
+        2. Open up the playlist repository using the Details button (green box)
+            * Click the **Update to Latest** button (green oval)
+
+    *Imported Repositories Page*
+        .. image:: /images/includes_tutorial/panhandler_imported_repositories.png
+         :width: 800
+
+    *Details Page*
+        .. image:: /images/includes_tutorial/repository_details_panhandler.png
+         :width: 800
 
 Document
 --------
@@ -565,46 +841,34 @@ README.md
         1. A full IronSkillet PAN-OS 10.0 configuration
         2. An Alert-Only Security Profiles IronSkillet PAN-OS 10.0 configuration
             * only includes Alert-Only Security Profiles
-            * the IronSkillet version tag is included as well for documentation
-        3. A IronSkillet Not-Shared Panorama 10.0 Security Profiles Only
+            * the IronSkillet version tag is included for documentation purposes
+        3. A IronSkillet Not-Shared Panorama 10.0 Security Profiles configuration
+            * only includes Security Profiles for a Not-Shared Panorama configuration
+            * the IronSkillet version tag is included for documentation purposes
 
-        The configuration skillet was taken from the Configuration Tutorial for Skillet Builder documentation
-        (https://skilletbuilder.readthedocs.io/en/latest/tutorials/tutorial_configuration.html#).
+        These playlists were based off of some of the playlists in the
+        [IronSkillet 10.1 branch](https://github.com/PaloAltoNetworks/iron-skillet/tree/panos_v10.1/playlists).
+        Check out the [README](https://github.com/PaloAltoNetworks/iron-skillet/blob/panos_v10.1/playlists/README.md)
+        for more information on the playlists and content they contain.
 
+        Configuration elements in the playlists pull from the
+        [ironskillet-components](https://github.com/PaloAltoNetworks/ironskillet-components) submodule, which has several
+        sub-skillets. All skillet-player tools (PanHandler, SLI, etc.) will be able to read in the snippets from the
+        sub-skillets in the submodule using the `include_snippets` attribute in the playlists. However, the submodule
+        has a few steps for upkeep when using content locally.
 
-        ## Variables
+        When cloning this repository, the submodule will need to be initiated and updated before being able to use it.
+        To do this, run the following commands:
+            * Clone the repository: `git clone <clone_link>`
+            * Initiate the submodule: `git submodule init`
+            * Update the submodule to the latest commit: `git submodule update`
 
-        ### Main Workflow Menu Options:
-
-        * *TARGET_IP*: IP of firewall to validate and configure
-        * *TARGET_USERNAME*: Username of firewall management user
-        * *TARGET_PASSWORD*: Password of the above user
-        * *edl_url*: URL used for the External Dynamic List
-        * *assess_options*: Checkbox for validation skillet execution orders (beginning and/or
-          end of the workflow)
-
-        ### Configuration Sub-Skillet Options:
-
-        * *tag_name*: Name of a newly created tag that is used in the security rules
-        * *tag_description*: Text field to describe the tag
-        * *tag_color*: Dropdown menu mapping color names to color numbers (required in the XML configuration)
-
-        * *edl_name*: Name of the newly created External Dynamic List
-        * *edl_description*: Text field used to describe the External Dynamic List
-
-        The 'recurring' value for the EDL is set to *five-minutes*. This could be added as a variable but for this example, the
-        value is considered a recommended practice so not configurable in the skillet.
-
-        The EDL type is set to IP since used in the security policy and is not configurable in the skillet.
-
-        ### Configuration Sub-Skillet Security Policy Referencing Variables
-
-        The security policy does not have its own variables asking for rule name, zones, or actions. The rules are
-        hardcoded with 'any' for most attributes and action as _deny_ to block traffic matching the EDL IP list.
-
-        The security rule names use the EDL name followed by '-in' and '-out' to create unique security policies for each
-        EDL. This is denoted in the yaml file with ```{{ edl_name }}``` included in the rule name.
-
+        It is also recommended to update the submodule as needed (not done automatically as new commits are released). It
+        is necessary to commit and push changes in order to see the latest commit pulled into a skillet player. This
+        can be done using the following steps:
+            * Open the repository
+            * Update the submodule: `git submodule update --remote --merge`
+            * Commit and Push any changes
 
 
     **Support Policy Text**
@@ -627,10 +891,13 @@ LIVEcommunity
 Other Applications
 ------------------
 
-    With the Playlist Framework, there are many new options for how skillets can be built. A few use cases not included
-    in this tutorial are listed below.
+    With the Playlist Framework, there are many new options for how skillets can be built. A few further ideas to spark
+    inspiration are listed below.
         * Any repo with developed skillets can be added as a submodule
         * Existing skillets can be broken into smaller sub-skillets and included in a playlist
         * If submodules are too complex, the sub-skillets can be added directly to the host repository
         * Playlist Includes can see any sub-skillets within the playlist repository directory or submodule
-        * More than one submodule can be added, if needed
+        * More than one submodule can be added to a repository
+
+    Feel free to reach out with any questions! See the :ref:`Feedback Section<SkilletBuilder Feedback>`
+    for more information on how to do so.
