@@ -734,19 +734,61 @@ Debug and Play the Playlist
         .. image:: /images/includes_tutorial/debug_button_panhandler.png
          :width: 800
 
-**Check variables loaded correctly**
+    The **Debug** view has a section for each snippet that is included in the playlist. Each of these section is broken
+    out into the snippet name (blue text), JSON format of what is being loaded, the xpath the configuration will be pushed
+    to (pink text), and then the xml to be pushed (red and black text). An example is shown below for the IronSkillet
+    version tag snippet in the **PAN-OS Alert Only** playlist.
+
+        .. image:: /images/includes_tutorial/debug_overview.png
+         :width: 800
+
+    .. NOTE::
+        The blue text is formatted so that is joins the name of the sub-skillet and the name of the snippet with a period.
+        In the example above, the ``ironskillet_tag_ironskillet_version`` snippet was pulled from the ``panos_ngfw_tag_10_0``
+        sub-skillet. This is useful when tracking the location of an error when debugging.
+
+    **Check variables loaded correctly**
+
+        The first way to check this is through the variable menus shown above. Each menu should list out all variables
+        expected to be included in the playlist, along with any characteristics specified for the variable. If variables
+        are not showing up in the menu as expected, make sure that there is an ``include_variables:`` specified in the snippet
+        that the variables are pulling from. Alternatively, try adding the variable to the ``variables:`` section of the
+        playlist.
+
+        The second way to check the variables is on the **Debug** page. All xml snippets shown (red and black text) should have
+        the variables populated according to what was specified in the variable menu. No ``{{ VARIABLE_NAME }}`` text should
+        be left. For example, in the **PAN-OS Full** playlist, The primary and secondary DNS servers have been specified.
+
+            .. image:: /images/includes_tutorial/dns_variable_load.png
+             :width: 800
 
 
-**Check xml snippets and xpaths loaded correctly**
+    **Check xml snippets and xpaths loaded correctly**
+
+        When only including certain snippets from a sub-skillet, it is good practice to confirm that *only* those snippets were
+        loaded from the playlist. Using the **PAN-OS Alert-Only** playlist, it is easy to confirm that only the Alert profiles
+        were loaded for each of the Security Policy sub-skillets. There should be 10 snippets total (8 alert policies, alert
+        profile group, and the IronSkillet tag). When scrolling down the **Debug** page, there should only be 10 sections
+        that start with the blue text header (which indicates 10 snippets loaded).
 
 
-**Confirm xml, xpath, and variable overrides**
+    **Confirm xpath and xml overrides**
 
+        If specifying a different xpath or xml for a snippet than is pre-defined in the sub-skillet, it is a good idea to
+        confirm that those changes went through. For xpaths, this is simple to view on the **Debug** page, as each snippet
+        loaded has the xpath tied to it in pink text. As can be seen below, the Not-Shared Panorama xpaths for device group
+        went through, and the variable loaded in correctly.
+
+            .. image:: /images/includes_tutorial/xpath_override.png
+             :width: 800
+
+        Any xml overrides specified can also be confirmed in the same manner as the xpath. Double check that the xml
+        loaded matches what is explicitly written in the playlist versus what would normally be included from the sub-skillet.
 
 
     Some common errors are:
         * Using the incorrect sub-skillet or snippet name in an ``include_snippets:`` attribute
-        * Not including variables needed
+        * Not including all variables needed
         * Using the same name between sub-skillets and playlists, or between separate repositories loaded in PanHandler
 
 
