@@ -14,13 +14,13 @@ Overview
       * Pulling together content from multiple skillets
 
     This Playlist Includes tutorial highlights the first three use cases. The focus of this tutorial will show how the
-    playlist model for IronSkillet works. This uses a submodule called `ironskillet-components`_ that is used to build
+    playlist model for IronSkillet works. This uses a submodule called `ironskillet-components <https://github.com/PaloAltoNetworks/ironskillet-components>`_
+    that is used to build
     several playlists that contain different content groups of the IronSkillet configuration. By using a submodule, it
     is easy to update the sub-skillets in one place, and have the playlists pull the latest snippets available. To make
     terms more clear in this tutorial, the skillets that the playlist include snippets come from will be called sub-skillets.
     This means we will be constructing a playlists containing snippets from sub-skillets.
 
-    .. _ironskillet-components: https://github.com/PaloAltoNetworks/ironskillet-components
 
     The final repository built from this tutorial can be viewed `here <https://github.com/madelinemccombe/Playlist_Includes_Tutorial>`_.
 
@@ -57,16 +57,15 @@ Prerequisites and Set Up
 Set Up the Submodule
 --------------------
 
-    In this tutorial we are using `ironskillet-components`_, which contains all of the sub-skillets for IronSkillet 9.1+.
+    In this tutorial we are using `ironskillet-components <https://github.com/PaloAltoNetworks/ironskillet-components>`_,
+    which contains all of the sub-skillets for IronSkillet 9.1+.
     Each folder for the PAN-OS version has all of the panos and panorama sub-skillets, which are broken down into separate
     files by the xpath that the snippets use to push the configuration. This was do e to keep like snippets together, as
     well as group configurations by categories that could be included or excluded based on the preference of the user.
     A breakdown of which sub-skillets correspond to which configuration elements can be found in the
-    `IronSkillet documentation`_. This tutorial uses the 10.0 panos and panorama sub-skillets to build
-    several configuration playlists.
+    `IronSkillet documentation <https://iron-skillet.readthedocs.io/en/docs_master/panos_template_guide.html>`_. This
+    tutorial uses the 10.0 panos and panorama sub-skillets to build several configuration playlists.
 
-    .. _ironskillet-components: https://github.com/PaloAltoNetworks/ironskillet-components
-    .. _IronSkillet documentation: https://iron-skillet.readthedocs.io/en/docs_master/panos_template_guide.html
 
 Add the Submodule
 ~~~~~~~~~~~~~~~~~
@@ -80,10 +79,10 @@ Add the Submodule
 
     This will add a copy of the files at that specific commit to your working directory. A ``.gitmodules`` file will
     automatically appear, containing the information about the submodule just added. The sub-skillets from the submodule
-    are now able to be included in a playlist. See the :ref:`git submodule overview<Use Submodules>` for more
+    are now able to be included in a playlist. See the :ref:`Git Submodules Overview<Use Submodules>` for more
     information on submodules and how they work.
 
-    The working tree of the repository (green square) and ``.gitmodules`` file (red quare) should look like the
+    The working tree of the repository (green square) and ``.gitmodules`` file (red square) should look like the
     following after following the steps above:
 
       .. image:: /images/includes_tutorial/submodule_init_IDE.png
@@ -139,7 +138,7 @@ Sub-Skillets in Submodule
             collection:
               - IronSkillet 10.0 PAN-OS Snippets
 
-    When ``ironskillet-components`` is imported into PanHandler (as of the writing of this tutorial), the following
+    When **ironskillet-components** is imported into PanHandler (as of the writing of this tutorial), the following
     collections are available. Each of the sub-skillets within these collections loaded can be run individually.
 
       .. image:: /images/includes_tutorial/ironskillet_components_collections.png
@@ -270,7 +269,7 @@ Playlist Preamble
 
 
     See :ref:`Metadata Attributes page<Metadata Attributes>` for more information on Preamble Attributes and further
-    options to specify. The ``variables:`` and `` snippets:`` sections are blank for now, but will be added to in the
+    options to specify. The ``variables:`` and ``snippets:`` sections are blank for now, but will be added to in the
     following sections.
 
 
@@ -609,6 +608,7 @@ Including Snippets
                   - name: ironskillet_profile_group_default
                     xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profile-group
 
+    |
 
     .. NOTE::
         It is not currently possible to include another include. This means that a playlist cannot effectively include a
@@ -635,9 +635,13 @@ Including Variables
               - name: ironskillet_tag_ironskillet_version
                 xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/tag
 
-    This also highlights another important factor, which is that any **new** variables introduced to the playlist in
+    The ``panorama_tag_10_0`` sub-skillet does not have any variables in it, so in this case, an ``include_variables:`` is
+    not necessary. However, if including snippets from a different sub-skillet, and ``include_variables: all`` should be
+    added right above the ``include_snippets:``.
+
+    This also highlights another important factor, which is that any *new* variables introduced to the playlist in
     snippet changes must be included in the ``variables:`` section of the playlist. Here, the **DEVICE_GROUP** variable should be
-    added to the Not-Shared DGTemplate playlists as follows:
+    added to the Panorama Not-Shared Security Profile playlist as follows:
 
     .. code-block:: yaml
 
@@ -649,9 +653,9 @@ Including Variables
             help_text: creates a sample device-group with IronSkillet configuration elements
 
 
-    Other use cases that might come up:
-      * menu options for custom loads (checkboxes in a workflow)
-      * when conditional includes
+    There are a few other use cases that might come up:
+      * Menu options for custom loads (checkboxes in a workflow)
+      * When conditional includes
       * See the `Workflow Tutorial <https://skilletbuilder.readthedocs.io/en/latest/tutorials/tutorial_workflow.html#add-variables-to-the-skillet>`_ for more examples of variable usage
 
 
@@ -661,7 +665,7 @@ Test and Troubleshoot
 
     Now that the skillet has been pushed to GitHub, the skillet can be imported or loaded into one of the skillet
     player tools, such as PanHandler or SLI, for testing. This Tutorial will show how to test and debug using PanHandler.
-    Make sure to `update to the latest release <https://panhandler.readthedocs.io/en/master/running.html#quick-start>`_,
+    Make sure to `update PanHandler to the latest release <https://panhandler.readthedocs.io/en/master/running.html#quick-start>`_,
     as playlists are a new feature.
 
     Testing playlists involves three main components:
@@ -676,8 +680,8 @@ Test and Troubleshoot
 Import the Playlists
 ~~~~~~~~~~~~~~~~~~~~
 
-    Import the playlists into PanHandler (see menu for location to do this below), and open the
-    **IronSkillet Playlists** collection from either the *Skillet Collections* or *Skillet Repositories* page.
+    First, import the repository into PanHandler. The **Import Playlists** option in the PanHandler Menu will take you
+    this page. Then fill out the *Repository Name* (can be anything you want) and the *URL*, and hit the **Submit** button.
 
         .. image:: /images/includes_tutorial/import_playlist_panhandler.png
          :width: 800
@@ -695,11 +699,12 @@ Import the Playlists
         .. image:: /images/includes_tutorial/repository_details_panhandler.png
          :width: 800
 
+
     .. NOTE::
-    If there are other repositories (for example PANW IronSkillet) already loaded into PanHandler that have
-    the same skillet names as the playlists, the new playlists will not load. This will not throw an error, so it will
-    appear that the new repository loaded correctly, but it could be missing playlists. To fix this, remove both repositories
-    with duplicate names and try importing the playlist repository again.
+        If there are other repositories (for example PANW IronSkillet) already loaded into PanHandler that have
+        the same skillet names as the playlists, the new playlists will not load. This will not throw an error, so it will
+        appear that the new repository loaded correctly, but it could be missing playlists. To fix this, remove both repositories
+        with duplicate names and try importing the playlist repository again.
 
 
 Debug and Play the Playlist
@@ -734,7 +739,7 @@ Debug and Play the Playlist
         .. image:: /images/includes_tutorial/debug_button_panhandler.png
          :width: 800
 
-    The **Debug** view has a section for each snippet that is included in the playlist. Each of these section is broken
+    The **Debug** view has a section for each snippet that is included in the playlist. Each of these sections is broken
     out into the snippet name (blue text), JSON format of what is being loaded, the xpath the configuration will be pushed
     to (pink text), and then the xml to be pushed (red and black text). An example is shown below for the IronSkillet
     version tag snippet in the **PAN-OS Alert Only** playlist.
@@ -800,11 +805,16 @@ Edit, Push, Test
         * Commit and Push changes from the IDE/code editor to GitHub
         * In PanHandler open up the **Imported Repositories** page using the **Skillet Repositories** menu option (blue box)
 
-    Once on the **Imported Repositories** page, there are two options to update
-        1. Click the **Update All Repostiories** button (purple box)
+    Once on the **Imported Repositories** page, there are two options to update:
+
+    1. Click the **Update All Repositories** button (purple box below)
+
         OR
-        2. Open up the playlist repository using the Details button (green box)
-            * Click the **Update to Latest** button (green oval)
+
+    2.
+        (a) Open up the playlist repository using the Details button (green box below)
+        (b) Click the **Update to Latest** button (green oval below)
+
 
     *Imported Repositories Page*
         .. image:: /images/includes_tutorial/panhandler_imported_repositories.png
@@ -828,16 +838,17 @@ README.md
     The playlist repository has an empty placeholder ``README.md`` that should give an overview of the solution.
     The ``README.md`` should provide skillet-specific details such as what the playlist does, variable input descriptions,
     and caveats and requirements. Some playlist-specific information to include:
-        * Information about the submodules and the content they contain
-        * A reminder that when cloning a repository with a submodule, existing submodules will need to be initiated and
-          updated before use. To do this, run the following commands:
-            * Clone the repository ``git clone <clone_link>``
-            * ``git submodule init``
-            * ``git submodule update``
-        * Remind users to update the submodule as needed, since that is not done automatically as new commits are released
-            * Open the playlist repository
-            * Run ``git submodule update --remote --merge``
-            * Commit and Push any changes
+
+    * Information about the submodules and the content they contain
+    * A reminder that when cloning a repository with a submodule, existing submodules will need to be initiated and updated before use. To do this, run the following commands:
+        * Clone the repository ``git clone <clone_link>``
+        * ``git submodule init``
+        * ``git submodule update``
+    * Remind users to update the submodule as needed, since that is not done automatically as new commits are released. To do this, run the following commands:
+        * Open the playlist repository
+        * Run ``git submodule update --remote --merge``
+        * Commit and Push any changes
+
 
     ``README.md`` uses the markdown formatting language. Numerous examples can be found in the skillet files. There is also a
     wide array of `markdown cheat sheets`_ you can find using Google searches.
@@ -901,16 +912,16 @@ README.md
 
         When cloning this repository, the submodule will need to be initiated and updated before being able to use it.
         To do this, run the following commands:
-            * Clone the repository: `git clone <clone_link>`
-            * Initiate the submodule: `git submodule init`
-            * Update the submodule to the latest commit: `git submodule update`
+        * Clone the repository: `git clone <clone_link>`
+        * Initiate the submodule: `git submodule init`
+        * Update the submodule to the latest commit: `git submodule update`
 
         It is also recommended to update the submodule as needed (not done automatically as new commits are released). It
         is necessary to commit and push changes in order to see the latest commit pulled into a skillet player. This
         can be done using the following steps:
-            * Open the repository
-            * Update the submodule: `git submodule update --remote --merge`
-            * Commit and Push any changes
+        * Open the repository
+        * Update the submodule: `git submodule update --remote --merge`
+        * Commit and Push any changes
 
 
     **Support Policy Text**
