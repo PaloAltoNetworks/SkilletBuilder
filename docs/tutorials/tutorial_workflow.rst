@@ -773,8 +773,8 @@ Add Snippets to the Skillet
 
     .. _SkilletLib repo in GitHub: https://github.com/PaloAltoNetworks/skilletlib/tree/master/example_skillets/workflow_transform
 
-    .. NOTE::
-        **REMEMBER**: To avoid PanHandler skillet import errors, skillets' names must be globally unique.
+    .. WARNING::
+        To avoid PanHandler skillet import errors, skillets' names must be globally unique.
 
 Push the Skillet to GitHub
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
