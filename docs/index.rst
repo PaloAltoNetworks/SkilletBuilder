@@ -39,7 +39,7 @@ Skillet Builder Documentation
 
 .. toctree::
    :maxdepth: 1
-   :caption: Developing Skillets Tutorials
+   :caption: Skillet Tutorials
 
    tutorials/tutorial_configuration
    tutorials/tutorial_set_commands
