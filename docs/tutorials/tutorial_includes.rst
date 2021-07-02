@@ -1,6 +1,8 @@
 Playlist Includes
 =================
 
+|
+
 Overview
 --------
 
@@ -25,13 +27,14 @@ Overview
     The final repository built from this tutorial can be viewed `here <https://github.com/madelinemccombe/Playlist_Includes_Tutorial>`_.
 
 
-    .. NOTE::
-        Video walkthrough coming soon!
+    .. raw:: html
 
+        <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=52cb2d2e-8e09-420e-8af6-ad58012843e3&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&captions=false&interactivity=all"
+        height="405" width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 |
 
     Click below to jump to a specific section of the tutorial:
-      1. `Prerequisites and Set Up`_
+      1. `Prerequisites`_
       2. `Set Up the Submodule`_
       3. `Build the Playlist`_
       4. `Test and Troubleshoot`_
@@ -40,8 +43,8 @@ Overview
 
 |
 
-Prerequisites and Set Up
-------------------------
+Prerequisites
+-------------
 
     Before moving forward with the tutorial, you will need the following:
 
@@ -52,25 +55,27 @@ Prerequisites and Set Up
 
     .. _instructions here: https://panhandler.readthedocs.io/en/master/running.html#quick-start
 
-
+|
 
 Set Up the Submodule
 --------------------
 
     In this tutorial we are using `ironskillet-components <https://github.com/PaloAltoNetworks/ironskillet-components>`_,
     which contains all of the sub-skillets for IronSkillet 9.1+.
-    Each folder for the PAN-OS version has all of the panos and panorama sub-skillets, which are broken down into separate
-    files by the xpath that the snippets use to push the configuration. This was do e to keep like snippets together, as
+    Each folder for the PAN-OS version has all of the ``panos`` and ``panorama`` sub-skillets, which are broken down into separate
+    files by the XPath that the snippets use to push the configuration. This was done to keep like snippets together, as
     well as group configurations by categories that could be included or excluded based on the preference of the user.
     A breakdown of which sub-skillets correspond to which configuration elements can be found in the
     `IronSkillet documentation <https://iron-skillet.readthedocs.io/en/docs_master/panos_template_guide.html>`_. This
-    tutorial uses the 10.0 panos and panorama sub-skillets to build several configuration playlists.
+    tutorial uses the 10.0 ``panos`` and ``panorama`` sub-skillets to build several configuration playlists.
 
+|
 
 Add the Submodule
 ~~~~~~~~~~~~~~~~~
 
     To add this submodule to the new repository that will contain the playlists, use the following steps:
+
       * Open the new repository in your IDE or text editor of choice
       * Create a new folder in the root directory called **Submodules**
       * Navigate into that folder
@@ -104,6 +109,7 @@ Add the Submodule
     This will use the ``.gitmodules`` file to initiate the ironskillet-components repo in the submodules folder, and then
     pull down the latest commit.
 
+|
 
 Sub-Skillets in Submodule
 ~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -118,9 +124,9 @@ Sub-Skillets in Submodule
     .. _ironskillet-components: https://github.com/PaloAltoNetworks/ironskillet-components
 
     Inside each sub-skillet, the meta-data preamble structure is the same as any normal skillet would have. To keep naming conventions simple,
-    it is recommended to use the same ``file_name`` specified as the external file name as the internal skillet ``name``
-    in the header. Another handy attribute to include is the ``collection`` a sub-skillet should be included
-    in. This is because it is possible to load repositories with many sub-skillets into PnaHandler, and it makes it much
+    it is recommended to use the same ``file_name`` specified as the external file name as the internal skillet **name**
+    in the header. Another handy attribute to include is the **collection** a sub-skillet should be included
+    in. This is because it is possible to load repositories with many sub-skillets into PanHandler, and it makes it much
     easier to find the sub-skillet you are looking for if they are sorted into descriptive collections.
     See :ref:`Metadata Attributes page<Metadata Attributes>` for more information on
     Preamble Attributes and further options to specify. The
@@ -145,25 +151,25 @@ Sub-Skillets in Submodule
          :width: 800
 
     Another best practice to mention is that each sub-skillet should include all information needed to configure all snippets
-    by itself. This means that any variables used or xml included in the snippet **must** be included directly in the
+    by itself. This means that any variables used or XML included in the snippet **must** be included directly in the
     sub-skillet. This allows each sub-skillet to be run and debugged individually, and ensures that the playlist that
     includes the sub-skillet will be able to find all the information needed to run the snippet. Also, it is not possible
-    to include a skillet include, which is why any xml must be directly specified within the snippets of a sub-skillet.
+    to include a skillet include, which is why any XML must be directly specified within the snippets of a sub-skillet.
 
     The final recommendation for sub-skillets pertains to the individual snippets within the sub-skillet. Each of the
-    snippets in a sub-skillet should include a piece of xml small enough to encompass one action. For example,
-    each of the IronSkillet antivirus security profiles are broken down into their own snippets. For the five profiles (alert-only,
-    inbound, outbound, internal, and exception), there exists a snippet that can then be included or not included in a playlist.
+    snippets in a sub-skillet should include a piece of XML small enough to encompass one action. For example,
+    each of the IronSkillet antivirus security profiles are broken down into their own snippets. For the five profiles (Alert-Only,
+    Inbound, Outbound, Internal, and Exception), there exists a snippet that can then be included or not included in a playlist.
     This subsetting of information is important to provide granularity in choosing what can be included or excluded from
     a playlist down the road.
     See the `panos_ngfw_profile_antivirus_10_0.skillet.yaml <https://github.com/PaloAltoNetworks/ironskillet-components/blob/main/panos_v10.0/ngfw/panos_ngfw_profile_antivirus_10_0.skillet.yaml>`_
     for more in depth information.
 
-    .. NOTE::
+    .. WARNING::
         All snippets and sub-skillets within a submodule repository **must** have unique names. This is required for
         referencing later in playlist includes.
 
-
+|
 
 Build the Playlist
 ------------------
@@ -171,6 +177,8 @@ Build the Playlist
     A playlist is nearly identical to any other skillet, with the main difference being the variable and snippet includes.
     This means that the format and headers will be the same as a normal skillet. The following section will walk through
     how to build out a playlist, and show examples of how to include snippets from a sub-skillet in various ways.
+
+|
 
 Set Up the Directory Structure
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -183,17 +191,19 @@ Set Up the Directory Structure
     * ``ironskillet_panos_full_10_0.skillet.yaml``
     * ``ironskillet_panos_alert_only_10_0.skillet.yaml``
     * ``ironskillet_panorama_notshared_security_policies_10_0.skillet.yaml``
+|
 
 
     Playlist file names should follow the pattern ``playlist_name.skillet.yaml``. This allows the skillet players
     (PanHandler, SLI) to recognize that it is a playlist and load the snippets accordingly. In this tutorial, playlist
-    names will mention IronSkillet, the device type to be configured (panos or panorama), type of playlist, and the
+    names will mention IronSkillet, the device type to be configured (``panos`` or ``panorama``), type of playlist, and the
     PAN-OS version. This gives an accurate description of what is included in the playlist without having to open it
     and try to decipher the skillet includes. See below for what the directory should look like after following these steps.
 
       .. image:: /images/includes_tutorial/playlist_creation.png
          :width: 400
 
+|
 
 Playlist Preamble
 ~~~~~~~~~~~~~~~~~
@@ -215,7 +225,7 @@ Playlist Preamble
 
     The playlist preambles should look like the following:
 
-    **PAN-OS Full Playlist**
+    **PAN-OS Full Skeleton**
 
     .. code-block:: yaml
 
@@ -233,7 +243,7 @@ Playlist Preamble
         snippets:
 
 
-    **PAN-OS Alert Only Playlist**
+    **PAN-OS Alert Only Skeleton**
 
     .. code-block:: yaml
 
@@ -250,7 +260,7 @@ Playlist Preamble
 
         snippets:
 
-    **Panorama Not-Shared Security Policies Playlist**
+    **Panorama Not-Shared Security Policies Skeleton**
 
     .. code-block:: yaml
 
@@ -272,18 +282,25 @@ Playlist Preamble
     options to specify. The ``variables:`` and ``snippets:`` sections are blank for now, but will be added to in the
     following sections.
 
+    .. TIP::
+        YAML is notoriously finicky about whitespace and formatting. While it's a relatively
+        simple structure and easy to learn, it can often also be frustrating to work with.
+        A good reference to use to check your YAML syntax is the
+        `YAML Lint site <http://www.yamllint.com/>`_.
+
+|
 
 Including Snippets
 ~~~~~~~~~~~~~~~~~~
 
-    There are different ways to include snippets from sub-skillets in a playlist. The main ways are listed below, and
+    There are different use cases for include snippets from sub-skillets in a playlist. The main ways are listed below, and
     will be highlighted when building out the playlists in the following section:
       * Load entire sub-skillet as is
       * Load only certain snippets from a sub-skillet
       * Load and change the element of snippets in a sub-skillet
-      * Load and change xpath of snippets in a sub-skillet (particularly useful with different panorama setups)
+      * Load and change XPath of snippets in a sub-skillet (particularly useful with different panorama setups)
 
-**Load entire sub-skillet as is**
+**Case 1: Load entire sub-skillet as is**
 
     To include an entire sub-skillet into a playlist, in the **snippet** section of the *playlist*, create entries that
     have a **name** and **include** set to the internal sub-skillet name defined in the preamble of the sub-skillet. In
@@ -294,9 +311,9 @@ Including Snippets
 
         snippets:
             - name: panos_ngfw_device_system_10_0
-            include: panos_ngfw_device_system_10_0
+              include: panos_ngfw_device_system_10_0
 
-**Load only certain snippets from a sub-skillet**
+**Case 2: Load only certain snippets from a sub-skillet**
 
     If only certain snippets within a sub-skillet should be included in a playlist, still specify the **name** and **include**
     of the entry in the **snippet** section of the *playlist* like the above example. Then, add an **include_snippets**
@@ -308,8 +325,8 @@ Including Snippets
 
         snippets:
             - name: panos_ngfw_profile_antivirus_10_1
-            include: panos_ngfw_profile_antivirus_10_1
-            include_snippets:
+              include: panos_ngfw_profile_antivirus_10_1
+              include_snippets:
               - name: ironskillet_antivirus_alert_all
 
     .. NOTE::
@@ -317,22 +334,20 @@ Including Snippets
         This is covered in the :ref:`Including Variables<Including Variables>` section of this tutorial.
 
 
-**Change the element of a snippet in a sub-skillet**
+**Case 3: Change the element of a snippet in a sub-skillet**
 
-    Sometimes, there may be one snippet in a sub-skillet that has XML changes needed in a playlist. This can easily be
+    Sometimes, there may be one snippet in a sub-skillet that has XML changes needed for a playlist that will overwrite
+    the sub-skillet snippet. This can easily be
     done through overwriting the element attribute of the snippet from the sub-skillet. In this example the login banner
     snippet was changed from the default in the Device System sub-skillet, but the other five snippets were kept as is.
-    Notice that there is an ``include_variables: all`` attribute before the ``include_snippets:``. This is because there
-    are variables used in the other snippets that need to be carried over into the playlist. When making overrides to
-    snippets using ``include_snippets:``, this is a required step.
 
     .. code-block:: yaml
 
         snippets:
             - name: panos_ngfw_device_system_10_0
-            include: panos_ngfw_device_system_10_0
-            include_variables: all
-            include_snippets:
+              include: panos_ngfw_device_system_10_0
+              include_variables: all
+              include_snippets:
               - name: ironskillet_device_system_dynamic_updates
               - name: ironskillet_device_system_snmp
               - name: ironskillet_device_system_ntp
@@ -343,18 +358,24 @@ Including Snippets
                     <login-banner>You have accessed a protected system.
                     If not authorized, log off immediately.</login-banner>
 
+    .. WARNING::
+        Notice that there is an ``include_variables: all`` attribute before the ``include_snippets:``. This is because there
+        are variables used in the other snippets that need to be carried over into the playlist. When making overrides to
+        snippets using ``include_snippets:``, this is a **required step**.
 
-**Change xpath of a snippet in a sub-skillet**
 
-    Similar to the above example, sometime the xpath of a snippet will need to be changed due to device configuration. The
-    xpath specifies where in the XML the element should be placed, which can change due to how the device is set up.
-    Panorama in particular often has a different xpath depending if it is a shared or not-shared setup. See
+**Case 4: Change XPath of a snippet in a sub-skillet**
+
+    Similar to the above example, sometimes the XPath of a snippet will need to be changed due to panorama configuration
+    (Shared or Not-Shared). The
+    XPath specifies where in the XML the element should be placed, which can change due to how the device is set up.
+    Panorama in particular often has a different XPath depending if it is a shared or not-shared setup. See
     `IronSkillet Documentation <https://iron-skillet.readthedocs.io/en/docs_master/panorama_template_guide.html>`_ for
     more information about this. In `ironskillet-components <https://github.com/PaloAltoNetworks/ironskillet-components>`_,
-    the shared xpath was chosen as the default for the xpath attribute in the panorama sub-skillets. In this example,
-    a Not-Shared playlist is being built, so the xpath will have to be changed to the not-shared version for some
-    sub-skillets. Each snippet in the sub-skillet must be individually included and have the xpath 'overwritten', even
-    though the xpath for all snippets in the file might be changing to the same path.
+    the shared XPath was chosen as the default for the **xpath** attribute in the panorama sub-skillets. In this example,
+    a Not-Shared playlist is being built, so the XPath will have to be changed to the not-shared version for some
+    sub-skillets. Each snippet in the sub-skillet must be individually included and have the XPath 'overwritten', even
+    though the XPath for all snippets in the file might be changing to the same path.
 
     .. code-block:: yaml
 
@@ -366,7 +387,7 @@ Including Snippets
                 xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/tag
 
     .. NOTE::
-        Notice that there is a new ``DEVICE_GROUP`` variable introduced in the changed xpaths. This variable will need to be
+        Notice that there is a new ``DEVICE_GROUP`` variable introduced in the changed XPaths. This variable will need to be
         included in the playlist ``variables:`` section.
 
 
@@ -550,7 +571,7 @@ Including Snippets
                     xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/spyware
                   - name: ironskillet_spyware_alert_all
                     xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/spyware
-                  - name: ironskillet_exception
+                  - name: ironskillet_spyware_exception
                     xpath: /config/devices/entry[@name='localhost.localdomain']/device-group/entry[@name='{{DEVICE_GROUP}}']/profiles/spyware
               - name: panorama_profiles_vulnerability_10_0
                 include: panorama_profiles_vulnerability_10_0
@@ -615,6 +636,8 @@ Including Snippets
         snippet from another playlist that already has a ``include_snippets:`` defined. If this needs to be done, instead
         try referencing the same sub-skillets directly in both playlists.
 
+|
+
 Including Variables
 ~~~~~~~~~~~~~~~~~~~
 
@@ -624,7 +647,7 @@ Including Variables
     specify how variables are included. Basically, anytime the ``include_snippets:`` attribute is used, ``include_variables:``
     should also be specified, as long as there are variables in the sub-skillet to include.
 
-    Take the xpath override example from the previous section:
+    Take the XPath override example from the previous section:
 
     .. code-block:: yaml
 
@@ -654,11 +677,12 @@ Including Variables
 
 
     There are a few other use cases that might come up:
+
       * Menu options for custom loads (checkboxes in a workflow)
       * When conditional includes
       * See the `Workflow Tutorial <https://skilletbuilder.readthedocs.io/en/latest/tutorials/tutorial_workflow.html#add-variables-to-the-skillet>`_ for more examples of variable usage
 
-
+|
 
 Test and Troubleshoot
 ---------------------
@@ -676,6 +700,7 @@ Test and Troubleshoot
 
     Continue reading to see how to test these components in PanHandler.
 
+|
 
 Import the Playlists
 ~~~~~~~~~~~~~~~~~~~~
@@ -700,12 +725,13 @@ Import the Playlists
          :width: 800
 
 
-    .. NOTE::
+    .. WARNING::
         If there are other repositories (for example PANW IronSkillet) already loaded into PanHandler that have
         the same skillet names as the playlists, the new playlists will not load. This will not throw an error, so it will
         appear that the new repository loaded correctly, but it could be missing playlists. To fix this, remove both repositories
         with duplicate names and try importing the playlist repository again.
 
+|
 
 Debug and Play the Playlist
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -719,14 +745,17 @@ Debug and Play the Playlist
     variable menus are shown below for each playlist.
 
     **PAN-OS Full**
+
         .. image:: /images/includes_tutorial/panos_full_variables.png
          :width: 800
 
     **PAN-OS Alert Only**
+
         .. image:: /images/includes_tutorial/alert_only_variables.png
          :width: 800
 
     **Panorama Not-Shared Security Policies**
+
         .. image:: /images/includes_tutorial/panorama_variables.png
          :width: 800
 
@@ -740,8 +769,8 @@ Debug and Play the Playlist
          :width: 800
 
     The **Debug** view has a section for each snippet that is included in the playlist. Each of these sections is broken
-    out into the snippet name (blue text), JSON format of what is being loaded, the xpath the configuration will be pushed
-    to (pink text), and then the xml to be pushed (red and black text). An example is shown below for the IronSkillet
+    out into the snippet name (blue text), JSON format of what is being loaded, the XPath the configuration will be pushed
+    to (pink text), and then the XML to be pushed (red and black text). An example is shown below for the IronSkillet
     version tag snippet in the **PAN-OS Alert Only** playlist.
 
         .. image:: /images/includes_tutorial/debug_overview.png
@@ -760,7 +789,7 @@ Debug and Play the Playlist
         that the variables are pulling from. Alternatively, try adding the variable to the ``variables:`` section of the
         playlist.
 
-        The second way to check the variables is on the **Debug** page. All xml snippets shown (red and black text) should have
+        The second way to check the variables is on the **Debug** page. All XML snippets shown (red and black text) should have
         the variables populated according to what was specified in the variable menu. No ``{{ VARIABLE_NAME }}`` text should
         be left. For example, in the **PAN-OS Full** playlist, The primary and secondary DNS servers have been specified.
 
@@ -768,7 +797,7 @@ Debug and Play the Playlist
              :width: 800
 
 
-    **Check xml snippets and xpaths loaded correctly**
+    **Check XML snippets and XPaths loaded correctly**
 
         When only including certain snippets from a sub-skillet, it is good practice to confirm that *only* those snippets were
         loaded from the playlist. Using the **PAN-OS Alert-Only** playlist, it is easy to confirm that only the Alert profiles
@@ -777,25 +806,27 @@ Debug and Play the Playlist
         that start with the blue text header (which indicates 10 snippets loaded).
 
 
-    **Confirm xpath and xml overrides**
+    **Confirm XPath and XML overrides**
 
-        If specifying a different xpath or xml for a snippet than is pre-defined in the sub-skillet, it is a good idea to
-        confirm that those changes went through. For xpaths, this is simple to view on the **Debug** page, as each snippet
-        loaded has the xpath tied to it in pink text. As can be seen below, the Not-Shared Panorama xpaths for device group
+        If specifying a different XPath or XML for a snippet than is pre-defined in the sub-skillet, it is a good idea to
+        confirm that those changes went through. For XPaths, this is simple to view on the **Debug** page, as each snippet
+        loaded has the XPath tied to it in pink text. As can be seen below, the Not-Shared Panorama XPaths for device group
         went through, and the variable loaded in correctly.
 
             .. image:: /images/includes_tutorial/xpath_override.png
              :width: 800
 
-        Any xml overrides specified can also be confirmed in the same manner as the xpath. Double check that the xml
+        Any XML overrides specified can also be confirmed in the same manner as the XPath. Double check that the XML
         loaded matches what is explicitly written in the playlist versus what would normally be included from the sub-skillet.
 
 
     Some common errors are:
+
         * Using the incorrect sub-skillet or snippet name in an ``include_snippets:`` attribute
         * Not including all variables needed
         * Using the same name between sub-skillets and playlists, or between separate repositories loaded in PanHandler
 
+|
 
 Edit, Push, Test
 ~~~~~~~~~~~~~~~~
@@ -807,22 +838,22 @@ Edit, Push, Test
 
     Once on the **Imported Repositories** page, there are two options to update:
 
-    1. Click the **Update All Repositories** button (purple box below)
+    1. Open up the playlist repository using the Details button (green box below) and click the **Update to Latest** button (green oval below) OR
 
-        OR
-
-    2.
-        (a) Open up the playlist repository using the Details button (green box below)
-        (b) Click the **Update to Latest** button (green oval below)
+    2. Click the **Update All Repositories** button (purple box below)
 
 
     *Imported Repositories Page*
+
         .. image:: /images/includes_tutorial/panhandler_imported_repositories.png
          :width: 800
 
     *Details Page*
+
         .. image:: /images/includes_tutorial/repository_details_panhandler.png
          :width: 800
+
+|
 
 Document
 --------
@@ -831,6 +862,7 @@ Document
     to the user community. Documentation is especially important when using the Playlist Framework, as there is
     additional content being included and referenced through the submodule and sub-skillets.
 
+|
 
 README.md
 ~~~~~~~~~
@@ -841,10 +873,13 @@ README.md
 
     * Information about the submodules and the content they contain
     * A reminder that when cloning a repository with a submodule, existing submodules will need to be initiated and updated before use. To do this, run the following commands:
+
         * Clone the repository ``git clone <clone_link>``
         * ``git submodule init``
         * ``git submodule update``
+
     * Remind users to update the submodule as needed, since that is not done automatically as new commits are released. To do this, run the following commands:
+
         * Open the playlist repository
         * Run ``git submodule update --remote --merge``
         * Commit and Push any changes
@@ -931,7 +966,7 @@ README.md
 
     .. _SkilletBuilder repo README: https://raw.githubusercontent.com/PaloAltoNetworks/SkilletBuilder/master/README.md
 
-
+|
 
 LIVEcommunity
 ~~~~~~~~~~~~~~
@@ -940,6 +975,7 @@ LIVEcommunity
   are expected to have a higher quality of testing, documentation, and ongoing support. Personal skillets
   can be shared as-is to create awareness and eventually become upgraded as Community Skillets.
 
+|
 
 Other Applications
 ------------------
