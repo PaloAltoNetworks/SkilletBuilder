@@ -1,26 +1,26 @@
-Basic Configuration With Set Commands
-=====================================
+Set Commands
+============
 
 
 Overview
 --------
 
-This tutorial is designed to help the user get familiar with using set commands to bring up and apply basic configs to their NGFW. By then end of this tutorial the user should be able to alter their firewall manually through the Command Line Interface(CLI) with set commands. All set/op commands that can be entered in the CLI manually can also be transformed into an automation playlist in the form of a skillet. This allows the user to run a series of set commands to easily configure their NGFW with just the click of a button. The configuration tutorial will create a simple configuration including:
+    This tutorial is designed to help the user get familiar with using set commands to bring up and apply basic configs to their NGFW. By the end of this tutorial the user should be able to alter their firewall manually through the Command Line Interface (CLI) with set commands. All set/op commands that can be entered in the CLI manually can also be transformed into an automation playlist in the form of a skillet. This allows the user to run a series of set commands to easily configure their NGFW with just the click of a button. The configuration tutorial will create a simple configuration including:
 
-  - An IP External Dynamic List (EDL) object
-  - A tag object
-  - Security rules (Inbound and Outbound) referencing the EDL and tag objects
+        - An IP External Dynamic List (EDL) object
+        - A tag object
+        - Security rules (Inbound and Outbound) referencing the EDL and tag objects
 
-This Basic Config with Set Commands tutorial will show the user how to:
+    This Basic Config with Set Commands tutorial will show the user how to:
   
-  - Access and configure the Next Generation Firewall(NGFW) through the web UI and CLI
-  - Capture configuration differences made on the NGFW into set commands and automation skillets
-  - Learn how to use Panhandler tooling
-  - Learn how to use the Skillet Line Interface(SLI) tool on the CLI
-  - Learn the basics of using GitHub and repositories
+        - Access and configure the Next Generation Firewall (NGFW) through the web UI and CLI
+        - Capture configuration differences made on the NGFW into set commands and automation skillets
+        - Learn how to use Panhandler tooling
+        - Learn how to use the Skillet Line Interface (SLI) tool on the CLI
+        - Learn the basics of using GitHub and repositories
 
-The video below provides an end-to-end perspective for building a configuration skillet through PanHandler and can be
-used as a complement to the documentation content.
+    The video below provides an end-to-end perspective for building a configuration skillet through PanHandler and can be
+    used as a complement to the documentation content.
 
 .. raw:: html
 
@@ -28,58 +28,49 @@ used as a complement to the documentation content.
     e9138&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="405"
     width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
 
-The video below provides an end-to-end perspective for getting a configuration difference in set command format, saving
-the config diff to a file and then using the SLI utility tool to load it into an NGFW.
+|
+
+    The video below provides an end-to-end perspective for getting a configuration difference in set command format, saving
+    the config diff to a file and then using the SLI utility tool to load it into an NGFW.
 
 .. raw:: html
 
     <iframe src="https://paloaltonetworks.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=85ec045b-9ef8-4bd3-902a-ad49016
     5825c&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&start=0&interactivity=all" height="405"
     width="720" style="border: 1px solid #464646;" allowfullscreen allow="autoplay"></iframe>
-
-
+|
 Navigation Menu
 ~~~~~~~~~~~~~~~
 
-You can click on the hyperlink menu below to quickly navigate to different parts of the tutorial.
-
-1. `Prerequisites`_
-
-2. `Building Skillets with Set Commands`_
-
-3. `Test and Troubleshoot`_
-
-4. `Document`_
+    You can click on the hyperlink menu below to quickly navigate to different parts of the tutorial.
+      1. `Prerequisites`_
+      2. `Building Skillets with Set Commands`_
+      3. `Test and Troubleshoot`_
+      4. `Document`_
 
 
 Prerequisites
 -------------
 
-Before moving forward with the tutorial, please ensure the following prerequisites have been fulfilled.
+    Before moving forward with the tutorial, please ensure the following prerequisites have been fulfilled.
 
-* Have an up and running NGFW Virtual Machine(VM)
-* Familiarity with `SkilletBuilder tooling <https://skilletbuilder.readthedocs.io/en/latest/reference_examples/builder_tools.html>`
-* A GitHub_ account with access permissions to edit repository content. Please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/github.html>`_ for guidance on setting up GitHub for this tutorial
-* Docker_ desktop installed, active and running on your local machine
-* Ability to access the NGFW device via the GUI[1][2] and SSH/CLI[3]
-* For users wishing to work through the command line have SLI_ set up and ready to go. Please refer to and follow the steps in the linked `SLI page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/sli.html>`_ to get started with using SLI within the context of this tutorial  
-* For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets. For more assistance on using PanHandler tooling within the context of this tutorial please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/panhandler.html>`_
-    
-It may also be useful to review the following topics before getting started:
+        * Have an up and running NGFW Virtual Machine (VM)
+        * Familiarity with the core elements of the `SkilletBuilder`_ page
+        * A GitHub_ account with access permissions to edit repository content. Please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/github.html>`_ for guidance on setting up GitHub for this tutorial
+        * Docker_ installed, active and running on your local machine
+        * Ability to access the NGFW device via the GUI and SSH/CLI
+        * For users wishing to work through the command line have SLI_ set up and ready to go. Please refer to and follow the steps in the linked `SLI page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/sli.html>`_ to get started with using SLI within the context of this tutorial
+        * For users wishing to work through the browser UI log into PanHandler_ and be able to import/run Skillets. For more assistance on using PanHandler tooling within the context of this tutorial please refer to the following `page <https://skilletbuilder.readthedocs.io/en/latest/getting_started/panhandler.html>`_
 
-- :ref:`jinjaandskillets`
-
+.. _SkilletBuilder: https://skilletbuilder.readthedocs.io/en/latest/
 .. _PanHandler: https://panhandler.readthedocs.io/en/master/
 .. _GitHub: https://github.com
-.. _Docker: https://www.docker.com
+.. _Docker: https://docs.docker.com/get-started/
 .. _SLI: https://pypi.org/project/sli/
 
-.. [1] Log in to the NGFW UI by entering this, *https://X.X.X.X* (with your NGFW's management IP replacing the X's), into the web browser URL bar.
-.. [2] If you reach a warning page during this step, click advanced settings and choose the proceed to webpage option.
-.. [3] Log in to the NGFW via CLI by opening a terminal/bash window on your local machine and entering this, *ssh {username}@{X.X.X.X}* (with your NGFW's management IP replacing the X's).
 
-This tutorial can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended 
-results via use of the PanHandler UI tool and the SLI command line interface tool.
+    This tutorial can either be done by reading the document or by watching the tutorial videos. There is a video tutorial for achieving the intended
+    results via use of the PanHandler UI tool and the SLI command line interface tool.
 
 
 |
@@ -91,45 +82,50 @@ Create the Configuration in the NGFW
 
     Before modifying the configuration, ensure you have a snapshot of the `before/baseline` configuration of your NGFW saved, 
     we will use this saved snapshot to perform an offline configuration difference later. To do this navigate through 
-    **Device->Setup->Operations->Save named configuration snapshot** to save the current NGFW config.
+    **Device > Setup > Operations > Save named configuration snapshot** to save the current NGFW config.
     
     .. image:: /images/set_command_tutorial/save_config_snapshot.png
-        :width: 600
+        :width: 800
         
 |
-    The tutorial examples use the GUI to create the external dynamic list(EDL), tag, and security rules. Before starting these steps,
+
+    The tutorial examples use the GUI to create the external dynamic list (EDL), tag, and security rules. Before starting these steps,
     make sure you commit the most recent changes made to the NGFW, to do this click on the **Commit** button located at the top-right 
     of the NGFW GUI.
     
     .. image:: /images/set_command_tutorial/commit_button.png
-        :width: 600
+        :width: 400
         
-|    
+|
+
     Now after committing we want to start making changes to our NGFW. First we want to configure the external-list object with a name,
     description, and source URL. To get to the `External Dynamic List` section on your NGFW navigate through the following, 
-    **Objects->External Dynamic Lists->Add**. 
+    **Objects > External Dynamic Lists > Add**.
     
     .. image:: /images/set_command_tutorial/add_edl.png
-        :width: 600 
+        :width: 800
   
 |
+
     Once in the correct place make the necessary changes as seen below. Click the **OK** button to save the changes.
 
     .. image:: /images/set_command_tutorial/External_list.png
-        :width: 600
+        :width: 800
 
 |
+
     Next we need to configure the tag object with a name, color, and comments (description) and then click the **OK** button. Tag
-    objects are found by clicking through the following, **Objects->Tags->Add**.
+    objects are found by clicking through the following, **Objects > Tags > Add**.
  
     .. image:: /images/set_command_tutorial/find_tag.png
-        :width: 600
+        :width: 800
         
-|        
+|
+
     Once you have hit the add button make necessary changes as seen below and click the **OK** button.
 
     .. image:: /images/set_command_tutorial/tag_configure.png
-        :width: 600
+        :width: 400
 
 
     .. TIP::
@@ -140,14 +136,16 @@ Create the Configuration in the NGFW
         sample configs like this to discover those values.
         
 |
+
     Finally, configure inbound and outbound security rules referencing the tag and external-list. In order to add security rules please
-    navigate through the following, **Policy->Security->Add**. Note that the rule names are prepended with the EDL name. In later 
+    navigate through the following, **Policy > Security > Add**. Note that the rule names are prepended with the EDL name. In later
     steps variables are used in the rule names to map the EDL and ensure rule names are unique.
 
     .. image:: /images/set_command_tutorial/navigate_security_policy.png
         :width: 800
         
-|      
+|
+
     Once you have hit the add button make necessary changes as seen below, please make sure you have all the configurations shown 
     below copied into your security policy.      
 
@@ -155,10 +153,10 @@ Create the Configuration in the NGFW
         :width: 800
         
 |
- 
+
     If you want to be able to generate your set commands skillet in offline mode later in the tutorial, don't forget to commit and save
     a modified configuration snapshot of your NGFW here. With your baseline and modified configurations saved you can export the files to your 
-    local machine for later use! You can do this by navigating to, **Devices->Setup->Operations->Export named configuration snapshot**.
+    local machine for later use! You can do this by navigating to, **Devices > Setup > Operations > Export named configuration snapshot**.
   
     .. image:: /images/set_command_tutorial/export_snapshot.png
         :width: 800
@@ -171,30 +169,32 @@ Generate the Set Commands Skillet
     To begin, start up PanHandler by clicking on the **PanHandler** tab at the top and then clicking on **Skillet Repositories**. 
     
     .. image:: /images/set_command_tutorial/panhandler_nav.png
-        :width: 600
+        :width: 800
         
-|    
+|
+
     Scroll down until you find your cloned repository name, in this case the `Set_Commands_Tutorial` repository and then click on the 
     **Details** button. 
     
     .. image:: /images/set_command_tutorial/set_commands_details.png
-        :width: 600
+        :width: 400
         
-|   
+|
+
     Here you want to locate and click on the **Create Skillet** button.
     
     .. image:: /images/set_command_tutorial/create_skillet.png
-        :width: 600
+        :width: 800
         
-|       
+|
+
     Now we want to extract the difference between the baseline and modified NGFW configurations as set commands. To do this directly from
     your connected NGFW find the box on this page that says `Generate Set Commands From PAN-OS` and then click on **Generate CLI**. 
     
     .. image:: /images/set_command_tutorial/generate_set_cli.png
-        :width: 600
+        :width: 400
         
 |        
-
 
     .. NOTE::
         There is also an option to upload previously saved NGFW XML files manually to the PanHandler SkilletBuilder utility from your local machine. 
@@ -203,40 +203,45 @@ Generate the Set Commands Skillet
         under the `Pre-Configuration` and `Post-Configuration` sections.
       
 |
+
     Once at the `Skillet Generator` page fill in your NGFW information and click **Submit**.
     
     .. image:: /images/set_command_tutorial/skillet_generator_fill.png
-        :width: 600
+        :width: 800
         
-|        
+|
+
     You will then end up at another `Skillet Generator` page where you will need to choose some NGFW configuration options to 
     pull from in a couple of drop-down menus. Under the `Pre-Configuration Source` menu, choose the baseline configuration.
     Under the `Post Configuration Source` menu choose your modified configuration that you want to get the config difference between.
     After the correct NGFW commit versions are chosen hit **Submit**.
     
     .. image:: /images/set_command_tutorial/pre_post_choose_cli.png
-        :width: 600
+        :width: 800
         
-|    
+|
+
     After the files are added and submitted, the next stage of the workflow is a web form for the YAML file preamble attributes.
     Suggested tutorial inputs for this section are as follows:
 
-      * Skillet ID: tag_edl_tutorial
-      * Skillet Label: Tutorial skillet
-      * Skillet description: The tutorial skillet demonstrates the use of various config snippets and variables
-      * Skillet type: ``Template``
-      * Branch: Local
-      * Commit Message: Create Tutorial Skillet
+      * **Skillet ID**: tag_edl_tutorial
+      * **Skillet Label**: Tutorial skillet
+      * **Skillet description**: The tutorial skillet demonstrates the use of various config snippets and variables
+      * **Skillet type**: ``Template``
+      * **Branch**: Local
+      * **Commit Message**: Create Tutorial Skillet
       
     .. image:: /images/set_command_tutorial/preamble_yaml_fill.png
-        :width: 600   
+        :width: 800
         
 |
+
     Once everything has been entered, clicking on the blue **Submit** button results in a screen titled `Skillet Editor`. This page 
     will showcase parts of the skillet that you just created as well as a snippets section containing all of your set commands from
     the config diff.
 
 |
+
     The rendered YAML file contains:
 
       * Preamble populated with the web form values
@@ -247,15 +252,16 @@ Generate the Set Commands Skillet
 Working with Snippets and Variables
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
       
-    In section we will be editing the snippets and variables sections that were just rendered in the YAML file.
+    In this section we will be editing the snippets and variables sections that were just rendered in the YAML file.
       
     To access the set commands found within the snippets you want to view the snippets in `edit` mode by clicking the blue **Edit** 
     button all the way on the right of the snippets section. 
       
     .. image:: /images/set_command_tutorial/snippets_edit.png
-        :width: 600 
+        :width: 800
         
-|          
+|
+
     Upon clicking the **edit** button you will land at an `Edit template snippet` page showcasing all the set commands retrieved from
     the config diff. Here is where we can get into working with a cool templating language called `Jinja`_, to allow for user inputted
     value substitution within the variables in our skillets. Thankfully with this skillet editor tool there is a very simple and easy way
@@ -263,13 +269,12 @@ Working with Snippets and Variables
     of the screen again.
     
     .. image:: /images/set_command_tutorial/set_command_snippet_edit.png
-        :width: 600
+        :width: 800
         
 |       
 
-
     .. NOTE::
-        Order matters with set commands! The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
+        **Order matters with set commands!** The *Generate Set CLI Commands* skillet won't always output set commands in the right order.
         For example it may output the commands in such a way that it will try to load in a security policy before the EDL is created, an
         example of this is shown in the screenshot below. As you can see the `set rulebase security rules` set commands are appearing before
         the set commands that create the edl. This would fail if you input it into the NGFW CLI since the EDL doesn't exist yet.
@@ -280,7 +285,8 @@ Working with Snippets and Variables
           .. image:: /images/set_command_tutorial/out_of_order.png
               :width: 400 
         
-|   
+|
+
     This will take us to a page titled `Edit Text`, this is where we can make text substitutions for variables. For example if we 
     wanted to change all instances of the text "tag_name" into a jinja variable you would enter in "tag_name" to the left box and then
     whatever you wanted the variable to be called in the right box. It is best practice to name your variables something identifiable 
@@ -288,7 +294,7 @@ Working with Snippets and Variables
     forget to click **Update** twice to confirm and save your changes!
     
     .. image:: /images/set_command_tutorial/switch_variables.png
-        :width: 600
+        :width: 800
 
     .. NOTE::
       For the purpose of this Tutorial you should have 6 variables in the variables section of the Skillet Editor. Please refer
@@ -296,6 +302,7 @@ Working with Snippets and Variables
       cases.
 
 |
+
     Once the **Update** button has been pushed and changes have been made you will be brought back to the `Skillet Editor` screen from 
     before. Here you should see that the previously empty variables section has now been populated with your newly created variables. you
     can now click into the blue **Edit** buttons to the right of the variable names to edit their descriptions, names, etc. For example, 
@@ -303,7 +310,7 @@ Working with Snippets and Variables
     what tag colors map to what values.
 
     .. image:: /images/set_command_tutorial/skillet_editor_update.png
-        :width: 600
+        :width: 800
     
     +-------------------------------------------------------------------------------------+
     | Tag Color Mappings                                                                  |
@@ -326,56 +333,62 @@ Working with Snippets and Variables
     +-------------------------------------------------------------------------------------+
     
 |
+
     On the `Edit Variable` page click on the **Variable Type** dropdown menu and choose the **Dropdown Select** option. From here you can type
     in key:value pairs similar to a dictionary and then click on the **+** sign on the right to add them as dropdown menu options for your
     variable color type. Add all the color options you would like and then hit **Update** at the bottom to save the changes in your variable.
     
     .. image:: /images/set_command_tutorial/dropdown.png
-        :width: 600
+        :width: 400
     
     Back on the `Skillet Editor` page, we can save all aspects of our generated skillet by clicking the blue **Save** button at the bottom right 
     of the screen.
         
     .. image:: /images/set_command_tutorial/save_skillet.png
-        :width: 600
+        :width: 800
      
 |
+
     Now that the skillet has been saved in PanHandler it will show up as a skillet on the next page titled `Repository Detail for
     Set_Commands_Tutorial`. 
     
     .. image:: /images/set_command_tutorial/repo_detail_tutorial.png
-        :width: 600
+        :width: 800
     
 |
+
     On this page simply scroll down until you find your saved skillet, in this case it should be called `Tutorial Skillet`. Locate the 
     skillet and click on the **Gear** icon to inspect the skillets raw YAML data file. Choosing to click into the **Gear** should allow 
     you to see the fully function skillets YAML file including all generated set commands within as well as the variables that were updated 
     prior.
     
     .. image:: /images/set_command_tutorial/inspect_tutorial.png
-        :width: 600 
+        :width: 800
    
 |
+
     You can also click the **Edit** button on this page to access your skillet in `edit` mode and make changes.
         
     .. image:: /images/set_command_tutorial/tutorial_edit.png
-        :width: 600 
+        :width: 800
     
 |
+
     Your raw skillet YAML file should look something like the screenshots below.
     
     .. toggle-header:: class
         :header: **Skillet Raw Yaml**
 
             .. image:: /images/set_command_tutorial/skillet_metadata1.png
-              :width: 600
+              :width: 800
           |
 
             .. image:: /images/set_command_tutorial/skillet_metadata2.png
-              :width: 600
+              :width: 800
           |
     
 |
+
     At this point you should have a fully functioning set commands skillet! However we aren't done yet, you always
     want to be sure to test your skillet for any possible issues before committing it back to your repository. Please
     refer to the `Testing and Troubleshooting` section in this tutorial for more guidance on testing methods.
@@ -393,40 +406,48 @@ Using SLI to Perform a Configuration Difference
     In this section we will be going over how to use the SLI tool in the CLI to get a config diff. First head into the folder in which
     you cloned the SLI repository, activate the venv and perform the pip install command. For more in depth guidance please refer to 
     `SLI documentation`_.
-  
-    .. image:: /images/set_command_tutorial/sli_setup.png
-        :width: 600
+
+    .. code-block:: bash
+
+      > python3 -m venv ./venv
+      > source ./venv/bin/activate
+      > pip install sli
       
 |
+
     From here, run the following simple SLI command to get the config diff output in set commands form.
+    accordingly.
   
     .. code-block:: bash
   
       > sli diff -of set
-    
+
+    .. NOTE::
+        It should be noted that you can also get the config diff output in xml and skillet format by changing the
+        keyword after the `-of` flag
+
     After entering this command you will be prompted to enter your NGFW information, after entering the correct information you will
     receive all of the config differences output as set commands as can be seen below.
   
     .. image:: /images/set_command_tutorial/sli_output.png
-        :width: 600
+        :width: 800
       
-|      
+|
+
     From here you can copy all of these set commands and paste them into a .txt file in the same directory as your SLI cloned repo.
   
     .. image:: /images/set_command_tutorial/sli_set_txt.png
-        :width: 600  
+        :width: 800
   
 |
+
     While in that directory you can run SLI and pass in the .txt file containing all of the set commands to automatically configure the
     NGFW with all provided set commands.
   
     .. code-block:: bash
   
       > sli load_set -uc set_commands.txt
-  
-    .. image:: /images/set_command_tutorial/sli_load_txt.png
-      :width: 600    
-      
+
 |
 
 
@@ -457,19 +478,22 @@ Debug
     At the bottom of the Skillet Editor page, click the green **Debug** button.
 
     .. image:: /images/set_command_tutorial/debug_button.png
-        :width: 600  
+        :width: 800
+|
 
     This tool allows you to do some quick testing of the snippets to make sure they function as expected.
     In the context section, enter values based on your information:
 
     .. image:: /images/set_command_tutorial/context_section.png
-        :width: 600  
+        :width: 800
+|
 
     In the 'Step Through Snippets' section click the **Play** button to execute the snippet.
     Expected output may look something like the screenshot below:
 
     .. image:: /images/set_command_tutorial/play_snippet.png
-        :width: 600 
+        :width: 800
+|
 
     Continue to step through the snippets. If you encounter an error, be sure to check the syntax in the 'Context' section.
     Look for missing quotes '"', colons ':', etc.
@@ -482,20 +506,20 @@ Play the Skillet
     On the Repository Details page, click on the Skillet in the 'Skillets' section.
 
     .. image:: /images/set_command_tutorial/test_skillet.png
-        :width: 600 
+        :width: 800
 
     Now you should recognize all the variables that you added earlier on in the tutorial.
     Add your desired values for the variables. and click **Submit**.
 
     .. image:: /images/set_command_tutorial/render_template.png
-        :width: 600 
+        :width: 800
 
     After submitting your customized variable names you will reach a page titled `Output`. Here you will be shown the output
     of your set command template skillet. You should see all the proper set commands with the respective variable names
     substituted where they should be. 
 
     .. image:: /images/set_command_tutorial/template_skillet_output.png
-        :width: 600 
+        :width: 800
 
     If you receive errors messages, common issues may be:
 
@@ -522,51 +546,51 @@ Commit and Save
     made to your skillet in PanHandler back to GitHub under the chosen branch, in this case the changes will be pushed under the `Local` branch.
 
     .. image:: /images/set_command_tutorial/push_github.png
-        :width: 600 
+        :width: 800
 
 |
+
     If the push was successful you should see a green message stating `Changes Pushed Upstream`!
-    
-    .. image:: /images/set_command_tutorial/changes_pushed.png
-        :width: 600 
-
-|
     Now navigating back to your GitHub repository for this tutorial, you will want to locate the branches dropdown menu and click on it
     to expand your branch options. In this case click on **Main** branch and then navigate to the branch that your changes got pushed to,
     here it would be **Local**.
 
     .. image:: /images/set_command_tutorial/github_branch.png
-        :width: 600 
+        :width: 800
         
 |
+
     Once in the correct branch you will want to merge your changes into the main branch via a pull request. You will want to find the section
     shown below and then click on **Pull Request** in order to start merging the branches.
     
     .. image:: /images/set_command_tutorial/find_pull.png
-        :width: 600 
+        :width: 800
         
 |
+
     On the `Open a Pull Request` page you should give a descriptive title on what functionality the pull request will add to the repository.
     You can also go into more detail in the `description` portion of the pull request. Once everything has been filled in click the 
     **Create Pull Request** button.
     
     .. image:: /images/set_command_tutorial/pull_message.png
-        :width: 600 
+        :width: 800
 
 |       
+
     You will then find yourself on the final page of the pull request. Here you should make sure there are no merge conflicts and everything
     is cleared to merge. If everything checks out you should click the **Merge Pull Request** button and then the **Confirm Merge** button
     that replaces it once clicked. 
     
     .. image:: /images/set_command_tutorial/final_pull.png
-        :width: 600 
+        :width: 800
  
 |
-    You should see a message stating `Pull request successfully merged and closed`, upon seeing this message you can click the 
+
+    You should see a message stating `Pull request successfully merged and closed`, upon seeing this message you can click the
     **Delete branch** button and navigate back to your main repository to see your changes all successfully merged!
     
     .. image:: /images/set_command_tutorial/merge_done.png
-        :width: 600 
+        :width: 800
 
 |
 Document
@@ -605,48 +629,48 @@ Document
     +-------------------------------------------------------------------------------------+
     | \`\`\`text block - one or more lines\`\`\` to create a highlighted text block       |
     +-------------------------------------------------------------------------------------+
-    
+
     .. TIP::
         To view markdown edits in existing GitHub repos, click on the README.md file, then use the ``Raw``
         option to display the output as raw markdown text. From here you can copy-paste or review formatting.
 |
 
-    Sample README.md file for the tutorial skillet. Paste into the skillet README file and push to Github.
+    Below is a sample README.md file for the tutorial skillet. Paste into the skillet README file and push to Github.
     View the skillet repo to see the updated page text.
 
-  .. code-block:: md
+    .. code-block:: md
 
-      # Sample Configuration Skillet
+        # Sample Configuration Skillet
 
-      This is used in the training material as part of the tutorial.
+        This is used in the training material as part of the tutorial.
 
-      The skillet has 3 set elements:
+        The skillet has 3 set elements:
 
-      * tag: create a tag using inputs for name, description, and color
-      * external-list: create an edl using inputs for name, description, and url
-      * security policies: inbound and outbound security policies referencing the edl and tag names
+        * tag: create a tag using inputs for name, description, and color
+        * external-list: create an edl using inputs for name, description, and url
+        * security policies: inbound and outbound security policies referencing the edl and tag names
 
-      ## variables
+        ## variables
 
-      * tag_name: name of a newly created tag and used in the security rules
-      * tag_description: text field to describe the tag
-      * tag_color: dropdown mapping color names to color numbers 
-      * edl_name: name of the newly created external-list
-      * edl_description: text field used to describe the external-list
-      * edl_url: url used for the external-list
+        * tag_name: name of a newly created tag and used in the security rules
+        * tag_description: text field to describe the tag
+        * tag_color: dropdown mapping color names to color numbers
+        * edl_name: name of the newly created external-list
+        * edl_description: text field used to describe the external-list
+        * edl_url: url used for the external-list
 
-      The 'recurring' value for the EDL is set to five-minutes. This could be added as a variable but for this example, the
-      value is considered a recommended practice so not configurable in the skillet.
+        The 'recurring' value for the EDL is set to five-minutes. This could be added as a variable but for this example, the
+        value is considered a recommended practice so not configurable in the skillet.
 
-      The EDL type is set to IP since used in the security policy and is not configurable in the skillet.
+        The EDL type is set to IP since used in the security policy and is not configurable in the skillet.
 
-      ## security policy referencing variables
+        ## security policy referencing variables
 
-      The security policy does not have its own variables asking for rule name, zones, or actions. The rules are
-      hardcoded with 'any' for most attributes and action as deny to block traffic matching the EDL IP list.
+        The security policy does not have its own variables asking for rule name, zones, or actions. The rules are
+        hardcoded with 'any' for most attributes and action as deny to block traffic matching the EDL IP list.
 
-      The security rule names use the EDL name followed by '-in' and '-out' to create unique security policies for each
-      EDL. This is denoted in the yaml file with ```{{ edl_name }}``` included in the rule name.
+        The security rule names use the EDL name followed by '-in' and '-out' to create unique security policies for each
+        EDL. This is denoted in the yaml file with ```{{ edl_name }}``` included in the rule name.
 
 Live Community
 ~~~~~~~~~~~~~~
