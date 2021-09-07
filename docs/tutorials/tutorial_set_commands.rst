@@ -464,7 +464,7 @@ Using SLI to Perform a Configuration Difference
       
     At this point all configurations should have been made in your NGFW, simply log in to validate and commit the changes in your NGFW.
 
-.. _`SLI documentation`: https://gitlab.com/panw-gse/as/sli
+.. _`SLI documentation`: https://pypi.org/project/sli/
 
 
 Test and Troubleshoot
